@@ -1,0 +1,659 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Font Name="Tahoma" Size="8.25" />
+  <Class Name="DAM_Prover.My.MyApplication" Collapsed="true">
+    <Position X="15.25" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>ApplicationEvents.vb</FileName>
+      <HashCode>AAAAIAAAAAAAAAAAAAAAAIAAAAAAAIAAAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DAM_Prover.My.MySettings" Collapsed="true">
+    <Position X="17" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IABEoAACASAUIAQAQLIAKSqgBCBBCxICIAABCIAAABI=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DAM_Prover.Customer" Collapsed="true">
+    <Position X="24" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>Classes\Base\Customer.vb</FileName>
+      <HashCode>IAADRABkIIASAACQIAQIDAABWAABAAAAIAACAAQDEAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DAM_Prover.DABoard" Collapsed="true">
+    <Position X="11.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>Classes\Base\DABoard.vb</FileName>
+      <HashCode>AEAAAAAAACAAwAAAAAAAAgAAAAAAAAAAIgABAwBAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DAM_Prover.MechanicalTestClass" Collapsed="true">
+    <Position X="1.75" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>Classes\Base\DriveTypes\MechanicalTestClass.vb</FileName>
+      <HashCode>AAAAAAAAAAAQAAAAAAAAAAAAAgAAAAAAAAAACAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DAM_Prover.RotaryTestClass" Collapsed="true">
+    <Position X="6.25" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>Classes\Base\DriveTypes\RotaryTestClass.vb</FileName>
+      <HashCode>AAAAAAAAACAQAAAAAAAAAAAAkgAAAAIAAAAACQAAAAA=</HashCode>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="DAM_Prover.ExcelWriterClass" Collapsed="true">
+    <Position X="29.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>Classes\Base\ExcelWriterClass.vb</FileName>
+      <HashCode>QAAAAAAAAAAAgKAAAAAAwAAAAAAAAAAAACABAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DAM_Prover.ExportToDataSetClass" Collapsed="true">
+    <Position X="15.25" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>Classes\Base\ExportToDataSetClass.vb</FileName>
+      <HashCode>QAAABAAAAEAQAAAAACAAAACBACAAAAAAAAACAAQCAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DAM_Prover.Instrument" Collapsed="true">
+    <Position X="4" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>Classes\Base\Instrument.vb</FileName>
+      <HashCode>UAUAAYkAADQYEAJAYBVMAYACmAwAwASAEFKBAgSGBAA=</HashCode>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="DAM_Prover.PressureFactorClass" Collapsed="true">
+    <Position X="25.75" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>Classes\Base\PressureFactorClass.vb</FileName>
+      <HashCode>AEAAAACAAQgABUAQAoACKCAAABAAEQAAEAACAgAAoAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DAM_Prover.SuperFactorClass" Collapsed="true">
+    <Position X="22.25" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>Classes\Base\SuperFactorClass.vb</FileName>
+      <HashCode>gAAABAAkAAEAAEAAAAAAAASgAEAAAQAAEBIAEAQQACA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DAM_Prover.TachometerClass" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="24" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>Classes\Base\TachometerClass.vb</FileName>
+      <HashCode>AAAAAAAAACAAAAAQAAAAAAAAACAAAAAAAAAAAEAAAAA=</HashCode>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="DAM_Prover.TemperatureClass" Collapsed="true">
+    <Position X="27.5" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>Classes\Base\TemperatureClass.vb</FileName>
+      <HashCode>AgKAAAAIAAgABwAAAKEAIIEAAAAgEAAgAAiAAAAAAkA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DAM_Prover.TestClass" Collapsed="true">
+    <Position X="4" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>Classes\Base\TestClass.vb</FileName>
+      <HashCode>ABEAAAQEACQUAAAABAECAIAEngQEEAIABAkACgECBAg=</HashCode>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="DAM_Prover.Volume" Collapsed="true">
+    <Position X="4" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>Classes\Base\Volume.vb</FileName>
+      <HashCode>IAgIIAAABMBDIACACAoUSAEgAVIQQkkRIgAATQCAVAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DAM_Prover.XMLWriterClass" Collapsed="true">
+    <Position X="27.5" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>Classes\Base\XMLWriterClass.vb</FileName>
+      <HashCode>AAMCAAAAAAAQAAAQAABAAAAAQACAAAAAAQAAAAQCEBA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DAM_Prover.PCIDataAcqClass" Collapsed="true">
+    <Position X="10.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>Classes\DABoards\PCIDataAcqClass.vb</FileName>
+      <HashCode>AMAAAACAACEAgABAAAAAAAgAAAAAEAAAAAAAAQBAACA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DAM_Prover.USBDataAcqClass" Collapsed="true">
+    <Position X="12.75" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>Classes\DABoards\USBDataAcqClass.vb</FileName>
+      <HashCode>AEAAAACAAgAAgAAAACAAAAgQAAAAEAAAAAAAAQBAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DAM_Prover.MiniATInstrument" Collapsed="true">
+    <Position X="7.5" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>Classes\Mini-AT\MiniATInstrument.vb</FileName>
+      <HashCode>AAAAAAAAAAAAAABAIAAAAAAAAAAAAAAAAAIAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DAM_Prover.MiniATTestClass" Collapsed="true">
+    <Position X="0.75" Y="9.25" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>Classes\Mini-AT\MiniATTestClass.vb</FileName>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="DAM_Prover.MiniATVolumeClass" Collapsed="true">
+    <Position X="3" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>Classes\Mini-AT\MiniATVolumeClass.vb</FileName>
+      <HashCode>AAAIAAAAAEAAAAAAAAAAAAEAAAAAAAAQAAAAAQAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DAM_Prover.MiniMaxInstrument" Collapsed="true">
+    <Position X="0.75" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>Classes\MiniMax\MiniMaxInstrument.vb</FileName>
+      <HashCode>AAAAAAAAAEAAAAAAIAAAAAAAAAAAAAAAAAIAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DAM_Prover.MiniMaxTestClass" Collapsed="true">
+    <Position X="3" Y="9.25" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>Classes\MiniMax\MiniMaxTestClass.vb</FileName>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="DAM_Prover.MiniMaxVolumeClass" Collapsed="true">
+    <Position X="5.25" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>Classes\MiniMax\MiniMaxVolumeClass.vb</FileName>
+      <HashCode>AAAIAAAAAEAAAAAAAAAAAAEAAAAAAAAQAAAAAQAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DAM_Prover.MiniMaxRotaryTestClass" Collapsed="true">
+    <Position X="5.25" Y="9.25" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>Classes\MiniMaxRotary\MiniMaxRotaryTestClass.vb</FileName>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DAM_Prover.RotaryInstrument" Collapsed="true">
+    <Position X="3" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>Classes\MiniMaxRotary\RotaryInstrument.vb</FileName>
+      <HashCode>AAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAIAAAAABAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DAM_Prover.RotaryVolumeClass" Collapsed="true">
+    <Position X="7.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>Classes\MiniMaxRotary\RotaryVolumeClass.vb</FileName>
+      <HashCode>AAAIAEACBEAAAAAAAAIAAAEAAAAAAgAQAAAAAQAABAA=</HashCode>
+    </TypeIdentifier>
+    <NestedTypes>
+      <Enum Name="DAM_Prover.RotaryVolumeClass.GeneralVolumeItems" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Classes\MiniMaxRotary\RotaryVolumeClass.vb</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+    </NestedTypes>
+  </Class>
+  <Class Name="DAM_Prover.TCIInstrument" Collapsed="true">
+    <Position X="5.25" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>Classes\TCI\TCIInstrument.vb</FileName>
+      <HashCode>AAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAIAAAAAAgA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DAM_Prover.TCITestClass" Collapsed="true">
+    <Position X="7.5" Y="9.25" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>Classes\TCI\TCITestClass.vb</FileName>
+      <HashCode>ABAAAAAAACQAAAAAAAAAAAAAngAAAAIAAAAAAAACAAA=</HashCode>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="DAM_Prover.TCIVolumeClass" Collapsed="true">
+    <Position X="0.75" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>Classes\TCI\TCIVolumeClass.vb</FileName>
+      <HashCode>AAAIAAACAEAAAAAAAAAAAAEAAAAAAAAQAAAAAQAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DAM_Prover.dam_proverDataSet" Collapsed="true">
+    <Position X="20.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>dam_proverDataSet.vb</FileName>
+      <HashCode>AAAAQQBDMwBQgCPBDBxAQKAACEgHQjwCAoQoAAMAHBQ=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DAM_Prover.CustomerItemsDataSet" Collapsed="true">
+    <Position X="29.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>DataSets\CustomerItemsDataSet.vb</FileName>
+      <HashCode>AAAAAAADEwAggAJABAgAQAAAAEgCTjwAAAAAAAEABBA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DAM_Prover.EquipementDataSet" Collapsed="true">
+    <Position X="25.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAgAAAAAIwAAAAJABQQAQAAYAAgGQBgAAAAAAAkQBBA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DAM_Prover.ICDataSet" Collapsed="true">
+    <Position X="17" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>DataSets\ICDataSet.vb</FileName>
+      <HashCode>UAEAAABAAwCAACJALBAIQQAAIQgCQBkAUCAAAgEGBBA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DAM_Prover.InstrumentInformationDataSet" Collapsed="true">
+    <Position X="24" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>DataSets\InstrumentInformationDataSet.vb</FileName>
+      <HashCode>AAAAAAlAAwAQACNBDAIAwCEACAgDQBgCAIQIAAEAlBQ=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DAM_Prover.LoadInspectionCertDataSet" Collapsed="true">
+    <Position X="18.75" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>DataSets\LoadInspectionCertDataSet.vb</FileName>
+      <HashCode>AAAAAAABAwAAgAJABAAIQAAIAAgCQDgAAAAAAAUABBA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DAM_Prover.AboutBox" Collapsed="true">
+    <Position X="15.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>Form\AboutBox.vb</FileName>
+      <HashCode>AAACAgAAASAAAAAAAACEAABCgAAAAEAAAACACAAQAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DAM_Prover.AddCustomerForm" Collapsed="true">
+    <Position X="17" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>Form\AddCustomerForm.vb</FileName>
+      <HashCode>AABAIAAAECAAAAAQAQCAAAQSAEAAAAJAIAAABAAAAAQ=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DAM_Prover.CSVDialog" Collapsed="true">
+    <Position X="22.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>Form\CSVDialog.vb</FileName>
+      <HashCode>AAAAAABAECAAkAAAAAGAAAACAAAAAAAAAAAQAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DAM_Prover.CustomerItems" Collapsed="true">
+    <Position X="27.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>Form\CustomerItems.vb</FileName>
+      <HashCode>AAECAAAAEWYYiECAAAmAAEJiIAABMmDAAgAxAQAACEY=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DAM_Prover.InstrumentType" Collapsed="true">
+    <Position X="25.75" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>Form\CustomerItems.vb</FileName>
+      <HashCode>AAAAAAIAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DAM_Prover.DAPortsDialog" Collapsed="true">
+    <Position X="22.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>Form\DAPortsDialog.vb</FileName>
+      <HashCode>AACAIABAACAFEBAAAACAEAACADAIAAhAAAQAAAAAgAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DAM_Prover.EditInstrumentForm" Collapsed="true">
+    <Position X="24" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>Form\EditInstrumentForm.vb</FileName>
+      <HashCode>naBBIAAQkP0BEBIIKgmBIRqDATT/LQUEAJIRBA0kfsg=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DAM_Prover.ICReportForm" Collapsed="true">
+    <Position X="18.75" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>Form\ICReportForm.vb</FileName>
+      <HashCode>AAAAQAAAACAAAAAAAACBAAACAAAAAAACAAAQAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DAM_Prover.InspecForm" Collapsed="true">
+    <Position X="20.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>Form\InspecForm.vb</FileName>
+      <HashCode>CCAAIgAgEHAQgCAAABGAwOACIMFAEDSAEEAAAMJOQAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DAM_Prover.InspectionCustomerDialog" Collapsed="true">
+    <Position X="27.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>Form\InspectionCustomerDialog.vb</FileName>
+      <HashCode>AAAgKABAHiUBmABARQCIUgACEEgAIAgIAAgQAAAAAEA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DAM_Prover.ManualVolumeForm" Collapsed="true">
+    <Position X="20.5" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>Form\ManualVolumeForm.vb</FileName>
+      <HashCode>GSHFIgAYECCAkAAgOoDAARICADz/JACAEBQzAoAEaMg=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DAM_Prover.MechanicalInputDialog" Collapsed="true">
+    <Position X="22.25" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>Form\MechanicalInputDialog.vb</FileName>
+      <HashCode>AAAAIABAECABEAAAAACCAgACABAAAAgAgAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DAM_Prover.MeterTypesForm" Collapsed="true">
+    <Position X="29.25" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>Form\MeterTypesForm.vb</FileName>
+      <HashCode>ABACIEAAACAAgAAAAACCAAgCAAAgAAAAAAgABAAQAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DAM_Prover.NewTestForm" Collapsed="true">
+    <Position X="18.75" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>Form\NewTestForm.vb</FileName>
+      <HashCode>wsQAYRiq+KoAGUCCIXDAFI4iHlX/4gTARUScAAVCMAM=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DAM_Prover.OldForm" Collapsed="true">
+    <Position X="20.5" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>Form\OldForm.vb</FileName>
+      <HashCode>AAAAAAgAECAAAAAAAAGCBBgDGAAAYAIAQEAADQAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DAM_Prover.OldStatusForm" Collapsed="true">
+    <Position X="22.25" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>Form\OldStatusForm.vb</FileName>
+      <HashCode>AAAABAEAACAAEAAAAACAAAACIABAAAAAAAAAgQAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DAM_Prover.PAutoDialog" Collapsed="true">
+    <Position X="24" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>Form\PAutoDialog.vb</FileName>
+      <HashCode>AQAAIABAECABECACAADAAAgCAAAAYAAAAAAAIACAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DAM_Prover.PTAutoDialog" Collapsed="true">
+    <Position X="15.25" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>Form\PTAutoDialog.vb</FileName>
+      <HashCode>AQAAIABAEiABMCACAADAABgCAAAAYAAAAAAAIACAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DAM_Prover.RawItemDialog" Collapsed="true">
+    <Position X="17" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>Form\RawItemDialog.vb</FileName>
+      <HashCode>CAAAYwBAECABEABAAACIAAACAEAAAAgBAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DAM_Prover.SaveInstrumentForm" Collapsed="true">
+    <Position X="18.75" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>Form\SaveInstrumentForm.vb</FileName>
+      <HashCode>AAAAAAAAECQAEAAAAACAAAACAAAAQAAAAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DAM_Prover.TAutoDialog" Collapsed="true">
+    <Position X="25.75" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>Form\TAutoDialog.vb</FileName>
+      <HashCode>AAAAIABAEiABECAAAACAABgCAAAAYAAAAEAAhACAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DAM_Prover.TestCompleteDialog" Collapsed="true">
+    <Position X="17" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>Form\TestCompleteDialog.vb</FileName>
+      <HashCode>AAAAIABAECABEAAAAAiAAAACCAAIAAgAAA1AAAUAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DAM_Prover.TestForm" Collapsed="true">
+    <Position X="18.75" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>Form\TestForm.vb</FileName>
+      <HashCode>AAAEIAABUCgjGAQAAgOGAJBHGAAAABAAQFAgDAAgChA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DAM_Prover.ViewInspectionForm" Collapsed="true">
+    <Position X="20.5" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>Form\ViewInspectionForm.vb</FileName>
+      <HashCode>AAALIlAAEGNgEgoAEQCIQQgCAUwAABK8AAIAQBQAAEA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DAM_Prover.CRWIC_trial" Collapsed="true">
+    <Position X="20.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>Reports\CRWIC-trial.vb</FileName>
+      <HashCode>AAgAAAAAEAEAAAAAAAAAAAAAAAAAAAgQAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DAM_Prover.CachedCRWIC_trial" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="18.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>Reports\CRWIC-trial.vb</FileName>
+      <HashCode>AAAAACAAAAAFAEAAAAAAAAAAAACAAAAAAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="DAM_Prover.MySQLLibrary.Database" Collapsed="true">
+    <Position X="0.5" Y="11.75" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>Classes\Base\Database.vb</FileName>
+      <HashCode>EAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAACAAAAAQAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DAM_Prover.MySQLLibrary.ObjectDisposeClass" Collapsed="true">
+    <Position X="0.5" Y="10.5" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>Classes\Base\Database.vb</FileName>
+      <HashCode>AAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAA=</HashCode>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="DAM_Prover.dam_proverDataSetTableAdapters.customersTableAdapter" Collapsed="true">
+    <Position X="15.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAQAAGAAEAAAAAMAIAAAAAAAACEICAAAAAAAAAAABBA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DAM_Prover.dam_proverDataSetTableAdapters.inspection_certTableAdapter" Collapsed="true">
+    <Position X="24" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAQAAGAAEAAAAAMAIAAAAAAAACEICAAAAAAAAAAABBA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DAM_Prover.dam_proverDataSetTableAdapters.instrTableAdapter" Collapsed="true">
+    <Position X="22.25" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAQAAGAAEAAAAAMAIAAAAAAAACEICAAAAAAAAAAABBA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DAM_Prover.dam_proverDataSetTableAdapters.instr_infoTableAdapter" Collapsed="true">
+    <Position X="15.25" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAQAAGAAEAAAAAMAIAAAAAAAACAICAAAAAAAAAAABBA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DAM_Prover.dam_proverDataSetTableAdapters.instr_typeTableAdapter" Collapsed="true">
+    <Position X="18.75" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAQAAGAAEAAAAAMAIAAAAAAAACEICAAAAAAAAAAABBA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DAM_Prover.dam_proverDataSetTableAdapters.item_unitsTableAdapter" Collapsed="true">
+    <Position X="27.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAQAAGAAEAAAAAMAIAAAAAAAACAICAAAAAAAAAAABBA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DAM_Prover.dam_proverDataSetTableAdapters.itemsTableAdapter" Collapsed="true">
+    <Position X="17" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAQAAGAAEAAAAAMAIAAAAAAAACAICAAAAAAAAAAABBA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DAM_Prover.dam_proverDataSetTableAdapters.items_grpTableAdapter" Collapsed="true">
+    <Position X="29.25" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAQAAGAAEAAAAAMAIAAAAAAAACAICAAAAAAAAAAABBA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DAM_Prover.dam_proverDataSetTableAdapters.meter_indexTableAdapter" Collapsed="true">
+    <Position X="27.5" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAQAAGAAEAAAAAMAIAAAAAAAACAICAAAAAAAAAAABBA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DAM_Prover.dam_proverDataSetTableAdapters.meter_index_instrTableAdapter" Collapsed="true">
+    <Position X="24" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAQAAGAAEAAAAAMAIAAAAAAAACAICAAAAAAAAAAABBA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DAM_Prover.dam_proverDataSetTableAdapters.pressureTableAdapter" Collapsed="true">
+    <Position X="29.25" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAQAAGAAEAAAAAMAIAAAAAAAACAICAAAAAAAAAAABBA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DAM_Prover.dam_proverDataSetTableAdapters.temperatureTableAdapter" Collapsed="true">
+    <Position X="15.25" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAQAAGAAEAAAAAMAIAAAAAAAACAICAAAAAAAAAAABBA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DAM_Prover.dam_proverDataSetTableAdapters.volume_testTableAdapter" Collapsed="true">
+    <Position X="22.25" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAQAAGAAEAAAAAMAIAAAAAAAACAICAAAAAAAAAAABBA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DAM_Prover.dam_proverDataSetTableAdapters.write_itemsTableAdapter" Collapsed="true">
+    <Position X="25.75" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAQAAGAAEAAAAAMAIAAAAAAAACAICAAAAAAAAAAABBA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DAM_Prover.CustomerItemsDataSetTableAdapters.customer_itemsTableAdapter" Collapsed="true">
+    <Position X="25.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAQAAGAAEAAAAAMAIAAAAAAAACAICAAAAAAAAAAABBA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DAM_Prover.CustomerItemsDataSetTableAdapters.instr_typeTableAdapter" Collapsed="true">
+    <Position X="17" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAQAAGAAEAAAAAMAIAAAAAAAACEICAAAAAAAAAAABBA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DAM_Prover.CustomerItemsDataSetTableAdapters.itemsTableAdapter" Collapsed="true">
+    <Position X="15.25" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAQAAGAAEAAAAAMAIAAAAAAAACAICAAAAAAAAAAABBA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DAM_Prover.CustomerItemsDataSetTableAdapters.customersTableAdapter" Collapsed="true">
+    <Position X="17" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAQAAGAAEAAAAAMAIAAAAAAAACEICAgAAAAAAAAABBA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DAM_Prover.EquipementDataSetTableAdapters.equipementTableAdapter" Collapsed="true">
+    <Position X="27.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAQAAGAAEAAAAAMAIAAAAAAAACAICAgAAAAAAAAABBA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DAM_Prover.EquipementDataSetTableAdapters.inspection_equipementTableAdapter" Collapsed="true">
+    <Position X="25.75" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAQAAGAAEAAAAAMAIAAAAAAAACEICAAAAAAAAAAABBA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DAM_Prover.EquipementDataSetTableAdapters.meter_indexTableAdapter" Collapsed="true">
+    <Position X="25.75" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAQAAGAAEAAAAAMAIAAAAAAAACEICAAAAAAAAAAABBA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DAM_Prover.InstrumentInformationDataSetTableAdapters.instrTableAdapter" Collapsed="true">
+    <Position X="20.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAAAAGAAEAgAABMAIAAAAAAAACAICAAAAAAIAAAABBA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DAM_Prover.InstrumentInformationDataSetTableAdapters.pressureTableAdapter" Collapsed="true">
+    <Position X="27.5" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAQAAGAAEAAAAAMAIAAAAAAAACAICAAAAAAAAAAABBA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DAM_Prover.InstrumentInformationDataSetTableAdapters.temperatureTableAdapter" Collapsed="true">
+    <Position X="29.25" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAQAAGAAEAAAAAMAIAAAAAAAACAICAAAAAAIAAAABBA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DAM_Prover.InstrumentInformationDataSetTableAdapters.instr_infoTableAdapter" Collapsed="true">
+    <Position X="29.25" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAQAgGAAEAAAAAMAIAAAAAAAACAICAAAAAAAAAAABBA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DAM_Prover.InstrumentInformationDataSetTableAdapters.volume_testTableAdapter" Collapsed="true">
+    <Position X="24" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAQAAGAAEAAAAAMAIAAAAAAAACAICAAAAAAAAAAABBA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DAM_Prover.InstrumentInformationDataSetTableAdapters.SerialCompanyTableAdapter" Collapsed="true">
+    <Position X="20.5" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAAAAGAAEAAAAAMAIAAAAAAAACAICAAAAAAAAAAABBA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DAM_Prover.LoadInspectionCertDataSetTableAdapters.InspecTableAdapter" Collapsed="true">
+    <Position X="22.25" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAAAAGAAEAAAAAMAIAAAAAAAACAICAAAAAAAAAAABBA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DAM_Prover.LoadInspectionCertDataSetTableAdapters.customersTableAdapter" Collapsed="true">
+    <Position X="18.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAQAAGAAEAAAAAMAIAAAAAAAACEICAAAAAAAAAAABBA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Module Name="DAM_Prover.My.MySettingsProperty" Collapsed="true">
+    <Position X="15.25" Y="8.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Module>
+  <Module Name="DAM_Prover.Tester" Collapsed="true">
+    <Position X="18.75" Y="8.75" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>Tester.vb</FileName>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQ=</HashCode>
+    </TypeIdentifier>
+  </Module>
+  <Module Name="DAM_Prover.My.Resources.Resources" Collapsed="true">
+    <Position X="17" Y="8.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAABUAAAAQAAAAAAAAAAAAAAAIA=</HashCode>
+    </TypeIdentifier>
+  </Module>
+</ClassDiagram>

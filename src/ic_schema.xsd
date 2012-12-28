@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema
+     xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+  <xs:element name="InspectionCertificate">
+    <xs:complexType>
+      <xs:element name="customer">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="name" type="xs:string" />
+            <xs:element name="address" type="xs:string" />
+            <xs:element name="postalcode" type="xs:string" />
+            <xs:element name="regnumber" type="xs:string" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+
+      <xs:element name="instrument" minOccurs="0" maxOccurs="unbounded">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="volume" minOccurs="1" maxOccurs="1">
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:element name="item90" type="xs:double" />
+                  <xs:element name="item92" type="xs:double" />
+                  <xs:element name="item98" type="xs:double" />
+                  <xs:element name="AppliedInput" type="xs:double" />
+                  <xs:element name="CorrectedMultiplier" type="xs:double" />
+                  <xs:element name="CorrectedPercentError" type="xs:double" />
+                  <xs:element name="MeterDisplacement" type="xs:double" />
+                  <xs:element name="DriveRate" type="xs:double" />
+                  <xs:element name="MeterType" type="xs:double" />
+                  <xs:element name="EndCorrected" type="xs:double" />
+                  <xs:element name="EndUnCorrected" type="xs:double" />
+                  <xs:element name="Fpv2Factor" type="xs:double" />
+                  <xs:element name="InputUncVolume" type="xs:double" />
+                  <xs:element name="PressureFactor" type="xs:double" />
+                  <xs:element name="PulserA" type="xs:double" />
+                  <xs:element name="PulserASelect" type="xs:string" />
+                  <xs:element name="PulserB" type="xs:double" />
+                  <xs:element name="PulserBSelect" type="xs:string" />
+                  <xs:element name="StartCorrected" type="xs:double" />
+                  <xs:element name="StartUnCorrected" type="xs:double" />
+                  <xs:element name="TempFactor" type="xs:double" />
+                  <xs:element name="PressureFactor" type="xs:double" />
+                  <xs:element name="TrueCorrected" type="xs:double" />
+                  <xs:element name="UnCorrectedMultiplier" type="xs:double" />
+                  <xs:element name="UnCorrectedPercentError" type="xs:double" />
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+
+            <xs:element name="temperature" minOccurs="1" maxOccurs="1">
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:element name="item26" type="xs:double"/>
+                  <xs:element name="item34" type="xs:double"/>
+                  <xs:element name="item45" type="xs:double"/>
+                  <xs:element name="item89" type="xs:double"/>
+                  <xs:element name="item111" type="xs:double"/>
+                  <xs:element name="TRange" type="xs:string"/>
+                  <xs:element name="temp" minOccurs="3" maxOccurs="3"/>
+                    <xs:complexType>
+                      <xs:sequence>
+                        <xs:element name="temp_level" type="xs:integer"/>
+                        <xs:element name="temppercerror" type="xs:double"/>
+                      </xs:sequence>
+                    </xs:complexType>
+                  </xs:element>
+                </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+        </xs:sequence>
+      </xs:complexType>
+    </xs:sequence>
+  </xs:element>
+	</xs:complexType>
+</xs:element>
+
+</xs:schema>

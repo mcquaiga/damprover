@@ -1,0 +1,152 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="My" GeneratedClassName="MySettings" UseMySettingsClassName="true">
+  <Profiles />
+  <Settings>
+    <Setting Name="UserID" Type="System.String" Scope="User">
+      <Value Profile="(Default)">damprover09</Value>
+    </Setting>
+    <Setting Name="Password" Type="System.String" Scope="User">
+      <Value Profile="(Default)">damprover09</Value>
+    </Setting>
+    <Setting Name="DB_server" Type="System.String" Scope="User">
+      <Value Profile="(Default)">damserver</Value>
+    </Setting>
+    <Setting Name="PulserASubsystem" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">0</Value>
+    </Setting>
+    <Setting Name="PulserBSubsystem" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">1</Value>
+    </Setting>
+    <Setting Name="Location" Type="System.Drawing.Point" Scope="User">
+      <Value Profile="(Default)">0, 0</Value>
+    </Setting>
+    <Setting Name="Dimensions" Type="System.Drawing.SizeF" Scope="User">
+      <Value Profile="(Default)">6, 13</Value>
+    </Setting>
+    <Setting Name="PulserADataFlow" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">1</Value>
+    </Setting>
+    <Setting Name="PulserBDataFlow" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">1</Value>
+    </Setting>
+    <Setting Name="PulserOutSubsystem" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">5</Value>
+    </Setting>
+    <Setting Name="PulserOutDataFlow" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">1</Value>
+    </Setting>
+    <Setting Name="LowPressureHighTemp" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Auto</Value>
+    </Setting>
+    <Setting Name="MidPressureMidTemp" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Auto</Value>
+    </Setting>
+    <Setting Name="HighPressureLowTemp" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Auto</Value>
+    </Setting>
+    <Setting Name="ExcelReport" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="TCIBaudRate" Type="miSerialProtocol.BaudRateEnum" Scope="User">
+      <Value Profile="(Default)">b38400</Value>
+    </Setting>
+    <Setting Name="TCICommPort" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">5</Value>
+    </Setting>
+    <Setting Name="TCIAccessCode" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">33333</Value>
+    </Setting>
+    <Setting Name="TempLimit" Type="System.String" Scope="User">
+      <Value Profile="(Default)">35</Value>
+    </Setting>
+    <Setting Name="PressureLimit" Type="System.String" Scope="User">
+      <Value Profile="(Default)">80</Value>
+    </Setting>
+    <Setting Name="TempPercentageMax" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">0.8</Value>
+    </Setting>
+    <Setting Name="PressurePercentageMax" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">0.8</Value>
+    </Setting>
+    <Setting Name="UncVolumeOnly" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="ManualPressure" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="ManualTemp" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="CustomerId" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">0</Value>
+    </Setting>
+    <Setting Name="PCIBoardName" Type="System.String" Scope="User">
+      <Value Profile="(Default)">"DT335(00)"</Value>
+    </Setting>
+    <Setting Name="USBBoardName" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="BoardType" Type="System.String" Scope="User">
+      <Value Profile="(Default)">1</Value>
+    </Setting>
+    <Setting Name="InstrumentCommPort" Type="System.String" Scope="User">
+      <Value Profile="(Default)">COM1</Value>
+    </Setting>
+    <Setting Name="InstrumentBaudRate" Type="System.String" Scope="User">
+      <Value Profile="(Default)">38400</Value>
+    </Setting>
+    <Setting Name="InstrumentAccessCode" Type="System.String" Scope="User">
+      <Value Profile="(Default)">33333</Value>
+    </Setting>
+    <Setting Name="ExcelLocation" Type="System.String" Scope="User">
+      <Value Profile="(Default)">C:\Mi Testing Files\</Value>
+    </Setting>
+    <Setting Name="SetInstrumentDateTime" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="RotaryMetricExcel" Type="System.String" Scope="User">
+      <Value Profile="(Default)">C:\Mi Testing Files\</Value>
+    </Setting>
+    <Setting Name="MechExcel" Type="System.String" Scope="User">
+      <Value Profile="(Default)">C:\Mi Testing Files\</Value>
+    </Setting>
+    <Setting Name="MechMetricExcel" Type="System.String" Scope="User">
+      <Value Profile="(Default)">C:\Mi Testing Files\</Value>
+    </Setting>
+    <Setting Name="TachCommPort" Type="System.String" Scope="User">
+      <Value Profile="(Default)">COM2</Value>
+    </Setting>
+    <Setting Name="PressureTolerance" Type="System.String" Scope="User">
+      <Value Profile="(Default)">1.0</Value>
+    </Setting>
+    <Setting Name="TemperatureTolerance" Type="System.String" Scope="User">
+      <Value Profile="(Default)">1.0</Value>
+    </Setting>
+    <Setting Name="SuperTolerance" Type="System.String" Scope="User">
+      <Value Profile="(Default)">0.3</Value>
+    </Setting>
+    <Setting Name="UncVolumeTolerance" Type="System.String" Scope="User">
+      <Value Profile="(Default)">0.1</Value>
+    </Setting>
+    <Setting Name="CorVolumeTolerance" Type="System.String" Scope="User">
+      <Value Profile="(Default)">1.0</Value>
+    </Setting>
+    <Setting Name="DB" Type="System.String" Scope="User">
+      <Value Profile="(Default)">dam_prover_test</Value>
+    </Setting>
+    <Setting Name="dam_proverConnectionString" Type="(Connection string)" Scope="Application">
+      <DesignTimeValue Profile="(Default)">&lt;?xml version="1.0" encoding="utf-16"?&gt;
+&lt;SerializableConnectionString xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
+  &lt;ConnectionString&gt;server=damserver;user id=root;password=!crw@work;persist security info=True;database=dam_prover_test&lt;/ConnectionString&gt;
+  &lt;ProviderName&gt;MySql.Data.MySqlClient&lt;/ProviderName&gt;
+&lt;/SerializableConnectionString&gt;</DesignTimeValue>
+      <Value Profile="(Default)">server=damserver;user id=root;password=!crw@work;persist security info=True;database=dam_prover_test</Value>
+    </Setting>
+    <Setting Name="ICLocation" Type="System.String" Scope="User">
+      <Value Profile="(Default)">\\crwall-01\Company\Inspection Certificates\MASTER MI testing files\CRWIC-trial.rpt</Value>
+    </Setting>
+    <Setting Name="version" Type="System.String" Scope="User">
+      <Value Profile="(Default)">2.0.0.0</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>
