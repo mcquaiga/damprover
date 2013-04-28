@@ -1,0 +1,685 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="DAMProverModel.Store" Alias="Self" Provider="System.Data.SqlServerCe.4.0" ProviderManifestToken="4.0" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityContainer Name="DAMProverModelStoreContainer">
+          <EntitySet Name="customers" EntityType="DAMProverModel.Store.customers" store:Type="Tables" />
+          <EntitySet Name="equipement" EntityType="DAMProverModel.Store.equipement" store:Type="Tables" />
+          <EntitySet Name="inspection_cert" EntityType="DAMProverModel.Store.inspection_cert" store:Type="Tables" />
+          <EntitySet Name="inspection_equipement" EntityType="DAMProverModel.Store.inspection_equipement" store:Type="Tables" />
+          <EntitySet Name="instr" EntityType="DAMProverModel.Store.instr" store:Type="Tables" />
+          <EntitySet Name="instr_info" EntityType="DAMProverModel.Store.instr_info" store:Type="Tables" />
+          <EntitySet Name="item_units" EntityType="DAMProverModel.Store.item_units" store:Type="Tables" />
+          <EntitySet Name="items" EntityType="DAMProverModel.Store.items" store:Type="Tables" />
+          <EntitySet Name="meter_index" EntityType="DAMProverModel.Store.meter_index" store:Type="Tables" />
+          <EntitySet Name="pressure" EntityType="DAMProverModel.Store.pressure" store:Type="Tables" />
+          <EntitySet Name="temperature" EntityType="DAMProverModel.Store.temperature" store:Type="Tables" />
+          <EntitySet Name="volume_test" EntityType="DAMProverModel.Store.volume_test" store:Type="Tables" />
+          <EntitySet Name="write_items" EntityType="DAMProverModel.Store.write_items" store:Type="Tables" />
+          <AssociationSet Name="customers1" Association="DAMProverModel.Store.customers1">
+            <End Role="customers" EntitySet="customers" />
+            <End Role="write_items" EntitySet="write_items" />
+          </AssociationSet>
+          <AssociationSet Name="equipment" Association="DAMProverModel.Store.equipment">
+            <End Role="equipement" EntitySet="equipement" />
+            <End Role="inspection_equipement" EntitySet="inspection_equipement" />
+          </AssociationSet>
+          <AssociationSet Name="instr1" Association="DAMProverModel.Store.instr1">
+            <End Role="instr" EntitySet="instr" />
+            <End Role="instr_info" EntitySet="instr_info" />
+          </AssociationSet>
+          <AssociationSet Name="pressure_instruments" Association="DAMProverModel.Store.pressure_instruments">
+            <End Role="instr" EntitySet="instr" />
+            <End Role="pressure" EntitySet="pressure" />
+          </AssociationSet>
+          <AssociationSet Name="temperature_instrument" Association="DAMProverModel.Store.temperature_instrument">
+            <End Role="instr" EntitySet="instr" />
+            <End Role="temperature" EntitySet="temperature" />
+          </AssociationSet>
+          <AssociationSet Name="volume_instrument" Association="DAMProverModel.Store.volume_instrument">
+            <End Role="instr" EntitySet="instr" />
+            <End Role="volume_test" EntitySet="volume_test" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="customers">
+          <Key>
+            <PropertyRef Name="customer_id" />
+          </Key>
+          <Property Name="customer_id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="nvarchar" Nullable="false" MaxLength="200" />
+          <Property Name="address" Type="nvarchar" MaxLength="200" />
+          <Property Name="postal_code" Type="nvarchar" MaxLength="10" />
+          <Property Name="reg_number" Type="int" />
+        </EntityType>
+        <EntityType Name="equipement">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="code" Type="nvarchar" Nullable="false" MaxLength="50" />
+          <Property Name="desription" Type="nvarchar" Nullable="false" MaxLength="75" />
+        </EntityType>
+        <!--Errors Found During Generation:
+            warning 6035: The relationship 'inspections' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
+            -->
+        <EntityType Name="inspection_cert">
+          <Key>
+            <PropertyRef Name="inspection_id" />
+          </Key>
+          <Property Name="inspection_id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="date" Type="datetime" Nullable="false" />
+          <Property Name="customer_id" Type="int" />
+          <Property Name="comments" Type="ntext" />
+          <Property Name="insp_type" Type="nchar" MaxLength="5" />
+          <Property Name="event_log" Type="tinyint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="inspection_equipement">
+          <Key>
+            <PropertyRef Name="inspec_id" />
+            <PropertyRef Name="equip_id" />
+          </Key>
+          <Property Name="inspec_id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="equip_id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="instr">
+          <Key>
+            <PropertyRef Name="instr_id" />
+          </Key>
+          <Property Name="instr_id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="customer_id" Type="int" />
+          <Property Name="serial_number" Type="nvarchar" MaxLength="100" />
+          <Property Name="date" Type="datetime" />
+          <Property Name="approver" Type="nvarchar" MaxLength="100" />
+          <Property Name="instr_type_id" Type="int" />
+          <Property Name="inspection_id" Type="int" />
+          <Property Name="meter_index_id" Type="int" />
+          <Property Name="pass" Type="tinyint" />
+        </EntityType>
+        <EntityType Name="instr_info">
+          <Key>
+            <PropertyRef Name="instr_id" />
+          </Key>
+          <Property Name="instr_id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="item_number" Type="int" />
+          <Property Name="item_value" Type="nvarchar" Nullable="false" MaxLength="500" />
+        </EntityType>
+        <EntityType Name="item_units">
+          <Key>
+            <PropertyRef Name="item_number" />
+          </Key>
+          <Property Name="item_number" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="value" Type="int" />
+          <Property Name="unit_desc" Type="nvarchar" MaxLength="100" />
+          <Property Name="unit_value" Type="float" />
+        </EntityType>
+        <EntityType Name="items">
+          <Key>
+            <PropertyRef Name="instr_type_id" />
+          </Key>
+          <Property Name="instr_type_id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="item_num" Type="smallint" />
+          <Property Name="item_desc" Type="nvarchar" MaxLength="100" />
+          <Property Name="item_group" Type="int" />
+        </EntityType>
+        <EntityType Name="meter_index">
+          <Key>
+            <PropertyRef Name="meter_index_id" />
+          </Key>
+          <Property Name="meter_index_id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="type" Type="nvarchar" Nullable="false" MaxLength="200" />
+          <Property Name="meterdisplacement" Type="float" Nullable="false" />
+        </EntityType>
+        <EntityType Name="pressure">
+          <Key>
+            <PropertyRef Name="instr_id" />
+            <PropertyRef Name="p_level" />
+          </Key>
+          <Property Name="instr_id" Type="int" Nullable="false" />
+          <Property Name="p_level" Type="int" Nullable="false" />
+          <Property Name="gauge_pressure" Type="float" />
+          <Property Name="atm_pressure" Type="float" />
+          <Property Name="evc_pressure" Type="float" />
+          <Property Name="evc_pfactor" Type="float" />
+          <Property Name="evc_unsqr_super" Type="float" />
+        </EntityType>
+        <EntityType Name="temperature">
+          <Key>
+            <PropertyRef Name="instr_id" />
+            <PropertyRef Name="t_level" />
+          </Key>
+          <Property Name="instr_id" Type="int" Nullable="false" />
+          <Property Name="t_level" Type="int" Nullable="false" />
+          <Property Name="gauge_temp" Type="float" />
+          <Property Name="evc_temp" Type="float" />
+          <Property Name="evc_factor" Type="float" />
+        </EntityType>
+        <EntityType Name="volume_test">
+          <Key>
+            <PropertyRef Name="instr_id" />
+          </Key>
+          <Property Name="instr_id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="pulse_input" Type="float" />
+          <Property Name="pulser_a" Type="float" />
+          <Property Name="pulser_b" Type="float" />
+          <Property Name="end_uncor" Type="float" />
+          <Property Name="end_cor" Type="float" />
+          <Property Name="energy" Type="float" />
+          <Property Name="mech_read" Type="float" />
+        </EntityType>
+        <EntityType Name="write_items">
+          <Key>
+            <PropertyRef Name="customer_id" />
+            <PropertyRef Name="item_number" />
+            <PropertyRef Name="instr_type_id" />
+          </Key>
+          <Property Name="customer_id" Type="int" Nullable="false" />
+          <Property Name="item_number" Type="int" Nullable="false" />
+          <Property Name="instr_type_id" Type="int" Nullable="false" />
+          <Property Name="value" Type="nvarchar" MaxLength="100" />
+        </EntityType>
+        <Association Name="customers1">
+          <End Role="customers" Type="DAMProverModel.Store.customers" Multiplicity="1" />
+          <End Role="write_items" Type="DAMProverModel.Store.write_items" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="customers">
+              <PropertyRef Name="customer_id" />
+            </Principal>
+            <Dependent Role="write_items">
+              <PropertyRef Name="customer_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="equipment">
+          <End Role="equipement" Type="DAMProverModel.Store.equipement" Multiplicity="1" />
+          <End Role="inspection_equipement" Type="DAMProverModel.Store.inspection_equipement" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="equipement">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="inspection_equipement">
+              <PropertyRef Name="equip_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="instr1">
+          <End Role="instr" Type="DAMProverModel.Store.instr" Multiplicity="1" />
+          <End Role="instr_info" Type="DAMProverModel.Store.instr_info" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="instr">
+              <PropertyRef Name="instr_id" />
+            </Principal>
+            <Dependent Role="instr_info">
+              <PropertyRef Name="instr_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="pressure_instruments">
+          <End Role="instr" Type="DAMProverModel.Store.instr" Multiplicity="1" />
+          <End Role="pressure" Type="DAMProverModel.Store.pressure" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="instr">
+              <PropertyRef Name="instr_id" />
+            </Principal>
+            <Dependent Role="pressure">
+              <PropertyRef Name="instr_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="temperature_instrument">
+          <End Role="instr" Type="DAMProverModel.Store.instr" Multiplicity="1" />
+          <End Role="temperature" Type="DAMProverModel.Store.temperature" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="instr">
+              <PropertyRef Name="instr_id" />
+            </Principal>
+            <Dependent Role="temperature">
+              <PropertyRef Name="instr_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="volume_instrument">
+          <End Role="instr" Type="DAMProverModel.Store.instr" Multiplicity="1" />
+          <End Role="volume_test" Type="DAMProverModel.Store.volume_test" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="instr">
+              <PropertyRef Name="instr_id" />
+            </Principal>
+            <Dependent Role="volume_test">
+              <PropertyRef Name="instr_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="DAMProverModel" Alias="Self" p1:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:p1="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="DAMProverEntities1" p1:LazyLoadingEnabled="true">
+          <EntitySet Name="customers" EntityType="DAMProverModel.customer" />
+          <EntitySet Name="equipements" EntityType="DAMProverModel.equipement" />
+          <EntitySet Name="inspection_cert" EntityType="DAMProverModel.inspection_cert" />
+          <EntitySet Name="inspection_equipement" EntityType="DAMProverModel.inspection_equipement" />
+          <EntitySet Name="instrs" EntityType="DAMProverModel.instr" />
+          <EntitySet Name="instr_info" EntityType="DAMProverModel.instr_info" />
+          <EntitySet Name="item_units" EntityType="DAMProverModel.item_units" />
+          <EntitySet Name="items" EntityType="DAMProverModel.item" />
+          <EntitySet Name="meter_index" EntityType="DAMProverModel.meter_index" />
+          <EntitySet Name="pressures" EntityType="DAMProverModel.pressure" />
+          <EntitySet Name="temperatures" EntityType="DAMProverModel.temperature" />
+          <EntitySet Name="volume_test" EntityType="DAMProverModel.volume_test" />
+          <EntitySet Name="write_items" EntityType="DAMProverModel.write_items" />
+          <AssociationSet Name="customers1" Association="DAMProverModel.customers1">
+            <End Role="customers" EntitySet="customers" />
+            <End Role="write_items" EntitySet="write_items" />
+          </AssociationSet>
+          <AssociationSet Name="equipment" Association="DAMProverModel.equipment">
+            <End Role="equipement" EntitySet="equipements" />
+            <End Role="inspection_equipement" EntitySet="inspection_equipement" />
+          </AssociationSet>
+          <AssociationSet Name="instr1" Association="DAMProverModel.instr1">
+            <End Role="instr" EntitySet="instrs" />
+            <End Role="instr_info" EntitySet="instr_info" />
+          </AssociationSet>
+          <AssociationSet Name="pressure_instruments" Association="DAMProverModel.pressure_instruments">
+            <End Role="instr" EntitySet="instrs" />
+            <End Role="pressure" EntitySet="pressures" />
+          </AssociationSet>
+          <AssociationSet Name="temperature_instrument" Association="DAMProverModel.temperature_instrument">
+            <End Role="instr" EntitySet="instrs" />
+            <End Role="temperature" EntitySet="temperatures" />
+          </AssociationSet>
+          <AssociationSet Name="volume_instrument" Association="DAMProverModel.volume_instrument">
+            <End Role="instr" EntitySet="instrs" />
+            <End Role="volume_test" EntitySet="volume_test" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="customer">
+          <Key>
+            <PropertyRef Name="customer_id" />
+          </Key>
+          <Property Name="customer_id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="200" Unicode="true" FixedLength="false" />
+          <Property Name="address" Type="String" MaxLength="200" Unicode="true" FixedLength="false" />
+          <Property Name="postal_code" Type="String" MaxLength="10" Unicode="true" FixedLength="false" />
+          <Property Name="reg_number" Type="Int32" />
+          <NavigationProperty Name="write_items" Relationship="DAMProverModel.customers1" FromRole="customers" ToRole="write_items" />
+        </EntityType>
+        <EntityType Name="equipement">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="code" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="desription" Type="String" Nullable="false" MaxLength="75" Unicode="true" FixedLength="false" />
+          <NavigationProperty Name="inspection_equipement" Relationship="DAMProverModel.equipment" FromRole="equipement" ToRole="inspection_equipement" />
+        </EntityType>
+        <EntityType Name="inspection_cert">
+          <Key>
+            <PropertyRef Name="inspection_id" />
+          </Key>
+          <Property Name="inspection_id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="customer_id" Type="Int32" />
+          <Property Name="comments" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="insp_type" Type="String" MaxLength="5" Unicode="true" FixedLength="true" />
+          <Property Name="event_log" Type="Byte" Nullable="false" />
+        </EntityType>
+        <EntityType Name="inspection_equipement">
+          <Key>
+            <PropertyRef Name="inspec_id" />
+            <PropertyRef Name="equip_id" />
+          </Key>
+          <Property Name="inspec_id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="equip_id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="equipement" Relationship="DAMProverModel.equipment" FromRole="inspection_equipement" ToRole="equipement" />
+        </EntityType>
+        <EntityType Name="instr">
+          <Key>
+            <PropertyRef Name="instr_id" />
+          </Key>
+          <Property Name="instr_id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="customer_id" Type="Int32" />
+          <Property Name="serial_number" Type="String" MaxLength="100" Unicode="true" FixedLength="false" />
+          <Property Name="date" Type="DateTime" Precision="3" />
+          <Property Name="approver" Type="String" MaxLength="100" Unicode="true" FixedLength="false" />
+          <Property Name="instr_type_id" Type="Int32" />
+          <Property Name="inspection_id" Type="Int32" />
+          <Property Name="meter_index_id" Type="Int32" />
+          <Property Name="pass" Type="Byte" />
+          <NavigationProperty Name="instr_info" Relationship="DAMProverModel.instr1" FromRole="instr" ToRole="instr_info" />
+          <NavigationProperty Name="pressures" Relationship="DAMProverModel.pressure_instruments" FromRole="instr" ToRole="pressure" />
+          <NavigationProperty Name="temperatures" Relationship="DAMProverModel.temperature_instrument" FromRole="instr" ToRole="temperature" />
+          <NavigationProperty Name="volume_test" Relationship="DAMProverModel.volume_instrument" FromRole="instr" ToRole="volume_test" />
+        </EntityType>
+        <EntityType Name="instr_info">
+          <Key>
+            <PropertyRef Name="instr_id" />
+          </Key>
+          <Property Name="instr_id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="item_number" Type="Int32" />
+          <Property Name="item_value" Type="String" Nullable="false" MaxLength="500" Unicode="true" FixedLength="false" />
+          <NavigationProperty Name="instr" Relationship="DAMProverModel.instr1" FromRole="instr_info" ToRole="instr" />
+        </EntityType>
+        <EntityType Name="item_units">
+          <Key>
+            <PropertyRef Name="item_number" />
+          </Key>
+          <Property Name="item_number" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="value" Type="Int32" />
+          <Property Name="unit_desc" Type="String" MaxLength="100" Unicode="true" FixedLength="false" />
+          <Property Name="unit_value" Type="Double" />
+        </EntityType>
+        <EntityType Name="item">
+          <Key>
+            <PropertyRef Name="instr_type_id" />
+          </Key>
+          <Property Name="instr_type_id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="item_num" Type="Int16" />
+          <Property Name="item_desc" Type="String" MaxLength="100" Unicode="true" FixedLength="false" />
+          <Property Name="item_group" Type="Int32" />
+        </EntityType>
+        <EntityType Name="meter_index">
+          <Key>
+            <PropertyRef Name="meter_index_id" />
+          </Key>
+          <Property Name="meter_index_id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="type" Type="String" Nullable="false" MaxLength="200" Unicode="true" FixedLength="false" />
+          <Property Name="meterdisplacement" Type="Double" Nullable="false" />
+        </EntityType>
+        <EntityType Name="pressure">
+          <Key>
+            <PropertyRef Name="instr_id" />
+            <PropertyRef Name="p_level" />
+          </Key>
+          <Property Name="instr_id" Type="Int32" Nullable="false" />
+          <Property Name="p_level" Type="Int32" Nullable="false" />
+          <Property Name="gauge_pressure" Type="Double" />
+          <Property Name="atm_pressure" Type="Double" />
+          <Property Name="evc_pressure" Type="Double" />
+          <Property Name="evc_pfactor" Type="Double" />
+          <Property Name="evc_unsqr_super" Type="Double" />
+          <NavigationProperty Name="instr" Relationship="DAMProverModel.pressure_instruments" FromRole="pressure" ToRole="instr" />
+        </EntityType>
+        <EntityType Name="temperature">
+          <Key>
+            <PropertyRef Name="instr_id" />
+            <PropertyRef Name="t_level" />
+          </Key>
+          <Property Name="instr_id" Type="Int32" Nullable="false" />
+          <Property Name="t_level" Type="Int32" Nullable="false" />
+          <Property Name="gauge_temp" Type="Double" />
+          <Property Name="evc_temp" Type="Double" />
+          <Property Name="evc_factor" Type="Double" />
+          <NavigationProperty Name="instr" Relationship="DAMProverModel.temperature_instrument" FromRole="temperature" ToRole="instr" />
+        </EntityType>
+        <EntityType Name="volume_test">
+          <Key>
+            <PropertyRef Name="instr_id" />
+          </Key>
+          <Property Name="instr_id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="pulse_input" Type="Double" />
+          <Property Name="pulser_a" Type="Double" />
+          <Property Name="pulser_b" Type="Double" />
+          <Property Name="end_uncor" Type="Double" />
+          <Property Name="end_cor" Type="Double" />
+          <Property Name="energy" Type="Double" />
+          <Property Name="mech_read" Type="Double" />
+          <NavigationProperty Name="instr" Relationship="DAMProverModel.volume_instrument" FromRole="volume_test" ToRole="instr" />
+        </EntityType>
+        <EntityType Name="write_items">
+          <Key>
+            <PropertyRef Name="customer_id" />
+            <PropertyRef Name="item_number" />
+            <PropertyRef Name="instr_type_id" />
+          </Key>
+          <Property Name="customer_id" Type="Int32" Nullable="false" />
+          <Property Name="item_number" Type="Int32" Nullable="false" />
+          <Property Name="instr_type_id" Type="Int32" Nullable="false" />
+          <Property Name="value" Type="String" MaxLength="100" Unicode="true" FixedLength="false" />
+          <NavigationProperty Name="customer" Relationship="DAMProverModel.customers1" FromRole="write_items" ToRole="customers" />
+        </EntityType>
+        <Association Name="customers1">
+          <End Role="customers" Type="DAMProverModel.customer" Multiplicity="1" />
+          <End Role="write_items" Type="DAMProverModel.write_items" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="customers">
+              <PropertyRef Name="customer_id" />
+            </Principal>
+            <Dependent Role="write_items">
+              <PropertyRef Name="customer_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="equipment">
+          <End Role="equipement" Type="DAMProverModel.equipement" Multiplicity="1" />
+          <End Role="inspection_equipement" Type="DAMProverModel.inspection_equipement" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="equipement">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="inspection_equipement">
+              <PropertyRef Name="equip_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="instr1">
+          <End Role="instr" Type="DAMProverModel.instr" Multiplicity="1" />
+          <End Role="instr_info" Type="DAMProverModel.instr_info" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="instr">
+              <PropertyRef Name="instr_id" />
+            </Principal>
+            <Dependent Role="instr_info">
+              <PropertyRef Name="instr_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="pressure_instruments">
+          <End Role="instr" Type="DAMProverModel.instr" Multiplicity="1" />
+          <End Role="pressure" Type="DAMProverModel.pressure" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="instr">
+              <PropertyRef Name="instr_id" />
+            </Principal>
+            <Dependent Role="pressure">
+              <PropertyRef Name="instr_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="temperature_instrument">
+          <End Role="instr" Type="DAMProverModel.instr" Multiplicity="1" />
+          <End Role="temperature" Type="DAMProverModel.temperature" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="instr">
+              <PropertyRef Name="instr_id" />
+            </Principal>
+            <Dependent Role="temperature">
+              <PropertyRef Name="instr_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="volume_instrument">
+          <End Role="instr" Type="DAMProverModel.instr" Multiplicity="1" />
+          <End Role="volume_test" Type="DAMProverModel.volume_test" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="instr">
+              <PropertyRef Name="instr_id" />
+            </Principal>
+            <Dependent Role="volume_test">
+              <PropertyRef Name="instr_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="DAMProverModelStoreContainer" CdmEntityContainer="DAMProverEntities1">
+          <EntitySetMapping Name="customers">
+            <EntityTypeMapping TypeName="DAMProverModel.customer">
+              <MappingFragment StoreEntitySet="customers">
+                <ScalarProperty Name="customer_id" ColumnName="customer_id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="address" ColumnName="address" />
+                <ScalarProperty Name="postal_code" ColumnName="postal_code" />
+                <ScalarProperty Name="reg_number" ColumnName="reg_number" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="equipements">
+            <EntityTypeMapping TypeName="DAMProverModel.equipement">
+              <MappingFragment StoreEntitySet="equipement">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="code" ColumnName="code" />
+                <ScalarProperty Name="desription" ColumnName="desription" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="inspection_cert">
+            <EntityTypeMapping TypeName="DAMProverModel.inspection_cert">
+              <MappingFragment StoreEntitySet="inspection_cert">
+                <ScalarProperty Name="inspection_id" ColumnName="inspection_id" />
+                <ScalarProperty Name="date" ColumnName="date" />
+                <ScalarProperty Name="customer_id" ColumnName="customer_id" />
+                <ScalarProperty Name="comments" ColumnName="comments" />
+                <ScalarProperty Name="insp_type" ColumnName="insp_type" />
+                <ScalarProperty Name="event_log" ColumnName="event_log" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="inspection_equipement">
+            <EntityTypeMapping TypeName="DAMProverModel.inspection_equipement">
+              <MappingFragment StoreEntitySet="inspection_equipement">
+                <ScalarProperty Name="inspec_id" ColumnName="inspec_id" />
+                <ScalarProperty Name="equip_id" ColumnName="equip_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="instrs">
+            <EntityTypeMapping TypeName="DAMProverModel.instr">
+              <MappingFragment StoreEntitySet="instr">
+                <ScalarProperty Name="instr_id" ColumnName="instr_id" />
+                <ScalarProperty Name="customer_id" ColumnName="customer_id" />
+                <ScalarProperty Name="serial_number" ColumnName="serial_number" />
+                <ScalarProperty Name="date" ColumnName="date" />
+                <ScalarProperty Name="approver" ColumnName="approver" />
+                <ScalarProperty Name="instr_type_id" ColumnName="instr_type_id" />
+                <ScalarProperty Name="inspection_id" ColumnName="inspection_id" />
+                <ScalarProperty Name="meter_index_id" ColumnName="meter_index_id" />
+                <ScalarProperty Name="pass" ColumnName="pass" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="instr_info">
+            <EntityTypeMapping TypeName="DAMProverModel.instr_info">
+              <MappingFragment StoreEntitySet="instr_info">
+                <ScalarProperty Name="instr_id" ColumnName="instr_id" />
+                <ScalarProperty Name="item_number" ColumnName="item_number" />
+                <ScalarProperty Name="item_value" ColumnName="item_value" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="item_units">
+            <EntityTypeMapping TypeName="DAMProverModel.item_units">
+              <MappingFragment StoreEntitySet="item_units">
+                <ScalarProperty Name="item_number" ColumnName="item_number" />
+                <ScalarProperty Name="value" ColumnName="value" />
+                <ScalarProperty Name="unit_desc" ColumnName="unit_desc" />
+                <ScalarProperty Name="unit_value" ColumnName="unit_value" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="items">
+            <EntityTypeMapping TypeName="DAMProverModel.item">
+              <MappingFragment StoreEntitySet="items">
+                <ScalarProperty Name="instr_type_id" ColumnName="instr_type_id" />
+                <ScalarProperty Name="item_num" ColumnName="item_num" />
+                <ScalarProperty Name="item_desc" ColumnName="item_desc" />
+                <ScalarProperty Name="item_group" ColumnName="item_group" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="meter_index">
+            <EntityTypeMapping TypeName="DAMProverModel.meter_index">
+              <MappingFragment StoreEntitySet="meter_index">
+                <ScalarProperty Name="meter_index_id" ColumnName="meter_index_id" />
+                <ScalarProperty Name="type" ColumnName="type" />
+                <ScalarProperty Name="meterdisplacement" ColumnName="meterdisplacement" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="pressures">
+            <EntityTypeMapping TypeName="DAMProverModel.pressure">
+              <MappingFragment StoreEntitySet="pressure">
+                <ScalarProperty Name="instr_id" ColumnName="instr_id" />
+                <ScalarProperty Name="p_level" ColumnName="p_level" />
+                <ScalarProperty Name="gauge_pressure" ColumnName="gauge_pressure" />
+                <ScalarProperty Name="atm_pressure" ColumnName="atm_pressure" />
+                <ScalarProperty Name="evc_pressure" ColumnName="evc_pressure" />
+                <ScalarProperty Name="evc_pfactor" ColumnName="evc_pfactor" />
+                <ScalarProperty Name="evc_unsqr_super" ColumnName="evc_unsqr_super" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="temperatures">
+            <EntityTypeMapping TypeName="DAMProverModel.temperature">
+              <MappingFragment StoreEntitySet="temperature">
+                <ScalarProperty Name="instr_id" ColumnName="instr_id" />
+                <ScalarProperty Name="t_level" ColumnName="t_level" />
+                <ScalarProperty Name="gauge_temp" ColumnName="gauge_temp" />
+                <ScalarProperty Name="evc_temp" ColumnName="evc_temp" />
+                <ScalarProperty Name="evc_factor" ColumnName="evc_factor" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="volume_test">
+            <EntityTypeMapping TypeName="DAMProverModel.volume_test">
+              <MappingFragment StoreEntitySet="volume_test">
+                <ScalarProperty Name="instr_id" ColumnName="instr_id" />
+                <ScalarProperty Name="pulse_input" ColumnName="pulse_input" />
+                <ScalarProperty Name="pulser_a" ColumnName="pulser_a" />
+                <ScalarProperty Name="pulser_b" ColumnName="pulser_b" />
+                <ScalarProperty Name="end_uncor" ColumnName="end_uncor" />
+                <ScalarProperty Name="end_cor" ColumnName="end_cor" />
+                <ScalarProperty Name="energy" ColumnName="energy" />
+                <ScalarProperty Name="mech_read" ColumnName="mech_read" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="write_items">
+            <EntityTypeMapping TypeName="DAMProverModel.write_items">
+              <MappingFragment StoreEntitySet="write_items">
+                <ScalarProperty Name="customer_id" ColumnName="customer_id" />
+                <ScalarProperty Name="item_number" ColumnName="item_number" />
+                <ScalarProperty Name="instr_type_id" ColumnName="instr_type_id" />
+                <ScalarProperty Name="value" ColumnName="value" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="True" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

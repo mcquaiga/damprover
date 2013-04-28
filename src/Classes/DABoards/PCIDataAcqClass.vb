@@ -69,17 +69,17 @@ Public Class PCIDataAcqClass : Inherits DABoard
 
             pBoard = DeviceManager.GetDevice(pBoardName)
 
-            If pSubSysType = SubsystemType.DigitalOutput Then
-                pOutputSS = pBoard.DigitalOutputSubsystem(pSubSys)
-                pOutputSS.DataFlow = pDataFlow
-                pOutputSS.StopOnError = False
-                pOutputSS.Config()
-            ElseIf pSubSysType = SubsystemType.DigitalInput Then
-                pInputSS = New DigitalInputSubsystem(pBoard, pSubSys)
-                pInputSS.DataFlow = pDataFlow
-                pInputSS.StopOnError = True
-                pInputSS.Config()
-            End If
+            'If pSubSysType = SubsystemType.DigitalOutput Then
+            '    pOutputSS = pBoard.DigitalOutputSubsystem(pSubSys)
+            '    pOutputSS.DataFlow = pDataFlow
+            '    pOutputSS.StopOnError = False
+            '    pOutputSS.Config()
+            'ElseIf pSubSysType = SubsystemType.DigitalInput Then
+            '    pInputSS = New DigitalInputSubsystem(pBoard, pSubSys)
+            '    pInputSS.DataFlow = pDataFlow
+            '    pInputSS.StopOnError = True
+            '    pInputSS.Config()
+            'End If
         Catch ex As Exception
             MessageBox.Show(ex.Message & vbNewLine & "Is the Board being used by another resource?", "Data Acq. Board", MessageBoxButtons.OK, MessageBoxIcon.Error)
         End Try
@@ -95,7 +95,7 @@ Public Class PCIDataAcqClass : Inherits DABoard
         End If
         Me.disposing = disposing
         If Not pInputSS Is Nothing Then
-            pInputSS.Dispose()
+            'pInputSS.Dispose()
         End If
         pBoard.Dispose()
     End Sub
@@ -175,4 +175,13 @@ Public Class PCIDataAcqClass : Inherits DABoard
     End Function
 
 #End Region
+
+    Private Function DeviceMgr() As Object
+        Throw New NotImplementedException
+    End Function
+
+    Private Function SubsystemBase() As Object
+        Throw New NotImplementedException
+    End Function
+
 End Class

@@ -1,4 +1,4 @@
-Imports MySql.Data.MySqlClient
+Imports DAM_Prover.Instrument
 
 Public Class ExportToDataSetClass
 
@@ -146,8 +146,8 @@ Public Class ExportToDataSetClass
     Private Sub AddInstrument(ByVal Instrument As Instrument)
         Dim ConfirmStatusCounter As Integer
 
-        Dim myItems = System.Enum.GetValues(GetType(DAM_Prover.Instrument.ItemsEnum))
-        Dim myVolume = System.Enum.GetValues(GetType(DAM_Prover.Volume.GeneralVolumeItems))
+        Dim myItems = System.Enum.GetValues(GetType(ItemsEnum))
+        Dim myVolume = System.Enum.GetValues(GetType(Volume.GeneralVolumeItems))
         Dim PT As String = ""  'Will hold whether the instrument is pressure, temp
 
         Dim row As DataRow
@@ -196,7 +196,7 @@ Public Class ExportToDataSetClass
         row("StartCorrected") = CStr(Instrument.Volume.StartCorrected)
         row("StartUnCorrected") = CStr(Instrument.Volume.StartUncorrected)
 
-        If Instrument.InstrumentDriveType = DAM_Prover.Instrument.DriveType.Mechanical Then
+        If Instrument.InstrumentDriveType = Instrument.DriveType.Mechanical Then
             If Instrument.Energy.PercentError < 1 And Instrument.Energy.PercentError > -1 Then
                 row("Energy") = "Y"
             Else
@@ -215,15 +215,15 @@ Public Class ExportToDataSetClass
 
         Dim APulses As Integer
         Dim BPulses As Integer
-        If Instrument.PulseASelect = DAM_Prover.Instrument.PulseOutputValues.CorVol Then
+        If Instrument.PulseASelect = Instrument.PulseOutputValues.CorVol Then
             APulses = Int(Instrument.Volume.EndCorrected)
-        ElseIf Instrument.PulseASelect = DAM_Prover.Instrument.PulseOutputValues.UncVol Then
+        ElseIf Instrument.PulseASelect = Instrument.PulseOutputValues.UncVol Then
             APulses = Int(Instrument.Volume.EndUnCorrected)
         End If
 
-        If Instrument.PulseBSelect = DAM_Prover.Instrument.PulseOutputValues.CorVol Then
+        If Instrument.PulseBSelect = Instrument.PulseOutputValues.CorVol Then
             BPulses = Int(Instrument.Volume.EndCorrected)
-        ElseIf Instrument.PulseBSelect = DAM_Prover.Instrument.PulseOutputValues.UncVol Then
+        ElseIf Instrument.PulseBSelect = Instrument.PulseOutputValues.UncVol Then
             BPulses = Int(Instrument.Volume.EndUnCorrected)
         End If
 
@@ -269,7 +269,7 @@ Public Class ExportToDataSetClass
         '''''''''''''''''''Temp'''''''''''''''''''''''''''''''''''''''''
         row = ds.Tables("Temperature").NewRow
         row("id") = instr_id
-        For Each item As Integer In System.Enum.GetValues(GetType(DAM_Prover.TemperatureClass.TemperatureItems))
+        For Each item As Integer In System.Enum.GetValues(GetType(TemperatureClass.TemperatureItems))
             row("Item" & CStr(item)) = CStr(Instrument.GetItemValue(item).value)
         Next
 
@@ -309,7 +309,7 @@ Public Class ExportToDataSetClass
             row = ds.Tables("Pressure").NewRow
             row("id") = instr_id
             If Instrument.LivePressure = Instrument.FixedFactors.Live Then
-                For Each item As Integer In System.Enum.GetValues(GetType(DAM_Prover.PressureFactorClass.PressureItemsEnum))
+                For Each item As Integer In System.Enum.GetValues(GetType(PressureFactorClass.PressureItemsEnum))
                     row("Item" & CStr(item)) = CStr(Instrument.GetItemValue(item).value)
                 Next
                 x = 1
@@ -331,7 +331,7 @@ Public Class ExportToDataSetClass
                     x += 1
                 Next
             Else
-                For Each item As Integer In System.Enum.GetValues(GetType(DAM_Prover.PressureFactorClass.PressureItemsEnum))
+                For Each item As Integer In System.Enum.GetValues(GetType(PressureFactorClass.PressureItemsEnum))
                     row("Item" & CStr(item)) = 0
                 Next
                 row("PRange") = "N/A"
@@ -352,8 +352,8 @@ Public Class ExportToDataSetClass
         ''''''''''''''''''''''''''''Super Factors'''''''''''''''''''''''''''''''
         row = ds.Tables("SuperFactor").NewRow
         row("id") = instr_id
-        If Instrument.LivePressure = DAM_Prover.Instrument.FixedFactors.Live And Instrument.LiveTemp = DAM_Prover.Instrument.FixedFactors.Live Then
-            For Each item As Integer In System.Enum.GetValues(GetType(DAM_Prover.SuperFactorClass.SuperFactorItems))
+        If Instrument.LivePressure = Instrument.FixedFactors.Live And Instrument.LiveTemp = Instrument.FixedFactors.Live Then
+            For Each item As Integer In System.Enum.GetValues(GetType(SuperFactorClass.SuperFactorItems))
                 row("Item" & CStr(item)) = CStr(Instrument.GetItemValue(item).value)
             Next
             Dim SuperTable As SuperFactorClass.SuperTables
@@ -370,7 +370,7 @@ Public Class ExportToDataSetClass
                 x += 1
             Next
         Else
-            For Each item As Integer In System.Enum.GetValues(GetType(DAM_Prover.SuperFactorClass.SuperFactorItems))
+            For Each item As Integer In System.Enum.GetValues(GetType(SuperFactorClass.SuperFactorItems))
                 row("Item" & CStr(item)) = 0
             Next
             x = 1
@@ -400,7 +400,7 @@ Public Class ExportToDataSetClass
         End If
         Instrument.InstrumentType = Instrument.GetItemValue(127).value
         row("InstrumentType") = Instrument.InstrumentType.ToString
-        If Instrument.InstrumentDriveType = DAM_Prover.Instrument.DriveType.Rotary Then
+        If Instrument.InstrumentDriveType = Instrument.DriveType.Rotary Then
             row("InstrumentType") = Instrument.InstrumentType.ToString & vbNewLine & Instrument.InstrumentDriveType.ToString
         End If
         row("PT") = PT

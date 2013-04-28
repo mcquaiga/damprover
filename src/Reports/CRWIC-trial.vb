@@ -117,25 +117,25 @@ Public Class CachedCRWIC_trial
         End Set
     End Property
     
-    Public Overridable Function CreateReport() As CrystalDecisions.CrystalReports.Engine.ReportDocument Implements CrystalDecisions.ReportSource.ICachedReport.CreateReport
-        Dim rpt As CRWIC_trial = New CRWIC_trial
-        rpt.Site = Me.Site
-        Return rpt
-    End Function
+    'Public Overridable Function CreateReport() As CrystalDecisions.CrystalReports.Engine.ReportDocument Implements CrystalDecisions.ReportSource.ICachedReport.CreateReport
+    '    Dim rpt As CRWIC_trial = New CRWIC_trial
+    '    rpt.Site = Me.Site
+    '    Return rpt
+    'End Function
     
-    Public Overridable Function GetCustomizedCacheKey(ByVal request As RequestContext) As String Implements CrystalDecisions.ReportSource.ICachedReport.GetCustomizedCacheKey
-        Dim key As [String] = Nothing
-        '// The following is the code used to generate the default
-        '// cache key for caching report jobs in the ASP.NET Cache.
-        '// Feel free to modify this code to suit your needs.
-        '// Returning key == null causes the default cache key to
-        '// be generated.
-        '
-        'key = RequestContext.BuildCompleteCacheKey(
-        '    request,
-        '    null,       // sReportFilename
-        '    this.GetType(),
-        '    this.ShareDBLogonInfo );
-        Return key
-    End Function
+    'Public Overridable Function GetCustomizedCacheKey(ByVal request As RequestContext) As String Implements CrystalDecisions.ReportSource.ICachedReport.GetCustomizedCacheKey
+    '    Dim key As [String] = Nothing
+    '    '// The following is the code used to generate the default
+    '    '// cache key for caching report jobs in the ASP.NET Cache.
+    '    '// Feel free to modify this code to suit your needs.
+    '    '// Returning key == null causes the default cache key to
+    '    '// be generated.
+    '    '
+    '    'key = RequestContext.BuildCompleteCacheKey(
+    '    '    request,
+    '    '    null,       // sReportFilename
+    '    '    this.GetType(),
+    '    '    this.ShareDBLogonInfo );
+    '    Return key
+    'End Function
 End Class

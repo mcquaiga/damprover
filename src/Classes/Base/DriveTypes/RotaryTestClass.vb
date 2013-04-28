@@ -25,9 +25,9 @@ Public Class RotaryTestClass : Inherits TestClass
         If My.Settings.BoardType = DABoard.BoardType.PCI Then
             PulseA = New PCIDataAcqClass()
             If PulseA.CheckBoard = True Then
-                Me.PulseA = New PCIDataAcqClass("DT335(00)", OpenLayers.Base.SubsystemType.DigitalInput, 2, My.Settings.PulserADataFlow)
-                Me.PulseB = New PCIDataAcqClass("DT335(00)", OpenLayers.Base.SubsystemType.DigitalInput, 3, My.Settings.PulserBDataFlow)
-                Me.PulseOut = New PCIDataAcqClass("DT335(00)", OpenLayers.Base.SubsystemType.DigitalOutput, 1, My.Settings.PulserOutDataFlow)
+                'Me.PulseA = New PCIDataAcqClass("DT335(00)", OpenLayers.Base.SubsystemType.DigitalInput, 2, My.Settings.PulserADataFlow)
+                'Me.PulseB = New PCIDataAcqClass("DT335(00)", OpenLayers.Base.SubsystemType.DigitalInput, 3, My.Settings.PulserBDataFlow)
+                'Me.PulseOut = New PCIDataAcqClass("DT335(00)", OpenLayers.Base.SubsystemType.DigitalOutput, 1, My.Settings.PulserOutDataFlow)
             Else
                 Throw New Exception("No PCI board exists.")
             End If
@@ -76,8 +76,8 @@ Public Class RotaryTestClass : Inherits TestClass
         Instrument.Volume.StartCorrected = VolumeCollection.Item(CStr(Volume.VolumeTestItems.CorrectedVolume)).value
         Instrument.Volume.UncCorMultiplerCode = Instrument.GetItemValue(Volume.GeneralVolumeItems.UnCorrectedMultiplier).value
 
-        Instrument.PulseASelect = Me.Instrument.GetItemValue(DAM_Prover.Instrument.PulseOutputItems.PulserA).value
-        Instrument.PulseBSelect = Me.Instrument.GetItemValue(DAM_Prover.Instrument.PulseOutputItems.PulserB).value
+        Instrument.PulseASelect = Me.Instrument.GetItemValue(Instrument.PulseOutputItems.PulserA).value
+        Instrument.PulseBSelect = Me.Instrument.GetItemValue(Instrument.PulseOutputItems.PulserB).value
         tTach.ResetTach()
     End Sub
 
@@ -103,9 +103,9 @@ Public Class RotaryTestClass : Inherits TestClass
                 Me.PulseACount = PulseA.ReadPulse()
                 Me.PulseBCount = PulseB.ReadPulse()
 
-                If Instrument.PulseASelect = DAM_Prover.Instrument.PulseOutputValues.UncVol Then
+                If Instrument.PulseASelect = Instrument.PulseOutputValues.UncVol Then
                     UnCorCount = PulseACount
-                ElseIf Instrument.PulseBSelect = DAM_Prover.Instrument.PulseOutputValues.UncVol Then
+                ElseIf Instrument.PulseBSelect = Instrument.PulseOutputValues.UncVol Then
                     UnCorCount = PulseBCount
                 End If
             Loop Until UnCorCount = Me.Instrument.Volume.MaxUnCorrected

@@ -263,8 +263,8 @@ Public MustInherit Class TestClass
         End If
 
 
-        Instrument.PulseASelect = Me.Instrument.GetItemValue(DAM_Prover.Instrument.PulseOutputItems.PulserA).value
-        Instrument.PulseBSelect = Me.Instrument.GetItemValue(DAM_Prover.Instrument.PulseOutputItems.PulserB).value
+        Instrument.PulseASelect = Me.Instrument.GetItemValue(Instrument.PulseOutputItems.PulserA).value
+        Instrument.PulseBSelect = Me.Instrument.GetItemValue(Instrument.PulseOutputItems.PulserB).value
     End Sub
 
     Public Overridable Function Test() As DialogResult
@@ -296,7 +296,7 @@ Public MustInherit Class TestClass
         End If
 
         Instrument.InstrumentSrl.Disconnect()
-        If Instrument.InstrumentDriveType = DAM_Prover.Instrument.DriveType.Mechanical Then
+        If Instrument.InstrumentDriveType = Instrument.DriveType.Mechanical Then
             Instrument.Energy = New EnergyClass(0, VolumeColl.Item(CStr(Volume.VolumeTestItems.Energy)).value, Instrument.Volume.EvcCorrected, Instrument.GetItemValue(EnergyClass.EnergyItems.EnergyUnits).value, Instrument.GetItemValue(EnergyClass.EnergyItems.GasEnergyValue).value)
         End If
 
@@ -337,8 +337,8 @@ Public MustInherit Class TestClass
         Dim retry As Boolean = False
 
         If My.Settings.UncVolumeOnly = False Then
-            If Instrument.LivePressure = DAM_Prover.Instrument.FixedFactors.Live Then
-                If Instrument.LiveTemp = DAM_Prover.Instrument.FixedFactors.Live Then
+            If Instrument.LivePressure = Instrument.FixedFactors.Live Then
+                If Instrument.LiveTemp = Instrument.FixedFactors.Live Then
                     'Test low pressure and high temperature together, first
                     'Instrument.Temperatures(TemperatureLevels.High) = New TemperatureClass
                     'Need a dialog box to pop up here, first figure out if user wants manual or automatic,
@@ -346,7 +346,7 @@ Public MustInherit Class TestClass
                     If My.Settings.LowPressureHighTemp = "Auto" Then
                         Dim frm As New PTAutoDialog(Instrument.InstrumentSrl)
                         frm.Text = PressureLevel.ToString & " Pressure & " & TempLevel.ToString & " Temperature"
-                        If Instrument.GetItemValue(DAM_Prover.Instrument.ItemsEnum.TransducerType).value = TransducerTypesEnum.Absolute Then
+                        If Instrument.GetItemValue(Instrument.ItemsEnum.TransducerType).value = TransducerTypesEnum.Absolute Then
                             frm.ATMTextBox.Visible = True
                             frm.ATMLabel.Visible = True
                         Else
@@ -363,23 +363,23 @@ Public MustInherit Class TestClass
                         Instrument.Disconnect()
 
                         'Pressure Items
-                        If Instrument.GetItemValue(DAM_Prover.Instrument.ItemsEnum.TransducerType).value = TransducerTypesEnum.Absolute Then
+                        If Instrument.GetItemValue(Instrument.ItemsEnum.TransducerType).value = TransducerTypesEnum.Absolute Then
                             Pressure.AtmosphericPressure = frm.ATMTextBox.Text
                         Else
-                            Pressure.AtmosphericPressure = Me.Instrument.GetItemValue(DAM_Prover.Instrument.ItemsEnum.AtmosphericPressure).value
+                            Pressure.AtmosphericPressure = Me.Instrument.GetItemValue(Instrument.ItemsEnum.AtmosphericPressure).value
                         End If
-                        Pressure.BasePressure = Me.Instrument.GetItemValue(DAM_Prover.Instrument.ItemsEnum.BasePressure).value
-                        Pressure.PressureUnits = Me.Instrument.GetItemValue(DAM_Prover.Instrument.ItemsEnum.PressureUnits).value
-                        Pressure.Transducer = Me.Instrument.GetItemValue(DAM_Prover.Instrument.ItemsEnum.TransducerType).value
+                        Pressure.BasePressure = Me.Instrument.GetItemValue(Instrument.ItemsEnum.BasePressure).value
+                        Pressure.PressureUnits = Me.Instrument.GetItemValue(Instrument.ItemsEnum.PressureUnits).value
+                        Pressure.Transducer = Me.Instrument.GetItemValue(Instrument.ItemsEnum.TransducerType).value
                         Pressure.EVCPressure = PressureCollection.Item(CStr(PressureFactorClass.PressureItemsEnum.GasPressure)).value
                         Pressure.EVCFactor = PressureCollection.Item(CStr(PressureFactorClass.PressureItemsEnum.PressureFactor)).value
                         Pressure.EVCUnsqr = PressureCollection.Item(CStr(PressureFactorClass.PressureItemsEnum.UnsquaredSuperFactor)).value
 
                         'Temp Items
-                        Temp.BaseTemperature = Me.Instrument.GetItemValue(DAM_Prover.Instrument.ItemsEnum.BaseTemp).value
-                        Temp.TemperatureUnits = Me.Instrument.GetItemValue(DAM_Prover.Instrument.ItemsEnum.TempUnits).value
-                        Temp.EVCTemperature = TemperatureCollection.Item(CStr(DAM_Prover.TemperatureClass.TemperatureItems.GasTemp)).value
-                        Temp.EVCFactor = TemperatureCollection.Item(CStr(DAM_Prover.TemperatureClass.TemperatureItems.TempFactor)).value
+                        Temp.BaseTemperature = Me.Instrument.GetItemValue(Instrument.ItemsEnum.BaseTemp).value
+                        Temp.TemperatureUnits = Me.Instrument.GetItemValue(Instrument.ItemsEnum.TempUnits).value
+                        Temp.EVCTemperature = TemperatureCollection.Item(CStr(TemperatureClass.TemperatureItems.GasTemp)).value
+                        Temp.EVCFactor = TemperatureCollection.Item(CStr(TemperatureClass.TemperatureItems.TempFactor)).value
 
                         Pressure.GaugePressure = frm.GaugePressureTextBox.Text
                         Temp.GaugeTemperature = frm.GaugeTempTextBox.Text
@@ -430,7 +430,7 @@ Public MustInherit Class TestClass
                     If My.Settings.LowPressureHighTemp = "Auto" Then
                         Dim frm As New PAutoDialog(Instrument.InstrumentSrl)
                         frm.Text = PressureLevel.ToString
-                        If Instrument.GetItemValue(DAM_Prover.Instrument.ItemsEnum.TransducerType).value = TransducerTypesEnum.Absolute Then
+                        If Instrument.GetItemValue(Instrument.ItemsEnum.TransducerType).value = TransducerTypesEnum.Absolute Then
                             frm.ATMTextBox.Visible = True
                             frm.ATMLabel.Visible = True
                         Else
@@ -440,10 +440,10 @@ Public MustInherit Class TestClass
                         frm.pressureUnits = Me.Instrument.GetItemValue(PressureFactorClass.PressureItemsEnum.PressureUnits).value
                         frm.ShowDialog()
                         System.Threading.Thread.Sleep(1000)
-                        If Instrument.GetItemValue(DAM_Prover.Instrument.ItemsEnum.TransducerType).value = TransducerTypesEnum.Absolute Then
+                        If Instrument.GetItemValue(Instrument.ItemsEnum.TransducerType).value = TransducerTypesEnum.Absolute Then
                             Pressure.AtmosphericPressure = frm.ATMTextBox.Text
                         Else
-                            Pressure.AtmosphericPressure = Instrument.GetItemValue(DAM_Prover.Instrument.ItemsEnum.AtmosphericPressure).value
+                            Pressure.AtmosphericPressure = Instrument.GetItemValue(Instrument.ItemsEnum.AtmosphericPressure).value
                         End If
 
                         Instrument.Connect()
@@ -451,9 +451,9 @@ Public MustInherit Class TestClass
                         Instrument.Disconnect()
 
                         'Pressure Items
-                        Pressure.BasePressure = Me.Instrument.GetItemValue(DAM_Prover.Instrument.ItemsEnum.BasePressure).value
-                        Pressure.PressureUnits = Me.Instrument.GetItemValue(DAM_Prover.Instrument.ItemsEnum.PressureUnits).value
-                        Pressure.Transducer = Me.Instrument.GetItemValue(DAM_Prover.Instrument.ItemsEnum.TransducerType).value
+                        Pressure.BasePressure = Me.Instrument.GetItemValue(Instrument.ItemsEnum.BasePressure).value
+                        Pressure.PressureUnits = Me.Instrument.GetItemValue(Instrument.ItemsEnum.PressureUnits).value
+                        Pressure.Transducer = Me.Instrument.GetItemValue(Instrument.ItemsEnum.TransducerType).value
                         Pressure.EVCPressure = PressureCollection.Item(CStr(PressureFactorClass.PressureItemsEnum.GasPressure)).value
                         Pressure.EVCFactor = PressureCollection.Item(CStr(PressureFactorClass.PressureItemsEnum.PressureFactor)).value
                         Pressure.EVCUnsqr = PressureCollection.Item(CStr(PressureFactorClass.PressureItemsEnum.UnsquaredSuperFactor)).value
@@ -473,7 +473,7 @@ Public MustInherit Class TestClass
                     End If
                 End If
 
-            ElseIf Instrument.LiveTemp = DAM_Prover.Instrument.FixedFactors.Live Then
+            ElseIf Instrument.LiveTemp = Instrument.FixedFactors.Live Then
                 'Just test temperature factors\
                 If My.Settings.LowPressureHighTemp = "Auto" Then
                     Dim frm As New TAutoDialog(Instrument.InstrumentSrl)
@@ -488,10 +488,10 @@ Public MustInherit Class TestClass
                     Instrument.Disconnect()
 
                     'Temp Items
-                    Temp.BaseTemperature = Me.Instrument.GetItemValue(DAM_Prover.Instrument.ItemsEnum.BaseTemp).value
-                    Temp.TemperatureUnits = Me.Instrument.GetItemValue(DAM_Prover.Instrument.ItemsEnum.TempUnits).value
-                    Temp.EVCTemperature = TemperatureCollection.Item(CStr(DAM_Prover.TemperatureClass.TemperatureItems.GasTemp)).value
-                    Temp.EVCFactor = TemperatureCollection.Item(CStr(DAM_Prover.TemperatureClass.TemperatureItems.TempFactor)).value
+                    Temp.BaseTemperature = Me.Instrument.GetItemValue(Instrument.ItemsEnum.BaseTemp).value
+                    Temp.TemperatureUnits = Me.Instrument.GetItemValue(Instrument.ItemsEnum.TempUnits).value
+                    Temp.EVCTemperature = TemperatureCollection.Item(CStr(TemperatureClass.TemperatureItems.GasTemp)).value
+                    Temp.EVCFactor = TemperatureCollection.Item(CStr(TemperatureClass.TemperatureItems.TempFactor)).value
                     If Temp.PercentError <= My.Settings.TempPercentageMax And Temp.PercentError >= (-My.Settings.TempPercentageMax) Then
                         Instrument.Temperatures.Add(Temp, TempLevel)
                     Else

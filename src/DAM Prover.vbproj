@@ -18,7 +18,15 @@
     <SignManifests>false</SignManifests>
     <IsWebBootstrapper>false</IsWebBootstrapper>
     <OptionStrict>Off</OptionStrict>
-    <ApplicationIcon>logo_crwall.ico</ApplicationIcon>
+    <ApplicationIcon>
+    </ApplicationIcon>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <OldToolsVersion>2.0</OldToolsVersion>
+    <TargetFrameworkProfile />
     <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
@@ -30,15 +38,10 @@
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
     <TargetCulture>en-CA</TargetCulture>
-    <ApplicationVersion>2.0.0.%2a</ApplicationVersion>
-    <BootstrapperEnabled>true</BootstrapperEnabled>
-    <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
-    <FileUpgradeFlags>
-    </FileUpgradeFlags>
-    <UpgradeBackupLocation>
-    </UpgradeBackupLocation>
-    <OldToolsVersion>2.0</OldToolsVersion>
     <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>2.0.0.%2a</ApplicationVersion>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -50,6 +53,7 @@
     <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036,42353,42354,42355</NoWarn>
     <WarningsAsErrors>
     </WarningsAsErrors>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -61,33 +65,27 @@
     <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036,42353,42354,42355</NoWarn>
     <WarningsAsErrors>
     </WarningsAsErrors>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="CrystalDecisions.CrystalReports.Engine, Version=10.2.3600.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL">
-      <Private>True</Private>
+    <Reference Include="MccDaq, Version=2.1.0.0, Culture=neutral, PublicKeyToken=a37eefcf5c6ca10a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\Program Files (x86)\Measurement Computing\DAQ\MccDaq.dll</HintPath>
     </Reference>
-    <Reference Include="CrystalDecisions.Enterprise.Framework, Version=10.2.3600.0, Culture=neutral, PublicKeyToken=692fbea5521e1304" />
-    <Reference Include="CrystalDecisions.Enterprise.InfoStore, Version=10.2.3600.0, Culture=neutral, PublicKeyToken=692fbea5521e1304" />
-    <Reference Include="CrystalDecisions.ReportSource, Version=10.2.3600.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL">
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="CrystalDecisions.Shared, Version=10.2.3600.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL">
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="CrystalDecisions.Windows.Forms, Version=10.2.3600.0, Culture=neutral, PublicKeyToken=692fbea5521e1304">
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="MccDaq, Version=1.3.8.0, Culture=neutral, PublicKeyToken=a37eefcf5c6ca10a" />
     <Reference Include="miSerialProtocol, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\miSerialProtocol\miSerialProtocol\bin\Release\miSerialProtocol.dll</HintPath>
+      <HintPath>..\..\serialprotocol\miSerialProtocol\bin\Debug\miSerialProtocol.dll</HintPath>
     </Reference>
     <Reference Include="MySql.Data, Version=5.2.5.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL" />
     <Reference Include="OpenLayers.Base, Version=1.5.0.8, Culture=neutral, PublicKeyToken=1058f0463721e512" />
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Data.Entity" />
     <Reference Include="System.Deployment" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
     <Reference Include="System.ServiceProcess" />
     <Reference Include="System.Web.Services, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -107,12 +105,14 @@
     <Import Include="System.Data" />
     <Import Include="System.Drawing" />
     <Import Include="System.Diagnostics" />
+    <Import Include="System.Linq" />
     <Import Include="System.Windows.Forms" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApplicationEvents.vb" />
     <Compile Include="Classes\Base\CSVWriterClass.vb" />
-    <Compile Include="Classes\Base\Customer.vb" />
+    <Compile Include="Classes\Base\DriveTypes\OpenLayers.vb" />
+    <Compile Include="Classes\Customers\Customer.vb" />
     <Compile Include="Classes\Base\DABoard.vb" />
     <Compile Include="Classes\Base\Database.vb" />
     <Compile Include="Classes\Base\DriveTypes\MechanicalTestClass.vb" />
@@ -126,7 +126,12 @@
     <Compile Include="Classes\Base\PressureFactorClass.vb" />
     <Compile Include="Classes\Base\SuperFactorClass.vb" />
     <Compile Include="Classes\Base\XMLWriterClass.vb" />
+    <Compile Include="Classes\Customers\CustomerDataContext.vb" />
+    <Compile Include="Classes\Customers\CustomersProvider.vb" />
+    <Compile Include="Classes\Customers\ICustomers.vb" />
+    <Compile Include="Classes\DABoards\DigitalInputSubsystem.vb" />
     <Compile Include="Classes\DABoards\PCIDataAcqClass.vb" />
+    <Compile Include="Classes\DABoards\SubsystemType.vb" />
     <Compile Include="Classes\IdentityClass.vb" />
     <Compile Include="Classes\Mini-AT\MiniATVolumeClass.vb" />
     <Compile Include="Classes\MiniMaxRotary\MiniMaxRotaryTestClass.vb" />
@@ -146,12 +151,14 @@
     <Compile Include="Classes\TCI\TCITestClass.vb" />
     <Compile Include="Classes\TCI\TCIVolumeClass.vb" />
     <Compile Include="Classes\DABoards\USBDataAcqClass.vb" />
-    <Compile Include="Reports\CRWIC-trial.vb">
+    <Compile Include="DataProvider.vb" />
+    <Compile Include="IDataProvider.vb" />
+    <Compile Include="My Project\Resources.Designer.vb">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>CRWIC-trial.rpt</DependentUpon>
-      <SubType>Component</SubType>
+      <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="NamedEntity.vb" />
     <Compile Include="DataSets\dam_proverDataSet.vb">
       <DependentUpon>dam_proverDataSet.xsd</DependentUpon>
     </Compile>
@@ -167,171 +174,10 @@
     <Compile Include="DataSets\LoadInspectionCertDataSet.vb">
       <DependentUpon>LoadInspectionCertDataSet.xsd</DependentUpon>
     </Compile>
-    <Compile Include="Form\AboutBox.Designer.vb">
-      <DependentUpon>AboutBox.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Form\AboutBox.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Form\AddCustomerForm.Designer.vb">
-      <DependentUpon>AddCustomerForm.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Form\AddCustomerForm.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Form\CSVDialog.Designer.vb">
-      <DependentUpon>CSVDialog.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Form\CSVDialog.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Form\CustomerItems.Designer.vb">
-      <DependentUpon>CustomerItems.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Form\CustomerItems.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Form\DAPortsDialog.Designer.vb">
-      <DependentUpon>DAPortsDialog.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Form\DAPortsDialog.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Form\EditInstrumentForm.Designer.vb">
-      <DependentUpon>EditInstrumentForm.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Form\EditInstrumentForm.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Form\ICReportForm.Designer.vb">
-      <DependentUpon>ICReportForm.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Form\ICReportForm.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Form\InspecForm.Designer.vb">
-      <DependentUpon>InspecForm.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Form\InspecForm.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Form\InspectionCustomerDialog.Designer.vb">
-      <DependentUpon>InspectionCustomerDialog.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Form\InspectionCustomerDialog.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Form\LoginForm.Designer.vb">
-      <DependentUpon>LoginForm.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Form\LoginForm.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Form\ManualVolumeForm.designer.vb">
-      <DependentUpon>ManualVolumeForm.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Form\ManualVolumeForm.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Form\MechanicalInputDialog.Designer.vb">
-      <DependentUpon>MechanicalInputDialog.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Form\MechanicalInputDialog.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Form\MeterTypesForm.Designer.vb">
-      <DependentUpon>MeterTypesForm.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Form\MeterTypesForm.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Form\NewTestForm.Designer.vb">
-      <DependentUpon>NewTestForm.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Form\NewTestForm.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Form\OldForm.Designer.vb">
-      <DependentUpon>OldForm.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Form\OldForm.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Form\OldStatusForm.Designer.vb">
-      <DependentUpon>OldStatusForm.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Form\OldStatusForm.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Form\PAutoDialog.Designer.vb">
-      <DependentUpon>PAutoDialog.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Form\PAutoDialog.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Form\PCIBoardOptionsForm.Designer.vb">
-      <DependentUpon>PCIBoardOptionsForm.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Form\PCIBoardOptionsForm.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Form\PTAutoDialog.Designer.vb">
-      <DependentUpon>PTAutoDialog.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Form\PTAutoDialog.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Form\RawItemDialog.Designer.vb">
-      <DependentUpon>RawItemDialog.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Form\RawItemDialog.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Form\SaveInstrumentForm.Designer.vb">
-      <DependentUpon>SaveInstrumentForm.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Form\SaveInstrumentForm.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Form\TAutoDialog.Designer.vb">
-      <DependentUpon>TAutoDialog.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Form\TAutoDialog.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Form\TestCompleteDialog.Designer.vb">
-      <DependentUpon>TestCompleteDialog.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Form\TestCompleteDialog.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Form\TestForm.Designer.vb">
-      <DependentUpon>TestForm.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Form\TestForm.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Form\ViewInspectionForm.Designer.vb">
-      <DependentUpon>ViewInspectionForm.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Form\ViewInspectionForm.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Form\WiringDialog.Designer.vb">
-      <DependentUpon>WiringDialog.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Form\WiringDialog.vb">
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
       <DependentUpon>Application.myapp</DependentUpon>
-    </Compile>
-    <Compile Include="My Project\Resources.Designer.vb">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="My Project\Settings.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -342,119 +188,11 @@
     <Compile Include="Tester.vb" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Reports\CRWIC-trial.rpt">
-      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
-      <LastGenOutput>CRWIC-trial.vb</LastGenOutput>
-    </Content>
-    <EmbeddedResource Include="Form\AboutBox.resx">
-      <SubType>Designer</SubType>
-      <DependentUpon>AboutBox.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Form\AddCustomerForm.resx">
-      <SubType>Designer</SubType>
-      <DependentUpon>AddCustomerForm.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Form\CSVDialog.resx">
-      <SubType>Designer</SubType>
-      <DependentUpon>CSVDialog.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Form\CustomerItems.resx">
-      <DependentUpon>CustomerItems.vb</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Form\DAPortsDialog.resx">
-      <SubType>Designer</SubType>
-      <DependentUpon>DAPortsDialog.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Form\EditInstrumentForm.resx">
-      <SubType>Designer</SubType>
-      <DependentUpon>EditInstrumentForm.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Form\ICReportForm.resx">
-      <SubType>Designer</SubType>
-      <DependentUpon>ICReportForm.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Form\InspecForm.resx">
-      <SubType>Designer</SubType>
-      <DependentUpon>InspecForm.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Form\InspectionCustomerDialog.resx">
-      <SubType>Designer</SubType>
-      <DependentUpon>InspectionCustomerDialog.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Form\LoginForm.resx">
-      <SubType>Designer</SubType>
-      <DependentUpon>LoginForm.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Form\ManualVolumeForm.resx">
-      <DependentUpon>ManualVolumeForm.vb</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Form\MechanicalInputDialog.resx">
-      <SubType>Designer</SubType>
-      <DependentUpon>MechanicalInputDialog.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Form\MeterTypesForm.resx">
-      <SubType>Designer</SubType>
-      <DependentUpon>MeterTypesForm.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Form\NewTestForm.resx">
-      <SubType>Designer</SubType>
-      <DependentUpon>NewTestForm.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Form\OldForm.resx">
-      <DependentUpon>OldForm.vb</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Form\OldStatusForm.resx">
-      <SubType>Designer</SubType>
-      <DependentUpon>OldStatusForm.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Form\PAutoDialog.resx">
-      <SubType>Designer</SubType>
-      <DependentUpon>PAutoDialog.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Form\PCIBoardOptionsForm.resx">
-      <SubType>Designer</SubType>
-      <DependentUpon>PCIBoardOptionsForm.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Form\PTAutoDialog.resx">
-      <SubType>Designer</SubType>
-      <DependentUpon>PTAutoDialog.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Form\RawItemDialog.resx">
-      <SubType>Designer</SubType>
-      <DependentUpon>RawItemDialog.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Form\SaveInstrumentForm.resx">
-      <SubType>Designer</SubType>
-      <DependentUpon>SaveInstrumentForm.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Form\TAutoDialog.resx">
-      <SubType>Designer</SubType>
-      <DependentUpon>TAutoDialog.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Form\TestCompleteDialog.resx">
-      <SubType>Designer</SubType>
-      <DependentUpon>TestCompleteDialog.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Form\TestForm.resx">
-      <SubType>Designer</SubType>
-      <DependentUpon>TestForm.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Form\ViewInspectionForm.resx">
-      <SubType>Designer</SubType>
-      <DependentUpon>ViewInspectionForm.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Form\WiringDialog.resx">
-      <SubType>Designer</SubType>
-      <DependentUpon>WiringDialog.vb</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="My Project\Resources.resx">
       <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.vb</LastGenOutput>
       <CustomToolNamespace>My.Resources</CustomToolNamespace>
       <SubType>Designer</SubType>
+      <LastGenOutput>Resources.Designer.vb</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
@@ -526,9 +264,24 @@
       <ProductName>Crystal Reports for .NET Framework 2.0</ProductName>
       <Install>true</Install>
     </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
     <BootstrapperPackage Include="Microsoft.Net.Framework.2.0">
       <Visible>False</Visible>
       <ProductName>.NET Framework 2.0</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.SQL.Server.Compact.4.0">
+      <Visible>False</Visible>
+      <ProductName>SQL Server Compact 4.0 SP1</ProductName>
       <Install>true</Install>
     </BootstrapperPackage>
   </ItemGroup>
@@ -578,7 +331,7 @@
     <None Include="My Project\DataSources\DAM_Prover.My.MySettings1.datasource" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="logo_crwall.ico" />
+    <None Include="packages.config" />
     <None Include="Resources\blank.png" />
     <None Include="Resources\CheckMark.png" />
     <None Include="Resources\blank.jpg" />
@@ -590,6 +343,13 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="bin\" />
+    <Folder Include="Reports\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="DamProverModel\DamProverModel.vbproj">
+      <Project>{618af5d8-a289-4ea0-9584-c411b213ef22}</Project>
+      <Name>DamProverModel</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.VisualBasic.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

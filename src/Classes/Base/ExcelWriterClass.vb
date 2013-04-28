@@ -25,7 +25,7 @@ Public Class ExcelWriterClass
         Me.instr = instrument
         With app
             Try
-                If instrument.InstrumentDriveType = DAM_Prover.Instrument.DriveType.Rotary Then
+                If instrument.InstrumentDriveType = instrument.DriveType.Rotary Then
                     If instrument.GetTemperatureObject(TestClass.TemperatureLevels.Low).TemperatureUnits = TemperatureClass.UnitsEnum.C _
                             Or instrument.GetPressureObject(TestClass.PressureLevels.High).PressureUnits = PressureFactorClass.UnitsEnum.kPa Then
                         .Workbooks.Open(My.Settings.RotaryMetricExcel)
@@ -35,7 +35,7 @@ Public Class ExcelWriterClass
                     .Range("I6").Value = instrument.GetItemValue(RotaryVolumeClass.GeneralVolumeItems.MeterDisplacement).value
                     instrument.Volume.MeterTypeNumber = instrument.GetItemValue(RotaryVolumeClass.GeneralVolumeItems.MeterType).value
                     .Range("I9").Value = instrument.Volume.MeterTypeName
-                ElseIf instrument.InstrumentDriveType = DAM_Prover.Instrument.DriveType.Mechanical Then
+                ElseIf instrument.InstrumentDriveType = instrument.DriveType.Mechanical Then
                     If instrument.GetTemperatureObject(TestClass.TemperatureLevels.Low).TemperatureUnits = TemperatureClass.UnitsEnum.C _
                                 Or instrument.GetPressureObject(TestClass.PressureLevels.High).PressureUnits = PressureFactorClass.UnitsEnum.kPa Then
                         .Workbooks.Open(My.Settings.MechMetricExcel)
@@ -122,20 +122,20 @@ Public Class ExcelWriterClass
                 End If
 
 
-                If instrument.PulseASelect = DAM_Prover.Instrument.PulseOutputValues.CorVol Then
+                If instrument.PulseASelect = instrument.PulseOutputValues.CorVol Then
                     .Range("A55").Value = "Cor Vol"
-                ElseIf instrument.PulseASelect = DAM_Prover.Instrument.PulseOutputValues.UncVol Then
+                ElseIf instrument.PulseASelect = instrument.PulseOutputValues.UncVol Then
                     .Range("A55").Value = "Unc Vol"
-                ElseIf instrument.PulseASelect = DAM_Prover.Instrument.PulseOutputValues.NoOut Then
+                ElseIf instrument.PulseASelect = instrument.PulseOutputValues.NoOut Then
                     .Range("A55").Value = "No Out"
                 Else
                     .Range("A55").Value = instrument.PulseASelect.ToString
                 End If
-                If instrument.PulseBSelect = DAM_Prover.Instrument.PulseOutputValues.CorVol Then
+                If instrument.PulseBSelect = instrument.PulseOutputValues.CorVol Then
                     .Range("B55").Value = "Cor Vol"
-                ElseIf instrument.PulseBSelect = DAM_Prover.Instrument.PulseOutputValues.UncVol Then
+                ElseIf instrument.PulseBSelect = instrument.PulseOutputValues.UncVol Then
                     .Range("B55").Value = "Unc Vol"
-                ElseIf instrument.PulseBSelect = DAM_Prover.Instrument.PulseOutputValues.NoOut Then
+                ElseIf instrument.PulseBSelect = instrument.PulseOutputValues.NoOut Then
                     .Range("B55").Value = "No Out"
                 Else
                     .Range("B55").Value = instrument.PulseBSelect.ToString

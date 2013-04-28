@@ -1,4 +1,5 @@
-Imports MySql.Data.MySqlClient
+Imports DamProverModel
+Imports miSerialProtocol
 Public Class Instrument
     Implements IDisposable
 
@@ -63,9 +64,7 @@ Public Class Instrument
 
     'This class is responsible for holding values downloaded from the instrument and Temperature and Pressure Classes
 
-    Private mySQL As New MySQLLibrary.Database
-
-    Private sqlCommand As New MySqlCommand
+    ' Private sqlCommand As New MySqlCommand
     Public Shared Event TotalItems(ByVal Total As Integer)
     Public Shared Event ItemStored(ByVal ItemNumber As Integer)
 
@@ -105,7 +104,7 @@ Public Class Instrument
     Protected Overridable Overloads Sub Dispose(ByVal disposing As Boolean)
         'clean up our resources
         If (disposing) Then
-            mySQL.Dispose()
+            'mySQL.Dispose()
             If Not Me.InstrumentSrl Is Nothing Then
                 InstrumentSrl.Dispose()
             End If
@@ -385,35 +384,41 @@ Public Class Instrument
 
     'Load all items from the Database based on the instrument type
     Public Overridable Sub LoadInstrumentItems()
-        Dim myDataReader As MySqlDataReader = Nothing
+        'Dim myDataReader As MySqlDataReader = Nothing
 
-        Try
-            Using mysql As New MySQLLibrary.Database
-                Using mysqlcommand As New MySqlCommand
-                    With mysqlcommand
-                        .Connection = mysql.OpenMySQL
-                        .CommandText = "SELECT item_num, item_desc FROM items WHERE instr_type_id = " & Me.InstrumentType
-                        .CommandType = CommandType.Text
-                        myDataReader = .ExecuteReader(CommandBehavior.Default)
+        'Try
+        '    Using mysql As New MySQLLibrary.Database
+        '        Using mysqlcommand As New MySqlCommand
+        '            With mysqlcommand
+        '                .Connection = mysql.OpenMySQL
+        '                .CommandText = "SELECT item_num, item_desc FROM items WHERE instr_type_id = " & Me.InstrumentType
+        '                .CommandType = CommandType.Text
+        '                myDataReader = .ExecuteReader(CommandBehavior.Default)
 
-                        If myDataReader.HasRows Then
-                            While myDataReader.Read
-                                iAllItemNumbers.Add(myDataReader.GetUInt32("item_num"), myDataReader.GetString("item_desc"))
-                            End While
-                        Else
-                            iAllItemNumbers = Nothing
-                        End If
-                        .Connection.Close()
-                    End With
-                End Using
-            End Using
-        Catch ex As Exception
-            Throw New Exception(ex.Message)
-        Finally
-            If Not myDataReader.IsClosed Then
-                myDataReader.Close()
-            End If
-        End Try
+        '                If myDataReader.HasRows Then
+        '                    While myDataReader.Read
+        '                        iAllItemNumbers.Add(myDataReader.GetUInt32("item_num"), myDataReader.GetString("item_desc"))
+        '                    End While
+        '                Else
+        '                    iAllItemNumbers = Nothing
+        '                End If
+        '                .Connection.Close()
+        '            End With
+        '        End Using
+        '    End Using
+        'Catch ex As Exception
+        '    Throw New Exception(ex.Message)
+        'Finally
+        '    If Not myDataReader.IsClosed Then
+        '        myDataReader.Close()
+        '    End If
+        'End Try
+
+        'Dim context = New DamProverModel.DAMProverEntities
+        'Dim query = From i In context.item Where i.instr_type_id = Me.InstrumentType
+        'Dim items = query.ToList()
+
+
     End Sub
 
     'Will return a item value for a requested item
@@ -623,15 +628,15 @@ Public Class Instrument
         Me.Volume.StartCorrected = 0
         Me.Volume.StartUncorrected = 0
         If Me.LiveTemp = FixedFactors.Live And Me.LivePressure = FixedFactors.Live Then
-            Me.Volume.EVCType = DAM_Prover.Volume.EVCTypeEnum.PressureTemperature
+            Me.Volume.EVCType = Volume.EVCTypeEnum.PressureTemperature
             Volume.PressureFactor = Me.GetPressureObject(TestClass.PressureLevels.High).ActualPressureFactor
             Volume.TempFactor = Me.GetTemperatureObject(TestClass.TemperatureLevels.Low).TemperatureFactor
             Volume.Fpv2Factor = Me.GetSuperObject(TestClass.SuperLevels.HighPLowT).SuperFactorSquared
         ElseIf LiveTemp = FixedFactors.Live Then
-            Me.Volume.EVCType = DAM_Prover.Volume.EVCTypeEnum.Temperature
+            Me.Volume.EVCType = Volume.EVCTypeEnum.Temperature
             Volume.TempFactor = GetTemperatureObject(TestClass.TemperatureLevels.Low).TemperatureFactor
         ElseIf LivePressure = FixedFactors.Live Then
-            Me.Volume.EVCType = DAM_Prover.Volume.EVCTypeEnum.Pressure
+            Me.Volume.EVCType = Volume.EVCTypeEnum.Pressure
             Volume.PressureFactor = GetPressureObject(TestClass.PressureLevels.High).ActualPressureFactor
         End If
 

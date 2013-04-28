@@ -103,34 +103,34 @@ Public Class XMLWriterClass
     End Sub
 
     Public Sub StartXML()
-        Dim myDataReader As MySqlDataReader
+        'Dim myDataReader As MySqlDataReader
 
-        writer.WriteStartDocument()
-        writer.WriteStartElement("InspectionCertificate")
-        writer.WriteElementString("InspectionID", Me.InspectionID)
+        'writer.WriteStartDocument()
+        'writer.WriteStartElement("InspectionCertificate")
+        'writer.WriteElementString("InspectionID", Me.InspectionID)
 
-        Using mysqlcommand As New MySqlCommand
-            With mysqlcommand
-                .Connection = db
-                .CommandText = "SELECT * FROM inspection_cert WHERE inspection_id = " & Me.InspectionID
-                myDataReader = .ExecuteReader
-                If myDataReader.HasRows Then
-                    myDataReader.Read()
-                    writer.WriteElementString("Apparatus", myDataReader.GetString("apparatus"))
-                    writer.WriteElementString("Date", myDataReader.GetString("date"))
-                End If
-            End With
-            myDataReader.Close()
-        End Using
+        'Using mysqlcommand As New MySqlCommand
+        '    With mysqlcommand
+        '        .Connection = db
+        '        .CommandText = "SELECT * FROM inspection_cert WHERE inspection_id = " & Me.InspectionID
+        '        myDataReader = .ExecuteReader
+        '        If myDataReader.HasRows Then
+        '            myDataReader.Read()
+        '            writer.WriteElementString("Apparatus", myDataReader.GetString("apparatus"))
+        '            writer.WriteElementString("Date", myDataReader.GetString("date"))
+        '        End If
+        '    End With
+        '    myDataReader.Close()
+        'End Using
 
-        writer.WriteStartElement("Customer")
+        'writer.WriteStartElement("Customer")
 
-        writer.WriteElementString("Name", Customer.CustomerName)
-        writer.WriteElementString("Address", Customer.CustomerAddress)
-        writer.WriteElementString("PostalCode", Customer.PostalCode)
-        writer.WriteElementString("RegNumber", Customer.RegNumber)
+        'writer.WriteElementString("Name", Customer.CustomerName)
+        'writer.WriteElementString("Address", Customer.CustomerAddress)
+        'writer.WriteElementString("PostalCode", Customer.PostalCode)
+        'writer.WriteElementString("RegNumber", Customer.RegNumber)
 
-        writer.WriteEndElement()
+        'writer.WriteEndElement()
 
     End Sub
 
@@ -143,8 +143,8 @@ Public Class XMLWriterClass
         Dim ConfirmStatusCounter As Integer
 
 
-        Dim myItems = System.Enum.GetValues(GetType(DAM_Prover.Instrument.ItemsEnum))
-        Dim myVolume = System.Enum.GetValues(GetType(DAM_Prover.Volume.GeneralVolumeItems))
+        Dim myItems = System.Enum.GetValues(GetType(Instrument.ItemsEnum))
+        Dim myVolume = System.Enum.GetValues(GetType(Volume.GeneralVolumeItems))
         Dim PT As String = ""  'Will hold whether the instrument is pressure, temp
         With writer
             .WriteStartElement("instrument")
@@ -216,7 +216,7 @@ Public Class XMLWriterClass
 
             '''''''''''''''''''Temp'''''''''''''''''''''''''''''''''''''''''
             .WriteStartElement("Temperature")
-            For Each item As Integer In System.Enum.GetValues(GetType(DAM_Prover.TemperatureClass.TemperatureItems))
+            For Each item As Integer In System.Enum.GetValues(GetType(TemperatureClass.TemperatureItems))
                 .WriteElementString("Item" & CStr(item), CStr(Instrument.GetItemValue(item).value))
             Next
 
@@ -265,7 +265,7 @@ Public Class XMLWriterClass
             '''''''''''''''''Pressure''''''''''''''''''''''''''''''''''''''''''''''''
             Try
                 .WriteStartElement("Pressure")
-                For Each item As Integer In System.Enum.GetValues(GetType(DAM_Prover.PressureFactorClass.PressureItemsEnum))
+                For Each item As Integer In System.Enum.GetValues(GetType(PressureFactorClass.PressureItemsEnum))
                     .WriteElementString("Item" & CStr(item), CStr(Instrument.GetItemValue(item).value))
                 Next
                 x = 1
@@ -317,9 +317,9 @@ Public Class XMLWriterClass
 
                     ''''''''''''''''''''''''''''Super Factors'''''''''''''''''''''''''''''''
                     .WriteStartElement("SuperFactor")
-                    For Each item As Integer In System.Enum.GetValues(GetType(DAM_Prover.SuperFactorClass.SuperFactorItems))
-                        .WriteElementString("Item" & CStr(item), CStr(Instrument.GetItemValue(item).value))
-                    Next
+            For Each item As Integer In System.Enum.GetValues(GetType(SuperFactorClass.SuperFactorItems))
+                .WriteElementString("Item" & CStr(item), CStr(Instrument.GetItemValue(item).value))
+            Next
                     Dim SuperTable As SuperFactorClass.SuperTables
                     SuperTable = Instrument.GetItemValue(Instrument.ItemsEnum.SuperTable).value
                     .WriteElementString("SuperTable", SuperTable.ToString)
