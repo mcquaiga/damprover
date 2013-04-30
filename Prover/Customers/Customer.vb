@@ -21,82 +21,39 @@ Public Class Customer
 
     'Private _Instrument As Instrument
 
-
-    'By calling this constructor, no customer is being created or loaded
-    'This will allow other functions to retrieve a list of all the customers
-    Sub New()
-        _Name = ""
-    End Sub
-
     Sub New(Customer As Prover.Model.customer)
         _customer = Customer
     End Sub
 
-    Sub New(ByVal CustomerID As Integer)
-
-        Me.CustomerID = CustomerID
-        LoadCustomerInformation()
-    End Sub
-
-    Sub New(ByVal CustomerName As String)
-
-        CustomerID = 0
-        Me.CustomerName = CustomerName
-        NewCustomer()
-    End Sub
-
-    'Sub New(ByVal CustomerId As Integer) ', ByVal Instrument As Instrument)
-
-    '    Me.CustomerID = CustomerId
-    '    '_Instrument = Instrument
-    '    GetCustomerItems()
-    'End Sub
-
-
-    Public Property CustomerName() As String Implements ICustomers.CustomerName
+    Public ReadOnly Property CustomerName() As String Implements ICustomers.CustomerName
         Get
             Return _customer.name
         End Get
-        Set(ByVal value As String)
-            _Name = value
-        End Set
     End Property
 
-    Public Property CustomerAddress() As String Implements ICustomers.CustomerAddress
+    Public ReadOnly Property CustomerAddress() As String Implements ICustomers.CustomerAddress
         Get
-            Return _Address
+            Return _customer.address
         End Get
-        Set(ByVal value As String)
-            _Address = value
-        End Set
     End Property
 
-    Public Overridable Property WriteAfterItems() As Collection Implements ICustomers.WriteAfterItems
+    Public ReadOnly Property WriteAfterItems() As Collection Implements ICustomers.WriteAfterItems
         Get
-            Return _WriteAfterItems
+            Return _customer.write_items
         End Get
-        Set(ByVal value As Collection)
-            _WriteAfterItems = value
-        End Set
     End Property
 
-    Public Overridable Property WriteAfterValues() As Collection Implements ICustomers.WriteAfterValues
+    Public Overridable ReadOnly Property WriteAfterValues() As Collection Implements ICustomers.WriteAfterValues
         Get
             Return _WriteAfterValues
         End Get
-        Set(ByVal value As Collection)
-            _WriteAfterValues = value
-        End Set
     End Property
 
-    Public Property ItemDescriptions() As Collection Implements ICustomers.ItemDescriptions
+    Public ReadOnly Property ItemDescriptions() As Collection Implements ICustomers.ItemDescriptions
         Get
             Return _ItemDescriptions
         End Get
 
-        Set(value As Collection)
-
-        End Set
     End Property
 
     'Public Property Instrument() As Instrument
@@ -108,59 +65,40 @@ Public Class Customer
     '    End Set
     'End Property
 
-    Public Property CustomerID() As Integer Implements ICustomers.CustomerID
+    Public ReadOnly Property CustomerID() As Integer Implements ICustomers.CustomerID
         Get
             Return _Id
         End Get
-
-        Set(ByVal value As Integer)
-            _Id = value
-        End Set
     End Property
 
-    Public Property InspectionID() As Integer Implements ICustomers.InspectionID
+    Public ReadOnly Property InspectionID() As Integer Implements ICustomers.InspectionID
         Get
             Return _InspectionID
         End Get
-        Set(ByVal value As Integer)
-            _InspectionID = value
-        End Set
     End Property
 
-    Public Property ApparatusID() As String Implements ICustomers.ApparatusID
+    Public ReadOnly Property ApparatusID() As String Implements ICustomers.ApparatusID
         Get
             Return _ApparatusId
         End Get
-        Set(ByVal value As String)
-            _ApparatusId = value
-        End Set
     End Property
 
-    Public Property InspectionCount() As Integer Implements ICustomers.InspectionCount
+    Public ReadOnly Property InspectionCount() As Integer Implements ICustomers.InspectionCount
         Get
             Return _InspectionCount
         End Get
-        Set(ByVal value As Integer)
-            _InspectionCount = value
-        End Set
     End Property
 
-    Public Property PostalCode() As String Implements ICustomers.PostalCode
+    Public ReadOnly Property PostalCode() As String Implements ICustomers.PostalCode
         Get
             Return _PostalCode
         End Get
-        Set(ByVal value As String)
-            _PostalCode = value
-        End Set
     End Property
 
-    Public Property RegNumber() As Integer Implements ICustomers.RegNumber
+    Public ReadOnly Property RegNumber() As Integer Implements ICustomers.RegNumber
         Get
             Return _RegNumber
         End Get
-        Set(ByVal value As Integer)
-            _RegNumber = value
-        End Set
     End Property
 
 
