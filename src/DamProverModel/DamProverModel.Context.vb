@@ -11,11 +11,11 @@ Imports System
 Imports System.Data.Entity
 Imports System.Data.Entity.Infrastructure
 
-Partial Public Class DAMProverEntities
+Partial Public Class DAMProverEntities1
     Inherits DbContext
 
     Public Sub New()
-        MyBase.New("name=DAMProverEntities")
+        MyBase.New("name=DAMProverEntities1")
     End Sub
 
     Protected Overrides Sub OnModelCreating(modelBuilder As DbModelBuilder)

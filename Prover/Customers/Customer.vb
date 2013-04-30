@@ -18,7 +18,7 @@ Public Class Customer
     Private _WriteAfterValues As New Collection
     Private _ItemDescriptions As New Collection
 
-    Private _Instrument As Instrument
+    'Private _Instrument As Instrument
 
 
     'By calling this constructor, no customer is being created or loaded
@@ -40,15 +40,15 @@ Public Class Customer
         NewCustomer()
     End Sub
 
-    Sub New(ByVal CustomerId As Integer, ByVal Instrument As Instrument)
+    'Sub New(ByVal CustomerId As Integer) ', ByVal Instrument As Instrument)
 
-        Me.CustomerID = CustomerId
-        _Instrument = Instrument
-        GetCustomerItems()
-    End Sub
+    '    Me.CustomerID = CustomerId
+    '    '_Instrument = Instrument
+    '    GetCustomerItems()
+    'End Sub
 
 
-    Public Property CustomerName() As String
+    Public Property CustomerName() As String Implements ICustomers.CustomerName
         Get
             Return _Name
         End Get
@@ -57,7 +57,7 @@ Public Class Customer
         End Set
     End Property
 
-    Public Property CustomerAddress() As String
+    Public Property CustomerAddress() As String Implements ICustomers.CustomerAddress
         Get
             Return _Address
         End Get
@@ -66,7 +66,7 @@ Public Class Customer
         End Set
     End Property
 
-    Public Overridable Property WriteAfterItems() As Collection
+    Public Overridable Property WriteAfterItems() As Collection Implements ICustomers.WriteAfterItems
         Get
             Return _WriteAfterItems
         End Get
@@ -75,7 +75,7 @@ Public Class Customer
         End Set
     End Property
 
-    Public Overridable Property WriteAfterValues() As Collection
+    Public Overridable Property WriteAfterValues() As Collection Implements ICustomers.WriteAfterValues
         Get
             Return _WriteAfterValues
         End Get
@@ -83,23 +83,27 @@ Public Class Customer
             _WriteAfterValues = value
         End Set
     End Property
-    Public Overridable ReadOnly Property ItemDescriptions() As Collection
+
+    Public Property ItemDescriptions() As Collection Implements ICustomers.ItemDescriptions
         Get
             Return _ItemDescriptions
         End Get
 
-    End Property
+        Set(value As Collection)
 
-    Public Property Instrument() As Instrument
-        Get
-            Return _Instrument
-        End Get
-        Set(ByVal value As Instrument)
-            _Instrument = value
         End Set
     End Property
 
-    Public Property CustomerID() As Integer
+    'Public Property Instrument() As Instrument
+    '    Get
+    '        Return _Instrument
+    '    End Get
+    '    Set(ByVal value As Instrument)
+    '        _Instrument = value
+    '    End Set
+    'End Property
+
+    Public Property CustomerID() As Integer Implements ICustomers.CustomerID
         Get
             Return _Id
         End Get
@@ -109,7 +113,7 @@ Public Class Customer
         End Set
     End Property
 
-    Public Property InspectionID() As Integer
+    Public Property InspectionID() As Integer Implements ICustomers.InspectionID
         Get
             Return _InspectionID
         End Get
@@ -118,7 +122,7 @@ Public Class Customer
         End Set
     End Property
 
-    Public Property ApparatusID() As String
+    Public Property ApparatusID() As String Implements ICustomers.ApparatusID
         Get
             Return _ApparatusId
         End Get
@@ -127,7 +131,7 @@ Public Class Customer
         End Set
     End Property
 
-    Public Property InspectionCount() As Integer
+    Public Property InspectionCount() As Integer Implements ICustomers.InspectionCount
         Get
             Return _InspectionCount
         End Get
@@ -136,7 +140,7 @@ Public Class Customer
         End Set
     End Property
 
-    Public Property PostalCode() As String
+    Public Property PostalCode() As String Implements ICustomers.PostalCode
         Get
             Return _PostalCode
         End Get
@@ -145,7 +149,7 @@ Public Class Customer
         End Set
     End Property
 
-    Public Property RegNumber() As Integer
+    Public Property RegNumber() As Integer Implements ICustomers.RegNumber
         Get
             Return _RegNumber
         End Get
@@ -153,6 +157,7 @@ Public Class Customer
             _RegNumber = value
         End Set
     End Property
+
 
 #Region "Methods"
 

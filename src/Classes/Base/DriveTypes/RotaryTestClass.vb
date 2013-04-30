@@ -60,7 +60,7 @@ Public Class RotaryTestClass : Inherits TestClass
         MyBase.PreTest(Retest)
 
         'Create our volume, temp and pressure objects
-        Instrument.Volume = New RotaryVolumeClass(Instrument.GetItemValue(DAM_Prover.RotaryVolumeClass.GeneralVolumeItems.MeterType).value)
+        ' Instrument.Volume = New RotaryVolumeClass(Instrument.GetItemValue(DAM_Prover.RotaryVolumeClass.GeneralVolumeItems.MeterType).value)
         Dim meterName As String = Instrument.Volume.MeterTypeName
 
         Instrument.InstrumentSrl.Connect()

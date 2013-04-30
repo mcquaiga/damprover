@@ -5,8 +5,8 @@
     Property CustomerAddress As String
     Property WriteAfterItems As Collection
     Property WriteAfterValues As Collection
-    ReadOnly Property ItemDescriptions As Collection
-    Property Instrument As Instrument
+    Property ItemDescriptions As Collection
+    'Property Instrument As Instrument
     Property InspectionID As Integer
     Property ApparatusID As String
     Property InspectionCount As Integer
