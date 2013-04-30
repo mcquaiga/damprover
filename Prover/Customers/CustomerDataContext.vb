@@ -1,10 +1,12 @@
 ﻿
 Partial Public Class CustomerDataContext
-    Inherits Prover.Model.DAMProverEntities1
+    Inherits Prover.Model.DAMProverEntities
+
 
 
     Public Sub New()
         MyBase.New()
     End Sub
+
 
 End Class

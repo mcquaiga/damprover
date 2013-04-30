@@ -1,8 +1,9 @@
-
+Imports Prover.Model
 
 Public Class Customer
     Implements ICustomers
 
+    Private _customer As Prover.Model.customer
     Private _Name As String
     Private _Id As Integer
     Private _Address As String
@@ -25,6 +26,10 @@ Public Class Customer
     'This will allow other functions to retrieve a list of all the customers
     Sub New()
         _Name = ""
+    End Sub
+
+    Sub New(Customer As Prover.Model.customer)
+        _customer = Customer
     End Sub
 
     Sub New(ByVal CustomerID As Integer)
@@ -50,7 +55,7 @@ Public Class Customer
 
     Public Property CustomerName() As String Implements ICustomers.CustomerName
         Get
-            Return _Name
+            Return _customer.name
         End Get
         Set(ByVal value As String)
             _Name = value

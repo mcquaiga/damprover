@@ -18,9 +18,10 @@ Public Class CustomersProvider
     End Function
 
 
-    Private Function CreateICustomer(ByVal customer As Customer) As ICustomers
+    Private Function CreateICustomer(ByVal customer As Prover.Model.customer) As ICustomers
 
-        Return customer
+
+        Return New Customer(customer)
 
     End Function
 
@@ -36,13 +37,10 @@ Public Class CustomersProvider
     Private Function GetAllCustomers() As List(Of ICustomers)
 
         Using Data As New CustomerDataContext
-            Dim customers = From customer In Data.customers.ToList Where customer IsNot Nothing Select customer
-            For Each c In customers
-                Dim id = c.customer_id
-            Next
-            Return Nothing
-            'Return customers.ToList()
+            Dim customers = From customer In Data.customers.ToList Where customer IsNot Nothing Select CreateICustomer(customer)
+            Return customers.ToList
         End Using
+
 
     End Function
 End Class

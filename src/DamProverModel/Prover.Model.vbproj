@@ -107,46 +107,31 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="customer.vb">
-      <DependentUpon>DamProverModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DamProverModel.Context.vb">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>DamProverModel.Context.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DamProverModel.Designer.vb">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>DamProverModel.edmx</DependentUpon>
-    </Compile>
-    <Compile Include="DamProverModel.vb">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>DamProverModel.tt</DependentUpon>
+      <DependentUpon>ProverModel.tt</DependentUpon>
     </Compile>
     <Compile Include="equipement.vb">
-      <DependentUpon>DamProverModel.tt</DependentUpon>
+      <DependentUpon>ProverModel.tt</DependentUpon>
     </Compile>
     <Compile Include="inspection_cert.vb">
-      <DependentUpon>DamProverModel.tt</DependentUpon>
+      <DependentUpon>ProverModel.tt</DependentUpon>
     </Compile>
     <Compile Include="inspection_equipement.vb">
-      <DependentUpon>DamProverModel.tt</DependentUpon>
+      <DependentUpon>ProverModel.tt</DependentUpon>
     </Compile>
     <Compile Include="instr.vb">
-      <DependentUpon>DamProverModel.tt</DependentUpon>
+      <DependentUpon>ProverModel.tt</DependentUpon>
     </Compile>
     <Compile Include="instr_info.vb">
-      <DependentUpon>DamProverModel.tt</DependentUpon>
+      <DependentUpon>ProverModel.tt</DependentUpon>
     </Compile>
     <Compile Include="item.vb">
-      <DependentUpon>DamProverModel.tt</DependentUpon>
+      <DependentUpon>ProverModel.tt</DependentUpon>
     </Compile>
     <Compile Include="item_units.vb">
-      <DependentUpon>DamProverModel.tt</DependentUpon>
+      <DependentUpon>ProverModel.tt</DependentUpon>
     </Compile>
     <Compile Include="meter_index.vb">
-      <DependentUpon>DamProverModel.tt</DependentUpon>
+      <DependentUpon>ProverModel.tt</DependentUpon>
     </Compile>
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
@@ -164,16 +149,31 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <Compile Include="pressure.vb">
-      <DependentUpon>DamProverModel.tt</DependentUpon>
+      <DependentUpon>ProverModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ProverModel.Context.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ProverModel.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ProverModel.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ProverModel.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="ProverModel.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ProverModel.tt</DependentUpon>
     </Compile>
     <Compile Include="temperature.vb">
-      <DependentUpon>DamProverModel.tt</DependentUpon>
+      <DependentUpon>ProverModel.tt</DependentUpon>
     </Compile>
     <Compile Include="volume_test.vb">
-      <DependentUpon>DamProverModel.tt</DependentUpon>
+      <DependentUpon>ProverModel.tt</DependentUpon>
     </Compile>
     <Compile Include="write_items.vb">
-      <DependentUpon>DamProverModel.tt</DependentUpon>
+      <DependentUpon>ProverModel.tt</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -186,23 +186,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.Config" />
-    <EntityDeploy Include="DamProverModel.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>DamProverModel.Designer.vb</LastGenOutput>
-    </EntityDeploy>
-    <None Include="DamProverModel.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>DamProverModel.edmx</DependentUpon>
-      <LastGenOutput>DamProverModel.Context.vb</LastGenOutput>
-    </None>
-    <None Include="DamProverModel.edmx.diagram">
-      <DependentUpon>DamProverModel.edmx</DependentUpon>
-    </None>
-    <None Include="DamProverModel.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>DamProverModel.edmx</DependentUpon>
-      <LastGenOutput>DamProverModel.vb</LastGenOutput>
-    </None>
     <None Include="My Project\Application.myapp">
       <Generator>MyApplicationCodeGenerator</Generator>
       <LastGenOutput>Application.Designer.vb</LastGenOutput>
@@ -213,6 +196,23 @@
       <LastGenOutput>Settings.Designer.vb</LastGenOutput>
     </None>
     <None Include="packages.config" />
+    <EntityDeploy Include="ProverModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>ProverModel.Designer.vb</LastGenOutput>
+    </EntityDeploy>
+    <None Include="ProverModel.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>ProverModel.edmx</DependentUpon>
+      <LastGenOutput>ProverModel.Context.vb</LastGenOutput>
+    </None>
+    <None Include="ProverModel.edmx.diagram">
+      <DependentUpon>ProverModel.edmx</DependentUpon>
+    </None>
+    <None Include="ProverModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>ProverModel.edmx</DependentUpon>
+      <LastGenOutput>ProverModel.vb</LastGenOutput>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Content Include="DAMProver.sdf">

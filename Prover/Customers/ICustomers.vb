@@ -1,16 +1,16 @@
 ﻿Public Interface ICustomers
 
-    Property CustomerID As Integer
-    Property CustomerName As String
-    Property CustomerAddress As String
-    Property WriteAfterItems As Collection
-    Property WriteAfterValues As Collection
-    Property ItemDescriptions As Collection
+    ReadOnly Property CustomerID As Integer
+    ReadOnly Property CustomerName As String
+    ReadOnly Property CustomerAddress As String
+    ReadOnly Property WriteAfterItems As Collection
+    ReadOnly Property WriteAfterValues As Collection
+    ReadOnly Property ItemDescriptions As Collection
     'Property Instrument As Instrument
-    Property InspectionID As Integer
-    Property ApparatusID As String
-    Property InspectionCount As Integer
-    Property PostalCode As String
-    Property RegNumber As Integer
+    ReadOnly Property InspectionID As Integer
+    ReadOnly Property ApparatusID As String
+    ReadOnly Property InspectionCount As Integer
+    ReadOnly Property PostalCode As String
+    ReadOnly Property RegNumber As Integer
 
 End Interface
