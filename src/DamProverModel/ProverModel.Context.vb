@@ -25,9 +25,6 @@ Partial Public Class DAMProverEntities
     Public Property customers() As DbSet(Of customer)
     Public Property equipements() As DbSet(Of equipement)
     Public Property inspection_cert() As DbSet(Of inspection_cert)
-    Public Property inspection_equipement() As DbSet(Of inspection_equipement)
-    Public Property instrs() As DbSet(Of instr)
-    Public Property instr_info() As DbSet(Of instr_info)
     Public Property item_units() As DbSet(Of item_units)
     Public Property items() As DbSet(Of item)
     Public Property meter_index() As DbSet(Of meter_index)
@@ -35,5 +32,6 @@ Partial Public Class DAMProverEntities
     Public Property temperatures() As DbSet(Of temperature)
     Public Property volume_test() As DbSet(Of volume_test)
     Public Property write_items() As DbSet(Of write_items)
+    Public Property instrs() As DbSet(Of instr)
 
 End Class

@@ -45,13 +45,13 @@ Public Class Customer
 
     Public Overridable ReadOnly Property WriteAfterValues() As Collection Implements ICustomers.WriteAfterValues
         Get
-            Return _WriteAfterValues
+            Return Nothing '_customer._WriteAfterValues()
         End Get
     End Property
 
     Public ReadOnly Property ItemDescriptions() As Collection Implements ICustomers.ItemDescriptions
         Get
-            Return _ItemDescriptions
+            Return Nothing ' _ItemDescriptions
         End Get
 
     End Property
@@ -67,37 +67,37 @@ Public Class Customer
 
     Public ReadOnly Property CustomerID() As Integer Implements ICustomers.CustomerID
         Get
-            Return _Id
+            Return _customer.customer_id
         End Get
     End Property
 
     Public ReadOnly Property InspectionID() As Integer Implements ICustomers.InspectionID
         Get
-            Return _InspectionID
+            Return Nothing '_customer._InspectionID
         End Get
     End Property
 
     Public ReadOnly Property ApparatusID() As String Implements ICustomers.ApparatusID
         Get
-            Return _ApparatusId
+            Return Nothing '_ApparatusId
         End Get
     End Property
 
     Public ReadOnly Property InspectionCount() As Integer Implements ICustomers.InspectionCount
         Get
-            Return _InspectionCount
+            Return Nothing '_InspectionCount
         End Get
     End Property
 
     Public ReadOnly Property PostalCode() As String Implements ICustomers.PostalCode
         Get
-            Return _PostalCode
+            Return _customer.postal_code
         End Get
     End Property
 
     Public ReadOnly Property RegNumber() As Integer Implements ICustomers.RegNumber
         Get
-            Return _RegNumber
+            Return _customer.reg_number
         End Get
     End Property
 

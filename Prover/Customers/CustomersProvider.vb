@@ -8,7 +8,10 @@ Public Class CustomersProvider
     End Sub
 
     Public Shared Sub RegisterInstances()
-        DataCoordinator.RegisterDataProvider(New CustomersProvider("AllCustomers", "All Customers", Nothing, Nothing))
+
+        Dim params = New ParamDictionary From {{"time", New SimpleParamType(Of DateTime)}, {"maxHistory", New SimpleParamType(Of TimeSpan)}, {"jobId", New SimpleParamType(Of Guid)}}
+
+        DataCoordinator.RegisterDataProvider(New CustomersProvider("AllCustomers", "All Customers", Nothing, params))
     End Sub
 
     Protected Overrides Function FetchData(parameters As Dictionary(Of String, Object)) As IEnumerable(Of ICustomers)
@@ -26,11 +29,11 @@ Public Class CustomersProvider
     End Function
 
     Public Overrides Function GetIdentifier(ByVal element As ICustomers) As String
-        Return Nothing
+        Return element.CustomerID.ToString
     End Function
 
     Public Overrides Function GetName(ByVal element As ICustomers) As String
-        Return Nothing
+        Return element.CustomerName.ToString
     End Function
 
 

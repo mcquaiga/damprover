@@ -20,6 +20,4 @@ Partial Public Class volume_test
     Public Property energy As Nullable(Of Double)
     Public Property mech_read As Nullable(Of Double)
 
-    Public Overridable Property instr As instr
-
 End Class

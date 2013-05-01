@@ -15,6 +15,4 @@ Partial Public Class equipement
     Public Property code As String
     Public Property desription As String
 
-    Public Overridable Property inspection_equipement As ICollection(Of inspection_equipement) = New HashSet(Of inspection_equipement)
-
 End Class

@@ -7,10 +7,7 @@
       <Diagram DiagramId="1aeb9ccb54b942f899f89298888a4498" Name="Diagram1">
         <EntityTypeShape EntityType="Prover.Model.customer" Width="1.5" PointX="5.25" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="Prover.Model.equipement" Width="1.5" PointX="5.75" PointY="4.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="Prover.Model.inspection_cert" Width="1.5" PointX="5.75" PointY="7.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="Prover.Model.inspection_equipement" Width="1.5" PointX="8" PointY="5" IsExpanded="true" />
-        <EntityTypeShape EntityType="Prover.Model.instr" Width="1.5" PointX="0.75" PointY="5.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="Prover.Model.instr_info" Width="1.5" PointX="3" PointY="1.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="Prover.Model.inspection_cert" Width="1.5" PointX="5.5" PointY="7.375" IsExpanded="true" />
         <EntityTypeShape EntityType="Prover.Model.item_units" Width="1.5" PointX="7.75" PointY="7.75" IsExpanded="true" />
         <EntityTypeShape EntityType="Prover.Model.item" Width="1.5" PointX="9.75" PointY="7.75" IsExpanded="true" />
         <EntityTypeShape EntityType="Prover.Model.meter_index" Width="1.5" PointX="10.75" PointY="0.75" IsExpanded="true" />
@@ -19,11 +16,7 @@
         <EntityTypeShape EntityType="Prover.Model.volume_test" Width="1.5" PointX="3" PointY="10.125" IsExpanded="true" />
         <EntityTypeShape EntityType="Prover.Model.write_items" Width="1.5" PointX="8.5" PointY="1.125" IsExpanded="true" />
         <AssociationConnector Association="Prover.Model.customers1" ManuallyRouted="false" />
-        <AssociationConnector Association="Prover.Model.equipment" ManuallyRouted="false" />
-        <AssociationConnector Association="Prover.Model.instr1" ManuallyRouted="false" />
-        <AssociationConnector Association="Prover.Model.pressure_instruments" ManuallyRouted="false" />
-        <AssociationConnector Association="Prover.Model.temperature_instrument" ManuallyRouted="false" />
-        <AssociationConnector Association="Prover.Model.volume_instrument" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="Prover.Model.instr" Width="1.5" PointX="9.0919355010110579" PointY="14.72913635462948" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

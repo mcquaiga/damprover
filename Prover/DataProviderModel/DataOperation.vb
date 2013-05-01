@@ -15,7 +15,9 @@
         End Sub
 
         Public Function GetTypedData() As Dictionary(Of String, NamedEntity(Of TElement))
-            Return _provider.GetWrappedData(_parameters).ToDictionary(Of String)(Function(el) _provider.GetIdentifier(el.Entity))
+            Return _provider.GetWrappedData(_parameters).ToDictionary(Of String)(Function(el)
+                                                                                     Return _provider.GetIdentifier(el.Entity)
+                                                                                 End Function)
         End Function
 
     End Class

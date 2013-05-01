@@ -106,6 +106,12 @@
     <Compile Include="DataProviderModel\NamedEntity.vb" />
     <Compile Include="DataProviderModel\ParamDictionary.vb" />
     <Compile Include="DataProviderModel\ParamType.vb" />
+    <Compile Include="DataProviderModel\SimpleParamType.vb" />
+    <Compile Include="Instruments\BaseInstrument.vb" />
+    <Compile Include="Instruments\IBaseInstrument.vb" />
+    <Compile Include="Instruments\InstrumentDataContext.vb" />
+    <Compile Include="Instruments\InstrumentDataProvider.vb" />
+    <Compile Include="Instruments\Types\MiniMaxInstrument.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -144,11 +150,16 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\serialprotocol\miSerialProtocol\miSerialProtocol.vbproj">
+      <Project>{8c7e475a-15bb-477b-99f3-7b2abf41e43f}</Project>
+      <Name>miSerialProtocol</Name>
+    </ProjectReference>
     <ProjectReference Include="..\src\DamProverModel\Prover.Model.vbproj">
       <Project>{618af5d8-a289-4ea0-9584-c411b213ef22}</Project>
       <Name>Prover.Model</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

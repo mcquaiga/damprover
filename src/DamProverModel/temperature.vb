@@ -17,6 +17,4 @@ Partial Public Class temperature
     Public Property evc_temp As Nullable(Of Double)
     Public Property evc_factor As Nullable(Of Double)
 
-    Public Overridable Property instr As instr
-
 End Class

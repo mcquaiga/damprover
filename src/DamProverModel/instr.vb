@@ -11,7 +11,6 @@ Imports System
 Imports System.Collections.Generic
 
 Partial Public Class instr
-    Public Property instr_id As Integer
     Public Property customer_id As Nullable(Of Integer)
     Public Property serial_number As String
     Public Property [date] As Nullable(Of Date)
@@ -20,10 +19,7 @@ Partial Public Class instr
     Public Property inspection_id As Nullable(Of Integer)
     Public Property meter_index_id As Nullable(Of Integer)
     Public Property pass As Nullable(Of Byte)
-
-    Public Overridable Property instr_info As instr_info
-    Public Overridable Property pressures As ICollection(Of pressure) = New HashSet(Of pressure)
-    Public Overridable Property temperatures As ICollection(Of temperature) = New HashSet(Of temperature)
-    Public Overridable Property volume_test As volume_test
+    Public Property data As String
+    Public Property instr_id As System.Guid
 
 End Class

@@ -19,6 +19,4 @@ Partial Public Class pressure
     Public Property evc_pfactor As Nullable(Of Double)
     Public Property evc_unsqr_super As Nullable(Of Double)
 
-    Public Overridable Property instr As instr
-
 End Class

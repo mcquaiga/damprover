@@ -4,14 +4,12 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="Prover.Model.Store" Alias="Self" Provider="System.Data.SqlServerCe.4.0" ProviderManifestToken="4.0" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="Prover.Model.Store" Alias="Self" Provider="System.Data.SqlServerCe.4.0" ProviderManifestToken="4.0" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityContainer Name="ProverModelStoreContainer">
           <EntitySet Name="customers" EntityType="Prover.Model.Store.customers" store:Type="Tables" />
           <EntitySet Name="equipement" EntityType="Prover.Model.Store.equipement" store:Type="Tables" />
           <EntitySet Name="inspection_cert" EntityType="Prover.Model.Store.inspection_cert" store:Type="Tables" />
-          <EntitySet Name="inspection_equipement" EntityType="Prover.Model.Store.inspection_equipement" store:Type="Tables" />
           <EntitySet Name="instr" EntityType="Prover.Model.Store.instr" store:Type="Tables" />
-          <EntitySet Name="instr_info" EntityType="Prover.Model.Store.instr_info" store:Type="Tables" />
           <EntitySet Name="item_units" EntityType="Prover.Model.Store.item_units" store:Type="Tables" />
           <EntitySet Name="items" EntityType="Prover.Model.Store.items" store:Type="Tables" />
           <EntitySet Name="meter_index" EntityType="Prover.Model.Store.meter_index" store:Type="Tables" />
@@ -22,26 +20,6 @@
           <AssociationSet Name="customers1" Association="Prover.Model.Store.customers1">
             <End Role="customers" EntitySet="customers" />
             <End Role="write_items" EntitySet="write_items" />
-          </AssociationSet>
-          <AssociationSet Name="equipment" Association="Prover.Model.Store.equipment">
-            <End Role="equipement" EntitySet="equipement" />
-            <End Role="inspection_equipement" EntitySet="inspection_equipement" />
-          </AssociationSet>
-          <AssociationSet Name="instr1" Association="Prover.Model.Store.instr1">
-            <End Role="instr" EntitySet="instr" />
-            <End Role="instr_info" EntitySet="instr_info" />
-          </AssociationSet>
-          <AssociationSet Name="pressure_instruments" Association="Prover.Model.Store.pressure_instruments">
-            <End Role="instr" EntitySet="instr" />
-            <End Role="pressure" EntitySet="pressure" />
-          </AssociationSet>
-          <AssociationSet Name="temperature_instrument" Association="Prover.Model.Store.temperature_instrument">
-            <End Role="instr" EntitySet="instr" />
-            <End Role="temperature" EntitySet="temperature" />
-          </AssociationSet>
-          <AssociationSet Name="volume_instrument" Association="Prover.Model.Store.volume_instrument">
-            <End Role="instr" EntitySet="instr" />
-            <End Role="volume_test" EntitySet="volume_test" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="customers">
@@ -62,9 +40,6 @@
           <Property Name="code" Type="nvarchar" Nullable="false" MaxLength="50" />
           <Property Name="desription" Type="nvarchar" Nullable="false" MaxLength="75" />
         </EntityType>
-        <!--Errors Found During Generation:
-            warning 6035: The relationship 'inspections' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
-            -->
         <EntityType Name="inspection_cert">
           <Key>
             <PropertyRef Name="inspection_id" />
@@ -76,19 +51,10 @@
           <Property Name="insp_type" Type="nchar" MaxLength="5" />
           <Property Name="event_log" Type="tinyint" Nullable="false" />
         </EntityType>
-        <EntityType Name="inspection_equipement">
-          <Key>
-            <PropertyRef Name="inspec_id" />
-            <PropertyRef Name="equip_id" />
-          </Key>
-          <Property Name="inspec_id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-          <Property Name="equip_id" Type="int" Nullable="false" />
-        </EntityType>
         <EntityType Name="instr">
           <Key>
             <PropertyRef Name="instr_id" />
           </Key>
-          <Property Name="instr_id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="customer_id" Type="int" />
           <Property Name="serial_number" Type="nvarchar" MaxLength="100" />
           <Property Name="date" Type="datetime" />
@@ -97,14 +63,8 @@
           <Property Name="inspection_id" Type="int" />
           <Property Name="meter_index_id" Type="int" />
           <Property Name="pass" Type="tinyint" />
-        </EntityType>
-        <EntityType Name="instr_info">
-          <Key>
-            <PropertyRef Name="instr_id" />
-          </Key>
-          <Property Name="instr_id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-          <Property Name="item_number" Type="int" />
-          <Property Name="item_value" Type="nvarchar" Nullable="false" MaxLength="500" />
+          <Property Name="data" Type="ntext" />
+          <Property Name="instr_id" Type="uniqueidentifier" Nullable="false" />
         </EntityType>
         <EntityType Name="item_units">
           <Key>
@@ -192,68 +152,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="equipment">
-          <End Role="equipement" Type="Prover.Model.Store.equipement" Multiplicity="1" />
-          <End Role="inspection_equipement" Type="Prover.Model.Store.inspection_equipement" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="equipement">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="inspection_equipement">
-              <PropertyRef Name="equip_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="instr1">
-          <End Role="instr" Type="Prover.Model.Store.instr" Multiplicity="1" />
-          <End Role="instr_info" Type="Prover.Model.Store.instr_info" Multiplicity="0..1" />
-          <ReferentialConstraint>
-            <Principal Role="instr">
-              <PropertyRef Name="instr_id" />
-            </Principal>
-            <Dependent Role="instr_info">
-              <PropertyRef Name="instr_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="pressure_instruments">
-          <End Role="instr" Type="Prover.Model.Store.instr" Multiplicity="1" />
-          <End Role="pressure" Type="Prover.Model.Store.pressure" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="instr">
-              <PropertyRef Name="instr_id" />
-            </Principal>
-            <Dependent Role="pressure">
-              <PropertyRef Name="instr_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="temperature_instrument">
-          <End Role="instr" Type="Prover.Model.Store.instr" Multiplicity="1" />
-          <End Role="temperature" Type="Prover.Model.Store.temperature" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="instr">
-              <PropertyRef Name="instr_id" />
-            </Principal>
-            <Dependent Role="temperature">
-              <PropertyRef Name="instr_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="volume_instrument">
-          <End Role="instr" Type="Prover.Model.Store.instr" Multiplicity="1" />
-          <End Role="volume_test" Type="Prover.Model.Store.volume_test" Multiplicity="0..1" />
-          <ReferentialConstraint>
-            <Principal Role="instr">
-              <PropertyRef Name="instr_id" />
-            </Principal>
-            <Dependent Role="volume_test">
-              <PropertyRef Name="instr_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="Prover.Model" Alias="Self" p1:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:p1="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -261,9 +160,6 @@
           <EntitySet Name="customers" EntityType="Prover.Model.customer" />
           <EntitySet Name="equipements" EntityType="Prover.Model.equipement" />
           <EntitySet Name="inspection_cert" EntityType="Prover.Model.inspection_cert" />
-          <EntitySet Name="inspection_equipement" EntityType="Prover.Model.inspection_equipement" />
-          <EntitySet Name="instrs" EntityType="Prover.Model.instr" />
-          <EntitySet Name="instr_info" EntityType="Prover.Model.instr_info" />
           <EntitySet Name="item_units" EntityType="Prover.Model.item_units" />
           <EntitySet Name="items" EntityType="Prover.Model.item" />
           <EntitySet Name="meter_index" EntityType="Prover.Model.meter_index" />
@@ -275,27 +171,8 @@
             <End Role="customers" EntitySet="customers" />
             <End Role="write_items" EntitySet="write_items" />
           </AssociationSet>
-          <AssociationSet Name="equipment" Association="Prover.Model.equipment">
-            <End Role="equipement" EntitySet="equipements" />
-            <End Role="inspection_equipement" EntitySet="inspection_equipement" />
-          </AssociationSet>
-          <AssociationSet Name="instr1" Association="Prover.Model.instr1">
-            <End Role="instr" EntitySet="instrs" />
-            <End Role="instr_info" EntitySet="instr_info" />
-          </AssociationSet>
-          <AssociationSet Name="pressure_instruments" Association="Prover.Model.pressure_instruments">
-            <End Role="instr" EntitySet="instrs" />
-            <End Role="pressure" EntitySet="pressures" />
-          </AssociationSet>
-          <AssociationSet Name="temperature_instrument" Association="Prover.Model.temperature_instrument">
-            <End Role="instr" EntitySet="instrs" />
-            <End Role="temperature" EntitySet="temperatures" />
-          </AssociationSet>
-          <AssociationSet Name="volume_instrument" Association="Prover.Model.volume_instrument">
-            <End Role="instr" EntitySet="instrs" />
-            <End Role="volume_test" EntitySet="volume_test" />
-          </AssociationSet>
-        </EntityContainer>
+          <EntitySet Name="instrs" EntityType="Prover.Model.instr" />
+          </EntityContainer>
         <EntityType Name="customer">
           <Key>
             <PropertyRef Name="customer_id" />
@@ -314,7 +191,6 @@
           <Property Name="id" Type="Int32" Nullable="false" />
           <Property Name="code" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
           <Property Name="desription" Type="String" Nullable="false" MaxLength="75" Unicode="true" FixedLength="false" />
-          <NavigationProperty Name="inspection_equipement" Relationship="Prover.Model.equipment" FromRole="equipement" ToRole="inspection_equipement" />
         </EntityType>
         <EntityType Name="inspection_cert">
           <Key>
@@ -326,42 +202,6 @@
           <Property Name="comments" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
           <Property Name="insp_type" Type="String" MaxLength="5" Unicode="true" FixedLength="true" />
           <Property Name="event_log" Type="Byte" Nullable="false" />
-        </EntityType>
-        <EntityType Name="inspection_equipement">
-          <Key>
-            <PropertyRef Name="inspec_id" />
-            <PropertyRef Name="equip_id" />
-          </Key>
-          <Property Name="inspec_id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
-          <Property Name="equip_id" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="equipement" Relationship="Prover.Model.equipment" FromRole="inspection_equipement" ToRole="equipement" />
-        </EntityType>
-        <EntityType Name="instr">
-          <Key>
-            <PropertyRef Name="instr_id" />
-          </Key>
-          <Property Name="instr_id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
-          <Property Name="customer_id" Type="Int32" />
-          <Property Name="serial_number" Type="String" MaxLength="100" Unicode="true" FixedLength="false" />
-          <Property Name="date" Type="DateTime" Precision="3" />
-          <Property Name="approver" Type="String" MaxLength="100" Unicode="true" FixedLength="false" />
-          <Property Name="instr_type_id" Type="Int32" />
-          <Property Name="inspection_id" Type="Int32" />
-          <Property Name="meter_index_id" Type="Int32" />
-          <Property Name="pass" Type="Byte" />
-          <NavigationProperty Name="instr_info" Relationship="Prover.Model.instr1" FromRole="instr" ToRole="instr_info" />
-          <NavigationProperty Name="pressures" Relationship="Prover.Model.pressure_instruments" FromRole="instr" ToRole="pressure" />
-          <NavigationProperty Name="temperatures" Relationship="Prover.Model.temperature_instrument" FromRole="instr" ToRole="temperature" />
-          <NavigationProperty Name="volume_test" Relationship="Prover.Model.volume_instrument" FromRole="instr" ToRole="volume_test" />
-        </EntityType>
-        <EntityType Name="instr_info">
-          <Key>
-            <PropertyRef Name="instr_id" />
-          </Key>
-          <Property Name="instr_id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
-          <Property Name="item_number" Type="Int32" />
-          <Property Name="item_value" Type="String" Nullable="false" MaxLength="500" Unicode="true" FixedLength="false" />
-          <NavigationProperty Name="instr" Relationship="Prover.Model.instr1" FromRole="instr_info" ToRole="instr" />
         </EntityType>
         <EntityType Name="item_units">
           <Key>
@@ -401,7 +241,6 @@
           <Property Name="evc_pressure" Type="Double" />
           <Property Name="evc_pfactor" Type="Double" />
           <Property Name="evc_unsqr_super" Type="Double" />
-          <NavigationProperty Name="instr" Relationship="Prover.Model.pressure_instruments" FromRole="pressure" ToRole="instr" />
         </EntityType>
         <EntityType Name="temperature">
           <Key>
@@ -413,7 +252,6 @@
           <Property Name="gauge_temp" Type="Double" />
           <Property Name="evc_temp" Type="Double" />
           <Property Name="evc_factor" Type="Double" />
-          <NavigationProperty Name="instr" Relationship="Prover.Model.temperature_instrument" FromRole="temperature" ToRole="instr" />
         </EntityType>
         <EntityType Name="volume_test">
           <Key>
@@ -427,7 +265,6 @@
           <Property Name="end_cor" Type="Double" />
           <Property Name="energy" Type="Double" />
           <Property Name="mech_read" Type="Double" />
-          <NavigationProperty Name="instr" Relationship="Prover.Model.volume_instrument" FromRole="volume_test" ToRole="instr" />
         </EntityType>
         <EntityType Name="write_items">
           <Key>
@@ -453,67 +290,22 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="equipment">
-          <End Role="equipement" Type="Prover.Model.equipement" Multiplicity="1" />
-          <End Role="inspection_equipement" Type="Prover.Model.inspection_equipement" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="equipement">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="inspection_equipement">
-              <PropertyRef Name="equip_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="instr1">
-          <End Role="instr" Type="Prover.Model.instr" Multiplicity="1" />
-          <End Role="instr_info" Type="Prover.Model.instr_info" Multiplicity="0..1" />
-          <ReferentialConstraint>
-            <Principal Role="instr">
-              <PropertyRef Name="instr_id" />
-            </Principal>
-            <Dependent Role="instr_info">
-              <PropertyRef Name="instr_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="pressure_instruments">
-          <End Role="instr" Type="Prover.Model.instr" Multiplicity="1" />
-          <End Role="pressure" Type="Prover.Model.pressure" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="instr">
-              <PropertyRef Name="instr_id" />
-            </Principal>
-            <Dependent Role="pressure">
-              <PropertyRef Name="instr_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="temperature_instrument">
-          <End Role="instr" Type="Prover.Model.instr" Multiplicity="1" />
-          <End Role="temperature" Type="Prover.Model.temperature" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="instr">
-              <PropertyRef Name="instr_id" />
-            </Principal>
-            <Dependent Role="temperature">
-              <PropertyRef Name="instr_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="volume_instrument">
-          <End Role="instr" Type="Prover.Model.instr" Multiplicity="1" />
-          <End Role="volume_test" Type="Prover.Model.volume_test" Multiplicity="0..1" />
-          <ReferentialConstraint>
-            <Principal Role="instr">
-              <PropertyRef Name="instr_id" />
-            </Principal>
-            <Dependent Role="volume_test">
-              <PropertyRef Name="instr_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-      </Schema>
+        <EntityType Name="instr">
+          <Key>
+            <PropertyRef Name="instr_id" />
+          </Key>
+          <Property Type="Int32" Name="customer_id" />
+          <Property Type="String" Name="serial_number" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Type="DateTime" Name="date" Precision="3" />
+          <Property Type="String" Name="approver" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Type="Int32" Name="instr_type_id" />
+          <Property Type="Int32" Name="inspection_id" />
+          <Property Type="Int32" Name="meter_index_id" />
+          <Property Type="Byte" Name="pass" />
+          <Property Type="String" Name="data" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Type="Guid" Name="instr_id" Nullable="false" />
+        </EntityType>
+        </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
@@ -548,38 +340,6 @@
                 <ScalarProperty Name="comments" ColumnName="comments" />
                 <ScalarProperty Name="insp_type" ColumnName="insp_type" />
                 <ScalarProperty Name="event_log" ColumnName="event_log" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="inspection_equipement">
-            <EntityTypeMapping TypeName="Prover.Model.inspection_equipement">
-              <MappingFragment StoreEntitySet="inspection_equipement">
-                <ScalarProperty Name="inspec_id" ColumnName="inspec_id" />
-                <ScalarProperty Name="equip_id" ColumnName="equip_id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="instrs">
-            <EntityTypeMapping TypeName="Prover.Model.instr">
-              <MappingFragment StoreEntitySet="instr">
-                <ScalarProperty Name="instr_id" ColumnName="instr_id" />
-                <ScalarProperty Name="customer_id" ColumnName="customer_id" />
-                <ScalarProperty Name="serial_number" ColumnName="serial_number" />
-                <ScalarProperty Name="date" ColumnName="date" />
-                <ScalarProperty Name="approver" ColumnName="approver" />
-                <ScalarProperty Name="instr_type_id" ColumnName="instr_type_id" />
-                <ScalarProperty Name="inspection_id" ColumnName="inspection_id" />
-                <ScalarProperty Name="meter_index_id" ColumnName="meter_index_id" />
-                <ScalarProperty Name="pass" ColumnName="pass" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="instr_info">
-            <EntityTypeMapping TypeName="Prover.Model.instr_info">
-              <MappingFragment StoreEntitySet="instr_info">
-                <ScalarProperty Name="instr_id" ColumnName="instr_id" />
-                <ScalarProperty Name="item_number" ColumnName="item_number" />
-                <ScalarProperty Name="item_value" ColumnName="item_value" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -657,6 +417,22 @@
                 <ScalarProperty Name="item_number" ColumnName="item_number" />
                 <ScalarProperty Name="instr_type_id" ColumnName="instr_type_id" />
                 <ScalarProperty Name="value" ColumnName="value" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="instrs">
+            <EntityTypeMapping TypeName="Prover.Model.instr">
+              <MappingFragment StoreEntitySet="instr">
+                <ScalarProperty Name="instr_id" ColumnName="instr_id" />
+                <ScalarProperty Name="data" ColumnName="data" />
+                <ScalarProperty Name="pass" ColumnName="pass" />
+                <ScalarProperty Name="meter_index_id" ColumnName="meter_index_id" />
+                <ScalarProperty Name="inspection_id" ColumnName="inspection_id" />
+                <ScalarProperty Name="instr_type_id" ColumnName="instr_type_id" />
+                <ScalarProperty Name="approver" ColumnName="approver" />
+                <ScalarProperty Name="date" ColumnName="date" />
+                <ScalarProperty Name="serial_number" ColumnName="serial_number" />
+                <ScalarProperty Name="customer_id" ColumnName="customer_id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
