@@ -10,7 +10,7 @@ Public Class BaseInstrument
     'This class is responsible for holding values downloaded from the instrument and Temperature and Pressure Classes
 
     Protected _instrumentXml As XDocument
-    Protected _instrumentXmlNode As XElement
+    Protected _fileXmlNode As XElement
     Private _instrument As Model.instr
 
 
@@ -18,7 +18,8 @@ Public Class BaseInstrument
     Protected Sub New(instrument As Model.instr)
         _instrument = instrument
         _instrumentXml = XDocument.Parse(_instrument.data)
-        _instrumentXmlNode = _instrumentXml.<Instrument>.FirstOrDefault
+        _fileXmlNode = _instrumentXml.<instrumentFile>.FirstOrDefault()
+
     End Sub
 
 #Region "Properties"
@@ -60,8 +61,21 @@ Public Class BaseInstrument
         Get
             Return Nothing
         End Get
-
     End Property
+
+    Public Function GetItemValue(ItemNumber As Integer) As String Implements IBaseInstrument.GetItemValue
+
+        'Dim instrument As XElement
+        'Dim instrument = .FirstOrDefault()
+
+
+        Dim y As XElement = (From x In _fileXmlNode.Elements("item") Where x.Attribute("number").Value = CStr(ItemNumber) Select x).First
+
+        Return y.Attribute("value").Value
+
+
+
+    End Function
 #End Region
 
 

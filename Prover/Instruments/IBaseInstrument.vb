@@ -66,5 +66,6 @@ Public Interface IBaseInstrument
     ReadOnly Property PulseASelect As PulseOutputValues
     ReadOnly Property PulseBSelect As PulseOutputValues
 
+    Function GetItemValue(ItemNumber As Integer) As String
 
 End Interface

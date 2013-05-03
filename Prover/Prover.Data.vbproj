@@ -94,6 +94,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Class1.vb" />
+    <Compile Include="Communications\InstrumentCommunications.vb" />
     <Compile Include="Customers\Customer.vb" />
     <Compile Include="Customers\CustomerDataContext.vb" />
     <Compile Include="Customers\CustomersProvider.vb" />
