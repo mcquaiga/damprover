@@ -8,15 +8,21 @@ Public Class BaseInstrument
     'i.e. Mini-Max Rotary has Proving modes that must be set before testing
 
     'This class is responsible for holding values downloaded from the instrument and Temperature and Pressure Classes
-
     Protected _instrumentXml As XDocument
     Protected _fileXmlNode As XElement
     Private _instrument As Model.instr
 
+    Sub New()
+    End Sub
 
+    Sub New(CommPort As String, BaudRate As BaudRateEnum)
+        Me.BaudRate = BaudRate
+        Me.CommPort = CommPort
+    End Sub
 
     Protected Sub New(instrument As Model.instr)
         _instrument = instrument
+        _instrumentType = _instrument.instr_type_id
         _instrumentXml = XDocument.Parse(_instrument.data)
         _fileXmlNode = _instrumentXml.<instrumentFile>.FirstOrDefault()
 
@@ -24,6 +30,9 @@ Public Class BaseInstrument
 
 #Region "Properties"
 
+    Public Property BaudRate As miSerialProtocol.BaudRateEnum Implements IBaseInstrument.BaudRate
+    Public Property CommPort As String Implements IBaseInstrument.CommPort
+    Public Property InstrumentType As miSerialProtocol.InstrumentTypeCode Implements IBaseInstrument.InstrumentType
 
     Public ReadOnly Property InstrumenGuID() As Guid Implements IBaseInstrument.InstrumentGuid
         Get
@@ -68,12 +77,8 @@ Public Class BaseInstrument
         'Dim instrument As XElement
         'Dim instrument = .FirstOrDefault()
 
-
         Dim y As XElement = (From x In _fileXmlNode.Elements("item") Where x.Attribute("number").Value = CStr(ItemNumber) Select x).First
-
         Return y.Attribute("value").Value
-
-
 
     End Function
 #End Region

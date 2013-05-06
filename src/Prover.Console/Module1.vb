@@ -18,12 +18,13 @@ Module Module1
         InstrumentDataProvider.RegisterInstances()
         Dim i = DataCoordinator.GetData(Of IBaseInstrument)("AllInstruments", New Dictionary(Of String, Object) From {{"time", DateTime.Now()}})
 
-        For Each x In i
-            Dim y = x.Entity.GetItemValue(62)
-        Next
+        'For Each x In i
+        '    'Dim y = x.Entity.GetItemValue(62)
+        '    Dim y = InstrumentCommunications.DownloadItemFile(x.EntityAsObject)
+        'Next
 
-        InstrumentCommunications.DownloadItems()
-
+        Dim myInstrument As New MiniMaxInstrument("COM9", miSerialProtocol.BaudRateEnum.b38400)
+        Dim y = InstrumentCommunications.DownloadItemFile(myInstrument)
 
     End Sub
 

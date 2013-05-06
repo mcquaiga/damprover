@@ -1,3 +1,7 @@
+Imports System.Xml.Linq
+Imports System.Xml
+Imports System.IO
+
 Public Class MiniMaxClass : Inherits miSerialProtocolClass
     Public Enum BaudRateEnum
         'Mini Max only supports the folllowing baud rates
@@ -27,9 +31,10 @@ Public Class MiniMaxClass : Inherits miSerialProtocolClass
         UnSupported = 336
     End Enum
 
-    Sub New(ByVal PortNumber As Integer, ByVal BaudRate As BaudRateEnum)
-        MyBase.New(PortNumber, BaudRate)
+    Sub New(ByVal PortName As String, ByVal BaudRate As BaudRateEnum)
+        MyBase.New(PortName, BaudRate)
         Me.Instrument = InstrumentTypeCode.MiniMax
+        Me.LoadInstrumentItems()
     End Sub
 
     Public Shadows Sub Connect()
@@ -40,20 +45,9 @@ Public Class MiniMaxClass : Inherits miSerialProtocolClass
         End Try
     End Sub
 
-    Public Shadows Function ResetAlarms() As InstrumentErrorsEnum
-        Dim myAlarms As Array
-        Dim alarm As String
-        Dim myCollection As New List(Of Integer)
-
-        myAlarms = System.Enum.GetValues(GetType(AlarmsEnum))
-
-        For Each alarm In myAlarms
-            myCollection.Add(CInt(alarm))
-        Next
-
-        Return MyBase.ResetAlarms(myCollection)
-    End Function
-
-    Public 
+    Protected Overloads Sub LoadInstrumentItems()
+        Dim _xml = File.ReadAllText(My.Application.Info.DirectoryPath + "\MiniMaxItems.xml")
+        MyBase.LoadInstrumentItems(_xml)
+    End Sub
 
 End Class

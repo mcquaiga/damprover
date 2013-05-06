@@ -1,4 +1,9 @@
 Imports System.Windows.Forms
+Imports System.Xml
+Imports System.Linq
+Imports System.Xml.Linq
+Imports System.Data.Linq
+
 
 '***************
 'Author: Adam McQuaig
@@ -122,7 +127,7 @@ Public MustInherit Class miSerialProtocolClass
     'previous MSComm Control
     Protected WithEvents comm As System.IO.Ports.SerialPort
 
-    Protected _instrumentItems As Dictionary(Of Integer, String)
+    Protected _instrumentItems As List(Of ItemClass)
     'Communication Port Settings
     'These must be set before calling connect or trying to open the serial port
     Protected i_CommPort As String
@@ -158,13 +163,16 @@ Public MustInherit Class miSerialProtocolClass
     Protected Shared Event MessageStateChanged()
     Protected Shared Event InstrumentErrorChanged()
 
+    Protected _itemsXMLDocument As XDocument
+    Protected _itemsXMLElements As XElement
+
 
 
 #Region "Constructor and Destructor"
 
-    Public Sub New(ByVal PortNumber As Integer, ByVal BaudRate As BaudRateEnum, Optional ByVal Timeout As Integer = 50)
+    Public Sub New(ByVal PortName As String, ByVal BaudRate As BaudRateEnum, Optional ByVal Timeout As Integer = 50)
         Try
-            Me.Port = "COM" & PortNumber
+            Me.Port = PortName
             Me.BaudRate = BaudRate
             Me.Timeout = Timeout
         Catch ex As Exception
@@ -206,6 +214,14 @@ Public MustInherit Class miSerialProtocolClass
 #End Region
 
 #Region "Properties"
+
+    Public Property Items As List(Of ItemClass)
+
+    Public ReadOnly Property AlarmItems As List(Of ItemClass)
+        Get
+            Return (From alarms In Items Where alarms.IsAlarm = True)
+        End Get
+    End Property
 
     Public Property Port() As String
         Get
@@ -503,16 +519,16 @@ Public MustInherit Class miSerialProtocolClass
     End Function
 
     'Public Function RG(ByVal Items As Collection, ByRef Downloaded As Collection) As InstrumentErrorsEnum
-    Public Function RG(ByVal Items As List(Of Integer)) As Dictionary(Of Integer, String)
+    Public Function RG(ByVal Items As List(Of ItemClass)) As List(Of ItemClass)
         Dim cmd As String = ""
         Dim temp_collection As New Collection
         Dim item_num, y, temp, count As Integer
-        Dim ItemAndValue As ItemClass
-        Dim temp_items As New Collection
+
+        Dim temp_items As New List(Of ItemClass)
         Dim temp_counter As Integer
         Dim x As Integer = 0
 
-        Dim Downloaded As New Dictionary(Of Integer, String)
+        Dim Downloaded As New List(Of ItemClass)
 
 
         comm.DiscardInBuffer()
@@ -540,11 +556,11 @@ Public MustInherit Class miSerialProtocolClass
                 count = Items.Count - (y * 15)
             End If
 
-            'count += x
+            count += x
             temp_items.Clear()
 
             Do While x < count
-                cmd = cmd & CStr(Items(x)).PadLeft(3, "0") & ","
+                cmd = cmd & CStr(Items(x).Number).PadLeft(3, "0") & ","
                 temp_items.Add(Items(x))
                 x += 1
                 item_num += 1
@@ -554,15 +570,12 @@ Public MustInherit Class miSerialProtocolClass
             cmd = cmd & Chr(CommCharEnum.ETX)
             SendDataToComm(cmd)
 
-            temp_counter = 1
+            temp_counter = 0
 
             For Each rg_item As Object In ParseRG(CommBuffer)
                 Console.Write("Read:" & rg_item & vbNewLine)
                 If rg_item <> "! Unsupported" Then
-                    ItemAndValue = New ItemClass
-                    ItemAndValue.item = temp_items.Item(temp_counter)
-                    ItemAndValue.value = rg_item
-                    Downloaded.Add(ItemAndValue.item, CStr(ItemAndValue.value))
+                    Downloaded.Add(New ItemClass(temp_items.Item(temp_counter).Number, Nothing, Nothing, False, CStr(rg_item)))
                 End If
                 temp_counter += 1
             Next
@@ -574,6 +587,30 @@ Public MustInherit Class miSerialProtocolClass
 
         Return Downloaded
     End Function
+
+    'Clear all alarms for the instrument
+    'First read the group of alarms and then reset them based on those that are set off
+    Public Function ResetAlarms() As InstrumentErrorsEnum
+
+        Dim Downloaded As New List(Of ItemClass)
+        Dim x As Integer = 1
+
+        Downloaded = RG(AlarmItems)
+        CommState = CommStateEnum.SendingClearAlarmsMessage
+
+        For Each item As ItemClass In Downloaded
+            If item.Value <> AlarmValuesEnum.NoAlarm Then
+                WD(item.Number, AlarmValuesEnum.NoAlarm)
+                If InstrumentError <> InstrumentErrorsEnum.NoError Then
+                    Throw New InstrumentCommunicationException(InstrumentError, item.Number)
+                End If
+            End If
+            x += 1
+        Next
+
+        CommState = CommStateEnum.LinkedIdle
+    End Function
+
 
     Public Function LR(ByVal ItemNumber As Integer) As Object
         Dim cmd As String
@@ -590,6 +627,7 @@ Public MustInherit Class miSerialProtocolClass
             Throw New Exception(ex.Message)
         End Try
     End Function
+
 #End Region
 
 #Region "Protected"
@@ -781,32 +819,7 @@ Public MustInherit Class miSerialProtocolClass
     End Sub
 
 
-    'Clear all alarms for the instrument
-    'First read the group of alarms and then reset them based on those that are set off
-    Protected Function ResetAlarms(ByVal Alarms As List(Of Integer)) As InstrumentErrorsEnum
 
-        Dim Items As New List(Of Integer)
-        Dim Downloaded As New Dictionary(Of Integer, String)
-        Dim item As KeyValuePair(Of Integer, String)
-        Dim x As Integer = 1
-
-        Items = Alarms
-
-        Downloaded = RG(Items)
-        CommState = CommStateEnum.SendingClearAlarmsMessage
-
-        For Each item In Downloaded
-            If item.value <> AlarmValuesEnum.NoAlarm Then
-                WD(item.Key, AlarmValuesEnum.NoAlarm)
-                If InstrumentError <> InstrumentErrorsEnum.NoError Then
-                    Throw New InstrumentCommunicationException(InstrumentError, item.Key)
-                End If
-            End If
-            x += 1
-        Next
-
-        CommState = CommStateEnum.LinkedIdle
-    End Function
 
     'A function can call this and it'll use the current value in the comm buffer
     Protected Function ParseRD() As Object
@@ -890,6 +903,18 @@ Public MustInherit Class miSerialProtocolClass
         End If
     End Function
 
+
+    'This will set _instrumentItems with attributes from our specific instrument xml files
+    Public Sub LoadInstrumentItems(xmlPath As String)
+        If xmlPath Is Nothing OrElse xmlPath = "" Then
+            Throw New Exception("Could not load instrument items.")
+        End If
+
+        _itemsXMLDocument = XDocument.Parse(xmlPath)
+        Items = (From x In _itemsXMLDocument.<InstrumentItems>.Elements("item") Select New ItemClass(x.@number, x.@shortDescription, x.@Description, Not IsNothing(x.@isAlarm))).ToList
+
+
+    End Sub
 #End Region
 
 #End Region

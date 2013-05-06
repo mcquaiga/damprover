@@ -108,18 +108,5 @@ Public Class TCIClass : Inherits miSerialProtocolClass
         End Try
     End Sub
 
-    Public Shadows Function ResetAlarms() As InstrumentErrorsEnum
-        Dim myAlarms As Array
-        Dim alarm As String
-        Dim myCollection As New List(Of Integer)
-
-        myAlarms = System.Enum.GetValues(GetType(AlarmsEnum))
-
-        For Each alarm In myAlarms
-            myCollection.Add(CInt(alarm))
-        Next
-
-        Return MyBase.ResetAlarms(myCollection)
-    End Function
 
 End Class

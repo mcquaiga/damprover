@@ -1,5 +1,7 @@
 ﻿Imports Prover.Data.ProviderModel
 Imports miSerialProtocol.InstrumentTypeCode
+Imports miSerialProtocol.BaudRateEnum
+Imports System.IO.Ports
 
 Public Interface IBaseInstrument
 
@@ -55,6 +57,10 @@ Public Interface IBaseInstrument
         YYMMDD = 2
     End Enum
 #End Region
+
+    Property InstrumentType As miSerialProtocol.InstrumentTypeCode
+    Property BaudRate As miSerialProtocol.BaudRateEnum
+    Property CommPort As String
 
 
     ReadOnly Property InstrumentGuid As Guid

@@ -151,7 +151,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\serialprotocol\miSerialProtocol\miSerialProtocol.vbproj">
+    <ProjectReference Include="..\serialprotocol\miSerialProtocol\miSerialProtocol.vbproj">
       <Project>{8c7e475a-15bb-477b-99f3-7b2abf41e43f}</Project>
       <Name>miSerialProtocol</Name>
     </ProjectReference>
