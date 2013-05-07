@@ -12,7 +12,7 @@ Public Class InstrumentCommunications
 
     Public Shared Function DownloadItemFile(Instrument As IBaseInstrument) As XElement
 
-        Select Instrument.InstrumentType
+        Select Case Instrument.InstrumentType
             Case InstrumentTypeCode.MiniMax
                 _miSerial = New miSerialProtocol.MiniMaxClass(Instrument.CommPort, Instrument.BaudRate)
             Case Else

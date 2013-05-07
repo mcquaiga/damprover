@@ -3,6 +3,9 @@
 Public Class InstrumentDataProvider
     Inherits DataProvider(Of IBaseInstrument)
 
+    Public Sub New()
+        MyBase.New()
+    End Sub
     Private Sub New(ByVal key As String, ByVal name As String, ByVal source As String, ByVal parameters As ParamDictionary)
         MyBase.New(key, name, source, parameters)
     End Sub
@@ -45,10 +48,50 @@ Public Class InstrumentDataProvider
     Private Function GetAllInstruments() As List(Of IBaseInstrument)
 
         Using Data As New InstrumentDataContext
-            Dim instruments = From inst In Data.instrs.ToList Where inst IsNot Nothing Select CreateInstrument(inst)
-            Return instruments.ToList
+            Return (From inst In Data.instrs.ToList Where inst IsNot Nothing Select CreateInstrument(inst)).ToList
+        End Using
+    End Function
+
+    Public Function GetInstrumentByGUID(InstrumentGUID As String) As IBaseInstrument
+        Dim myGuid As Guid
+        myGuid = Guid.Parse(InstrumentGUID)
+
+        Using Data As New InstrumentDataContext
+            Return (From inst In Data.instrs.ToList Where inst.instr_id = myGuid And inst IsNot Nothing Select CreateInstrument(inst)).FirstOrDefault
         End Using
 
+    End Function
+
+    Public Function GetInstrumentBySerialNumber(SerialNumber As String) As IBaseInstrument
+
+        Using Data As New InstrumentDataContext
+            Return (From inst In Data.instrs.ToList Where inst.serial_number = SerialNumber And inst IsNot Nothing Select CreateInstrument(inst)).ToList
+        End Using
 
     End Function
+
+    Public Sub UpsertInstrument(instrument As IBaseInstrument)
+
+        Using DataContext As New InstrumentDataContext
+            Dim existingInstrument = DataContext.instrs.FirstOrDefault(Function(ei) ei.instr_id = instrument.InstrumentGuid)
+
+            If existingInstrument Is Nothing Then
+                With existingInstrument
+                    .instr_id = Guid.NewGuid
+                    .date = DateTime.Now
+                End With
+            End If
+
+            With existingInstrument
+                '.data = instrument.
+                .serial_number = instrument.SerialNumber
+                .instr_type_id = instrument.InstrumentType
+                '.customer_id = instrument.
+            End With
+
+            DataContext.SaveChanges()
+        End Using
+
+    End Sub
+
 End Class

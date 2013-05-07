@@ -4,7 +4,8 @@ Module Module1
 
     Sub Main()
         'LoadCustomers()
-        loadinstruments()
+        ' loadinstruments()
+        saveInstrument()
     End Sub
 
     Public Sub LoadCustomers()
@@ -18,14 +19,20 @@ Module Module1
         InstrumentDataProvider.RegisterInstances()
         Dim i = DataCoordinator.GetData(Of IBaseInstrument)("AllInstruments", New Dictionary(Of String, Object) From {{"time", DateTime.Now()}})
 
-        'For Each x In i
-        '    'Dim y = x.Entity.GetItemValue(62)
-        '    Dim y = InstrumentCommunications.DownloadItemFile(x.EntityAsObject)
-        'Next
-
         Dim myInstrument As New MiniMaxInstrument("COM9", miSerialProtocol.BaudRateEnum.b38400)
         Dim y = InstrumentCommunications.DownloadItemFile(myInstrument)
 
     End Sub
 
+    Public Sub saveinstrument()
+        ' Dim myinstrument As New MiniMaxInstrument("COM9", miSerialProtocol.BaudRateEnum.b38400)
+        Dim myprovider As New InstrumentDataProvider
+
+        Dim i = myprovider.GetInstrumentByGUID("9a16a25a-eb0b-4ad6-95bd-8583771673d4")
+        'InstrumentDataProvider.RegisterInstances()
+        'Dim i = DataCoordinator.GetData(Of IBaseInstrument)("AllInstruments", New Dictionary(Of String, Object) From {{"time", DateTime.Now()}})
+
+        'myinstrument.ItemFile = InstrumentCommunications.DownloadItemFile(myinstrument)
+        myprovider.UpsertInstrument(i)
+    End Sub
 End Module

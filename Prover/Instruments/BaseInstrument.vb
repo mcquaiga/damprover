@@ -9,7 +9,6 @@ Public Class BaseInstrument
 
     'This class is responsible for holding values downloaded from the instrument and Temperature and Pressure Classes
     Protected _instrumentXml As XDocument
-    Protected _fileXmlNode As XElement
     Private _instrument As Model.instr
 
     Sub New()
@@ -24,7 +23,7 @@ Public Class BaseInstrument
         _instrument = instrument
         _instrumentType = _instrument.instr_type_id
         _instrumentXml = XDocument.Parse(_instrument.data)
-        _fileXmlNode = _instrumentXml.<instrumentFile>.FirstOrDefault()
+        ItemFile = _instrumentXml.<instrumentFile>.FirstOrDefault()
 
     End Sub
 
@@ -40,24 +39,19 @@ Public Class BaseInstrument
         End Get
     End Property
 
-    Public ReadOnly Property InstrumentDriveType() As IBaseInstrument.DriveType Implements IBaseInstrument.InstrumentDriveType
-        Get
-            Return _instrument.meter_index_id
-        End Get
-    End Property
+    Public Property InstrumentDriveType() As IBaseInstrument.DriveType Implements IBaseInstrument.InstrumentDriveType
+    Public Property ItemFile As XElement Implements IBaseInstrument.ItemFile
+    Public Property InspectionID As Integer Implements IBaseInstrument.InspectionID
 
     Public ReadOnly Property SerialNumber As String Implements IBaseInstrument.SerialNumber
         Get
-            Return _instrument.serial_number
+            If _instrument Is Nothing Then
+                Return GetItemValue(62)
+            Else
+                Return _instrument.serial_number
+            End If
         End Get
     End Property
-
-    Public ReadOnly Property InspectionID As Integer Implements IBaseInstrument.InspectionID
-        Get
-            Return _instrument.inspection_id
-        End Get
-    End Property
-
 
 
     Public ReadOnly Property PulseASelect() As IBaseInstrument.PulseOutputValues Implements IBaseInstrument.PulseASelect
@@ -76,8 +70,14 @@ Public Class BaseInstrument
 
         'Dim instrument As XElement
         'Dim instrument = .FirstOrDefault()
+        Dim y As XElement
 
-        Dim y As XElement = (From x In _fileXmlNode.Elements("item") Where x.Attribute("number").Value = CStr(ItemNumber) Select x).First
+        Try
+            y = (From x In ItemFile.Elements("item") Where x.Attribute("number").Value = CStr(ItemNumber) And x IsNot Nothing Select x).First
+        Catch ex As Exception
+            Return Nothing
+        End Try
+
         Return y.Attribute("value").Value
 
     End Function

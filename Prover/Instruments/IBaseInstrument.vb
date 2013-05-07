@@ -62,12 +62,13 @@ Public Interface IBaseInstrument
     Property BaudRate As miSerialProtocol.BaudRateEnum
     Property CommPort As String
 
+    Property ItemFile As XElement
 
     ReadOnly Property InstrumentGuid As Guid
-    ReadOnly Property InstrumentDriveType As DriveType
-
     ReadOnly Property SerialNumber As String
-    ReadOnly Property InspectionID As Integer
+
+    Property InstrumentDriveType As DriveType
+    Property InspectionID As Integer
 
     ReadOnly Property PulseASelect As PulseOutputValues
     ReadOnly Property PulseBSelect As PulseOutputValues

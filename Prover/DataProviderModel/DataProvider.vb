@@ -15,6 +15,10 @@
             _source = source
         End Sub
 
+        Protected Sub New()
+
+        End Sub
+
         Public ReadOnly Property ElementType() As System.Type Implements IDataProvider.ElementType
             Get
                 Return GetType(TElement)

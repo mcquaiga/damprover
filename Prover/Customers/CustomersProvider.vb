@@ -43,7 +43,23 @@ Public Class CustomersProvider
             Dim customers = From customer In Data.customers.ToList Where customer IsNot Nothing Select CreateICustomer(customer)
             Return customers.ToList
         End Using
+    End Function
 
+    Private Function GetCustomerByID(customerID As Integer) As ICustomers
+
+        Using Data As New CustomerDataContext
+            Return (From c In Data.customers.ToList Where c.customer_id = customerID And c IsNot Nothing Select CreateICustomer(c)).First
+        End Using
 
     End Function
+
+    Private Function GetCustomerByName(customerName As String) As ICustomers
+
+        Using Data As New CustomerDataContext
+            Return (From c In Data.customers.ToList Where c.name = customerName And c IsNot Nothing Select CreateICustomer(c)).First
+        End Using
+
+    End Function
+
+
 End Class
