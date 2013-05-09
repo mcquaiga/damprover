@@ -126,8 +126,6 @@ Public MustInherit Class miSerialProtocolClass
     'Using the new SerialPort class that comes with VB 2005, it seems to be alot more robust then the
     'previous MSComm Control
     Protected WithEvents comm As System.IO.Ports.SerialPort
-
-    Protected _instrumentItems As List(Of ItemClass)
     'Communication Port Settings
     'These must be set before calling connect or trying to open the serial port
     Protected i_CommPort As String
@@ -215,13 +213,6 @@ Public MustInherit Class miSerialProtocolClass
 
 #Region "Properties"
 
-    Public Property Items As List(Of ItemClass)
-
-    Public ReadOnly Property AlarmItems As List(Of ItemClass)
-        Get
-            Return (From alarms In Items Where alarms.IsAlarm = True)
-        End Get
-    End Property
 
     Public Property Port() As String
         Get
@@ -519,16 +510,16 @@ Public MustInherit Class miSerialProtocolClass
     End Function
 
     'Public Function RG(ByVal Items As Collection, ByRef Downloaded As Collection) As InstrumentErrorsEnum
-    Public Function RG(ByVal Items As List(Of ItemClass)) As List(Of ItemClass)
+    Public Function RG(ByVal Items As List(Of Integer)) As Dictionary(Of Integer, String)
         Dim cmd As String = ""
         Dim temp_collection As New Collection
         Dim item_num, y, temp, count As Integer
 
-        Dim temp_items As New List(Of ItemClass)
+        Dim temp_items As New List(Of Integer)
         Dim temp_counter As Integer
         Dim x As Integer = 0
 
-        Dim Downloaded As New List(Of ItemClass)
+        Dim Downloaded As New Dictionary(Of Integer, String)
 
 
         comm.DiscardInBuffer()
@@ -560,7 +551,7 @@ Public MustInherit Class miSerialProtocolClass
             temp_items.Clear()
 
             Do While x < count
-                cmd = cmd & CStr(Items(x).Number).PadLeft(3, "0") & ","
+                cmd = cmd & CStr(Items(x)).PadLeft(3, "0") & ","
                 temp_items.Add(Items(x))
                 x += 1
                 item_num += 1
@@ -575,7 +566,7 @@ Public MustInherit Class miSerialProtocolClass
             For Each rg_item As Object In ParseRG(CommBuffer)
                 Console.Write("Read:" & rg_item & vbNewLine)
                 If rg_item <> "! Unsupported" Then
-                    Downloaded.Add(New ItemClass(temp_items.Item(temp_counter).Number, Nothing, Nothing, False, CStr(rg_item)))
+                    Downloaded.Add(temp_items.Item(temp_counter), CStr(rg_item))
                 End If
                 temp_counter += 1
             Next
@@ -590,19 +581,19 @@ Public MustInherit Class miSerialProtocolClass
 
     'Clear all alarms for the instrument
     'First read the group of alarms and then reset them based on those that are set off
-    Public Function ResetAlarms() As InstrumentErrorsEnum
+    Public Function ResetAlarms(ByVal Items As List(Of Integer)) As InstrumentErrorsEnum
 
-        Dim Downloaded As New List(Of ItemClass)
+        Dim Downloaded As New Dictionary(Of Integer, String)
         Dim x As Integer = 1
 
-        Downloaded = RG(AlarmItems)
+        Downloaded = RG(Items)
         CommState = CommStateEnum.SendingClearAlarmsMessage
 
-        For Each item As ItemClass In Downloaded
+        For Each item As KeyValuePair(Of Integer, String) In Downloaded
             If item.Value <> AlarmValuesEnum.NoAlarm Then
-                WD(item.Number, AlarmValuesEnum.NoAlarm)
+                WD(item.Key, AlarmValuesEnum.NoAlarm)
                 If InstrumentError <> InstrumentErrorsEnum.NoError Then
-                    Throw New InstrumentCommunicationException(InstrumentError, item.Number)
+                    Throw New InstrumentCommunicationException(InstrumentError, item.Key)
                 End If
             End If
             x += 1
@@ -904,17 +895,6 @@ Public MustInherit Class miSerialProtocolClass
     End Function
 
 
-    'This will set _instrumentItems with attributes from our specific instrument xml files
-    Public Sub LoadInstrumentItems(xmlPath As String)
-        If xmlPath Is Nothing OrElse xmlPath = "" Then
-            Throw New Exception("Could not load instrument items.")
-        End If
-
-        _itemsXMLDocument = XDocument.Parse(xmlPath)
-        Items = (From x In _itemsXMLDocument.<InstrumentItems>.Elements("item") Select New ItemClass(x.@number, x.@shortDescription, x.@Description, Not IsNothing(x.@isAlarm))).ToList
-
-
-    End Sub
 #End Region
 
 #End Region

@@ -34,7 +34,6 @@ Public Class MiniMaxClass : Inherits miSerialProtocolClass
     Sub New(ByVal PortName As String, ByVal BaudRate As BaudRateEnum)
         MyBase.New(PortName, BaudRate)
         Me.Instrument = InstrumentTypeCode.MiniMax
-        Me.LoadInstrumentItems()
     End Sub
 
     Public Shadows Sub Connect()
@@ -45,9 +44,6 @@ Public Class MiniMaxClass : Inherits miSerialProtocolClass
         End Try
     End Sub
 
-    Protected Overloads Sub LoadInstrumentItems()
-        Dim _xml = File.ReadAllText(My.Application.Info.DirectoryPath + "\MiniMaxItems.xml")
-        MyBase.LoadInstrumentItems(_xml)
-    End Sub
+
 
 End Class

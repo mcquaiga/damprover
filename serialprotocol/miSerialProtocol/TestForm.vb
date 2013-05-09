@@ -106,19 +106,19 @@ Public Class TestForm
 
     Private Sub Button2_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button2.Click
 
-        Try
-            If Not mini Is Nothing Then
-                mini.ResetAlarms()
-            ElseIf Not max Is Nothing Then
-                max.ResetAlarms()
-            ElseIf Not ec Is Nothing Then
-                ec.ResetAlarms()
-            ElseIf Not tci Is Nothing Then
-                tci.ResetAlarms()
-            End If
-        Catch ex As Exception
-            MessageBox.Show(ex.Message)
-        End Try
+        'Try
+        '    If Not mini Is Nothing Then
+        '        mini.ResetAlarms()
+        '    ElseIf Not max Is Nothing Then
+        '        max.ResetAlarms()
+        '    ElseIf Not ec Is Nothing Then
+        '        ec.ResetAlarms()
+        '    ElseIf Not tci Is Nothing Then
+        '        tci.ResetAlarms()
+        '    End If
+        'Catch ex As Exception
+        '    MessageBox.Show(ex.Message)
+        'End Try
 
     End Sub
 

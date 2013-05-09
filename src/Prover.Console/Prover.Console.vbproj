@@ -145,13 +145,17 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Prover\Prover.Data.vbproj">
-      <Project>{f397ca27-ec97-4b98-b8cf-e60eb1f399b9}</Project>
-      <Name>Prover.Data</Name>
+    <ProjectReference Include="..\..\Prover.Instruments.Data\Prover.Instruments.Data.vbproj">
+      <Project>{4a9fb13d-8615-4fb5-858b-7ecb3f0ddee0}</Project>
+      <Name>Prover.Instruments.Data</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\serialprotocol\miSerialProtocol\miSerialProtocol.vbproj">
+    <ProjectReference Include="..\..\Prover\Prover.vbproj">
+      <Project>{f397ca27-ec97-4b98-b8cf-e60eb1f399b9}</Project>
+      <Name>Prover</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\serialprotocol\miSerialProtocol\Prover.SerialProtocol.vbproj">
       <Project>{8c7e475a-15bb-477b-99f3-7b2abf41e43f}</Project>
-      <Name>miSerialProtocol</Name>
+      <Name>Prover.SerialProtocol</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
