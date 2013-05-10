@@ -35,32 +35,17 @@ Public Class PressureFactorClass
     End Enum
 #End Region
 
-    Private pGaugePressure As Double
-    Private pAtmosphericPressure As Double
-    Private pBasePressure As Double
-    Private pUnits As UnitsEnum
-    Private pPreviousUnits As UnitsEnum
-    Private pEVCPressure As Double
-    Private pEVCFactor As Double
-    Private pEVcUnsqr As Double
+    Public Property PressureItems As List(Of ItemClass)
+    Private Property ItemsXMLPath As String
 
-    Private pTransducerType As TransducerType
-
-    Sub New()
-
+    Sub New(PathToItemsXML As String)
+        ItemsXMLPath = PathToItemsXML
+        SetPressureItems()
     End Sub
 
-    Sub New(ByVal PressureItems As Collection)
-        Me.Initialize(PressureItems)
-    End Sub
-
-
-    Sub New(ByVal Transducer As TransducerType, ByVal PressureUnits As UnitsEnum, ByVal GaugePressure As Double, ByVal AtmosphericPressure As Double, ByVal BasePressure As Double)
-        pGaugePressure = GaugePressure
-        pAtmosphericPressure = AtmosphericPressure
-        pBasePressure = BasePressure
-        Me.PressureUnits = PressureUnits
-        Me.Transducer = Transducer
+    Sub New(PathToItemsXML As String, ByVal PressureXml As XElement)
+        ItemsXMLPath = PathToItemsXML
+        SetPressureItems()
     End Sub
 
 
@@ -168,6 +153,12 @@ Public Class PressureFactorClass
 
 #Region "Methods"
 
+    Public Function SetPressureItems()
+        PressureItems = (From p In ItemClass.LoadInstrumentItems(ItemsXmlPath) Where p.IsPressure = True).ToList
+
+    End Function
+
+
     'Convert any values to PSI so we can calculate other unit values
     'I may move this to a conversion class in the future so everything can use it
     Public Function Convert(ByVal pValue As Double) As Double
@@ -269,38 +260,7 @@ Public Class PressureFactorClass
         XmlWriter.WriteEndElement()
     End Sub
 
-    'Call this to set the properties of this class
-    'Items in the collection must correspond to the PressureEnum from the TestClass
-    Public Sub Initialize(ByVal Items As Collection)
-        Dim ItemNumbers As Array = System.Enum.GetValues(GetType(PressureItemsEnum))
-        Dim x As Integer
-        Dim ItemName As PressureItemsEnum
-
-        'If ItemNumbers.Length = Items.Count Then
-        '    For Each item As miSerialProtocol.ItemClass In Items
-        '        ItemName = ItemNumbers(x)
-        '        Select Case ItemName
-        '            Case PressureItemsEnum.AtmPressure
-        '                Me.AtmosphericPressure = item.value
-        '            Case PressureItemsEnum.UnsquaredSuperFactor
-        '                Me.EVCUnsqr = item.value
-        '            Case PressureItemsEnum.BasePressure
-        '                Me.BasePressure = item.value
-        '            Case PressureItemsEnum.GasPressure
-        '                Me.EVCPressure = item.value
-        '            Case PressureItemsEnum.PressureUnits
-        '                Me.pUnits = item.value
-        '                Me.pPreviousUnits = item.value
-        '            Case PressureItemsEnum.TransducerType
-        '                Me.Transducer = item.value
-        '            Case PressureItemsEnum.PressureFactor
-        '                Me.EVCFactor = item.value
-        '        End Select
-        '        x += 1
-        '    Next
-        'End If
-    End Sub
-
+  
 #End Region
 
 End Class

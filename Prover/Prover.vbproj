@@ -158,10 +158,6 @@
       <Project>{618af5d8-a289-4ea0-9584-c411b213ef22}</Project>
       <Name>Prover.Model</Name>
     </ProjectReference>
-    <ProjectReference Include="..\src\Prover.Instruments\Prover.Instruments.vbproj">
-      <Project>{6290e240-4ef2-44db-bcf7-2d58fdb99cca}</Project>
-      <Name>Prover.Instruments</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />

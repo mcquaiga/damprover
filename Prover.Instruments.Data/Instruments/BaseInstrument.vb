@@ -32,6 +32,9 @@ Public Class BaseInstrument
     Public Property BaudRate As miSerialProtocol.BaudRateEnum Implements IBaseInstrument.BaudRate
     Public Property CommPort As String Implements IBaseInstrument.CommPort
     Public Property InstrumentType As miSerialProtocol.InstrumentTypeCode Implements IBaseInstrument.InstrumentType
+    Public Property PressureData As PressureFactorClass
+    Public Property TemperatureData As TemperatureClass
+    Public Property VolumeData As IVolume
 
     Public ReadOnly Property InstrumenGuID() As Guid Implements IBaseInstrument.InstrumentGuid
         Get
@@ -55,7 +58,7 @@ Public Class BaseInstrument
 
     Public ReadOnly Property SerialNumber As String Implements IBaseInstrument.SerialNumber
         Get
-            Return GetItemValue(GetItemNumberByCode("SERIALNUM"))
+            Return GetItemValue((From i In Items Where i.Code = "SERIALNUM").FirstOrDefault.Number)
         End Get
     End Property
 
@@ -72,8 +75,10 @@ Public Class BaseInstrument
         End Get
     End Property
 
-    Public Function GetItemValue(ItemNumber As Integer) As String Implements IBaseInstrument.GetItemValue
+
+    Public Overridable Function GetItemValue(ItemNumber As Integer) As String Implements IBaseInstrument.GetItemValue
         Dim y As XElement
+
         Try
             y = (From x In ItemFile.Elements("item") Where x.Attribute("number").Value = CStr(ItemNumber) And x IsNot Nothing Select x).First
         Catch ex As Exception
@@ -82,37 +87,6 @@ Public Class BaseInstrument
         Return y.Attribute("value").Value
 
     End Function
-
-    Public Function GetItemNumberByCode(Code As String) As Integer
-        Try
-            Return ((From i In Items Where i.Code = CStr(Code) And i IsNot Nothing Select i).First).Number
-        Catch ex As Exception
-            Return Nothing
-        End Try
-    End Function
-
-
-#Region "Shared Stuff"
-
-    Public Shared Function GetItemNumberByCode(Items As List(Of ItemClass), Code As String) As Integer
-        Try
-            Return ((From i In Items Where i.Code = CStr(Code) And i IsNot Nothing Select i).First).Number
-        Catch ex As Exception
-            Return Nothing
-        End Try
-    End Function
-
-    'This will set _instrumentItems with attributes from our specific instrument xml files
-    Public Shared Function LoadInstrumentItems(xmlPath As String) As List(Of ItemClass)
-        If xmlPath Is Nothing OrElse xmlPath = "" Then
-            Throw New Exception("Could not load instrument items.")
-        End If
-
-        Dim _xmlElement = XDocument.Load(xmlPath)
-        Return (From x In _xmlElement.<InstrumentItems>.Elements("item") Select New ItemClass(x.@number, x.@code, x.@shortDescription, x.@Description, Not IsNothing(x.@isAlarm))).ToList
-    End Function
-#End Region
-
 
 #End Region
 

@@ -21,7 +21,7 @@ Public Class MiniMaxInstrument : Inherits BaseInstrument
 
 
     Overloads Shared Function LoadInstrumentItems() As List(Of ItemClass)
-        Return BaseInstrument.LoadInstrumentItems(My.Application.Info.DirectoryPath + "\MiniMaxItems.xml")
+        Return ItemClass.LoadInstrumentItems(My.Application.Info.DirectoryPath + "\MiniMaxItems.xml")
     End Function
 
 #End Region

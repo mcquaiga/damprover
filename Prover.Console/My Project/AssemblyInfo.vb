@@ -8,17 +8,17 @@ Imports System.Runtime.InteropServices
 
 ' Review the values of the assembly attributes
 
-<Assembly: AssemblyTitle("DamProverConsoleTest")> 
+<Assembly: AssemblyTitle("Prover.Console")> 
 <Assembly: AssemblyDescription("")> 
 <Assembly: AssemblyCompany("Microsoft")> 
-<Assembly: AssemblyProduct("DamProverConsoleTest")> 
+<Assembly: AssemblyProduct("Prover.Console")> 
 <Assembly: AssemblyCopyright("Copyright © Microsoft 2013")> 
 <Assembly: AssemblyTrademark("")> 
 
 <Assembly: ComVisible(False)>
 
 'The following GUID is for the ID of the typelib if this project is exposed to COM
-<Assembly: Guid("6c37357d-6621-45e0-8889-ae712f8ad237")> 
+<Assembly: Guid("85c801d5-324f-46b4-9222-348199eef237")> 
 
 ' Version information for an assembly consists of the following four values:
 '
