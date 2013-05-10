@@ -8,12 +8,15 @@ Public Class MiniMaxInstrument : Inherits BaseInstrument
 
     Sub New(commPort As String, BaudRate As BaudRateEnum)
         MyBase.New(commPort, BaudRate)
+
         InstrumentType = InstrumentTypeCode.MiniMax
         Items = LoadInstrumentItems()
     End Sub
 
     Sub New(instrument As Prover.Model.instr)
         MyBase.New(instrument)
+        _pathToItemXML = My.Application.Info.DirectoryPath + "\MiniMaxItems.xml"
+        Items = LoadInstrumentItems()
     End Sub
 
 

@@ -9,6 +9,7 @@ Public Class BaseInstrument
 
     'This class is responsible for holding values downloaded from the instrument and Temperature and Pressure Classes
     Protected _instrumentXml As XDocument
+    Protected _pathToItemXML As String
     Private _instrument As Model.instr
 
     Sub New()
@@ -23,7 +24,7 @@ Public Class BaseInstrument
         _instrument = instrument
         _instrumentType = _instrument.instr_type_id
         _instrumentXml = XDocument.Parse(_instrument.data)
-        ItemFile = _instrumentXml.<instrumentFile>.FirstOrDefault()
+        ItemFile = _instrumentXml.<Instrument>.Elements("instrumentFile").FirstOrDefault()
     End Sub
 
 #Region "Properties"
@@ -32,9 +33,11 @@ Public Class BaseInstrument
     Public Property BaudRate As miSerialProtocol.BaudRateEnum Implements IBaseInstrument.BaudRate
     Public Property CommPort As String Implements IBaseInstrument.CommPort
     Public Property InstrumentType As miSerialProtocol.InstrumentTypeCode Implements IBaseInstrument.InstrumentType
-    Public Property PressureData As PressureFactorClass
     Public Property TemperatureData As TemperatureClass
     Public Property VolumeData As IVolume
+    Public Property InstrumentDriveType() As IBaseInstrument.DriveType Implements IBaseInstrument.InstrumentDriveType
+    Public Property ItemFile As XElement Implements IBaseInstrument.ItemFile
+    Public Property InspectionID As Integer Implements IBaseInstrument.InspectionID
 
     Public ReadOnly Property InstrumenGuID() As Guid Implements IBaseInstrument.InstrumentGuid
         Get
@@ -52,13 +55,11 @@ Public Class BaseInstrument
         End Get
     End Property
 
-    Public Property InstrumentDriveType() As IBaseInstrument.DriveType Implements IBaseInstrument.InstrumentDriveType
-    Public Property ItemFile As XElement Implements IBaseInstrument.ItemFile
-    Public Property InspectionID As Integer Implements IBaseInstrument.InspectionID
+
 
     Public ReadOnly Property SerialNumber As String Implements IBaseInstrument.SerialNumber
         Get
-            Return GetItemValue((From i In Items Where i.Code = "SERIALNUM").FirstOrDefault.Number)
+            Return GetItemValue((From i In Items Where i.Code = "SERIAL_NUM").FirstOrDefault.Number)
         End Get
     End Property
 
@@ -88,6 +89,16 @@ Public Class BaseInstrument
 
     End Function
 
+
+    Public ReadOnly Property PressureTests As List(Of PressureFactorClass) Implements IBaseInstrument.PressureTests
+        Get
+            Return ( _
+                From p In _instrumentXml.<Instrument>.<TestResults>.<Pressure>.Elements("Test")
+                Let y As PressureFactorClass = New PressureFactorClass(_pathToItemXML, p)
+                Select y).ToList
+
+        End Get
+    End Property
 #End Region
 
 

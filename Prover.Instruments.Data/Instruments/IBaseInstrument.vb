@@ -75,6 +75,8 @@ Public Interface IBaseInstrument
 
     Property Items As List(Of ItemClass)
 
+    ReadOnly Property PressureTests As List(Of PressureFactorClass)
+
     Function GetItemValue(ItemNumber As Integer) As String
 
 

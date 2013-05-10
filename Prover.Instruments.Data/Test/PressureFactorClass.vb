@@ -36,117 +36,114 @@ Public Class PressureFactorClass
 #End Region
 
     Public Property PressureItems As List(Of ItemClass)
-    Private Property ItemsXMLPath As String
+
+    Private Property _itemsXMLPath As String
+    Private Property _pressureXElement As XElement
 
     Sub New(PathToItemsXML As String)
-        ItemsXMLPath = PathToItemsXML
+        _itemsXMLPath = PathToItemsXML
         SetPressureItems()
     End Sub
 
     Sub New(PathToItemsXML As String, ByVal PressureXml As XElement)
-        ItemsXMLPath = PathToItemsXML
+        _itemsXMLPath = PathToItemsXML
+        _pressureXElement = PressureXml
         SetPressureItems()
     End Sub
 
 
 #Region "Properties"
 
-    Public Property PressureUnits() As UnitsEnum
+    Public ReadOnly Property PressureUnits() As UnitsEnum
         Get
-            Return pUnits
+            Return Nothing '_pressureXElement.
         End Get
-        Set(ByVal value As UnitsEnum)
-            'pPreviousUnits = pUnits
-            pUnits = value
-            'GaugePressure = Convert(GaugePressure)
-            'AtmosphericPressure = Convert(AtmosphericPressure)
-            'BasePressure = Convert(BasePressure)
-        End Set
+
     End Property
 
-    Public Property GaugePressure() As Double
-        Get
-            Return pGaugePressure
-        End Get
-        Set(ByVal value As Double)
-            pGaugePressure = value
-        End Set
-    End Property
+    'Public Property GaugePressure() As Double
+    '    Get
+    '        Return pGaugePressure
+    '    End Get
+    '    Set(ByVal value As Double)
+    '        pGaugePressure = value
+    '    End Set
+    'End Property
 
-    Public Property AtmosphericPressure() As Double
-        Get
-            Return pAtmosphericPressure
-        End Get
-        Set(ByVal value As Double)
-            pAtmosphericPressure = value
-        End Set
-    End Property
+    'Public Property AtmosphericPressure() As Double
+    '    Get
+    '        Return pAtmosphericPressure
+    '    End Get
+    '    Set(ByVal value As Double)
+    '        pAtmosphericPressure = value
+    '    End Set
+    'End Property
 
-    Public Property BasePressure() As Double
-        Get
-            Return pBasePressure
-        End Get
-        Set(ByVal value As Double)
-            pBasePressure = value
-        End Set
-    End Property
+    'Public Property BasePressure() As Double
+    '    Get
+    '        Return pBasePressure
+    '    End Get
+    '    Set(ByVal value As Double)
+    '        pBasePressure = value
+    '    End Set
+    'End Property
 
-    Public Property Transducer() As TransducerType
-        Get
-            Return pTransducerType
-        End Get
-        Set(ByVal value As TransducerType)
-            pTransducerType = value
-        End Set
-    End Property
+    'Public Property Transducer() As TransducerType
+    '    Get
+    '        Return pTransducerType
+    '    End Get
+    '    Set(ByVal value As TransducerType)
+    '        pTransducerType = value
+    '    End Set
+    'End Property
 
-    Public Property EVCPressure()
-        Get
-            Return pEVCPressure
-        End Get
-        Set(ByVal value)
-            pEVCPressure = value
-        End Set
-    End Property
+    'Public Property EVCPressure()
+    '    Get
+    '        Return pEVCPressure
+    '    End Get
+    '    Set(ByVal value)
+    '        pEVCPressure = value
+    '    End Set
+    'End Property
 
-    Public Property EVCFactor()
-        Get
-            Return pEVCFactor
-        End Get
-        Set(ByVal value)
-            pEVCFactor = value
-        End Set
-    End Property
+    'Public Property EVCFactor()
+    '    Get
+    '        Return pEVCFactor
+    '    End Get
+    '    Set(ByVal value)
+    '        pEVCFactor = value
+    '    End Set
+    'End Property
 
-    Public Property EVCUnsqr() As Double
-        Get
-            Return pEVCUnsqr
-        End Get
-        Set(ByVal value As Double)
-            pEVCUnsqr = value
-        End Set
-    End Property
+    'Public Property EVCUnsqr() As Double
+    '    Get
+    '        Return pEVCUnsqr
+    '    End Get
+    '    Set(ByVal value As Double)
+    '        pEVCUnsqr = value
+    '    End Set
+    'End Property
 
-    Public ReadOnly Property PercentError() As Double
-        Get
-            Return ((EVCFactor - ActualPressureFactor) / ActualPressureFactor) * 100
-        End Get
-    End Property
+    'Public ReadOnly Property PercentError() As Double
+    '    Get
+    '        Return ((EVCFactor - ActualPressureFactor) / ActualPressureFactor) * 100
+    '    End Get
+    'End Property
 
-    Public ReadOnly Property ActualPressureFactor() As Double
-        Get
-            Dim pFactor As Double
+    'Public ReadOnly Property ActualPressureFactor() As Double
+    '    Get
+    '        Dim pFactor As Double
 
-            If BasePressure <> 0 Then
-                If Transducer = TransducerType.Absolute Then
-                    pFactor = (GaugePressure + AtmosphericPressure) / BasePressure
-                Else
-                    pFactor = (GaugePressure + AtmosphericPressure) / BasePressure
-                End If
-            End If
-            Return pFactor
-        End Get
-    End Property
+    '        If BasePressure <> 0 Then
+    '            If Transducer = TransducerType.Absolute Then
+    '                pFactor = (GaugePressure + AtmosphericPressure) / BasePressure
+    '            Else
+    '                pFactor = (GaugePressure + AtmosphericPressure) / BasePressure
+    '            End If
+    '        End If
+    '        Return pFactor
+    '    End Get
+    'End Property
 
     
 #End Region
@@ -154,7 +151,7 @@ Public Class PressureFactorClass
 #Region "Methods"
 
     Public Function SetPressureItems()
-        PressureItems = (From p In ItemClass.LoadInstrumentItems(ItemsXmlPath) Where p.IsPressure = True).ToList
+        PressureItems = (From p In ItemClass.LoadInstrumentItems(_itemsXMLPath) Where p.IsPressure = True).ToList
 
     End Function
 
@@ -163,55 +160,55 @@ Public Class PressureFactorClass
     'I may move this to a conversion class in the future so everything can use it
     Public Function Convert(ByVal pValue As Double) As Double
 
-        'Convert to PSI
-        Select Case pPreviousUnits
-            Case UnitsEnum.BAR
-                pValue = pValue / (6.894757 * 10 ^ -2)
-            Case UnitsEnum.inWC
-                pValue = pValue / 27.68067
-            Case UnitsEnum.KGcm2
-                pValue = pValue / (7.030696 * 10 ^ -2)
-            Case UnitsEnum.kPa
-                pValue = pValue / 6.894757
-            Case UnitsEnum.mBAR
-                pValue = pValue / (6.894757 * 10 ^ 1)
-            Case UnitsEnum.mPa
-                pValue = pValue / (6.894757 * 10 ^ -3)
-            Case UnitsEnum.PSIA
-                pValue = pValue / 1
-            Case UnitsEnum.PSIG
-                pValue = pValue / 1
-            Case UnitsEnum.inHG
-                pValue = pValue / 2.03602
-            Case UnitsEnum.mmHG
-                pValue = pValue / 51.71492
-        End Select
+        ''Convert to PSI
+        'Select Case pPreviousUnits
+        '    Case UnitsEnum.BAR
+        '        pValue = pValue / (6.894757 * 10 ^ -2)
+        '    Case UnitsEnum.inWC
+        '        pValue = pValue / 27.68067
+        '    Case UnitsEnum.KGcm2
+        '        pValue = pValue / (7.030696 * 10 ^ -2)
+        '    Case UnitsEnum.kPa
+        '        pValue = pValue / 6.894757
+        '    Case UnitsEnum.mBAR
+        '        pValue = pValue / (6.894757 * 10 ^ 1)
+        '    Case UnitsEnum.mPa
+        '        pValue = pValue / (6.894757 * 10 ^ -3)
+        '    Case UnitsEnum.PSIA
+        '        pValue = pValue / 1
+        '    Case UnitsEnum.PSIG
+        '        pValue = pValue / 1
+        '    Case UnitsEnum.inHG
+        '        pValue = pValue / 2.03602
+        '    Case UnitsEnum.mmHG
+        '        pValue = pValue / 51.71492
+        'End Select
 
-        'Convert from PSI to the requested Units
-        Select Case PressureUnits
-            Case UnitsEnum.BAR
-                pValue = pValue * (6.894757 * 10 ^ -2)
-            Case UnitsEnum.inWC
-                pValue = pValue * 27.68067
-            Case UnitsEnum.KGcm2
-                pValue = pValue * (7.030696 * 10 ^ -2)
-            Case UnitsEnum.kPa
-                pValue = pValue * 6.894757
-            Case UnitsEnum.mBAR
-                pValue = pValue * (6.894757 * 10 ^ 1)
-            Case UnitsEnum.mPa
-                pValue = pValue * (6.894757 * 10 ^ -3)
-            Case UnitsEnum.PSIA
-                pValue = pValue * 1
-            Case UnitsEnum.PSIG
-                pValue = pValue * 1
-            Case UnitsEnum.inHG
-                pValue = pValue * 2.03602
-            Case UnitsEnum.mmHG
-                pValue = pValue * 51.71492
-        End Select
+        ''Convert from PSI to the requested Units
+        'Select Case PressureUnits
+        '    Case UnitsEnum.BAR
+        '        pValue = pValue * (6.894757 * 10 ^ -2)
+        '    Case UnitsEnum.inWC
+        '        pValue = pValue * 27.68067
+        '    Case UnitsEnum.KGcm2
+        '        pValue = pValue * (7.030696 * 10 ^ -2)
+        '    Case UnitsEnum.kPa
+        '        pValue = pValue * 6.894757
+        '    Case UnitsEnum.mBAR
+        '        pValue = pValue * (6.894757 * 10 ^ 1)
+        '    Case UnitsEnum.mPa
+        '        pValue = pValue * (6.894757 * 10 ^ -3)
+        '    Case UnitsEnum.PSIA
+        '        pValue = pValue * 1
+        '    Case UnitsEnum.PSIG
+        '        pValue = pValue * 1
+        '    Case UnitsEnum.inHG
+        '        pValue = pValue * 2.03602
+        '    Case UnitsEnum.mmHG
+        '        pValue = pValue * 51.71492
+        'End Select
 
-        Return pValue
+        'Return pValue
     End Function
 
 
@@ -245,19 +242,19 @@ Public Class PressureFactorClass
     End Function
 
     Public Sub WriteToXML(ByVal XmlWriter As Xml.XmlWriter)
-        XmlWriter.WriteStartElement("Pressure")
+        'XmlWriter.WriteStartElement("Pressure")
 
-        XmlWriter.WriteElementString("Pressure", GaugePressure)
-        XmlWriter.WriteElementString("AtmPressure", AtmosphericPressure)
-        XmlWriter.WriteElementString("BasePressure", BasePressure)
-        XmlWriter.WriteElementString("PressureUnits", PressureUnits.ToString)
-        XmlWriter.WriteElementString("TransducerType", Transducer.ToString)
-        XmlWriter.WriteElementString("EVCPressure", Me.EVCPressure)
-        XmlWriter.WriteElementString("EVCFactor", Me.EVCFactor)
-        XmlWriter.WriteElementString("PercentError", Me.PercentError)
-        XmlWriter.WriteElementString("ActualPressureFactor", ActualPressureFactor)
+        'XmlWriter.WriteElementString("Pressure", GaugePressure)
+        'XmlWriter.WriteElementString("AtmPressure", AtmosphericPressure)
+        'XmlWriter.WriteElementString("BasePressure", BasePressure)
+        'XmlWriter.WriteElementString("PressureUnits", PressureUnits.ToString)
+        'XmlWriter.WriteElementString("TransducerType", Transducer.ToString)
+        'XmlWriter.WriteElementString("EVCPressure", Me.EVCPressure)
+        'XmlWriter.WriteElementString("EVCFactor", Me.EVCFactor)
+        'XmlWriter.WriteElementString("PercentError", Me.PercentError)
+        'XmlWriter.WriteElementString("ActualPressureFactor", ActualPressureFactor)
 
-        XmlWriter.WriteEndElement()
+        'XmlWriter.WriteEndElement()
     End Sub
 
   

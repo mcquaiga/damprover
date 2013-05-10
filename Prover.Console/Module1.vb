@@ -6,7 +6,7 @@ Module Module1
     Sub Main()
         'LoadCustomers()
         ' loadinstruments()
-        saveinstrument()
+        'saveinstrument()
         InstrumentByGuid()
     End Sub
 
@@ -28,7 +28,9 @@ Module Module1
 
     Public Sub InstrumentByGuid()
         Dim i = New InstrumentDataProvider()
-        Dim it = i.GetInstrumentByGUID("14405968-ae84-43af-9821-2c6da6ddd462")
+        Dim it = i.GetInstrumentByGUID("9a16a25a-eb0b-4ad6-95bd-8583771673d4")
+        Dim se = it.SerialNumber
+        Dim x = it.PressureTests.Count
     End Sub
 
     Public Sub saveinstrument()
