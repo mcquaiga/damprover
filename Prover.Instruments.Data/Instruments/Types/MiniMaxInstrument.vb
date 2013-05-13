@@ -1,33 +1,34 @@
 Imports MiserialProtocol
 Imports Prover.Data.ProviderModel
 
-Public Class MiniMaxInstrument : Inherits BaseInstrument
-
-    Public MiniMax As miSerialProtocol.MiniMaxClass
+Namespace Instruments.Data
 
 
-    Sub New(commPort As String, BaudRate As BaudRateEnum)
-        MyBase.New(commPort, BaudRate)
+    Public Class MiniMaxInstrument : Inherits BaseInstrument
 
-        InstrumentType = InstrumentTypeCode.MiniMax
-        Items = LoadInstrumentItems()
-    End Sub
+        Sub New()
+            MyBase.New()
 
-    Sub New(instrument As Prover.Model.instr)
-        MyBase.New(instrument)
-        _pathToItemXML = My.Application.Info.DirectoryPath + "\MiniMaxItems.xml"
-        Items = LoadInstrumentItems()
-    End Sub
+            InstrumentType = InstrumentTypeCode.MiniMax
+            'Items = LoadInstrumentItems()
+        End Sub
+
+        Sub New(instrument As Prover.Model.instr)
+            MyBase.New(instrument)
+            _pathToItemXML = My.Application.Info.DirectoryPath + "\MiniMaxItems.xml"
+            'Items = LoadInstrumentItems()
+        End Sub
 
 
 #Region "Methods"
 
 
-    Overloads Shared Function LoadInstrumentItems() As List(Of ItemClass)
-        Return ItemClass.LoadInstrumentItems(My.Application.Info.DirectoryPath + "\MiniMaxItems.xml")
-    End Function
+        Overloads Shared Function LoadInstrumentItems() As List(Of ItemClass)
+            Return ItemClass.LoadInstrumentItems(My.Application.Info.DirectoryPath + "\MiniMaxItems.xml")
+        End Function
 
 #End Region
 
 
-End Class
+    End Class
+End Namespace

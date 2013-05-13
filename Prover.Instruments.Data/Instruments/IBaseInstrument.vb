@@ -2,6 +2,9 @@
 Imports miSerialProtocol.InstrumentTypeCode
 Imports miSerialProtocol.BaudRateEnum
 Imports System.IO.Ports
+Imports Newtonsoft.Json
+Imports Newtonsoft.Json.Linq
+
 
 Public Interface IBaseInstrument
 
@@ -59,23 +62,22 @@ Public Interface IBaseInstrument
 #End Region
 
     Property InstrumentType As miSerialProtocol.InstrumentTypeCode
-    Property BaudRate As miSerialProtocol.BaudRateEnum
-    Property CommPort As String
-
-    Property ItemFile As XElement
 
     ReadOnly Property InstrumentGuid As Guid
     ReadOnly Property SerialNumber As String
-
     Property InstrumentDriveType As DriveType
-    Property InspectionID As Integer
+
+    Property ID As String
+    Property CreatedDate As DateTime?
+
+    Property ItemFile As Dictionary(Of Integer, String)
+    Property PressureTests As List(Of PressureFactorClass)
+    Property TemperateTests As List(Of TemperatureClass)
+    Property VolumeTests As List(Of Volume)
 
     ReadOnly Property PulseASelect As PulseOutputValues
     ReadOnly Property PulseBSelect As PulseOutputValues
-
-    Property Items As List(Of ItemClass)
-
-    ReadOnly Property PressureTests As List(Of PressureFactorClass)
+    Property InspectionID As Integer
 
     Function GetItemValue(ItemNumber As Integer) As String
 

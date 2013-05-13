@@ -45,6 +45,7 @@ Public Enum InstrumentTypeCode
     TurboMon = 6
     PulseAcc = 8
     TCI = 12
+    EC300 = 13
     ER = 1
     ERX = 10
     PTBoard = 5

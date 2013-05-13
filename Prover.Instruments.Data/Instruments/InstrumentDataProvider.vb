@@ -1,89 +1,71 @@
 ﻿Imports Prover.Data.ProviderModel
+Imports Newtonsoft.Json
+Imports Newtonsoft.Json.Linq
+Imports Raven.Client.Document
+Imports Raven.Client.Linq
+Imports Prover.Instruments.Data
 
-Public Class InstrumentDataProvider
-    Inherits DataProvider(Of IBaseInstrument)
+Namespace Instruments.Data
+    Public Class InstrumentDataProvider
+        Inherits DataProvider(Of IBaseInstrument)
 
-    Public Sub New()
-        MyBase.New()
-    End Sub
-    Private Sub New(ByVal key As String, ByVal name As String, ByVal source As String, ByVal parameters As ParamDictionary)
-        MyBase.New(key, name, source, parameters)
-    End Sub
+        Public Sub New()
+            MyBase.New()
+        End Sub
+        Private Sub New(ByVal key As String, ByVal name As String, ByVal source As String, ByVal parameters As ParamDictionary)
+            MyBase.New(key, name, source, parameters)
+        End Sub
 
-    Public Shared Sub RegisterInstances()
-        Dim params = New ParamDictionary From {{"time", New SimpleParamType(Of DateTime)}, {"maxHistory", New SimpleParamType(Of TimeSpan)}, {"InstrumentGuId", New SimpleParamType(Of Guid)}}
-        DataCoordinator.RegisterDataProvider(New InstrumentDataProvider("AllInstruments", "All Instruments", Nothing, params))
-    End Sub
+        Public Shared Sub RegisterInstances()
+            Dim params = New ParamDictionary From {{"time", New SimpleParamType(Of DateTime)}, {"maxHistory", New SimpleParamType(Of TimeSpan)}, {"InstrumentGuId", New SimpleParamType(Of Guid)}}
+            DataCoordinator.RegisterDataProvider(New InstrumentDataProvider("AllInstruments", "All Instruments", Nothing, params))
+        End Sub
 
-    Protected Overrides Function FetchData(parameters As Dictionary(Of String, Object)) As Global.System.Collections.Generic.IEnumerable(Of IBaseInstrument)
-        Return GetAllInstruments()
-    End Function
+        Protected Overrides Function FetchData(parameters As Dictionary(Of String, Object)) As Global.System.Collections.Generic.IEnumerable(Of IBaseInstrument)
+            'Return GetAllInstruments()
+        End Function
 
-    Private Function CreateInstrument(ByVal instrument As Prover.Model.instr) As IBaseInstrument
-        Select Case instrument.instr_type_id
-            Case miSerialProtocol.InstrumentTypeCode.MiniMax
-                Return New MiniMaxInstrument(instrument)
-            Case Else
-                Return Nothing
-        End Select
-    End Function
+        Private Function CreateInstrument(ByVal instrument As Prover.Model.instr) As IBaseInstrument
+            Select Case instrument.instr_type_id
+                Case miSerialProtocol.InstrumentTypeCode.MiniMax
+                    Return New MiniMaxInstrument(instrument)
+                Case Else
+                    Return Nothing
+            End Select
+        End Function
 
-    Public Overrides Function GetIdentifier(ByVal element As IBaseInstrument) As String
-        Return element.InstrumentGuid.ToString
-    End Function
+        Public Overrides Function GetIdentifier(ByVal element As IBaseInstrument) As String
+            Return element.InstrumentGuid.ToString
+        End Function
 
-    Public Overrides Function GetName(ByVal element As IBaseInstrument) As String
-        Return element.InstrumentDriveType.ToString
-    End Function
+        Public Overrides Function GetName(ByVal element As IBaseInstrument) As String
+            Return element.InstrumentDriveType.ToString
+        End Function
 
 
-    Private Function GetAllInstruments() As List(Of IBaseInstrument)
-        Using Data As New InstrumentDataContext
-            Return (From inst In Data.instrs.ToList Where inst IsNot Nothing Select CreateInstrument(inst)).ToList
-        End Using
-    End Function
+        Public Function GetInstrumentsBySerialNumber(SerialNumber As String) As List(Of BaseInstrument)
+            Dim session = _docStore.OpenSession()
 
-    Public Function GetInstrumentByGUID(InstrumentGUID As String) As IBaseInstrument
-        Dim myGuid As Guid
-        myGuid = Guid.Parse(InstrumentGUID)
+            Dim instr = (From i In session.Query(Of BaseInstrument)("BaseInstruments/BySerialNumber")
+                Where i.SerialNumber Like "%" + SerialNumber + "%"
+                Select i).ToList()
 
-        Using Data As New InstrumentDataContext
-            Return (From inst In Data.instrs.ToList Where inst.instr_id = myGuid And inst IsNot Nothing Select CreateInstrument(inst)).FirstOrDefault
-        End Using
+            Return instr
+        End Function
 
-    End Function
+        Public Function GetInstrumentByID(ID As String) As BaseInstrument
+            Dim session = _docStore.OpenSession()
 
-    Public Function GetInstrumentBySerialNumber(SerialNumber As String) As IBaseInstrument
+            Return session.Load(Of BaseInstrument)(ID)
+        End Function
 
-        Using Data As New InstrumentDataContext
-            Return (From inst In Data.instrs.ToList Where inst.serial_number = SerialNumber And inst IsNot Nothing Select CreateInstrument(inst)).ToList
-        End Using
+        Public Sub UpsertInstrument(instrument As IBaseInstrument)
 
-    End Function
+            Dim session = _docStore.OpenSession()
+            If instrument.CreatedDate Is Nothing Then instrument.CreatedDate = Date.Now()
+            session.Store(instrument)
+            session.SaveChanges()
+        End Sub
 
-    Public Sub UpsertInstrument(instrument As IBaseInstrument)
-
-        Using DataContext As New InstrumentDataContext
-            Dim existingInstrument = DataContext.instrs.FirstOrDefault(Function(ei) ei.instr_id = instrument.InstrumentGuid And instrument.InstrumentGuid <> Guid.Empty)
-
-            If existingInstrument Is Nothing Then
-                existingInstrument = New Model.instr
-                With existingInstrument
-                    .instr_id = Guid.NewGuid
-                    .date = DateTime.Now
-                End With
-                DataContext.instrs.Add(existingInstrument)
-            End If
-
-            With existingInstrument
-                .serial_number = instrument.SerialNumber
-                .instr_type_id = instrument.InstrumentType
-                .data = instrument.ItemFile.ToString
-            End With
-
-            Dim x As Integer = DataContext.SaveChanges()
-        End Using
-
-    End Sub
-
-End Class
+    End Class
+End Namespace

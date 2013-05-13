@@ -6,8 +6,8 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{4A9FB13D-8615-4FB5-858B-7ECB3F0DDEE0}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <RootNamespace>Prover.Instruments</RootNamespace>
-    <AssemblyName>Prover.Instruments</AssemblyName>
+    <RootNamespace>Prover</RootNamespace>
+    <AssemblyName>Prover.Instruments.Data</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <MyType>Windows</MyType>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
@@ -18,7 +18,7 @@
     <DefineDebug>true</DefineDebug>
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\Debug\</OutputPath>
-    <DocumentationFile>Prover.Instruments.xml</DocumentationFile>
+    <DocumentationFile>Prover.Instruments.Data.xml</DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
@@ -27,7 +27,7 @@
     <DefineTrace>true</DefineTrace>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
-    <DocumentationFile>Prover.Instruments.xml</DocumentationFile>
+    <DocumentationFile>Prover.Instruments.Data.xml</DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
   </PropertyGroup>
   <PropertyGroup>
@@ -69,7 +69,23 @@
     <Reference Include="Microsoft.Practices.Unity.Configuration">
       <HintPath>..\src\packages\Unity.3.0.1304.0\lib\Net45\Microsoft.Practices.Unity.Configuration.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\src\packages\Newtonsoft.Json.5.0.5\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="Raven.Abstractions">
+      <HintPath>..\src\packages\RavenDB.Database.2.0.2360\lib\net40\Raven.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="Raven.Client.Embedded">
+      <HintPath>..\src\packages\RavenDB.Embedded.2.0.2360\lib\net40\Raven.Client.Embedded.dll</HintPath>
+    </Reference>
+    <Reference Include="Raven.Client.Lightweight">
+      <HintPath>..\src\packages\RavenDB.Client.2.0.2360\lib\net40\Raven.Client.Lightweight.dll</HintPath>
+    </Reference>
+    <Reference Include="Raven.Database">
+      <HintPath>..\src\packages\RavenDB.Database.2.0.2360\lib\net40\Raven.Database.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.Data" />
     <Reference Include="System.Windows.Interactivity, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\src\packages\Prism.4.1.0.0\lib\NET40\System.Windows.Interactivity.dll</HintPath>
@@ -97,6 +113,7 @@
     <Compile Include="Communications\DABoards\SubsystemType.vb" />
     <Compile Include="Communications\DABoards\USBDataAcqClass.vb" />
     <Compile Include="Communications\TachometerClass.vb" />
+    <Compile Include="Global.vb" />
     <Compile Include="InstrumentsModule.vb" />
     <Compile Include="Communications\InstrumentCommunications.vb" />
     <Compile Include="Instruments\BaseInstrument.vb" />
@@ -104,6 +121,7 @@
     <Compile Include="Instruments\InstrumentDataContext.vb" />
     <Compile Include="Instruments\InstrumentDataProvider.vb" />
     <Compile Include="Instruments\ItemClass.vb" />
+    <Compile Include="Test\FactorClass.vb" />
     <Compile Include="Test\ITestClass.vb" />
     <Compile Include="Test\IVolume.vb" />
     <Compile Include="Test\PressureFactorClass.vb" />

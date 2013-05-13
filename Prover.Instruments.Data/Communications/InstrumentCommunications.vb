@@ -1,35 +1,56 @@
 ﻿Imports miSerialProtocol
+Imports Newtonsoft.Json
+Imports Newtonsoft.Json.Linq
 
-Public Class InstrumentCommunications
+Namespace Instruments.Data
+    Public Class InstrumentCommunications
 
-    Private Shared _items As New List(Of Integer)
-    Private Shared _miSerial As miSerialProtocolClass
-    'Private Shared _
+        Private Shared _items As New List(Of ItemClass)
+        Private Shared _miSerial As miSerialProtocolClass
+        Public Shared Property BaudRate As miSerialProtocol.BaudRateEnum
+        Public Shared Property CommPort As String
+        'Private Shared _
 
-    Sub New()
+        Sub New(CommPortName As String, BaudRate As miSerialProtocol.BaudRateEnum)
 
-    End Sub
+        End Sub
 
-    Public Shared Function DownloadItemFile(Instrument As IBaseInstrument) As XElement
+        Public Shared Function DownloadItemFile(Instrument As IBaseInstrument) As Dictionary(Of Integer, String)
 
-        Select Case Instrument.InstrumentType
-            Case InstrumentTypeCode.MiniMax
-                _miSerial = New miSerialProtocol.MiniMaxClass(Instrument.CommPort, Instrument.BaudRate)
-            Case Else
-                _miSerial = New miSerialProtocol.TCIClass(Instrument.CommPort, Instrument.BaudRate)
-        End Select
 
-        _miSerial.Connect()
-        Dim downloads = _miSerial.RG((From i In Instrument.Items Select i.Number).ToList)
-        _miSerial.Disconnect()
+            Select Case Instrument.InstrumentType
+                Case InstrumentTypeCode.MiniMax
+                    _miSerial = New miSerialProtocol.MiniMaxClass(CommPort, BaudRate)
+                    _items = MiniMaxInstrument.LoadInstrumentItems()
+                Case Else
+                    _miSerial = New miSerialProtocol.TCIClass(CommPort, BaudRate)
+            End Select
 
-        Return SerializeToXML(downloads)
-    End Function
+            _miSerial.Connect()
+            Dim downloads = _miSerial.RG((From i In _items Select i.Number).ToList)
+            _miSerial.Disconnect()
 
-    Private Shared Function SerializeToXML(itemsDownloaded As Dictionary(Of Integer, String)) As XElement
-        Dim _xml =
-                <instrumentFile><%= From i In itemsDownloaded Select <item number=<%= i.Key %> value=<%= Trim(i.Value) %>/> %></instrumentFile>
-        Return _xml
-    End Function
+            Return downloads
+        End Function
 
-End Class
+
+        Public Shared Function DownloadPressureItems(Instrument As IBaseInstrument) As Dictionary(Of Integer, String)
+
+
+            Select Case Instrument.InstrumentType
+                Case InstrumentTypeCode.MiniMax
+                    _miSerial = New miSerialProtocol.MiniMaxClass(CommPort, BaudRate)
+                    _items = (From i In MiniMaxInstrument.LoadInstrumentItems() Where i.IsPressure = True).ToList
+                Case Else
+                    _miSerial = New miSerialProtocol.TCIClass(CommPort, BaudRate)
+            End Select
+
+            _miSerial.Connect()
+            Dim downloads = _miSerial.RG((From i In _items Select i.Number).ToList)
+            _miSerial.Disconnect()
+
+            Return downloads
+        End Function
+
+    End Class
+End Namespace

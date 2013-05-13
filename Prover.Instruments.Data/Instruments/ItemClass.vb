@@ -40,6 +40,12 @@ Public Class ItemClass
             Return Nothing
         End Try
     End Function
+
+    Public ReadOnly Property AlarmItems(Items As List(Of ItemClass)) As List(Of ItemClass)
+        Get
+            Return (From alarms In Items Where alarms.IsAlarm = True)
+        End Get
+    End Property
 #End Region
 
 End Class

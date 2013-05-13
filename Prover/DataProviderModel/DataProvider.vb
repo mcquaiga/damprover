@@ -1,7 +1,11 @@
-﻿Namespace Data.ProviderModel
+﻿Imports Raven.Client.Document
+
+Namespace Data.ProviderModel
     Public MustInherit Class DataProvider(Of TElement)
         Implements IDataProvider
 
+
+        Protected _docStore As DocumentStore = ProverDocuments.ProverDocumentStore
         Private _name As String
         Private _parameters As ParamDictionary
         Private _source As String
