@@ -13,11 +13,6 @@ Namespace Instruments.Data
             'Items = LoadInstrumentItems()
         End Sub
 
-        Sub New(instrument As Prover.Model.instr)
-            MyBase.New(instrument)
-            _pathToItemXML = My.Application.Info.DirectoryPath + "\MiniMaxItems.xml"
-            'Items = LoadInstrumentItems()
-        End Sub
 
 
 #Region "Methods"

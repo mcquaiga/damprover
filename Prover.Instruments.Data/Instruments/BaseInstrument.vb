@@ -6,7 +6,6 @@ Imports Newtonsoft.Json.Linq
 
 Namespace Instruments.Data
 
-    <XmlRootAttribute("Instrument")>
     Public Class BaseInstrument
         Implements IBaseInstrument
 
@@ -18,16 +17,12 @@ Namespace Instruments.Data
         'This class is responsible for holding values downloaded from the instrument and Temperature and Pressure Classes
         Protected _instrumentJson As JObject
         Protected _pathToItemXML As String
-        Private _instrument As Model.instr
         Private _instrumentGUID As Guid
 
         Sub New()
             PressureTests = New List(Of PressureFactorClass)
-        End Sub
-
-        Protected Sub New(instrument As Model.instr)
-            _instrument = instrument
-            _InstrumentType = _instrument.instr_type_id
+            TemperatureTests = New List(Of TemperatureClass)
+            VolumeTests = New List(Of IVolume)
         End Sub
 
 #Region "Properties"
@@ -36,16 +31,14 @@ Namespace Instruments.Data
         Public Property ID As String Implements IBaseInstrument.ID
         Public Property CreatedDate As DateTime? Implements IBaseInstrument.CreatedDate
         Public Property InstrumentType As miSerialProtocol.InstrumentTypeCode Implements IBaseInstrument.InstrumentType
-        Public Property TemperatureData As TemperatureClass
-        Public Property VolumeData As IVolume
         Public Property InstrumentDriveType() As IBaseInstrument.DriveType Implements IBaseInstrument.InstrumentDriveType
         Public Property ItemFile As Dictionary(Of Integer, String) Implements IBaseInstrument.ItemFile
-        Public Property InspectionID As Integer Implements IBaseInstrument.InspectionID
+        Public Property InspectionID As Integer? Implements IBaseInstrument.InspectionID
 
 
         Public Property PressureTests As List(Of PressureFactorClass) Implements IBaseInstrument.PressureTests
         Public Property TemperatureTests As List(Of TemperatureClass) Implements IBaseInstrument.TemperateTests
-        Public Property VolumeTests As List(Of Volume) Implements IBaseInstrument.VolumeTests
+        Public Property VolumeTests As List(Of IVolume) Implements IBaseInstrument.VolumeTests
 
         Public ReadOnly Property InstrumenGuID() As Guid Implements IBaseInstrument.InstrumentGuid
             Get

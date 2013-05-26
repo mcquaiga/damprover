@@ -6,6 +6,8 @@ Imports Microsoft.Practices.Prism.Regions
 Imports Microsoft.Practices.Prism.Modularity
 Imports System.Globalization
 Imports System.Windows
+Imports Prover
+Imports Prover.Instruments
 
 Public Class ProverBootstrapper
     Inherits UnityExtensions.UnityBootstrapper
@@ -22,11 +24,11 @@ Public Class ProverBootstrapper
 
     Protected Overrides Sub ConfigureContainer()
         MyBase.ConfigureContainer()
+
     End Sub
 
     Protected Overrides Sub InitializeShell()
         MyBase.InitializeShell()
-
         'Application.Current.MainWindow = DirectCast(Window, MainWindow)()
         Application.Current.MainWindow.Show()
     End Sub
@@ -35,4 +37,10 @@ Public Class ProverBootstrapper
         MyBase.InitializeModules()
     End Sub
 
+    Protected Overrides Sub ConfigureModuleCatalog()
+        MyBase.ConfigureModuleCatalog()
+        Dim InstrumentModuleType As Type = GetType(InstrumentsModule)
+        ModuleCatalog.AddModule(New ModuleInfo(InstrumentModuleType.Name, InstrumentModuleType.AssemblyQualifiedName))
+
+    End Sub
 End Class

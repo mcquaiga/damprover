@@ -3,7 +3,7 @@ Imports Newtonsoft.Json
 Imports Newtonsoft.Json.Linq
 Imports Raven.Client.Document
 Imports Raven.Client.Linq
-Imports Prover.Instruments.Data
+Imports Prover.Instruments.Prover
 
 Namespace Instruments.Data
     Public Class InstrumentDataProvider
@@ -25,13 +25,13 @@ Namespace Instruments.Data
             'Return GetAllInstruments()
         End Function
 
-        Private Function CreateInstrument(ByVal instrument As Prover.Model.instr) As IBaseInstrument
-            Select Case instrument.instr_type_id
-                Case miSerialProtocol.InstrumentTypeCode.MiniMax
-                    Return New MiniMaxInstrument(instrument)
-                Case Else
-                    Return Nothing
-            End Select
+        Private Function CreateInstrument() As IBaseInstrument 'ByVal instrument As Prover.Model.instr) As IBaseInstrument
+            'Select Case instrument.instr_type_id
+            '    Case miSerialProtocol.InstrumentTypeCode.MiniMax
+            '        Return New MiniMaxInstrument()
+            '    Case Else
+            '        Return Nothing
+            'End Select
         End Function
 
         Public Overrides Function GetIdentifier(ByVal element As IBaseInstrument) As String
@@ -53,15 +53,22 @@ Namespace Instruments.Data
             Return instr
         End Function
 
-        Public Function GetInstrumentByID(ID As String) As BaseInstrument
+        Public Function GetInstrumentByID(ID As String) As IBaseInstrument
             Dim session = _docStore.OpenSession()
 
             Return session.Load(Of BaseInstrument)(ID)
         End Function
 
-        Public Sub UpsertInstrument(instrument As IBaseInstrument)
+        Public Sub UpsertInstrument(instrument As BaseInstrument, Session As DocumentSession)
+            If Session Is Nothing Then
+                Session = _docStore.OpenSession()
+            Else
+                If Not Session.HasChanged(instrument) Then
+                    Exit Sub
+                End If
+            End If
 
-            Dim session = _docStore.OpenSession()
+
             If instrument.CreatedDate Is Nothing Then instrument.CreatedDate = Date.Now()
             session.Store(instrument)
             session.SaveChanges()

@@ -175,10 +175,6 @@
       <Project>{8c7e475a-15bb-477b-99f3-7b2abf41e43f}</Project>
       <Name>Prover.SerialProtocol</Name>
     </ProjectReference>
-    <ProjectReference Include="..\src\DamProverModel\Prover.Model.vbproj">
-      <Project>{618af5d8-a289-4ea0-9584-c411b213ef22}</Project>
-      <Name>Prover.Model</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Content Include="ResourceData\MeterIndexes.xml">

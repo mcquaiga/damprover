@@ -72,6 +72,8 @@
       <HintPath>..\src\packages\Newtonsoft.Json.5.0.5\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Windows.Interactivity, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Prism.4.1.0.0\lib\NET40\System.Windows.Interactivity.dll</HintPath>
     </Reference>
@@ -88,9 +90,21 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
+    <Page Include="TestWizard.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Themes\Generic.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\ToolbarView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\InstrumentsListPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
   <ItemGroup>
@@ -113,6 +127,7 @@
     <Import Include="System.Windows.Navigation" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="InstrumentsModule.vb" />
     <Compile Include="My Project\AssemblyInfo.vb">
       <SubType>Code</SubType>
     </Compile>
@@ -126,6 +141,17 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Compile Include="Views\IToolBarVM.vb" />
+    <Compile Include="Views\ToolbarView.xaml.vb">
+      <DependentUpon>ToolbarView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\IInstrumentsListPageVM.vb" />
+    <Compile Include="Views\InstrumentsListPage.xaml.vb">
+      <DependentUpon>InstrumentsListPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\InstrumentsListPageVM.vb" />
+    <Compile Include="Views\ToolbarVM.vb" />
+    <Compile Include="Wizard\PressureTestWizard.vb" />
     <EmbeddedResource Include="My Project\Resources.resx">
       <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.vb</LastGenOutput>
@@ -141,6 +167,19 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Readme.html" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{94E38DFF-614B-4CBD-B67C-F211BB35CE8B}" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Prover.Instruments.Data\Prover.Instruments.Data.vbproj">
+      <Project>{4a9fb13d-8615-4fb5-858b-7ecb3f0ddee0}</Project>
+      <Name>Prover.Instruments.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Prover\Prover.vbproj">
+      <Project>{f397ca27-ec97-4b98-b8cf-e60eb1f399b9}</Project>
+      <Name>Prover</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>

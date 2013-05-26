@@ -73,11 +73,11 @@ Public Interface IBaseInstrument
     Property ItemFile As Dictionary(Of Integer, String)
     Property PressureTests As List(Of PressureFactorClass)
     Property TemperateTests As List(Of TemperatureClass)
-    Property VolumeTests As List(Of Volume)
+    Property VolumeTests As List(Of IVolume)
 
     ReadOnly Property PulseASelect As PulseOutputValues
     ReadOnly Property PulseBSelect As PulseOutputValues
-    Property InspectionID As Integer
+    Property InspectionID As Integer?
 
     Function GetItemValue(ItemNumber As Integer) As String
 

@@ -3,8 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "DAM Prover", "DAM Prover.vbproj", "{453A1940-DCC3-4BA1-877E-D9EAD2E6224F}"
 EndProject
-Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Prover.Model", "DamProverModel\Prover.Model.vbproj", "{618AF5D8-A289-4EA0-9584-C411B213EF22}"
-EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Prover.Client", "..\Prover.Client\Prover.Client.vbproj", "{CDB792D9-DA20-442D-A37F-BE10214E5EE3}"
 EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Prover", "..\Prover\Prover.vbproj", "{F397CA27-EC97-4B98-B8CF-E60EB1F399B9}"
@@ -26,8 +24,6 @@ Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Prover.Instruments", "..\Pr
 EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Prover.Console", "..\Prover.Console\Prover.Console.vbproj", "{D92FD400-5285-437D-BE4D-EAC1C6A40C25}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Prover.UI", "..\Prover.UI\Prover.UI.csproj", "{2311D084-BAC4-4327-B6C0-71F148AAD9C5}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -38,10 +34,6 @@ Global
 		{453A1940-DCC3-4BA1-877E-D9EAD2E6224F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{453A1940-DCC3-4BA1-877E-D9EAD2E6224F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{453A1940-DCC3-4BA1-877E-D9EAD2E6224F}.Release|Any CPU.Build.0 = Release|Any CPU
-		{618AF5D8-A289-4EA0-9584-C411B213EF22}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{618AF5D8-A289-4EA0-9584-C411B213EF22}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{618AF5D8-A289-4EA0-9584-C411B213EF22}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{618AF5D8-A289-4EA0-9584-C411B213EF22}.Release|Any CPU.Build.0 = Release|Any CPU
 		{CDB792D9-DA20-442D-A37F-BE10214E5EE3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{CDB792D9-DA20-442D-A37F-BE10214E5EE3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CDB792D9-DA20-442D-A37F-BE10214E5EE3}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -70,10 +62,6 @@ Global
 		{D92FD400-5285-437D-BE4D-EAC1C6A40C25}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D92FD400-5285-437D-BE4D-EAC1C6A40C25}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D92FD400-5285-437D-BE4D-EAC1C6A40C25}.Release|Any CPU.Build.0 = Release|Any CPU
-		{2311D084-BAC4-4327-B6C0-71F148AAD9C5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{2311D084-BAC4-4327-B6C0-71F148AAD9C5}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{2311D084-BAC4-4327-B6C0-71F148AAD9C5}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{2311D084-BAC4-4327-B6C0-71F148AAD9C5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

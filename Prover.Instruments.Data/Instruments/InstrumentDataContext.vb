@@ -1,6 +1,6 @@
 ﻿
 Partial Public Class InstrumentDataContext
-    Inherits Prover.Model.DAMProverEntities
+    'Inherits Prover.Model.DAMProverEntities
 
 
     Public Sub New()

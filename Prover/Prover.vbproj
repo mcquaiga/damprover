@@ -116,10 +116,6 @@
   <ItemGroup>
     <Compile Include="DataProviderModel\DocumentStore.vb" />
     <Compile Include="ProverManager.vb" />
-    <Compile Include="Customers\Customer.vb" />
-    <Compile Include="Customers\CustomerDataContext.vb" />
-    <Compile Include="Customers\CustomersProvider.vb" />
-    <Compile Include="Customers\ICustomers.vb" />
     <Compile Include="DataProviderModel\DataCoordinator.vb" />
     <Compile Include="DataProviderModel\DataOperation.vb" />
     <Compile Include="DataProviderModel\DataProvider.vb" />
@@ -144,6 +140,10 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Compile Include="RegionNames.vb" />
+    <Compile Include="ViewModels\BaseViewModel.vb" />
+    <Compile Include="WPF\BaseWizard.vb" />
+    <Compile Include="WPF\IWizardStep.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="My Project\Resources.resx">
@@ -170,10 +170,6 @@
     <ProjectReference Include="..\serialprotocol\miSerialProtocol\Prover.SerialProtocol.vbproj">
       <Project>{8c7e475a-15bb-477b-99f3-7b2abf41e43f}</Project>
       <Name>Prover.SerialProtocol</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\src\DamProverModel\Prover.Model.vbproj">
-      <Project>{618af5d8-a289-4ea0-9584-c411b213ef22}</Project>
-      <Name>Prover.Model</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />

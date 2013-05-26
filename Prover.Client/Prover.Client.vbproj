@@ -173,20 +173,26 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Prover\Prover.vbproj">
-      <Project>{f397ca27-ec97-4b98-b8cf-e60eb1f399b9}</Project>
-      <Name>Prover</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Resources\MiniMax_Rotary_Thumb1_NEW_Lg.jpg" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="ModelViews\" />
+  </ItemGroup>
   <ItemGroup>
     <Page Include="Windows\MainWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Prover.Instruments\Prover.Instruments.vbproj">
+      <Project>{6290e240-4ef2-44db-bcf7-2d58fdb99cca}</Project>
+      <Name>Prover.Instruments</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Prover\Prover.vbproj">
+      <Project>{f397ca27-ec97-4b98-b8cf-e60eb1f399b9}</Project>
+      <Name>Prover</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>

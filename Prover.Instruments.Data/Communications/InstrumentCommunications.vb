@@ -52,5 +52,24 @@ Namespace Instruments.Data
             Return downloads
         End Function
 
+
+        Public Shared Function DownloadTemperatureItems(Instrument As IBaseInstrument) As Dictionary(Of Integer, String)
+
+            Select Case Instrument.InstrumentType
+                Case InstrumentTypeCode.MiniMax
+                    _miSerial = New miSerialProtocol.MiniMaxClass(CommPort, BaudRate)
+                    _items = (From i In MiniMaxInstrument.LoadInstrumentItems() Where i.IsTemperature = True).ToList
+                Case Else
+                    _miSerial = New miSerialProtocol.TCIClass(CommPort, BaudRate)
+            End Select
+
+            _miSerial.Connect()
+            Dim downloads = _miSerial.RG((From i In _items Select i.Number).ToList)
+            _miSerial.Disconnect()
+
+            Return downloads
+
+        End Function
+
     End Class
 End Namespace
