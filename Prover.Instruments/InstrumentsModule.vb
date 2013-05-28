@@ -19,11 +19,11 @@ Public Class InstrumentsModule
     End Sub
 
     Public Sub Initialize() Implements IModule.Initialize
-        Dim toolbar As IToolBarVM = _container.Resolve(Of IToolBarVM)()
-        _regionManager.Regions(RegionNames.ToolbarRegion).Add(toolbar)
-        _regionManager.Regions(RegionNames.ToolbarRegion).Activate(toolbar)
+        'Dim toolbar As IToolBarVM = _container.Resolve(Of IToolBarVM)()
+        '_regionManager.Regions(RegionNames.ToolbarRegion).Add(toolbar)
+        '_regionManager.Regions(RegionNames.ToolbarRegion).Activate(toolbar)
 
         ' _regionManager.RegisterViewWithRegion(RegionNames.ToolbarRegion, GetType(ToolbarView))
-        _regionManager.RegisterViewWithRegion(RegionNames.ContentRegion, GetType(InstrumentsListPage))
+        _regionManager.RegisterViewWithRegion(RegionNames.ContentRegion, GetType(ToolbarView))
     End Sub
 End Class

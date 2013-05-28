@@ -152,11 +152,11 @@
     <Compile Include="Views\InstrumentsListPageVM.vb" />
     <Compile Include="Views\ToolbarVM.vb" />
     <Compile Include="Wizard\PressureTestWizard.vb" />
-    <EmbeddedResource Include="My Project\Resources.resx">
+    <Resource Include="My Project\Resources.resx">
       <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.vb</LastGenOutput>
       <CustomToolNamespace>My.Resources</CustomToolNamespace>
-    </EmbeddedResource>
+      <LastGenOutput>Resources.Designer.vb</LastGenOutput>
+    </Resource>
     <None Include="app.config" />
     <None Include="My Project\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -180,6 +180,12 @@
       <Project>{f397ca27-ec97-4b98-b8cf-e60eb1f399b9}</Project>
       <Name>Prover</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Themes\search.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Themes\Test.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>
