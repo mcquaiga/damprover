@@ -3,29 +3,125 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:prover="clr-namespace:Prover.Instruments"
+             xmlns:vm="clr-namespace:Prover.Instruments.ViewModels"
              d:DesignHeight="300"
              d:DesignWidth="506"
              mc:Ignorable="d">
-    <ListView Width="Auto"
-              AlternationCount="2"
-              AutomationProperties.AutomationId="Instruments"
-              BorderThickness="0"
-              IsSynchronizedWithCurrentItem="True">
-        <!--
-            ItemsSource="{Binding Path=Position.Items}"
-            SelectedItem="{Binding Path=CurrentPositionSummaryItem,
-            Mode=TwoWay}"
-        -->
-        <ListView.View>
-            <GridView AllowsColumnReorder="true" ColumnHeaderToolTip="Current positions">
-                <GridViewColumn Width="200" Header="Serial Number" />
-                <!--  DisplayMemberBinding="{Binding Path=TickerSymbol}"  -->
-                <GridViewColumn Width="200" Header="Instrument Type" />
+    <UserControl.DataContext>
+        <vm:InstrumentsListPageVM />
+    </UserControl.DataContext>
 
-                <!--  DisplayMemberBinding="{Binding Path=TickerSymbol}"  -->
+    <UserControl.Resources>
+        <CollectionViewSource x:Key="Instruments" Source="{Binding Path=Instruments, Mode=OneWay}" />
+        <DataTemplate x:Key="inst">
+            <StackPanel Orientation="Horizontal">
+                <Image />
+                <StackPanel Orientation="Vertical">
+                    <TextBlock Width="125"
+                               Foreground="White"
+                               Text="{Binding InstrumentType}" />
+                    <TextBlock Width="125"
+                               Margin="2"
+                               HorizontalAlignment="Center"
+                               VerticalAlignment="Center"
+                               FontSize="22"
+                               Foreground="White"
+                               Text="{Binding SerialNumber}" />
+                </StackPanel>
+                <Grid Height="50"
+                      Margin="2"
+                      DataContext="{Binding}">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <StackPanel Grid.Row="0" Orientation="Horizontal">
+                        <TextBlock Text="{Binding CreatedDate}" />
+                    </StackPanel>
+                    <StackPanel Grid.Row="1" Orientation="Horizontal" />
+                    <StackPanel Grid.Row="2" Orientation="Horizontal">
+                        <TextBlock Text="I.C. #: " />
+                        <TextBlock Text="{Binding ConnectionString}" />
+                    </StackPanel>
+                    <StackPanel Grid.Row="3" Orientation="Horizontal">
+                        <TextBlock Text="Drive Type: " />
+                        <TextBlock Text="{Binding InstrumentDriveType}" />
+                    </StackPanel>
+                </Grid>
+            </StackPanel>
+        </DataTemplate>
+        <Style x:Key="InstrumentStyle" TargetType="{x:Type ListBoxItem}">
+            <Setter Property="IsSelected" Value="{Binding Path=IsSelected, Mode=TwoWay}" />
+            <Style.Triggers>
+                <MultiTrigger>
+                    <MultiTrigger.Conditions>
+                        <Condition Property="ItemsControl.AlternationIndex" Value="1" />
+                        <Condition Property="IsSelected" Value="False" />
+                        <Condition Property="IsMouseOver" Value="False" />
+                    </MultiTrigger.Conditions>
+                    <Setter Property="Background" Value="#EEEEEEEE" />
+                </MultiTrigger>
+            </Style.Triggers>
+        </Style>
+        <Style x:Key="Flat">
+            <Setter Property="Control.Background" Value="{x:Null}" />
+            <Setter Property="Control.BorderBrush" Value="{x:Null}" />
+            <Style.Triggers>
+                <Trigger Property="Control.IsMouseOver" Value="True">
+                    <Setter Property="Control.Background" Value="{x:Null}" />
+                    <Setter Property="Control.BorderBrush" Value="{x:Null}" />
+                    <Setter Property="Control.FontWeight" Value="Bold" />
+                </Trigger>
+                <Trigger Property="Control.IsFocused" Value="True">
+                    <Setter Property="Control.FontWeight" Value="Bold" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </UserControl.Resources>
 
 
-            </GridView>
-        </ListView.View>
-    </ListView>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="9*" />
+        </Grid.RowDefinitions>
+        <StackPanel Margin="10, 0, 0, 0" Orientation=" Horizontal">
+            <Button Command="{Binding OneWeekFilterCommand}" Style="{StaticResource Flat}">Last 7 Days</Button>
+            <Button Command="{Binding OneMonthFilterCommand}" Style="{StaticResource Flat}">Last 30 Days</Button>
+            <TextBox x:Name="SerialNumber"
+                     Width="125"
+                     Margin="2"
+                     HorizontalAlignment="Right"
+                     Text="{Binding SerialNumber,
+                                    UpdateSourceTrigger=PropertyChanged}" />
+
+            <!--  <TextBlock HorizontalAlignment="Right">Serial Number:</TextBlock>  -->
+        </StackPanel>
+        <Grid Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="3*" />
+            </Grid.ColumnDefinitions>
+            <ListBox Name="InstrumentList"
+                     Grid.Row="2"
+                     Margin="10"
+                     HorizontalContentAlignment="Stretch"
+                     VerticalContentAlignment="Stretch"
+                     Background="#FF200074"
+                     BorderThickness="0"
+                     ItemContainerStyle="{StaticResource InstrumentStyle}"
+                     ItemTemplate="{StaticResource ResourceKey=inst}"
+                     ItemsSource="{Binding Source={StaticResource Instruments}}" />
+
+            <!--  Details  -->
+            <prover:InstrumentDetails Grid.Column="2" Margin="10" />
+
+
+
+        </Grid>
+
+    </Grid>
 </UserControl>

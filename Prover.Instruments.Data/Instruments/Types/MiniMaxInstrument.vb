@@ -8,7 +8,6 @@ Namespace Instruments.Data
 
         Sub New()
             MyBase.New()
-
             InstrumentType = InstrumentTypeCode.MiniMax
             'Items = LoadInstrumentItems()
         End Sub

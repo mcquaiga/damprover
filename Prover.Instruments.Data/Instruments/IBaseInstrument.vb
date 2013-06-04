@@ -1,6 +1,7 @@
 ﻿Imports Prover.Data.ProviderModel
 Imports miSerialProtocol.InstrumentTypeCode
 Imports miSerialProtocol.BaudRateEnum
+
 Imports System.IO.Ports
 Imports Newtonsoft.Json
 Imports Newtonsoft.Json.Linq
@@ -60,6 +61,10 @@ Public Interface IBaseInstrument
         YYMMDD = 2
     End Enum
 #End Region
+
+    Function IsLiveSuper() As FixedFactors
+    Function IsLivePressure() As FixedFactors
+    Function IsLiveTemperate() As FixedFactors
 
     Property InstrumentType As miSerialProtocol.InstrumentTypeCode
 

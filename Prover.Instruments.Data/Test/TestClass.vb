@@ -58,6 +58,14 @@ Public MustInherit Class TestClass
 
 #End Region
 
+    Sub New()
+
+    End Sub
+
+
+#Region "Old Code"
+
+
     '    Private tCustomer As Customer
     '    'Protected tInstrument As Instrument
 
@@ -529,5 +537,5 @@ Public MustInherit Class TestClass
     '        GC.SuppressFinalize(Me)
     '    End Sub
     '#End Region
-
+#End Region
 End Class

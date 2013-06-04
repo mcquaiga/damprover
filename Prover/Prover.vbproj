@@ -11,6 +11,8 @@
     <FileAlignment>512</FileAlignment>
     <MyType>Windows</MyType>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -20,6 +22,8 @@
     <OutputPath>bin\Debug\</OutputPath>
     <DocumentationFile>Prover.xml</DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+    <Prefer32Bit>false</Prefer32Bit>
+    <PlatformTarget>AnyCPU</PlatformTarget>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -29,6 +33,7 @@
     <OutputPath>bin\Release\</OutputPath>
     <DocumentationFile>Prover.xml</DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup>
     <OptionExplicit>On</OptionExplicit>
@@ -75,6 +80,8 @@
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\src\packages\Newtonsoft.Json.5.0.5\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
     <Reference Include="Raven.Abstractions">
       <HintPath>..\src\packages\RavenDB.Database.2.0.2360\lib\net40\Raven.Abstractions.dll</HintPath>
     </Reference>
@@ -93,9 +100,10 @@
     <Reference Include="System.Data.Entity" />
     <Reference Include="System.Deployment" />
     <Reference Include="System.Windows" />
-    <Reference Include="System.Windows.Interactivity, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\src\packages\Prism.4.1.0.0\lib\NET40\System.Windows.Interactivity.dll</HintPath>
+    <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\src\packages\MvvmLightLibs.4.1.27.0\lib\net45\System.Windows.Interactivity.dll</HintPath>
     </Reference>
+    <Reference Include="System.Xaml" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -115,6 +123,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DataProviderModel\DocumentStore.vb" />
+    <Compile Include="IView.vb" />
+    <Compile Include="Prism\IProverModule.vb" />
+    <Compile Include="Prism\ProverModule.vb" />
     <Compile Include="ProverManager.vb" />
     <Compile Include="DataProviderModel\DataCoordinator.vb" />
     <Compile Include="DataProviderModel\DataOperation.vb" />
@@ -141,9 +152,7 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <Compile Include="RegionNames.vb" />
-    <Compile Include="ViewModels\BaseViewModel.vb" />
-    <Compile Include="WPF\BaseWizard.vb" />
-    <Compile Include="WPF\IWizardStep.vb" />
+    <Compile Include="ViewModel.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="My Project\Resources.resx">
@@ -167,12 +176,14 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\serialprotocol\miSerialProtocol\Prover.SerialProtocol.vbproj">
-      <Project>{8c7e475a-15bb-477b-99f3-7b2abf41e43f}</Project>
-      <Name>Prover.SerialProtocol</Name>
-    </ProjectReference>
+    <Page Include="App.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Themes\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

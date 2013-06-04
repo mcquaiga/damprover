@@ -12,13 +12,18 @@ Imports Prover.Instruments
 Public Class ProverBootstrapper
     Inherits UnityExtensions.UnityBootstrapper
 
+    Protected _main As MainWindow
+
     Sub New()
         MyBase.New()
     End Sub
 
 
     Protected Overrides Function CreateShell() As System.Windows.DependencyObject
-        Return Container.Resolve(Of MainWindow)()
+        _main = Container.Resolve(Of MainWindow)()
+
+        Return _main
+
     End Function
 
 
@@ -33,12 +38,12 @@ Public Class ProverBootstrapper
         Application.Current.MainWindow.Show()
     End Sub
 
-    Protected Overrides Sub InitializeModules()
-        MyBase.InitializeModules()
-    End Sub
+    'Protected Overrides Sub InitializeModules()
+    '    MyBase.InitializeModules()
+    'End Sub
 
     Protected Overrides Sub ConfigureModuleCatalog()
-        MyBase.ConfigureModuleCatalog()
+        'MyBase.ConfigureModuleCatalog()
         Dim InstrumentModuleType As Type = GetType(InstrumentsModule)
         ModuleCatalog.AddModule(New ModuleInfo(InstrumentModuleType.Name, InstrumentModuleType.AssemblyQualifiedName))
 

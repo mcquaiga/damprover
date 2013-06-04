@@ -4,9 +4,13 @@ Imports System.Xml.Serialization
 Imports Newtonsoft.Json
 Imports Newtonsoft.Json.Linq
 
+
+
 Namespace Instruments.Data
 
-    Public Class BaseInstrument
+
+
+    Public MustInherit Class BaseInstrument
         Implements IBaseInstrument
 
         'This is the base class for all the Mercury Instruments
@@ -52,7 +56,7 @@ Namespace Instruments.Data
 
         Public ReadOnly Property SerialNumber As String Implements IBaseInstrument.SerialNumber
             Get
-                Return ItemFile(62) 'GetItemValue((From i In Items Where i.Code = "SERIAL_NUM").FirstOrDefault.Number)
+                Return GetItemValue(62) 'GetItemValue((From i In Items Where i.Code = "SERIAL_NUM").FirstOrDefault.Number)
             End Get
         End Property
 
@@ -72,20 +76,33 @@ Namespace Instruments.Data
 
         Public Overridable Function GetItemValue(ItemNumber As Integer) As String Implements IBaseInstrument.GetItemValue
             Dim y As String
-
             Try
                 y = ItemFile.Item(ItemNumber.ToString)
             Catch ex As Exception
                 Return Nothing
             End Try
-
             Return y
+        End Function
 
+        Public Overridable Function IsLivePressure() As IBaseInstrument.FixedFactors Implements IBaseInstrument.IsLivePressure
+            Return GetItemValue(IBaseInstrument.FixedFactorItems.FixedPressure)
+        End Function
+
+        Public Overridable Function IsLiveTemperate() As IBaseInstrument.FixedFactors Implements IBaseInstrument.IsLiveTemperate
+            Return GetItemValue(IBaseInstrument.FixedFactorItems.FixedTempFactor)
+        End Function
+
+        Public Overridable Function IsLiveSuper() As IBaseInstrument.FixedFactors Implements IBaseInstrument.IsLiveSuper
+            Return GetItemValue(IBaseInstrument.FixedFactorItems.FixedSuperFactor)
+        End Function
+
+        Shared Function LoadInstrumentItems() As List(Of ItemClass)
+            Return Nothing
         End Function
 
 
-#End Region
 
+#End Region
 
     End Class
 

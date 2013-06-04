@@ -1,0 +1,93 @@
+﻿<UserControl x:Class="InstrumentDetails"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="clr-namespace:Prover.Instruments.ViewModels"
+             d:DesignHeight="300"
+             d:DesignWidth="300"
+             mc:Ignorable="d">
+    <UserControl.DataContext>
+        <vm:InstrumentDetailsVM />
+    </UserControl.DataContext>
+
+    <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+        <StackPanel Background="#FF200074">
+            <Grid>
+                <StackPanel Margin="10" Visibility="{Binding IsNewInstrument}">
+                    <WrapPanel>
+                        <Button>MiniMax</Button>
+                        <Button>EC300</Button>
+                    </WrapPanel>
+                    <WrapPanel>
+                        <Button>Comm 1</Button>
+                        <Button>Comm 2</Button>
+                        <Button>Comm 3</Button>
+                    </WrapPanel>
+                    <WrapPanel>
+                        <Button>B9600</Button>
+                        <Button>B38400</Button>
+                    </WrapPanel>
+                </StackPanel>
+            </Grid>
+            <Grid Margin="15">
+                <StackPanel>
+                    <!--  Basic Details Info  -->
+                    <TextBlock>Serial Number:</TextBlock>
+                    <TextBlock Text="{Binding SerialNumber}" />
+
+                    <Expander Foreground="White" Header="Item File">
+                        <ListBox ItemsSource="{Binding Instrument.ItemFile}">
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel />
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+                    </Expander>
+                    <Expander Foreground="White"
+                              Header="Pressure"
+                              Visibility="{Binding IsLivePressure}">
+                        <ListBox ItemsSource="{Binding Instrument.PressureTests}">
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel>
+                                        <TextBlock Text="{Binding AtmosphericPressure}" />
+                                        <TextBlock Text="{Binding PressureUnits}" />
+                                        <TextBlock Text="{Binding TransducerType}" />
+                                        <TextBlock Text="{Binding BasePressure}" />
+                                        <TextBlock Text="{Binding EVCPRessure}" />
+                                        <TextBlock Text="{Binding EVCFactor}" />
+                                        <TextBlock Text="{Binding EVCUnsqr}" />
+                                        <TextBlock Text="{Binding PercentError}" />
+                                        <TextBlock Text="{Binding ActualPressureFactor}" />
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+                    </Expander>
+                    <Expander Foreground="White"
+                              Header="Temperature"
+                              Visibility="{Binding IsLiveTemperature}">
+                        <ListBox ItemsSource="{Binding Instrument.TemperatureTests}" SelectedItem="{Binding DataContext.SelectedJob, ElementName=JobsListUserControl, Mode=TwoWay}">
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel />
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+                    </Expander>
+                    <Expander Foreground="White" Header="Volume">
+                        <ListBox ItemsSource="{Binding Instrument.VolumeTests}">
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel />
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+                    </Expander>
+                </StackPanel>
+            </Grid>
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

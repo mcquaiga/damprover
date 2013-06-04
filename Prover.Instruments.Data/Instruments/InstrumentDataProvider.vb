@@ -3,7 +3,7 @@ Imports Newtonsoft.Json
 Imports Newtonsoft.Json.Linq
 Imports Raven.Client.Document
 Imports Raven.Client.Linq
-Imports Prover.Instruments.Prover
+
 
 Namespace Instruments.Data
     Public Class InstrumentDataProvider
@@ -26,12 +26,6 @@ Namespace Instruments.Data
         End Function
 
         Private Function CreateInstrument() As IBaseInstrument 'ByVal instrument As Prover.Model.instr) As IBaseInstrument
-            'Select Case instrument.instr_type_id
-            '    Case miSerialProtocol.InstrumentTypeCode.MiniMax
-            '        Return New MiniMaxInstrument()
-            '    Case Else
-            '        Return Nothing
-            'End Select
         End Function
 
         Public Overrides Function GetIdentifier(ByVal element As IBaseInstrument) As String
@@ -42,24 +36,44 @@ Namespace Instruments.Data
             Return element.InstrumentDriveType.ToString
         End Function
 
-
-        Public Function GetInstrumentsBySerialNumber(SerialNumber As String) As List(Of BaseInstrument)
+        Public Function GetInstrumentsBySerialNumber(SerialNumber As String) As List(Of IBaseInstrument)
             Dim session = _docStore.OpenSession()
 
-            Dim instr = (From i In session.Query(Of BaseInstrument)("BaseInstruments/BySerialNumber")
-                Where i.SerialNumber Like "%" + SerialNumber + "%"
+            Dim instr = (From i In session.Query(Of IBaseInstrument)("BySerialNumber")
+                Where i.SerialNumber = SerialNumber
                 Select i).ToList()
 
             Return instr
         End Function
 
+        Public Function GetInstrumentDateCreated(FromDate As DateTime) As List(Of IBaseInstrument)
+            Dim session = _docStore.OpenSession()
+
+            Dim instr = (From i In session.Query(Of IBaseInstrument)("ByCreatedDate")
+              Where i.CreatedDate.Value >= FromDate
+              Select i).ToList()
+
+            Return instr
+
+        End Function
+
+        Public Function GetInstrumentByInstrumentType(InstrumentType As String) As List(Of IBaseInstrument)
+            Dim session = _docStore.OpenSession()
+
+            Dim instr = (From i In session.Query(Of IBaseInstrument)("MiniMaxInstruments")
+              Select i).ToList()
+
+            Return instr
+
+        End Function
+
         Public Function GetInstrumentByID(ID As String) As IBaseInstrument
             Dim session = _docStore.OpenSession()
 
-            Return session.Load(Of BaseInstrument)(ID)
+            Return session.Load(Of IBaseInstrument)(ID)
         End Function
 
-        Public Sub UpsertInstrument(instrument As BaseInstrument, Session As DocumentSession)
+        Public Sub UpsertInstrument(instrument As IBaseInstrument, Session As DocumentSession)
             If Session Is Nothing Then
                 Session = _docStore.OpenSession()
             Else
@@ -70,8 +84,8 @@ Namespace Instruments.Data
 
 
             If instrument.CreatedDate Is Nothing Then instrument.CreatedDate = Date.Now()
-            session.Store(instrument)
-            session.SaveChanges()
+            Session.Store(instrument)
+            Session.SaveChanges()
         End Sub
 
     End Class
