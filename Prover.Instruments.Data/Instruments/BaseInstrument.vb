@@ -24,8 +24,8 @@ Namespace Instruments.Data
         Private _instrumentGUID As Guid
 
         Sub New()
-            PressureTests = New List(Of PressureFactorClass)
-            TemperatureTests = New List(Of TemperatureClass)
+            PressureTests = New List(Of IPressureFactorClass)
+            TemperatureTests = New List(Of ITemperatureClass)
             VolumeTests = New List(Of IVolume)
         End Sub
 
@@ -40,8 +40,8 @@ Namespace Instruments.Data
         Public Property InspectionID As Integer? Implements IBaseInstrument.InspectionID
 
 
-        Public Property PressureTests As List(Of PressureFactorClass) Implements IBaseInstrument.PressureTests
-        Public Property TemperatureTests As List(Of TemperatureClass) Implements IBaseInstrument.TemperateTests
+        Public Property PressureTests As List(Of IPressureFactorClass) Implements IBaseInstrument.PressureTests
+        Public Property TemperatureTests As List(Of ITemperatureClass) Implements IBaseInstrument.TemperateTests
         Public Property VolumeTests As List(Of IVolume) Implements IBaseInstrument.VolumeTests
 
         Public ReadOnly Property InstrumenGuID() As Guid Implements IBaseInstrument.InstrumentGuid

@@ -3,38 +3,7 @@ Imports System.IO
 
 Public Class PressureFactorClass
     Inherits FactorClass
-
-#Region "Enums"
-    'Values for each enum will be the same as the values in the instrument
-    Public Enum UnitsEnum
-        PSIG = 0
-        PSIA = 1
-        kPa = 2
-        mPa = 3
-        BAR = 4
-        mBAR = 5
-        KGcm2 = 6
-        inWC = 7
-        inHG = 8
-        mmHG = 9
-    End Enum
-
-    Public Enum TransducerType
-        Gauge = 0
-        Absolute = 1
-    End Enum
-
-    Public Enum ItemsEnum
-        GasPressure = 8
-        BasePressure = 13
-        ATMPressure = 14
-        PressureUnits = 87
-        FixedPressureFactor = 109
-        TransducerType = 112
-        PressureFactor = 44
-        UnsquaredSuperFactor = 47
-    End Enum
-#End Region
+    Implements IPressureFactorClass
 
     Private _ATMPressure As Double
     Private _PreviousUnits
@@ -46,11 +15,11 @@ Public Class PressureFactorClass
 
 #Region "Properties"
 
-    Public Property GaugePressure As Double
+    Public Property GaugePressure As Double Implements IPressureFactorClass.GaugePressure
 
-    Public Property AtmosphericPressure() As Double
+    Public Property AtmosphericPressure() As Double Implements IPressureFactorClass.AtmosphericPressure
         Get
-            If Items IsNot Nothing AndAlso Transducer = TransducerType.Absolute Then
+            If Items IsNot Nothing AndAlso Transducer = IPressureFactorClass.TransducerType.Absolute Then
                 Return Items(112)
             Else
                 Return _ATMPressure
@@ -61,55 +30,55 @@ Public Class PressureFactorClass
         End Set
     End Property
 
-    Public ReadOnly Property PressureUnits As UnitsEnum
+    Public ReadOnly Property PressureUnits As IPressureFactorClass.UnitsEnum Implements IPressureFactorClass.PressureUnits
         Get
             Return Items(87)
         End Get
     End Property
 
-    Public ReadOnly Property Transducer() As TransducerType
+    Public ReadOnly Property Transducer() As IPressureFactorClass.TransducerType Implements IPressureFactorClass.Transducer
         Get
             Return Items(112)
         End Get
     End Property
 
-    Public ReadOnly Property BasePressure As Double
+    Public ReadOnly Property BasePressure As Double Implements IPressureFactorClass.BasePressure
         Get
             Return Items(13)
         End Get
     End Property
 
-    Public ReadOnly Property EVCPressure()
+    Public ReadOnly Property EVCPressure() Implements IPressureFactorClass.EVCPressure
         Get
             Return Items(8)
         End Get
     End Property
 
-    Public ReadOnly Property EVCFactor()
+    Public ReadOnly Property EVCFactor() Implements IPressureFactorClass.EVCFactor
         Get
             Return Items(44)
         End Get
     End Property
 
-    Public ReadOnly Property EVCUnsqr() As Double
+    Public ReadOnly Property EVCUnsqr() As Double Implements IPressureFactorClass.EVCUnsqr
         Get
             Return Items(47)
         End Get
 
     End Property
 
-    Public ReadOnly Property PercentError() As Double
+    Public ReadOnly Property PercentError() As Double Implements IPressureFactorClass.PercentError
         Get
             Return ((EVCFactor - ActualPressureFactor) / ActualPressureFactor) * 100
         End Get
     End Property
 
-    Public ReadOnly Property ActualPressureFactor() As Double
+    Public ReadOnly Property ActualPressureFactor() As Double Implements IPressureFactorClass.ActualPressureFactor
         Get
             Dim pFactor As Double
 
             If BasePressure <> 0 Then
-                If Transducer = TransducerType.Absolute Then
+                If Transducer = IPressureFactorClass.TransducerType.Absolute Then
                     pFactor = (GaugePressure + AtmosphericPressure) / BasePressure
                 Else
                     pFactor = (GaugePressure + AtmosphericPressure) / BasePressure
@@ -179,29 +148,29 @@ Public Class PressureFactorClass
         Return pValue
     End Function
 
-    Public Function ConvertToPSI(ByVal Value As Double, ByVal FromUnit As UnitsEnum) As Double
+    Public Function ConvertToPSI(ByVal Value As Double, ByVal FromUnit As IPressureFactorClass.UnitsEnum) As Double
 
         'Convert to PSI regardless of what it is
         Select Case FromUnit
-            Case UnitsEnum.BAR
+            Case IPressureFactorClass.UnitsEnum.BAR
                 Value = Value / (6.894757 * 10 ^ -2)
-            Case UnitsEnum.inWC
+            Case IPressureFactorClass.UnitsEnum.inWC
                 Value = Value / 27.68067
-            Case UnitsEnum.KGcm2
+            Case IPressureFactorClass.UnitsEnum.KGcm2
                 Value = Value / (7.030696 * 10 ^ -2)
-            Case UnitsEnum.kPa
+            Case IPressureFactorClass.UnitsEnum.kPa
                 Value = Value / 6.894757
-            Case UnitsEnum.mBAR
+            Case IPressureFactorClass.UnitsEnum.mBAR
                 Value = Value / (6.894757 * 10 ^ 1)
-            Case UnitsEnum.mPa
+            Case IPressureFactorClass.UnitsEnum.mPa
                 Value = Value / (6.894757 * 10 ^ -3)
-            Case UnitsEnum.PSIA
+            Case IPressureFactorClass.UnitsEnum.PSIA
                 Value = Value / 1
-            Case UnitsEnum.PSIG
+            Case IPressureFactorClass.UnitsEnum.PSIG
                 Value = Value / 1
-            Case UnitsEnum.inHG
+            Case IPressureFactorClass.UnitsEnum.inHG
                 Value = Value / 2.03602
-            Case UnitsEnum.mmHG
+            Case IPressureFactorClass.UnitsEnum.mmHG
                 Value = Value / 51.71492
         End Select
 

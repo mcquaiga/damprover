@@ -124,6 +124,7 @@
   <ItemGroup>
     <Compile Include="DataProviderModel\DocumentStore.vb" />
     <Compile Include="IView.vb" />
+    <Compile Include="MediatorHelper.vb" />
     <Compile Include="Prism\IProverModule.vb" />
     <Compile Include="Prism\ProverModule.vb" />
     <Compile Include="ProverManager.vb" />

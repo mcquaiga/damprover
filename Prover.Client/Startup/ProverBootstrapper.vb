@@ -7,7 +7,7 @@ Imports Microsoft.Practices.Prism.Modularity
 Imports System.Globalization
 Imports System.Windows
 Imports Prover
-Imports Prover.Instruments
+Imports Prover.Instruments.View
 
 Public Class ProverBootstrapper
     Inherits UnityExtensions.UnityBootstrapper
@@ -21,11 +21,8 @@ Public Class ProverBootstrapper
 
     Protected Overrides Function CreateShell() As System.Windows.DependencyObject
         _main = Container.Resolve(Of MainWindow)()
-
         Return _main
-
     End Function
-
 
     Protected Overrides Sub ConfigureContainer()
         MyBase.ConfigureContainer()
@@ -44,7 +41,7 @@ Public Class ProverBootstrapper
 
     Protected Overrides Sub ConfigureModuleCatalog()
         'MyBase.ConfigureModuleCatalog()
-        Dim InstrumentModuleType As Type = GetType(InstrumentsModule)
+        Dim InstrumentModuleType As Type = GetType(InstrumentsViewModule)
         ModuleCatalog.AddModule(New ModuleInfo(InstrumentModuleType.Name, InstrumentModuleType.AssemblyQualifiedName))
 
     End Sub

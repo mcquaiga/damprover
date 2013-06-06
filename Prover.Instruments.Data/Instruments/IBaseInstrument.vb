@@ -76,8 +76,8 @@ Public Interface IBaseInstrument
     Property CreatedDate As DateTime?
 
     Property ItemFile As Dictionary(Of Integer, String)
-    Property PressureTests As List(Of PressureFactorClass)
-    Property TemperateTests As List(Of TemperatureClass)
+    Property PressureTests As List(Of IPressureFactorClass)
+    Property TemperateTests As List(Of ITemperatureClass)
     Property VolumeTests As List(Of IVolume)
 
     ReadOnly Property PulseASelect As PulseOutputValues

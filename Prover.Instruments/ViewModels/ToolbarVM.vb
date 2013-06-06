@@ -3,7 +3,7 @@ Imports Microsoft.Practices.Prism.Events
 Imports Microsoft.Practices.Prism.Regions
 Imports Microsoft.Practices.Unity
 Imports Microsoft.Practices.Prism.Modularity
-Imports ReactiveUI
+
 
 
 Namespace ViewModels
@@ -14,9 +14,6 @@ Namespace ViewModels
         Private _container As UnityContainer
         Private _regionManager As RegionManager
         Private _moduleItems As List(Of IProverModule)
-
-        Protected _testPage As ReactiveObject
-        Protected _searchPage As ReactiveObject
 
         Public Event PropertyChanged(ByVal sender As Object, ByVal e As System.ComponentModel.PropertyChangedEventArgs) Implements System.ComponentModel.INotifyPropertyChanged.PropertyChanged
         Private Sub NotifyPropertyChanged(ByVal propname As String)

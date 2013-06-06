@@ -130,7 +130,9 @@
     <Compile Include="Instruments\InstrumentDataContext.vb" />
     <Compile Include="Instruments\InstrumentDataProvider.vb" />
     <Compile Include="Instruments\ItemClass.vb" />
+    <Compile Include="Test\ITemperatureClass.vb" />
     <Compile Include="Test\FactorClass.vb" />
+    <Compile Include="Test\IPressureFactorClass.vb" />
     <Compile Include="Test\ITestClass.vb" />
     <Compile Include="Test\IVolume.vb" />
     <Compile Include="Test\PressureFactorClass.vb" />

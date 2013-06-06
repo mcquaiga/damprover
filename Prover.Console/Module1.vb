@@ -14,8 +14,8 @@ Module Module1
         'LoadCustomers()
         'loadinstruments()
         'GetAllInstruments()
-        'saveinstrument()
-        InstrumentByGuid()
+        saveinstrument()
+        'InstrumentByGuid()
     End Sub
 
     Public Sub LoadCustomers()
@@ -65,7 +65,6 @@ Module Module1
         InstrumentCommunications.BaudRate = miSerialProtocol.BaudRateEnum.b38400
         myinstrument.ItemFile = InstrumentCommunications.DownloadItemFile(myinstrument)
 
-        Dim p As New PressureFactorClass()
 
         Dim p1 As New PressureFactorClass()
         p1.Items = InstrumentCommunications.DownloadPressureItems(myinstrument)
