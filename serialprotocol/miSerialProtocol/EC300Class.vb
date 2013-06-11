@@ -1,4 +1,5 @@
-Imports System.Windows.forms
+Imports System.Windows.Forms
+Imports InTheHand.Net
 Public Class EC300Class : Inherits miSerialProtocolClass
 
     Public Enum BaudRateEnum
@@ -36,8 +37,9 @@ Public Class EC300Class : Inherits miSerialProtocolClass
     'When this protocol tries to access the port it is freezing the application. e
 
     Sub New(ByVal PortNumber As Integer, ByVal BaudRate As BaudRateEnum)
-        MyBase.New(PortNumber, BaudRate)
+        MyBase.New(0, BaudRate)
         Me.Instrument = InstrumentTypeCode.EC300
+        Dim irda As New IrDA.IrDAAttributeType
     End Sub
 
     Public Overrides Sub Connect()

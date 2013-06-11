@@ -10,12 +10,6 @@
              d:DesignWidth="506"
              mc:Ignorable="d">
 
-    <!--
-        <UserControl.DataContext>
-        <local:InstrumentsListPageVM />
-        </UserControl.DataContext>
-    -->
-
 
     <UserControl.Resources>
         <CollectionViewSource x:Key="Instruments" Source="{Binding Path=Instruments, Mode=OneWay}" />
@@ -24,14 +18,14 @@
                 <Image />
                 <StackPanel Orientation="Vertical">
                     <TextBlock Width="125"
-                               Foreground="White"
+                               Foreground="Blue"
                                Text="{Binding InstrumentType}" />
                     <TextBlock Width="125"
                                Margin="2"
                                HorizontalAlignment="Center"
                                VerticalAlignment="Center"
                                FontSize="22"
-                               Foreground="White"
+                               Foreground="Blue"
                                Text="{Binding SerialNumber}" />
                 </StackPanel>
                 <Grid Height="50"
@@ -44,16 +38,16 @@
                         <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
                     <StackPanel Grid.Row="0" Orientation="Horizontal">
-                        <TextBlock Text="{Binding CreatedDate}" />
+                        <TextBlock Foreground="Blue" Text="{Binding CreatedDate}" />
                     </StackPanel>
                     <StackPanel Grid.Row="1" Orientation="Horizontal" />
                     <StackPanel Grid.Row="2" Orientation="Horizontal">
-                        <TextBlock Text="I.C. #: " />
-                        <TextBlock Text="{Binding ConnectionString}" />
+                        <TextBlock Foreground="Blue" Text="I.C. #: " />
+                        <TextBlock Foreground="Blue" Text="{Binding ConnectionString}" />
                     </StackPanel>
                     <StackPanel Grid.Row="3" Orientation="Horizontal">
-                        <TextBlock Text="Drive Type: " />
-                        <TextBlock Text="{Binding InstrumentDriveType}" />
+                        <TextBlock Foreground="Blue" Text="Drive Type: " />
+                        <TextBlock Foreground="Blue" Text="{Binding InstrumentDriveType}" />
                     </StackPanel>
                 </Grid>
             </StackPanel>
@@ -100,7 +94,7 @@
                      Width="125"
                      Margin="2"
                      HorizontalAlignment="Right"
-                     Text="{Binding SerialNumber,
+                     Text="{Binding Instruments.SerialNumber,
                                     UpdateSourceTrigger=PropertyChanged}" />
 
             <!--  <TextBlock HorizontalAlignment="Right">Serial Number:</TextBlock>  -->
@@ -114,7 +108,7 @@
                      Margin="10"
                      HorizontalContentAlignment="Stretch"
                      VerticalContentAlignment="Stretch"
-                     Background="#FF200074"
+                     Background="White"
                      BorderThickness="0"
                      ItemContainerStyle="{StaticResource InstrumentStyle}"
                      ItemTemplate="{StaticResource ResourceKey=inst}"

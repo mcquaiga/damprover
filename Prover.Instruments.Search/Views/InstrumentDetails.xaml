@@ -7,77 +7,187 @@
              d:DesignHeight="300"
              d:DesignWidth="300"
              mc:Ignorable="d">
-    <UserControl.Resources>
-        <CollectionViewSource x:Key="Details" Source="{Binding Path=Instruments, Mode=OneWay}" />
-    </UserControl.Resources>
-    <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
 
-        <StackPanel Background="#FF200074">
-            <Grid>
-                <StackPanel Margin="10" Visibility="{Binding DataContext.IsNewInstrument}">
-                    <WrapPanel>
-                        <Button>MiniMax</Button>
-                        <Button>EC300</Button>
-                    </WrapPanel>
-                    <WrapPanel>
-                        <Button>Comm 1</Button>
-                        <Button>Comm 2</Button>
-                        <Button>Comm 3</Button>
-                    </WrapPanel>
-                    <WrapPanel>
-                        <Button>B9600</Button>
-                        <Button>B38400</Button>
-                    </WrapPanel>
+    <UserControl.Resources>
+        <DataTemplate x:Key="SettingItem">
+            <Button Command="{Binding DataContext.SetBaudRateCommand,
+                                      RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"
+                    CommandParameter="{Binding .}"
+                    Content="{Binding .}"
+                    Style="{StaticResource SimpleButton}" />
+        </DataTemplate>
+
+        <DataTemplate x:Key="PressureItem">
+            <StackPanel Orientation="Horizontal">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    <StackPanel Orientation="Horizontal">
+                        <Button Command="" Content="Fetch" />
+                        <TextBox Margin="5" Text="{Binding GaugePressure}" />
+                        <TextBlock Margin="5" Text="{Binding AtmosphericPressure}" />
+                        <TextBlock Margin="5" Text="{Binding PressureUnits}" />
+                        <TextBlock Margin="5" Text="{Binding TransducerType}" />
+                        <TextBlock Margin="5" Text="{Binding BasePressure}" />
+                        <TextBlock Margin="5" Text="{Binding EVCPRessure}" />
+                        <TextBlock Margin="5" Text="{Binding EVCFactor}" />
+                        <TextBlock Margin="5" Text="{Binding EVCUnsqr}" />
+                        <TextBlock Margin="5" Text="{Binding PercentError}" />
+                        <TextBlock Margin="5" Text="{Binding ActualPressureFactor}" />
+                        <TextBlock Margin="5" Text="{Binding hasPassed}" />
+                    </StackPanel>
+                </Grid>
+            </StackPanel>
+        </DataTemplate>
+
+        <DataTemplate x:Key="TempItem">
+            <StackPanel Orientation="Horizontal">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    <StackPanel Orientation="Horizontal">
+                        <StackPanel Grid.Column="1" Orientation="Vertical">
+                            <TextBlock Text="Gauge Pressure" />
+                            <TextBlock Text="{Binding GaugeTemperature}" />
+                        </StackPanel>
+                        <TextBlock Text="{Binding TemperatureUnits}" />
+                        <TextBlock Text="{Binding EVCTemperature}" />
+                        <TextBlock Text="{Binding EVCFactor}" />
+                        <TextBlock Text="{Binding BaseTemperature}" />
+                        <TextBlock Text="{Binding TemperatureFactor}" />
+                        <TextBlock Text="{Binding PercentError}" />
+                    </StackPanel>
+                </Grid>
+            </StackPanel>
+        </DataTemplate>
+
+        <DataTemplate x:Key="ItemFile">
+            <StackPanel Orientation="Horizontal">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Grid.Column="0" Text="{Binding ItemClass.Number}" />
+                    <TextBlock Grid.Column="1" Text="{Binding ItemClass.ShortDescription}" />
+                </Grid>
+            </StackPanel>
+        </DataTemplate>
+    </UserControl.Resources>
+
+    <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+        <StackPanel Background="White">
+            <!--  <ContentControl Content="{Binding Source={StaticResource Instrument}, Mode=OneWay}" />  -->
+
+            <Grid Visibility="{Binding ShowCommButtons, UpdateSourceTrigger=PropertyChanged}">
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+                <WrapPanel Grid.Row="0">
+                    <Button>MiniMax</Button>
+                    <Button>EC300</Button>
+                </WrapPanel>
+                <WrapPanel Grid.Row="1">
+                    <ItemsControl ItemTemplate="{StaticResource ResourceKey=SettingItem}" ItemsSource="{Binding CommPorts}" />
+                </WrapPanel>
+
+                <StackPanel Grid.Row="2"
+                            HorizontalAlignment="Left"
+                            Orientation="Horizontal">
+                    <ItemsControl ItemTemplate="{StaticResource ResourceKey=SettingItem}" ItemsSource="{Binding BaudRates}" />
                 </StackPanel>
+
+                <Button Grid.Row="3"
+                        Command="{Binding FetchInstrumentInfoCommand}"
+                        Content="Fetch Instrument Information"
+                        Style="{StaticResource SimpleButton}" />
             </Grid>
             <Grid Margin="15">
                 <StackPanel>
                     <!--  Basic Details Info  -->
-                    <TextBlock>Serial Number:</TextBlock>
-                    <TextBlock Text="{Binding DataContext.Instrument.SerialNumber}" />
+                    <TextBlock Foreground="Blue">Serial Number:</TextBlock>
+                    <TextBlock Foreground="Blue" Text="{Binding Instrument.SerialNumber, UpdateSourceTrigger=PropertyChanged}" />
 
-                    <Expander Foreground="White" Header="Item File">
-                        <ListBox ItemsSource="{Binding Items}">
-                            <ListBox.ItemTemplate>
-                                <DataTemplate>
-                                    <StackPanel />
-                                </DataTemplate>
-                            </ListBox.ItemTemplate>
-                        </ListBox>
-                    </Expander>
-                    <Expander Foreground="White"
+
+                    <Expander Foreground="Blue"
                               Header="Pressure"
-                              Visibility="{Binding IsLivePressure}">
-                        <ListBox ItemsSource="{Binding Instrument.PressureTests}">
-                            <ListBox.ItemTemplate>
-                                <DataTemplate>
-                                    <StackPanel>
-                                        <TextBlock Text="{Binding AtmosphericPressure}" />
-                                        <TextBlock Text="{Binding PressureUnits}" />
-                                        <TextBlock Text="{Binding TransducerType}" />
-                                        <TextBlock Text="{Binding BasePressure}" />
-                                        <TextBlock Text="{Binding EVCPRessure}" />
-                                        <TextBlock Text="{Binding EVCFactor}" />
-                                        <TextBlock Text="{Binding EVCUnsqr}" />
-                                        <TextBlock Text="{Binding PercentError}" />
-                                        <TextBlock Text="{Binding ActualPressureFactor}" />
-                                    </StackPanel>
-                                </DataTemplate>
-                            </ListBox.ItemTemplate>
-                        </ListBox>
+                              Visibility="{Binding Instrument.IsLivePressure,
+                                                   UpdateSourceTrigger=PropertyChanged}">
+                        <Grid>
+                            <Grid>
+                                <TextBlock Text="Pressure Info" />
+                            </Grid>
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                </Grid.RowDefinitions>
+
+                                <Grid Grid.Row="0">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition />
+                                        <ColumnDefinition />
+                                        <ColumnDefinition />
+                                        <ColumnDefinition />
+                                        <ColumnDefinition />
+                                        <ColumnDefinition />
+                                        <ColumnDefinition />
+                                        <ColumnDefinition />
+                                        <ColumnDefinition />
+                                        <ColumnDefinition />
+                                        <ColumnDefinition />
+                                        <ColumnDefinition />
+                                    </Grid.ColumnDefinitions>
+
+                                    <TextBlock Grid.Column="0" Text="Gauge Press." />
+                                    <TextBlock Grid.Column="1" Text="ATM Press." />
+                                    <TextBlock Grid.Column="2" Text="Units" />
+                                    <TextBlock Grid.Column="3" Text="Transducer" />
+                                    <TextBlock Grid.Column="4" Text="Base Press." />
+                                    <TextBlock Grid.Column="5" Text="EVC Press. (8)" />
+                                    <TextBlock Grid.Column="6" Text="EVC Factor (44)" />
+                                    <TextBlock Grid.Column="7" Text="EVC Unsqr. (47)" />
+
+                                    <TextBlock Grid.Column="8" Text="Actual Press. Factor" />
+                                    <TextBlock Grid.Column="9" Text="% Error" />
+                                    <TextBlock Grid.Column="10" Text="Passed" />
+                                </Grid>
+                                <ListBox Grid.Row="2"
+                                         Margin="5"
+                                         ItemTemplate="{StaticResource ResourceKey=PressureItem}"
+                                         ItemsSource="{Binding Instrument.PressureTests,
+                                                               UpdateSourceTrigger=PropertyChanged}" />
+
+                            </Grid>
+                        </Grid>
                     </Expander>
-                    <Expander Foreground="White"
+                    <Expander Foreground="Blue"
                               Header="Temperature"
-                              Visibility="{Binding IsLiveTemperature}">
-                        <ListBox ItemsSource="{Binding Instrument.TemperatureTests}" SelectedItem="{Binding DataContext.SelectedJob, ElementName=JobsListUserControl, Mode=TwoWay}">
-                            <ListBox.ItemTemplate>
-                                <DataTemplate>
-                                    <StackPanel />
-                                </DataTemplate>
-                            </ListBox.ItemTemplate>
-                        </ListBox>
+                              Visibility="{Binding Instrument.IsLiveTemperature}">
+                        <ListBox ItemTemplate="{StaticResource ResourceKey=TempItem}" ItemsSource="{Binding Instrument.TemperatureTests, UpdateSourceTrigger=PropertyChanged}" />
+
                     </Expander>
-                    <Expander Foreground="White" Header="Volume">
+                    <Expander Foreground="Blue" Header="Volume">
                         <ListBox ItemsSource="{Binding Instrument.VolumeTests}">
                             <ListBox.ItemTemplate>
                                 <DataTemplate>
@@ -86,8 +196,15 @@
                             </ListBox.ItemTemplate>
                         </ListBox>
                     </Expander>
+
+
+                    <Expander Foreground="Blue" Header="Item File">
+                        <ListBox ItemTemplate="{StaticResource ResourceKey=ItemFile}" ItemsSource="{Binding Items, UpdateSourceTrigger=PropertyChanged}" />
+                    </Expander>
                 </StackPanel>
             </Grid>
         </StackPanel>
+
     </ScrollViewer>
+
 </UserControl>

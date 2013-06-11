@@ -10,7 +10,7 @@
 
     <Window.Resources />
 
-    <Grid Background="#FF200074">
+    <Grid Background="White">
         <DockPanel>
             <Grid Margin="10,10,10,10"
                   HorizontalAlignment="Stretch"

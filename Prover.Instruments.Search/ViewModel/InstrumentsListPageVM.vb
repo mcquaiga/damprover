@@ -1,17 +1,20 @@
 ﻿Imports Prover.Instruments.Data
+Imports System.ComponentModel
 Imports System.Collections.ObjectModel
 Imports Microsoft.Practices.Prism.Events
 
 
 Namespace ViewModels
     Public Class InstrumentsListPageVM
-        Implements IInstrumentsListPageVM
+        Implements IInstrumentsListPageVM, INotifyPropertyChanged
 
         Dim oneMonth As New TimeSpan(30, 0, 0, 0)
         Dim oneWeek As New TimeSpan(7, 0, 0, 0)
         Dim _InstrumentProvider As InstrumentDataProvider
-        Private _events As IEventAggregator
 
+
+
+        Private _events As IEventAggregator
         Private _instrs As ObservableCollection(Of IBaseInstrument)
 
         Public ReadOnly Property Instruments As ObservableCollection(Of IBaseInstrument) Implements IInstrumentsListPageVM.Instruments
@@ -103,6 +106,7 @@ Namespace ViewModels
         End Sub
 
         Private _selectedInstrument As IBaseInstrument
+
         Public Property SelectedInstrument As IBaseInstrument Implements IInstrumentsListPageVM.SelectedJob
             Get
                 Return _selectedInstrument
@@ -110,18 +114,18 @@ Namespace ViewModels
             Set(ByVal value As IBaseInstrument)
                 If Not value Is _selectedInstrument Then
 
-                    If value IsNot Nothing Then
-                        _selectedInstrument = value
-                    End If
+
+                    _selectedInstrument = value
+
                     _events.GetEvent(Of SelectedInstrumentChangedEvent).Publish(_selectedInstrument)
-                    NotifyPropertyChanged("SelectedJob")
+                    NotifyPropertyChanged("SelectedInstrument")
                 End If
             End Set
         End Property
 
-        Public Sub UnselectJob() Implements IInstrumentsListPageVM.UnselectJob
+        Public Sub UnselectInstrument() Implements IInstrumentsListPageVM.UnselectJob
             _selectedInstrument = Nothing
-            NotifyPropertyChanged("SelectedJob")
+            NotifyPropertyChanged("SelectedInstrument")
         End Sub
 
     End Class

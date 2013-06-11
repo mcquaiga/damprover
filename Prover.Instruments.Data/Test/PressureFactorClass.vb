@@ -88,6 +88,15 @@ Public Class PressureFactorClass
         End Get
     End Property
 
+    ReadOnly Property hasPassed As Boolean Implements IPressureFactorClass.hasPassed
+        Get
+            If ActualPressureFactor < 1 And ActualPressureFactor > -1 Then
+                Return True
+            Else
+                Return False
+            End If
+        End Get
+    End Property
 
 #End Region
 

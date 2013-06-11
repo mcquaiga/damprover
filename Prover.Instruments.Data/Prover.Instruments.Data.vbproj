@@ -116,6 +116,7 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Communications\CommPorts.vb" />
     <Compile Include="Communications\DABoard.vb" />
     <Compile Include="Communications\DABoards\DigitalInputSubsystem.vb" />
     <Compile Include="Communications\DABoards\PCIDataAcqClass.vb" />

@@ -11,13 +11,17 @@ Namespace Instruments.Data
         Public Shared Property CommPort As String
         'Private Shared _
 
-        Sub New(CommPortName As String, BaudRate As miSerialProtocol.BaudRateEnum)
 
+        Sub New(CommPortName As String, BaudRate As miSerialProtocol.BaudRateEnum)
+            CommPort = CommPortName
+            BaudRate = BaudRate
         End Sub
 
         Public Shared Function DownloadItemFile(Instrument As IBaseInstrument) As Dictionary(Of Integer, String)
 
-
+            If CommPort Is Nothing Or IsNothing(BaudRate) Then
+                Throw New Exception("Comm Port and Baud Rate must be set.")
+            End If
             Select Case Instrument.InstrumentType
                 Case InstrumentTypeCode.MiniMax
                     _miSerial = New miSerialProtocol.MiniMaxClass(CommPort, BaudRate)

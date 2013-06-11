@@ -44,5 +44,6 @@ Public Interface IPressureFactorClass
     ReadOnly Property EVCUnsqr() As Double
     ReadOnly Property PercentError() As Double
     ReadOnly Property ActualPressureFactor() As Double
+    ReadOnly Property hasPassed As Boolean
 
 End Interface

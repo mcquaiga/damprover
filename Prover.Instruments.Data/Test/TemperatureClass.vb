@@ -60,6 +60,17 @@ Public Class TemperatureClass
             Return ((EVCFactor - TemperatureFactor) / TemperatureFactor) * 100
         End Get
     End Property
+
+    ReadOnly Property hasPassed As Boolean Implements ITemperatureClass.hasPassed
+        Get
+            If PercentError < 1 And PercentError > -1 Then
+                Return True
+            Else
+                Return False
+            End If
+        End Get
+    End Property
+
 #End Region
 
 #Region "Methods"

@@ -4,8 +4,6 @@ Imports Prover.Instruments.Data
 Imports System.ComponentModel
 
 Namespace ViewModels
-
-
     Public Interface IInstrumentsListPageVM
         Inherits INotifyPropertyChanged
 
@@ -13,11 +11,9 @@ Namespace ViewModels
 
         ReadOnly Property OneWeekFilterCommand As ICommand
         ReadOnly Property OneMonthFilterCommand As ICommand
-
         ReadOnly Property OnSerialFilterChange As ICommand
 
         Property SelectedJob As IBaseInstrument
-
         Sub UnselectJob()
 
     End Interface

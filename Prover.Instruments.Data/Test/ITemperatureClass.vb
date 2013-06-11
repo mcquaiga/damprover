@@ -22,6 +22,7 @@ Public Interface ITemperatureClass
     ReadOnly Property BaseTemperature() As Double
     ReadOnly Property TemperatureFactor() As Double
     ReadOnly Property PercentError() As Double
+    ReadOnly Property hasPassed As Boolean
 
 
 
