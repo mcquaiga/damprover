@@ -2,7 +2,7 @@ Public Class ItemClass
 
     Public Property Number As Integer
     Public Property Code As String
-    Public Property Shortdescription As String
+    Public Property ShortDescription As String
     Public Property LongDescription As String
     Public Property IsAlarm As Boolean
     Public Property IsPressure As Boolean

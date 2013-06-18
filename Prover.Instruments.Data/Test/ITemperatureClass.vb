@@ -14,7 +14,7 @@ Public Interface ITemperatureClass
         FixedTempFactor = 111
     End Enum
 
-
+    Property Items As Dictionary(Of Integer, String)
     ReadOnly Property TemperatureUnits() As UnitsEnum
     Property GaugeTemperature() As Double
     ReadOnly Property EVCTemperature() As Double
@@ -23,6 +23,10 @@ Public Interface ITemperatureClass
     ReadOnly Property TemperatureFactor() As Double
     ReadOnly Property PercentError() As Double
     ReadOnly Property hasPassed As Boolean
+
+    ReadOnly Property LevelIndex As Integer
+
+    ReadOnly Property LevelDescription As String
 
 
 

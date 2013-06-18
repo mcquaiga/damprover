@@ -73,6 +73,10 @@ Namespace Instruments.Data
             Return session.Load(Of IBaseInstrument)(ID)
         End Function
 
+        Public Sub UpsetNewInstrument(Instrument As IBaseInstrument)
+            UpsertInstrument(Instrument, Nothing)
+        End Sub
+
         Public Sub UpsertInstrument(instrument As IBaseInstrument, Session As DocumentSession)
             If Session Is Nothing Then
                 Session = _docStore.OpenSession()

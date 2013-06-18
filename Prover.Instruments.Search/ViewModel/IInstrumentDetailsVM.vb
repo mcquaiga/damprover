@@ -12,11 +12,21 @@ Namespace ViewModels
 
         Property Instrument As IBaseInstrument
         ReadOnly Property CommPorts As ReadOnlyCollection(Of String)
-        ReadOnly Property BaudRates As List(Of Integer, String)
+        ReadOnly Property BaudRates As List(Of String)
 
         'Commands
         ReadOnly Property FetchInstrumentInfoCommand As ICommand
         ReadOnly Property SetBaudRateCommand As ICommand
+
+        ReadOnly Property setCommPortCommand As ICommand
+
+        ReadOnly Property SaveCommand As ICommand
+
+        ReadOnly Property MiniMaxCommand As ICommand
+
+        ReadOnly Property FetchPressureItemsByLevelCommand As ICommand
+
+        ReadOnly Property FetchTemperatureItemsByLevelCommand As ICommand
 
 
     End Interface

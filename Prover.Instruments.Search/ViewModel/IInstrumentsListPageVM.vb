@@ -14,6 +14,9 @@ Namespace ViewModels
         ReadOnly Property OnSerialFilterChange As ICommand
 
         Property SelectedJob As IBaseInstrument
+
+        ReadOnly Property AddNewCommand As ICommand
+
         Sub UnselectJob()
 
     End Interface

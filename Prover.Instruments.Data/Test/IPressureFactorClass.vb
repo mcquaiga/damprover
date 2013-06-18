@@ -1,4 +1,4 @@
-﻿
+﻿Imports System.ComponentModel
 
 Public Interface IPressureFactorClass
 
@@ -34,8 +34,11 @@ Public Interface IPressureFactorClass
     End Enum
 #End Region
 
+    Property Items As Dictionary(Of Integer, String)
     Property GaugePressure As Double
     Property AtmosphericPressure() As Double
+    ReadOnly Property LevelIndex As Integer
+    ReadOnly Property LevelDescription As String
     ReadOnly Property PressureUnits As UnitsEnum
     ReadOnly Property Transducer() As TransducerType
     ReadOnly Property BasePressure As Double
@@ -45,5 +48,7 @@ Public Interface IPressureFactorClass
     ReadOnly Property PercentError() As Double
     ReadOnly Property ActualPressureFactor() As Double
     ReadOnly Property hasPassed As Boolean
+
+    Event PropertyChanged As PropertyChangedEventHandler
 
 End Interface

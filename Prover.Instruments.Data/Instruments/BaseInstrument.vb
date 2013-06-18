@@ -3,15 +3,13 @@ Imports System.Xml
 Imports System.Xml.Serialization
 Imports Newtonsoft.Json
 Imports Newtonsoft.Json.Linq
-
-
+Imports System.ComponentModel
+Imports System.Runtime.CompilerServices
 
 Namespace Instruments.Data
 
-
-
     Public MustInherit Class BaseInstrument
-        Implements IBaseInstrument
+        Implements IBaseInstrument, INotifyPropertyChanged
 
         'This is the base class for all the Mercury Instruments
         'Seperate classes for each instrument must be created and inherited from this class
@@ -24,8 +22,19 @@ Namespace Instruments.Data
         Private _instrumentGUID As Guid
 
         Sub New()
+            ItemFile = New Dictionary(Of Integer, String)
             PressureTests = New List(Of IPressureFactorClass)
+            PressureTests.Add(New PressureFactorClass(1))
+            PressureTests.Add(New PressureFactorClass(2))
+            PressureTests.Add(New PressureFactorClass(3))
+
+
+
             TemperatureTests = New List(Of ITemperatureClass)
+            TemperatureTests.Add(New TemperatureClass(1))
+            TemperatureTests.Add(New TemperatureClass(2))
+            TemperatureTests.Add(New TemperatureClass(3))
+
             VolumeTests = New List(Of IVolume)
         End Sub
 
@@ -39,8 +48,19 @@ Namespace Instruments.Data
         Public Property ItemFile As Dictionary(Of Integer, String) Implements IBaseInstrument.ItemFile
         Public Property InspectionID As Integer? Implements IBaseInstrument.InspectionID
 
+        Private _pressure As List(Of IPressureFactorClass)
 
         Public Property PressureTests As List(Of IPressureFactorClass) Implements IBaseInstrument.PressureTests
+            Get
+                Return _pressure
+            End Get
+            Set(value As List(Of IPressureFactorClass))
+                _pressure = value
+                AddHandler _pressure.PropertyChanged, AddressOf 
+
+                NotifyPropertyChanged("PressureTests")
+            End Set
+        End Property
         Public Property TemperatureTests As List(Of ITemperatureClass) Implements IBaseInstrument.TemperateTests
         Public Property VolumeTests As List(Of IVolume) Implements IBaseInstrument.VolumeTests
 
@@ -103,6 +123,17 @@ Namespace Instruments.Data
 
 
 #End Region
+
+        Public Event PropertyChanged As PropertyChangedEventHandler Implements INotifyPropertyChanged.PropertyChanged
+
+        ' This method is called by the Set accessor of each property. 
+        ' The CallerMemberName attribute that is applied to the optional propertyName 
+        ' parameter causes the property name of the caller to be substituted as an argument. 
+        Private Sub NotifyPropertyChanged(<CallerMemberName()> Optional ByVal propertyName As String = Nothing)
+            RaiseEvent PropertyChanged(Me, New PropertyChangedEventArgs(propertyName))
+        End Sub
+
+
 
     End Class
 

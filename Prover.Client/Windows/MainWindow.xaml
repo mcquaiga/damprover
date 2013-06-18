@@ -63,20 +63,13 @@
                 </WrapPanel>
             </Grid>
             <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="9*" />
+                </Grid.RowDefinitions>
+                <ContentControl Grid.Row="1" prism:RegionManager.RegionName="{x:Static regions:RegionNames.ToolbarRegion}" />
                 <ContentControl prism:RegionManager.RegionName="{x:Static regions:RegionNames.ContentRegion}" />
-                <Grid DockPanel.Dock="Bottom">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="3*" />
 
-                    </Grid.ColumnDefinitions>
-
-                    <ContentControl Grid.Column="0" prism:RegionManager.RegionName="{x:Static regions:RegionNames.InstrumentsRegion}" />
-
-                    <ContentControl Grid.Row="2"
-                                    Grid.Column="1"
-                                    prism:RegionManager.RegionName="{x:Static regions:RegionNames.ToolbarRegion}" />
-                </Grid>
             </Grid>
         </DockPanel>
     </Grid>

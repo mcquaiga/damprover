@@ -1,16 +1,30 @@
 Imports System.IO
-
+Imports System.ComponentModel
+Imports System.Runtime.CompilerServices
 
 Public Class PressureFactorClass
-    Inherits FactorClass
-    Implements IPressureFactorClass
+    Implements IPressureFactorClass, INotifyPropertyChanged
+
+    Private _items As Dictionary(Of Integer, String)
+
+    Public Property Items As Dictionary(Of Integer, String) Implements IPressureFactorClass.Items
+        Get
+            Return _items
+        End Get
+        Set(value As Dictionary(Of Integer, String))
+            _items = value
+            NotifyPropertyChanged("Items")
+        End Set
+    End Property
 
     Private _ATMPressure As Double
     Private _PreviousUnits
     Private Property _itemsXMLPath As String
+    Private _levelIndex As Integer
 
-    Sub New()
+    Sub New(Level As Integer)
         MyBase.New()
+        _levelIndex = Level
     End Sub
 
 #Region "Properties"
@@ -32,36 +46,43 @@ Public Class PressureFactorClass
 
     Public ReadOnly Property PressureUnits As IPressureFactorClass.UnitsEnum Implements IPressureFactorClass.PressureUnits
         Get
+            If IsNothing(Items) Then Return Nothing
+
             Return Items(87)
         End Get
     End Property
 
     Public ReadOnly Property Transducer() As IPressureFactorClass.TransducerType Implements IPressureFactorClass.Transducer
         Get
+            If IsNothing(Items) Then Return Nothing
             Return Items(112)
         End Get
     End Property
 
     Public ReadOnly Property BasePressure As Double Implements IPressureFactorClass.BasePressure
         Get
+            If IsNothing(Items) Then Return Nothing
             Return Items(13)
         End Get
     End Property
 
     Public ReadOnly Property EVCPressure() Implements IPressureFactorClass.EVCPressure
         Get
+            If IsNothing(Items) Then Return Nothing
             Return Items(8)
         End Get
     End Property
 
     Public ReadOnly Property EVCFactor() Implements IPressureFactorClass.EVCFactor
         Get
+            If IsNothing(Items) Then Return Nothing
             Return Items(44)
         End Get
     End Property
 
     Public ReadOnly Property EVCUnsqr() As Double Implements IPressureFactorClass.EVCUnsqr
         Get
+            If IsNothing(Items) Then Return Nothing
             Return Items(47)
         End Get
 
@@ -98,6 +119,17 @@ Public Class PressureFactorClass
         End Get
     End Property
 
+    Public ReadOnly Property LevelIndex As Integer Implements IPressureFactorClass.LevelIndex
+        Get
+            Return _levelIndex
+        End Get
+    End Property
+
+    Public ReadOnly Property LevelDescription As String Implements IPressureFactorClass.LevelDescription
+        Get
+            Return "P" + CStr(_levelIndex)
+        End Get
+    End Property
 #End Region
 
 #Region "Methods"
@@ -187,5 +219,16 @@ Public Class PressureFactorClass
     End Function
 
 #End Region
+
+
+    Public Event PropertyChanged As PropertyChangedEventHandler Implements INotifyPropertyChanged.PropertyChanged
+
+    ' This method is called by the Set accessor of each property. 
+    ' The CallerMemberName attribute that is applied to the optional propertyName 
+    ' parameter causes the property name of the caller to be substituted as an argument. 
+    Private Sub NotifyPropertyChanged(<CallerMemberName()> Optional ByVal propertyName As String = Nothing)
+        RaiseEvent PropertyChanged(Me, New PropertyChangedEventArgs(propertyName))
+    End Sub
+
 
 End Class

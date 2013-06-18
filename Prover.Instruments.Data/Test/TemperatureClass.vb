@@ -1,22 +1,28 @@
 
 Public Class TemperatureClass
-    Inherits FactorClass
     Implements ITemperatureClass
+
+
 
     Private _PreviousUnits As ITemperatureClass.UnitsEnum
 
     Const TempCorrection As Double = 459.67
     Private MetericTempCorrection As Double = 273.15
 
-    Sub New()
+    Private _levelIndex As Integer
+
+    Sub New(Level As Integer)
         MyBase.New()
+        _levelIndex = Level
     End Sub
 
 #Region "Properties"
 
+    Public Property Items As Dictionary(Of Integer, String) Implements ITemperatureClass.Items
     Public ReadOnly Property TemperatureUnits() As ITemperatureClass.UnitsEnum Implements ITemperatureClass.TemperatureUnits
         Get
-            Return Items(ITemperatureClass.TemperatureItems.TempUnits)
+            If Items IsNot Nothing Then Return Items(ITemperatureClass.TemperatureItems.TempUnits)
+            Return Nothing
         End Get
 
     End Property
@@ -26,19 +32,22 @@ Public Class TemperatureClass
 
     Public ReadOnly Property EVCTemperature() As Double Implements ITemperatureClass.EVCTemperature
         Get
-            Return Items(ITemperatureClass.TemperatureItems.GasTemp)
+            If Items IsNot Nothing Then Return Items(ITemperatureClass.TemperatureItems.GasTemp)
+            Return Nothing
         End Get
     End Property
 
     Public ReadOnly Property EVCFactor() As Double Implements ITemperatureClass.EVCFactor
         Get
-            Return Items(ITemperatureClass.TemperatureItems.TempFactor)
+            If Items IsNot Nothing Then Return Items(ITemperatureClass.TemperatureItems.TempFactor)
+            Return Nothing
         End Get
     End Property
 
     Public ReadOnly Property BaseTemperature() As Double Implements ITemperatureClass.BaseTemperature
         Get
-            Return Items(ITemperatureClass.TemperatureItems.BaseTemp)
+            If Items IsNot Nothing Then Return Items(ITemperatureClass.TemperatureItems.BaseTemp)
+            Return Nothing
         End Get
 
     End Property
@@ -68,6 +77,18 @@ Public Class TemperatureClass
             Else
                 Return False
             End If
+        End Get
+    End Property
+
+    Public ReadOnly Property LevelIndex As Integer Implements ITemperatureClass.LevelIndex
+        Get
+            Return _levelIndex
+        End Get
+    End Property
+
+    Public ReadOnly Property LevelDescription As String Implements ITemperatureClass.LevelDescription
+        Get
+            Return "T" + CStr(_levelIndex)
         End Get
     End Property
 
@@ -121,5 +142,6 @@ Public Class TemperatureClass
 
 
 #End Region
+
 
 End Class

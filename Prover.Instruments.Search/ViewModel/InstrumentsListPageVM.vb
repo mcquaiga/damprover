@@ -74,6 +74,10 @@ Namespace ViewModels
             NotifyPropertyChanged("BaseInstruments")
         End Sub
 
+        Public Sub AddNewTestClick()
+            _events.GetEvent(Of SelectedInstrumentChangedEvent).Publish(Nothing)
+        End Sub
+
 #Region "commands"
 
         Private _oneWeekFilterCommand = New Microsoft.Practices.Prism.Commands.DelegateCommand(AddressOf OneWeekFilterClick)
@@ -95,6 +99,14 @@ Namespace ViewModels
 
             Get
                 Return _oneMonthFilterCommand
+            End Get
+        End Property
+
+        Private _addNewCommand = New Microsoft.Practices.Prism.Commands.DelegateCommand(AddressOf AddNewTestClick)
+        Public ReadOnly Property AddNewTestCommand As System.Windows.Input.ICommand Implements IInstrumentsListPageVM.AddNewCommand
+
+            Get
+                Return _addNewCommand
             End Get
         End Property
 
@@ -127,6 +139,8 @@ Namespace ViewModels
             _selectedInstrument = Nothing
             NotifyPropertyChanged("SelectedInstrument")
         End Sub
+
+
 
     End Class
 End Namespace

@@ -9,12 +9,24 @@
              mc:Ignorable="d">
 
     <UserControl.Resources>
-        <DataTemplate x:Key="SettingItem">
-            <Button Command="{Binding DataContext.SetBaudRateCommand,
-                                      RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"
-                    CommandParameter="{Binding .}"
-                    Content="{Binding .}"
-                    Style="{StaticResource SimpleButton}" />
+        <BooleanToVisibilityConverter x:Key="VisibilityOfBool" />
+        <DataTemplate x:Key="BaudRates">
+            <WrapPanel>
+                <Button Command="{Binding DataContext.SetBaudRateCommand,
+                                          RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"
+                        CommandParameter="{Binding .}"
+                        Content="{Binding .}"
+                        Style="{StaticResource SimpleButton}" />
+            </WrapPanel>
+        </DataTemplate>
+        <DataTemplate x:Key="CommPorts">
+            <WrapPanel>
+                <Button Command="{Binding DataContext.SetCommPortCommand,
+                                          RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"
+                        CommandParameter="{Binding .}"
+                        Content="{Binding .}"
+                        Style="{StaticResource SimpleButton}" />
+            </WrapPanel>
         </DataTemplate>
 
         <DataTemplate x:Key="PressureItem">
@@ -37,9 +49,9 @@
                         <TextBox Margin="5" Text="{Binding GaugePressure}" />
                         <TextBlock Margin="5" Text="{Binding AtmosphericPressure}" />
                         <TextBlock Margin="5" Text="{Binding PressureUnits}" />
-                        <TextBlock Margin="5" Text="{Binding TransducerType}" />
+                        <TextBlock Margin="5" Text="{Binding Transducer}" />
                         <TextBlock Margin="5" Text="{Binding BasePressure}" />
-                        <TextBlock Margin="5" Text="{Binding EVCPRessure}" />
+                        <TextBlock Margin="5" Text="{Binding EVCPressure}" />
                         <TextBlock Margin="5" Text="{Binding EVCFactor}" />
                         <TextBlock Margin="5" Text="{Binding EVCUnsqr}" />
                         <TextBlock Margin="5" Text="{Binding PercentError}" />
@@ -85,8 +97,9 @@
                         <ColumnDefinition />
                         <ColumnDefinition />
                     </Grid.ColumnDefinitions>
-                    <TextBlock Grid.Column="0" Text="{Binding ItemClass.Number}" />
-                    <TextBlock Grid.Column="1" Text="{Binding ItemClass.ShortDescription}" />
+                    <TextBlock Grid.Column="0" Text="{Binding Key.Number}" />
+                    <TextBlock Grid.Column="1" Text="{Binding Key.ShortDescription}" />
+                    <TextBlock Grid.Column="2" Text="{Binding Value}" />
                 </Grid>
             </StackPanel>
         </DataTemplate>
@@ -103,18 +116,35 @@
                     <RowDefinition />
                     <RowDefinition />
                 </Grid.RowDefinitions>
-                <WrapPanel Grid.Row="0">
-                    <Button>MiniMax</Button>
-                    <Button>EC300</Button>
-                </WrapPanel>
-                <WrapPanel Grid.Row="1">
-                    <ItemsControl ItemTemplate="{StaticResource ResourceKey=SettingItem}" ItemsSource="{Binding CommPorts}" />
-                </WrapPanel>
-
+                <StackPanel Grid.Row="0">
+                    <TextBlock Text="Instrument" />
+                    <WrapPanel>
+                        <Button Command="{Binding MiniMaxCommand}" Content="MiniMax" />
+                        <Button>EC300</Button>
+                    </WrapPanel>
+                </StackPanel>
+                <StackPanel Grid.Row="1">
+                    <TextBlock Grid.Row="1" Text="Communications Port" />
+                    <ItemsControl Margin="5"
+                                  ItemTemplate="{StaticResource ResourceKey=CommPorts}"
+                                  ItemsSource="{Binding CommPorts}">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <WrapPanel />
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                    </ItemsControl>
+                </StackPanel>
                 <StackPanel Grid.Row="2"
                             HorizontalAlignment="Left"
                             Orientation="Horizontal">
-                    <ItemsControl ItemTemplate="{StaticResource ResourceKey=SettingItem}" ItemsSource="{Binding BaudRates}" />
+                    <ItemsControl ItemTemplate="{StaticResource ResourceKey=BaudRates}" ItemsSource="{Binding BaudRates}">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <WrapPanel />
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                    </ItemsControl>
                 </StackPanel>
 
                 <Button Grid.Row="3"
@@ -131,61 +161,76 @@
 
                     <Expander Foreground="Blue"
                               Header="Pressure"
-                              Visibility="{Binding Instrument.IsLivePressure,
+                              Visibility="{Binding IsLivePressure,
+                                                   Converter={StaticResource VisibilityOfBool},
                                                    UpdateSourceTrigger=PropertyChanged}">
                         <Grid>
-                            <Grid>
-                                <TextBlock Text="Pressure Info" />
-                            </Grid>
-                            <Grid>
-                                <Grid.RowDefinitions>
-                                    <RowDefinition />
-                                    <RowDefinition />
-                                </Grid.RowDefinitions>
-
-                                <Grid Grid.Row="0">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition />
-                                        <ColumnDefinition />
-                                        <ColumnDefinition />
-                                        <ColumnDefinition />
-                                        <ColumnDefinition />
-                                        <ColumnDefinition />
-                                        <ColumnDefinition />
-                                        <ColumnDefinition />
-                                        <ColumnDefinition />
-                                        <ColumnDefinition />
-                                        <ColumnDefinition />
-                                        <ColumnDefinition />
-                                    </Grid.ColumnDefinitions>
-
-                                    <TextBlock Grid.Column="0" Text="Gauge Press." />
-                                    <TextBlock Grid.Column="1" Text="ATM Press." />
-                                    <TextBlock Grid.Column="2" Text="Units" />
-                                    <TextBlock Grid.Column="3" Text="Transducer" />
-                                    <TextBlock Grid.Column="4" Text="Base Press." />
-                                    <TextBlock Grid.Column="5" Text="EVC Press. (8)" />
-                                    <TextBlock Grid.Column="6" Text="EVC Factor (44)" />
-                                    <TextBlock Grid.Column="7" Text="EVC Unsqr. (47)" />
-
-                                    <TextBlock Grid.Column="8" Text="Actual Press. Factor" />
-                                    <TextBlock Grid.Column="9" Text="% Error" />
-                                    <TextBlock Grid.Column="10" Text="Passed" />
-                                </Grid>
-                                <ListBox Grid.Row="2"
-                                         Margin="5"
-                                         ItemTemplate="{StaticResource ResourceKey=PressureItem}"
-                                         ItemsSource="{Binding Instrument.PressureTests,
-                                                               UpdateSourceTrigger=PropertyChanged}" />
-
-                            </Grid>
+                            <DataGrid AutoGenerateColumns="false" ItemsSource="{Binding Instrument.PressureTests, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                                <DataGrid.Columns>
+                                    <DataGridTemplateColumn Header="Fetch">
+                                        <DataGridTemplateColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <Button Command="{Binding DataContext.fetchPressureCommand,
+                                                                          RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"
+                                                        CommandParameter="{Binding LevelIndex}"
+                                                        Content="{Binding LevelDescription}" />
+                                            </DataTemplate>
+                                        </DataGridTemplateColumn.CellTemplate>
+                                    </DataGridTemplateColumn>
+                                    <DataGridTemplateColumn Header="Gauge Press.">
+                                        <DataGridTemplateColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <TextBox Text="{Binding GaugePressure, UpdateSourceTrigger=PropertyChanged}" />
+                                            </DataTemplate>
+                                        </DataGridTemplateColumn.CellTemplate>
+                                    </DataGridTemplateColumn>
+                                    <DataGridTextColumn Binding="{Binding AtmosphericPressure}" Header="ATM Press." />
+                                    <DataGridTextColumn Binding="{Binding PressureUnits}" Header="Press. Units" />
+                                    <DataGridTextColumn Binding="{Binding Transducer}" Header="Transducer" />
+                                    <DataGridTextColumn Binding="{Binding BasePressure}" Header="Base Press." />
+                                    <DataGridTextColumn Binding="{Binding EVCPressure}" Header="EVC Press." />
+                                    <DataGridTextColumn Binding="{Binding EVCFactor}" Header="EVC Factor" />
+                                    <DataGridTextColumn Binding="{Binding EVCUnsqr}" Header="EVC Unsqr." />
+                                    <DataGridTextColumn Binding="{Binding ActualPressureFactor}" Header="Actual Press. Factor" />
+                                    <DataGridTextColumn Binding="{Binding PercentError}" Header="% Error" />
+                                    <DataGridTextColumn Binding="{Binding hasPassed}" Header="Pass" />
+                                </DataGrid.Columns>
+                            </DataGrid>
                         </Grid>
                     </Expander>
                     <Expander Foreground="Blue"
                               Header="Temperature"
-                              Visibility="{Binding Instrument.IsLiveTemperature}">
-                        <ListBox ItemTemplate="{StaticResource ResourceKey=TempItem}" ItemsSource="{Binding Instrument.TemperatureTests, UpdateSourceTrigger=PropertyChanged}" />
+                              Visibility="{Binding IsLiveTemperature,
+                                                   Converter={StaticResource VisibilityOfBool}}">
 
+                        <DataGrid AutoGenerateColumns="false" ItemsSource="{Binding Instrument.TemperatureTests, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                            <DataGrid.Columns>
+                                <DataGridTemplateColumn Header="Fetch">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <Button Command="{Binding DataContext.fetchTemperatureCommand,
+                                                                      RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"
+                                                    CommandParameter="{Binding LevelIndex}"
+                                                    Content="{Binding LevelDescription}" />
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+                                <DataGridTemplateColumn Header="Gauge Temp.">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <TextBox Text="{Binding GaugeTemperature, UpdateSourceTrigger=PropertyChanged}" />
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+
+                                </DataGridTemplateColumn>
+                                <DataGridTextColumn Binding="{Binding TemperatureUnits}" Header="Temp. Units" />
+                                <DataGridTextColumn Binding="{Binding EVCTemperature}" Header="EVC Temp." />
+                                <DataGridTextColumn Binding="{Binding EVCFactor}" Header="EVC Temp." />
+                                <DataGridTextColumn Binding="{Binding BaseTemperature}" Header="Base Temp." />
+                                <DataGridTextColumn Binding="{Binding TemperatureFactor}" Header="Temp. Factor" />
+                                <DataGridTextColumn Binding="{Binding PercentError}" Header="% Error" />
+                            </DataGrid.Columns>
+                        </DataGrid>
                     </Expander>
                     <Expander Foreground="Blue" Header="Volume">
                         <ListBox ItemsSource="{Binding Instrument.VolumeTests}">
@@ -199,8 +244,19 @@
 
 
                     <Expander Foreground="Blue" Header="Item File">
-                        <ListBox ItemTemplate="{StaticResource ResourceKey=ItemFile}" ItemsSource="{Binding Items, UpdateSourceTrigger=PropertyChanged}" />
+                        <DataGrid AutoGenerateColumns="False" ItemsSource="{Binding ItemValuesWithDescriptions, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}">
+
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Binding="{Binding Key.Number}" Header="Item" />
+                                <DataGridTextColumn Binding="{Binding Key.ShortDescription}" Header="Desc." />
+                                <DataGridTextColumn Binding="{Binding Value}" Header="Value" />
+
+                            </DataGrid.Columns>
+                        </DataGrid>
                     </Expander>
+
+                    <Button Command="{Binding SaveCommand}" Content="Save" />
+                    <Button Command="{Binding CancelCommand}" Content="Cancel" />
                 </StackPanel>
             </Grid>
         </StackPanel>

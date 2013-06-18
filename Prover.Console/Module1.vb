@@ -66,32 +66,32 @@ Module Module1
         myinstrument.ItemFile = InstrumentCommunications.DownloadItemFile(myinstrument)
 
 
-        Dim p1 As New PressureFactorClass()
+        Dim p1 As New PressureFactorClass(1)
         p1.Items = InstrumentCommunications.DownloadPressureItems(myinstrument)
         p1.GaugePressure = 80
         myinstrument.PressureTests.Add(p1)
 
-        Dim p2 As New PressureFactorClass()
+        Dim p2 As New PressureFactorClass(2)
         p2.Items = InstrumentCommunications.DownloadPressureItems(myinstrument)
         p2.GaugePressure = 60
         myinstrument.PressureTests.Add(p2)
 
-        Dim p3 As New PressureFactorClass()
+        Dim p3 As New PressureFactorClass(3)
         p3.Items = InstrumentCommunications.DownloadPressureItems(myinstrument)
         p3.GaugePressure = 20
         myinstrument.PressureTests.Add(p3)
 
-        Dim t1 As New TemperatureClass()
+        Dim t1 As New TemperatureClass(1)
         t1.Items = InstrumentCommunications.DownloadTemperatureItems(myinstrument)
         t1.GaugeTemperature = 90
         myinstrument.TemperatureTests.Add(t1)
 
-        Dim t2 As New TemperatureClass()
+        Dim t2 As New TemperatureClass(2)
         t2.Items = InstrumentCommunications.DownloadTemperatureItems(myinstrument)
         t2.GaugeTemperature = 60
         myinstrument.TemperatureTests.Add(t2)
 
-        Dim t3 As New TemperatureClass()
+        Dim t3 As New TemperatureClass(3)
         t3.Items = InstrumentCommunications.DownloadTemperatureItems(myinstrument)
         t3.GaugeTemperature = 32
         myinstrument.TemperatureTests.Add(t3)
