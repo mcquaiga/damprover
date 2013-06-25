@@ -126,6 +126,8 @@
     <Compile Include="InstrumentsViewModule.vb" />
     <Compile Include="ViewModel\IInstrumentDetailsVM.vb" />
     <Compile Include="ViewModel\IInstrumentsListPageVM.vb" />
+    <Compile Include="ViewModel\IToolBarVM.vb" />
+    <Compile Include="ViewModel\ToolBarVM.vb" />
     <Compile Include="Views\InstrumentDetails.xaml.vb">
       <DependentUpon>InstrumentDetails.xaml</DependentUpon>
     </Compile>
@@ -154,6 +156,9 @@
     <Compile Include="Views\InstrumentsListPage.xaml.vb">
       <DependentUpon>InstrumentsListPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\ToolBar.xaml.vb">
+      <DependentUpon>ToolBar.xaml</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="My Project\Resources.resx">
       <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.vb</LastGenOutput>
@@ -174,6 +179,10 @@
     <Page Include="Views\InstrumentDetails.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\ToolBar.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
   <ItemGroup>
@@ -204,7 +213,7 @@
     <CodeAnalysisDictionary Include="Themes\Icons\Test.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\Test.bmp" />
+    <Resource Include="Themes\Icons\search.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <Import Project="..\src\packages\PostSharp.2.1.7.30\tools\PostSharp.targets" Condition="Exists('..\src\packages\PostSharp.2.1.7.30\tools\PostSharp.targets')" />

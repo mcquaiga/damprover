@@ -29,9 +29,14 @@ Public Class InstrumentsViewModule
 
     Protected Overridable Sub RegisterTypes()
         _container.RegisterType(Of IInstrumentsListPageVM, InstrumentsListPageVM)("InstrumentsListPageVM")
-        _container.RegisterType(Of IView(Of IInstrumentsListPageVM), InstrumentsListPage)("InstrumentsListPage")
+        _container.RegisterType(Of IView(Of IInstrumentsListPageVM), InstrumentsListPage)("InstrumentsListPageView")
+
         _container.RegisterType(Of IInstrumentDetailsVM, InstrumentDetailsVM)()
-        _container.RegisterType(Of IView(Of IInstrumentDetailsVM), InstrumentDetails)("InstrumentDetails")
+        _container.RegisterType(Of IView(Of IInstrumentDetailsVM), InstrumentDetails)("InstrumentDetailsView")
+
+        _container.RegisterType(Of IToolBarVM, ToolBarVM)("ToolBar")
+        _container.RegisterType(Of IView(Of IToolBarVM), ToolBar)("ToolBarview")
+
     End Sub
 
     Public Sub Initialize() Implements IModule.Initialize
@@ -39,10 +44,9 @@ Public Class InstrumentsViewModule
         RegisterTypes()
         'Dim myView = _container.Resolve(Of IInstrumentsListPageVM)()
 
-        _regionManager.Regions(RegionNames.MainRegion).Add(Me)
-        _regionManager.Regions(RegionNames.MainRegion).Activate(Me)
         '_regionManager.RegisterViewWithRegion(RegionNames.InstrumentsRegion, GetType(InstrumentsListPage))
-        '_regionManager.RegisterViewWithRegion(RegionNames.ToolbarRegion, GetType(InstrumentDetails))
+        _regionManager.RegisterViewWithRegion(RegionNames.InstrumentsRegion, GetType(ToolBar))
+
     End Sub
 
 
@@ -58,11 +62,6 @@ Public Class InstrumentsViewModule
         End Get
     End Property
 
-    Public ReadOnly Property IconURI As String
-        Get
-            Return CType(Me.FindResource("Test.png"), String)
-        End Get
-    End Property
 
     Private Sub StartInstrumentListView()
         _regionManager.RequestNavigate(RegionNames.ContentRegion, New Uri("InstrumentDetails", UriKind.Relative))
