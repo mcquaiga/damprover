@@ -1,0 +1,60 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <DataTemplate x:Key="MainMenuItem">
+        <Button Width="150"
+                Height="150"
+                HorizontalAlignment="Stretch"
+                VerticalAlignment="Stretch"
+                HorizontalContentAlignment="Center"
+                Background="{DynamicResource MainButtonBrush1}"
+                Command="{Binding StartCommand}">
+            <Button.Style>
+                <Style TargetType="{x:Type Button}">
+                    <Setter Property="Template" Value="{DynamicResource EdocButtonBase}" />
+                    <Setter Property="Background" Value="{DynamicResource Pop2Brush1}" />
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding NoOfNotifications}" Value="0">
+                            <Setter Property="Background" Value="{DynamicResource LightBrush1}" />
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Button.Style>
+            <Grid Margin="10">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="auto" />
+                </Grid.RowDefinitions>
+
+                <TextBlock Grid.Row="1"
+                           Grid.Column="0"
+                           Margin="0,10,0,0"
+                           HorizontalAlignment="Center"
+                           FontFamily="Arial"
+                           FontSize="16"
+                           FontWeight="Regular"
+                           Foreground="{DynamicResource ForegroundBrush1}"
+                           Text="{Binding Title}"
+                           TextWrapping="Wrap" />
+                <Grid Grid.Column="0" HorizontalAlignment="Center">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                
+                    <Image Grid.Row="0"
+                           Grid.Column="1"
+                           Width="75"
+                           Height="75"
+                           Source="{Binding IconUri}" />
+                </Grid>
+                <!--
+                    <StackPanel>
+                    <TextBlock>Debug stuff</TextBlock>
+                    <TextBlock Text="{Binding ElementName=NotificationCountTextBlock,Path=Margin}"/>
+                    <TextBlock Text="{Binding ElementName=NotificationCountTextBlock,Path=Padding}"/>
+                    <TextBlock Text="{Binding ElementName=border,Path=Margin}"/>
+                    </StackPanel>
+                -->
+            </Grid>
+        </Button>
+    </DataTemplate>
+</ResourceDictionary>

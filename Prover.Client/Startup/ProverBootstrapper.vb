@@ -31,7 +31,7 @@ Public Class ProverBootstrapper
 
     Protected Overrides Sub InitializeShell()
         MyBase.InitializeShell()
-        'Application.Current.MainWindow = DirectCast(Window, MainWindow)()
+
         Application.Current.MainWindow.Show()
     End Sub
 

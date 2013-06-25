@@ -5,12 +5,10 @@ Imports System.Linq
 Imports System.ComponentModel
 Imports System.Runtime.CompilerServices
 
+
 Namespace ViewModels
     Public Class InstrumentDetailsVM
         Implements IInstrumentDetailsVM, INotifyPropertyChanged
-
-
-
 
         Private Property InstrumentType As String
         Public Property Items As List(Of ItemClass)
@@ -18,7 +16,8 @@ Namespace ViewModels
         Private _events As IEventAggregator
         Private _communications As InstrumentCommunications
         Private _provider As New InstrumentDataProvider
-
+        Private _pressurelevelIndex As List(Of String)
+        Private _templevelIndex As List(Of Integer)
 
         Sub New(events As IEventAggregator)
             _events = events
@@ -53,7 +52,17 @@ Namespace ViewModels
             Set(value As IBaseInstrument)
                 _Instrument = value
                 LoadItemDescriptions()
-                NotifyPropertyChanged("Instrument")
+                'NotifyPropertyChanged("Instrument")
+            End Set
+        End Property
+
+        Public Property PressureTests As List(Of IPressureFactorClass)
+            Get
+                If _Instrument IsNot Nothing AndAlso _Instrument.PressureTests IsNot Nothing Then Return _Instrument.PressureTests
+                Return Nothing
+            End Get
+            Set(value As List(Of IPressureFactorClass))
+                _Instrument.PressureTests = value
             End Set
         End Property
 
@@ -95,13 +104,18 @@ Namespace ViewModels
         Public Sub FetchInstrumentInformation()
             If Instrument Is Nothing Then MessageBox.Show("Select an Instrument Type.")
 
-            Instrument = New MiniMaxInstrument()
             LoadItemDescriptions()
-
             Instrument.ItemFile = InstrumentCommunications.DownloadItemFile(Instrument)
+
             NotifyPropertyChanged("ItemValuesWithDescriptions")
             NotifyPropertyChanged("Instrument")
 
+            If Instrument.IsLivePressure = IBaseInstrument.FixedFactors.Live Then
+                _pressurelevelIndex = New List(Of String)
+                _pressurelevelIndex.Add("P1")
+                _pressurelevelIndex.Add("P2")
+                _pressurelevelIndex.Add("P3")
+            End If
         End Sub
 
         Public ReadOnly Property CommPorts As ObjectModel.ReadOnlyCollection(Of String) Implements IInstrumentDetailsVM.CommPorts
@@ -126,12 +140,17 @@ Namespace ViewModels
             End Get
         End Property
 
+        Public ReadOnly Property PressureLevels As List(Of String)
+            Get
+                Return _pressurelevelIndex
+            End Get
+        End Property
+
 #Region "Methods"
 
         Public Sub ShowInstrument(instrument As IBaseInstrument)
             If instrument IsNot Nothing Then
                 Me.Instrument = instrument
-
             End If
         End Sub
 
@@ -151,14 +170,14 @@ Namespace ViewModels
             Me.Instrument = New MiniMaxInstrument()
         End Sub
 
-        Public Sub FetchPressureItemsByLevel(LevelIndex As Integer)
-            Me.Instrument.PressureTests.Where(Function(x) x.LevelIndex = LevelIndex).FirstOrDefault.Items = InstrumentCommunications.DownloadPressureItems(Me.Instrument)
-            NotifyPropertyChanged("Instrument")
+        Public Sub FetchPressureItemsByLevel(LevelIndex As String)
+            Me.PressureTests.Where(Function(x) x.LevelIndex = LevelIndex).FirstOrDefault.Items = InstrumentCommunications.DownloadPressureItems(Me.Instrument)
+            NotifyPropertyChanged("PressureTests")
         End Sub
 
         Public Sub FetchTemperatureItemsByLevel(LevelIndex As Integer)
             Me.Instrument.TemperateTests.Where(Function(x) (x.LevelIndex = LevelIndex)).FirstOrDefault.Items = InstrumentCommunications.DownloadTemperatureItems(Me.Instrument)
-            NotifyPropertyChanged("Instrument")
+            NotifyPropertyChanged("Instrument.PressureTests")
         End Sub
 
 #End Region

@@ -12,6 +12,7 @@
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <MyType>Custom</MyType>
     <ExpressionBlendVersion>5.0.40218.0</ExpressionBlendVersion>
+    <DontImportPostSharp>True</DontImportPostSharp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -83,6 +84,15 @@
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\src\packages\Newtonsoft.Json.5.0.5\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
+    <Reference Include="NLog">
+      <HintPath>..\src\packages\NLog.2.0.1.2\lib\net45\NLog.dll</HintPath>
+    </Reference>
+    <Reference Include="PostSharp">
+      <HintPath>..\src\packages\PostSharp.2.1.7.30\lib\net20\PostSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="PostSharp.NotifyPropertyChanged">
+      <HintPath>..\src\packages\PostSharp.NotifyPropertyChanged.0.4.1.0\lib\net35\PostSharp.NotifyPropertyChanged.dll</HintPath>
+    </Reference>
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
@@ -115,6 +125,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Startup\ProverBootstrapper.vb" />
+    <Compile Include="ViewModel\MainViewModel.vb" />
     <Compile Include="Windows\MainWindow.xaml.vb">
       <DependentUpon>MainWindow.xaml</DependentUpon>
     </Compile>
@@ -168,6 +179,7 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>LocalizedResource.Designer.vb</LastGenOutput>
     </EmbeddedResource>
+    <None Include="My Project\DataSources\Prover.Instruments.Data.BaseInstrument.datasource" />
     <None Include="My Project\DataSources\Prover.Model.instr.datasource" />
     <None Include="My Project\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -183,15 +195,15 @@
     <None Include="Resources\MiniMax_Rotary_Thumb1_NEW_Lg.jpg" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="ViewModel\MainViewModel.cs" />
-    <Content Include="ViewModel\ViewModelLocator.cs" />
-  </ItemGroup>
-  <ItemGroup>
     <Page Include="Themes\Button.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Themes\SimpleStyles.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\MainMenuItems.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -201,6 +213,10 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Prover.Instruments.Data\Prover.Instruments.Data.vbproj">
+      <Project>{4a9fb13d-8615-4fb5-858b-7ecb3f0ddee0}</Project>
+      <Name>Prover.Instruments.Data</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Prover.Instruments.Search\Prover.Instruments.View.vbproj">
       <Project>{7de480a7-2e26-4bdf-9788-18b9ad791760}</Project>
       <Name>Prover.Instruments.View</Name>
@@ -213,6 +229,10 @@
       <Project>{f397ca27-ec97-4b98-b8cf-e60eb1f399b9}</Project>
       <Name>Prover</Name>
     </ProjectReference>
+    <ProjectReference Include="..\serialprotocol\miSerialProtocol\Prover.SerialProtocol.vbproj">
+      <Project>{8c7e475a-15bb-477b-99f3-7b2abf41e43f}</Project>
+      <Name>Prover.SerialProtocol</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\Home.png" />
@@ -223,5 +243,7 @@
   <ItemGroup>
     <Resource Include="Resources\Settings2.png" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
+  <Import Project="..\src\packages\PostSharp.2.1.7.30\tools\PostSharp.targets" Condition="Exists('..\src\packages\PostSharp.2.1.7.30\tools\PostSharp.targets')" />
 </Project>

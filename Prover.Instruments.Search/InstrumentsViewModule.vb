@@ -15,6 +15,12 @@ Public Class InstrumentsViewModule
     Private _events As IEventAggregator
     Private _moduleItems As List(Of IProverModule)
 
+    Private _Title
+
+    Private _startCommand As New Microsoft.Practices.Prism.Commands.DelegateCommand(Of Object)(AddressOf StartInstrumentListView, AddressOf CanStartInstrumentListView)
+
+
+
     Public Sub New(Container As IUnityContainer, RegionManager As IRegionManager, events As IEventAggregator)
         _container = Container
         _regionManager = RegionManager
@@ -22,11 +28,10 @@ Public Class InstrumentsViewModule
     End Sub
 
     Protected Overridable Sub RegisterTypes()
-        _container.RegisterType(Of IInstrumentsListPageVM, InstrumentsListPageVM)()
-        _container.RegisterType(Of IView(Of IInstrumentsListPageVM), InstrumentsListPage)()
-
+        _container.RegisterType(Of IInstrumentsListPageVM, InstrumentsListPageVM)("InstrumentsListPageVM")
+        _container.RegisterType(Of IView(Of IInstrumentsListPageVM), InstrumentsListPage)("InstrumentsListPage")
         _container.RegisterType(Of IInstrumentDetailsVM, InstrumentDetailsVM)()
-        _container.RegisterType(Of IView(Of IInstrumentDetailsVM), InstrumentDetails)()
+        _container.RegisterType(Of IView(Of IInstrumentDetailsVM), InstrumentDetails)("InstrumentDetails")
     End Sub
 
     Public Sub Initialize() Implements IModule.Initialize
@@ -34,9 +39,37 @@ Public Class InstrumentsViewModule
         RegisterTypes()
         'Dim myView = _container.Resolve(Of IInstrumentsListPageVM)()
 
-        '_regionManager.Regions(RegionNames.ContentRegion).Add(myView)
-        '_regionManager.Regions(RegionNames.ContentRegion).Activate(myView)
-        _regionManager.RegisterViewWithRegion(RegionNames.InstrumentsRegion, GetType(InstrumentsListPage))
-        _regionManager.RegisterViewWithRegion(RegionNames.ToolbarRegion, GetType(InstrumentDetails))
+        _regionManager.Regions(RegionNames.MainRegion).Add(Me)
+        _regionManager.Regions(RegionNames.MainRegion).Activate(Me)
+        '_regionManager.RegisterViewWithRegion(RegionNames.InstrumentsRegion, GetType(InstrumentsListPage))
+        '_regionManager.RegisterViewWithRegion(RegionNames.ToolbarRegion, GetType(InstrumentDetails))
     End Sub
+
+
+    Public ReadOnly Property StartCommand() As System.Windows.Input.ICommand
+        Get
+            Return _startCommand
+        End Get
+    End Property
+
+    Public ReadOnly Property Title As String
+        Get
+            Return "New Test"
+        End Get
+    End Property
+
+    Public ReadOnly Property IconURI As String
+        Get
+            Return CType(Me.FindResource("Test.png"), String)
+        End Get
+    End Property
+
+    Private Sub StartInstrumentListView()
+        _regionManager.RequestNavigate(RegionNames.ContentRegion, New Uri("InstrumentDetails", UriKind.Relative))
+    End Sub
+
+    Private Function CanStartInstrumentListView() As Boolean
+        Return True
+    End Function
+
 End Class

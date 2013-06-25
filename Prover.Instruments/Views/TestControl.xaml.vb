@@ -1,3 +1,0 @@
-﻿Class TestListPage
-
-End Class

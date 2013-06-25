@@ -67,8 +67,38 @@
                     <RowDefinition Height="*" />
                     <RowDefinition Height="9*" />
                 </Grid.RowDefinitions>
-                <ContentControl Grid.Row="1" prism:RegionManager.RegionName="{x:Static regions:RegionNames.ToolbarRegion}" />
-                <ContentControl prism:RegionManager.RegionName="{x:Static regions:RegionNames.ContentRegion}" />
+
+                <!--  Main  -->
+                <StackPanel Grid.Row="1"
+                            Grid.Column="0"
+                            Margin="20"
+                            HorizontalAlignment="Stretch"
+                            VerticalAlignment="Stretch">
+
+                    <TextBlock x:Name="MainMenuTitleTextBlock"
+                               FontSize="{DynamicResource MediumLargeFontSize}"
+                               Foreground="{DynamicResource ForegroundBrush1}"
+                               Text="Main" />
+                    <Border Height="1"
+                            Margin="0,2,0,20"
+                            BorderBrush="{DynamicResource ForegroundBrush1}"
+                            BorderThickness="0.5" />
+
+                    <ItemsControl x:Name="MenuItemsControl"
+                                  ItemTemplate="{DynamicResource MainMenuItems}"
+                                  prism:RegionManager.RegionName="{x:Static regions:RegionNames.MainRegion}">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <UniformGrid HorizontalAlignment="Center"
+                                             VerticalAlignment="Stretch"
+                                             Columns="3" />
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                    </ItemsControl>
+                </StackPanel>
+
+                <!--  <ContentControl Grid.Row="1" prism:RegionManager.RegionName="{x:Static regions:RegionNames.ToolbarRegion}" />  -->
+                <!--  <ContentControl prism:RegionManager.RegionName="{x:Static regions:RegionNames.ContentRegion}" />  -->
 
             </Grid>
         </DockPanel>

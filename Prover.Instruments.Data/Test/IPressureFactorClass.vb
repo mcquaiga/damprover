@@ -1,7 +1,7 @@
 ﻿Imports System.ComponentModel
+Imports System.Runtime.CompilerServices
 
 Public Interface IPressureFactorClass
-
 #Region "Enums"
     'Values for each enum will be the same as the values in the instrument
     Enum UnitsEnum
@@ -37,8 +37,7 @@ Public Interface IPressureFactorClass
     Property Items As Dictionary(Of Integer, String)
     Property GaugePressure As Double
     Property AtmosphericPressure() As Double
-    ReadOnly Property LevelIndex As Integer
-    ReadOnly Property LevelDescription As String
+    ReadOnly Property LevelIndex As String
     ReadOnly Property PressureUnits As UnitsEnum
     ReadOnly Property Transducer() As TransducerType
     ReadOnly Property BasePressure As Double
@@ -49,6 +48,6 @@ Public Interface IPressureFactorClass
     ReadOnly Property ActualPressureFactor() As Double
     ReadOnly Property hasPassed As Boolean
 
-    Event PropertyChanged As PropertyChangedEventHandler
+    Sub NotifyPropertyChanged(<CallerMemberName()> Optional ByVal propertyName As String = Nothing)
 
 End Interface

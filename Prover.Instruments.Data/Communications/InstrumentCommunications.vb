@@ -30,17 +30,18 @@ Namespace Instruments.Data
                     _miSerial = New miSerialProtocol.TCIClass(CommPort, BaudRate)
             End Select
 
-            _miSerial.Connect()
-            Dim downloads = _miSerial.RG((From i In _items Select i.Number).ToList)
-            _miSerial.Disconnect()
-
-            Return downloads
+            Dim t = Task(Of Dictionary(Of Integer, String)).Factory.StartNew(Function()
+                                                                                 _miSerial.Connect()
+                                                                                 Dim downloads = _miSerial.RG((From i In _items Select i.Number).ToList)
+                                                                                 _miSerial.Disconnect()
+                                                                                 Return downloads
+                                                                             End Function)
+            t.Wait()
+            Return t.Result
         End Function
 
 
         Public Shared Function DownloadPressureItems(Instrument As IBaseInstrument) As Dictionary(Of Integer, String)
-
-
             Select Case Instrument.InstrumentType
                 Case InstrumentTypeCode.MiniMax
                     _miSerial = New miSerialProtocol.MiniMaxClass(CommPort, BaudRate)
@@ -49,11 +50,14 @@ Namespace Instruments.Data
                     _miSerial = New miSerialProtocol.TCIClass(CommPort, BaudRate)
             End Select
 
-            _miSerial.Connect()
-            Dim downloads = _miSerial.RG((From i In _items Select i.Number).ToList)
-            _miSerial.Disconnect()
-
-            Return downloads
+            Dim t = Task(Of Dictionary(Of Integer, String)).Factory.StartNew(Function()
+                                                                                 _miSerial.Connect()
+                                                                                 Dim downloads = _miSerial.RG((From i In _items Select i.Number).ToList)
+                                                                                 _miSerial.Disconnect()
+                                                                                 Return downloads
+                                                                             End Function)
+            t.Wait()
+            Return t.Result
         End Function
 
 

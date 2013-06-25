@@ -125,9 +125,5 @@
                 DataContext="{Binding DataContext.SelectedInstrument}" />
             -->
         </Grid>
-
-        <Button Grid.Row="2"
-                Command="{Binding AddNewTestCommand}"
-                Content="Add New" />
     </Grid>
 </UserControl>

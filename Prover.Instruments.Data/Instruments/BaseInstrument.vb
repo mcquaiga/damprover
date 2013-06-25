@@ -28,8 +28,6 @@ Namespace Instruments.Data
             PressureTests.Add(New PressureFactorClass(2))
             PressureTests.Add(New PressureFactorClass(3))
 
-
-
             TemperatureTests = New List(Of ITemperatureClass)
             TemperatureTests.Add(New TemperatureClass(1))
             TemperatureTests.Add(New TemperatureClass(2))
@@ -56,8 +54,6 @@ Namespace Instruments.Data
             End Get
             Set(value As List(Of IPressureFactorClass))
                 _pressure = value
-                AddHandler _pressure.PropertyChanged, AddressOf 
-
                 NotifyPropertyChanged("PressureTests")
             End Set
         End Property

@@ -5,6 +5,7 @@ Imports System.Runtime.CompilerServices
 Public Class PressureFactorClass
     Implements IPressureFactorClass, INotifyPropertyChanged
 
+
     Private _items As Dictionary(Of Integer, String)
 
     Public Property Items As Dictionary(Of Integer, String) Implements IPressureFactorClass.Items
@@ -13,7 +14,7 @@ Public Class PressureFactorClass
         End Get
         Set(value As Dictionary(Of Integer, String))
             _items = value
-            NotifyPropertyChanged("Items")
+            NotifyPropertyChanged()
         End Set
     End Property
 
@@ -24,7 +25,6 @@ Public Class PressureFactorClass
 
     Sub New(Level As Integer)
         MyBase.New()
-        _levelIndex = Level
     End Sub
 
 #Region "Properties"
@@ -119,15 +119,9 @@ Public Class PressureFactorClass
         End Get
     End Property
 
-    Public ReadOnly Property LevelIndex As Integer Implements IPressureFactorClass.LevelIndex
+    Public ReadOnly Property LevelIndex As String Implements IPressureFactorClass.LevelIndex
         Get
             Return _levelIndex
-        End Get
-    End Property
-
-    Public ReadOnly Property LevelDescription As String Implements IPressureFactorClass.LevelDescription
-        Get
-            Return "P" + CStr(_levelIndex)
         End Get
     End Property
 #End Region
@@ -226,7 +220,7 @@ Public Class PressureFactorClass
     ' This method is called by the Set accessor of each property. 
     ' The CallerMemberName attribute that is applied to the optional propertyName 
     ' parameter causes the property name of the caller to be substituted as an argument. 
-    Private Sub NotifyPropertyChanged(<CallerMemberName()> Optional ByVal propertyName As String = Nothing)
+    Public Sub NotifyPropertyChanged(<CallerMemberName()> Optional ByVal propertyName As String = Nothing) Implements IPressureFactorClass.NotifyPropertyChanged
         RaiseEvent PropertyChanged(Me, New PropertyChangedEventArgs(propertyName))
     End Sub
 
