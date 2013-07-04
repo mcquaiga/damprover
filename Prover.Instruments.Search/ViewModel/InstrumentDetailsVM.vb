@@ -44,7 +44,6 @@ Namespace ViewModels
             End Get
         End Property
 
-
         Public Property Instrument As IBaseInstrument Implements IInstrumentDetailsVM.Instrument
             Get
                 Return _Instrument
@@ -53,16 +52,6 @@ Namespace ViewModels
                 _Instrument = value
                 LoadItemDescriptions()
                 'NotifyPropertyChanged("Instrument")
-            End Set
-        End Property
-
-        Public Property PressureTests As List(Of IPressureFactorClass)
-            Get
-                If _Instrument IsNot Nothing AndAlso _Instrument.PressureTests IsNot Nothing Then Return _Instrument.PressureTests
-                Return Nothing
-            End Get
-            Set(value As List(Of IPressureFactorClass))
-                _Instrument.PressureTests = value
             End Set
         End Property
 
@@ -110,12 +99,6 @@ Namespace ViewModels
             NotifyPropertyChanged("ItemValuesWithDescriptions")
             NotifyPropertyChanged("Instrument")
 
-            If Instrument.IsLivePressure = IBaseInstrument.FixedFactors.Live Then
-                _pressurelevelIndex = New List(Of String)
-                _pressurelevelIndex.Add("P1")
-                _pressurelevelIndex.Add("P2")
-                _pressurelevelIndex.Add("P3")
-            End If
         End Sub
 
         Public ReadOnly Property CommPorts As ObjectModel.ReadOnlyCollection(Of String) Implements IInstrumentDetailsVM.CommPorts
@@ -170,14 +153,30 @@ Namespace ViewModels
             Me.Instrument = New MiniMaxInstrument()
         End Sub
 
-        Public Sub FetchPressureItemsByLevel(LevelIndex As String)
-            Me.PressureTests.Where(Function(x) x.LevelIndex = LevelIndex).FirstOrDefault.Items = InstrumentCommunications.DownloadPressureItems(Me.Instrument)
-            NotifyPropertyChanged("PressureTests")
+        Public Sub FetchPressureItemsByLevel(LevelIndex As Integer)
+
+            Dim p As New PressureFactorClass(LevelIndex)
+            p.Items = InstrumentCommunications.DownloadPressureItems(Me.Instrument)
+
+            Instrument.PressureTests.Remove(Instrument.PressureTests.Where(Function(x) x.LevelIndex = LevelIndex).FirstOrDefault())
+            Instrument.PressureTests.Add(p)
+            Instrument.PressureTests.OrderBy(Function(x) x.LevelIndex)
+
+
+            NotifyPropertyChanged("Instrument")
         End Sub
 
         Public Sub FetchTemperatureItemsByLevel(LevelIndex As Integer)
-            Me.Instrument.TemperateTests.Where(Function(x) (x.LevelIndex = LevelIndex)).FirstOrDefault.Items = InstrumentCommunications.DownloadTemperatureItems(Me.Instrument)
-            NotifyPropertyChanged("Instrument.PressureTests")
+            Dim t As New TemperatureClass(LevelIndex)
+            t.Items = InstrumentCommunications.DownloadTemperatureItems(Me.Instrument)
+
+            Instrument.TemperateTests.Remove(Instrument.TemperateTests.Where(Function(x) (x.LevelIndex = LevelIndex)).FirstOrDefault())
+            Instrument.TemperateTests.Add(t)
+            Instrument.TemperateTests.OrderBy(Function(x) x.LevelIndex)
+
+
+
+            NotifyPropertyChanged("Instruments")
         End Sub
 
 #End Region

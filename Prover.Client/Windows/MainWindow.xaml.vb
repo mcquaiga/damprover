@@ -1,6 +1,16 @@
 ﻿Public Class MainWindow
+    Implements IView(Of IMainVM)
 
-    Private Sub ToolbarView_Loaded(sender As Object, e As RoutedEventArgs)
 
+    Sub New()
+        InitializeComponent()
     End Sub
+
+    Sub New(viewModel As IMainVM)
+        DataContext = viewModel
+        InitializeComponent()
+    End Sub
+
+    Public Property DataContext1 As IMainVM Implements IView(Of IMainVM).DataContext
+
 End Class

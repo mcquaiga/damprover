@@ -12,8 +12,6 @@ Namespace ViewModels
         Dim oneWeek As New TimeSpan(7, 0, 0, 0)
         Dim _InstrumentProvider As InstrumentDataProvider
 
-
-
         Private _events As IEventAggregator
         Private _instrs As ObservableCollection(Of IBaseInstrument)
 

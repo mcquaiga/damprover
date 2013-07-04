@@ -1,14 +1,12 @@
-﻿Public Class MainViewModel
+﻿Imports Microsoft.Practices.Prism.Events
+
+Public Class MainViewModel
+    Implements IMainVM
+
+    Private _events As IEventAggregator
 
 
-
-    Private _goToMainMenu As Microsoft.Practices.Prism.Commands.DelegateCommand(Of Object)
-    Public ReadOnly Property GoToMainMenuCommand As ICommand
-        Get
-            Return _goToMainMenu
-        End Get
-    End Property
-    Private Sub GoToMainMenu(ByVal o As Object)
-        '_nav.GoToStart()
+    Sub New(events As IEventAggregator)
+        _events = events
     End Sub
 End Class

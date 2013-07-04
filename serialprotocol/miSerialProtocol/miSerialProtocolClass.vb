@@ -3,6 +3,7 @@ Imports System.Xml
 Imports System.Linq
 Imports System.Xml.Linq
 Imports System.Data.Linq
+Imports NLog
 
 
 '***************
@@ -165,6 +166,7 @@ Public MustInherit Class miSerialProtocolClass
     Protected _itemsXMLDocument As XDocument
     Protected _itemsXMLElements As XElement
 
+    Protected logger As Logger
 
 
 #Region "Constructor and Destructor"
@@ -174,6 +176,7 @@ Public MustInherit Class miSerialProtocolClass
             Me.Port = PortName
             Me.BaudRate = BaudRate
             Me.Timeout = Timeout
+            Me.logger = LogManager.GetCurrentClassLogger()
         Catch ex As Exception
             Throw New Exception(ex.Message, ex)
         End Try
@@ -199,12 +202,12 @@ Public MustInherit Class miSerialProtocolClass
                 Try
                     Me.Disconnect()
                 Catch ex As Exception
-                    Console.Write(ex.Message)
+                    logger.Error(ex.Message)
                 End Try
             End If
             ' Dispose managed resources.
             If Not comm Is Nothing Then
-                Console.Write("Disposing Serial Port Resources." & vbNewLine)
+                logger.Debug("Disposing Serial Port Resources.")
                 comm.Close()
                 comm = Nothing
             End If
@@ -258,7 +261,7 @@ Public MustInherit Class miSerialProtocolClass
         Set(ByVal value As CommStateEnum)
             i_CommState = value
             RaiseEvent CommStateChanged(value)
-            Console.Write(i_CommState.ToString & vbNewLine)
+            logger.Debug(i_CommState.ToString & vbNewLine)
         End Set
     End Property
 
@@ -269,7 +272,7 @@ Public MustInherit Class miSerialProtocolClass
         Set(ByVal value As MessageStateEnum)
             i_MessageState = value
             RaiseEvent MessageStateChanged()
-            Console.Write(i_MessageState.ToString & vbNewLine)
+            logger.Debug(i_MessageState.ToString & vbNewLine)
         End Set
     End Property
 
@@ -294,7 +297,7 @@ Public MustInherit Class miSerialProtocolClass
 
             i_InstrumentError = value
             RaiseEvent InstrumentErrorChanged()
-            Console.Write(InstrumentError.ToString & vbNewLine)
+            logger.Debug(InstrumentError.ToString & vbNewLine)
         End Set
     End Property
 
@@ -316,10 +319,10 @@ Public MustInherit Class miSerialProtocolClass
 
             data = comm_buffer.Item(comm_buffer.Count)
             If comm_buffer.Count >= 1 Then
-                Console.Write("Retrieved " & data & " from Comm Buffer.")
+                logger.Debug("Retrieved " & data & " from Comm Buffer.")
                 Return data
             Else
-                Console.Write("Buffer is Empty." & vbNewLine)
+                logger.Debug("Buffer is Empty." & vbNewLine)
                 Return ""
             End If
         End Get
@@ -327,7 +330,7 @@ Public MustInherit Class miSerialProtocolClass
             If value <> Nothing And value <> "" Then
                 comm_buffer.Add(value)
                 RaiseEvent CommBufferChanged()
-                Console.Write("Added " & value & " to Buffer." & vbNewLine)
+                logger.Debug("Added " & value & " to Buffer." & vbNewLine)
             End If
         End Set
     End Property
@@ -394,7 +397,7 @@ Public MustInherit Class miSerialProtocolClass
                 End If
             ElseIf CommState = CommStateEnum.LinkedIdle Then
                 'Already Connected to instrument, don't need to do anything
-                Console.Write("Already Connected.")
+                logger.Info("Already Connected.")
             Else
                 Throw New InstrumentBusyException(CommState)
             End If
@@ -507,7 +510,7 @@ Public MustInherit Class miSerialProtocolClass
         Catch ex As Exception
             Throw New Exception(ex.Message)
         End Try
-
+        Return Nothing
     End Function
 
     'Public Function RG(ByVal Items As Collection, ByRef Downloaded As Collection) As InstrumentErrorsEnum
@@ -639,6 +642,7 @@ Public MustInherit Class miSerialProtocolClass
                         Try
                             .Open()
                         Catch ex As Exception
+                            logger.Error(ex.Message)
                             Throw New CommInUseException(comm.PortName)
                         End Try
                         CommState = CommStateEnum.UnlinkedIdle
@@ -655,6 +659,7 @@ Public MustInherit Class miSerialProtocolClass
                 Throw New Exception("Connection Cancelled.", ex)
             End If
         Catch ex As Exception
+            logger.Error(ex.Message)
             Throw New Exception(ex.Message)
         End Try
     End Sub
@@ -728,14 +733,14 @@ Public MustInherit Class miSerialProtocolClass
             System.Threading.Thread.Sleep(200)
 
             Do Until comm.BytesToRead = 0
-                Console.Write("Bytes in Comm Buffer: " & comm.BytesToRead & vbNewLine)
+                logger.Trace("Bytes in Comm Buffer: " & comm.BytesToRead & vbNewLine)
                 IncomingData += comm.ReadExisting
                 System.Threading.Thread.Sleep(50)
             Loop
 
             If IncomingData <> Nothing Then
                 MessageState = MessageStateEnum.ReceivedAPacket
-                Console.Write(IncomingData & vbNewLine)
+                logger.Trace(IncomingData & vbNewLine)
                 CommBuffer = IncomingData
             Else
                 Throw New NoDataRecievedException("No data received.")
@@ -743,13 +748,14 @@ Public MustInherit Class miSerialProtocolClass
 
             MessageState = MessageStateEnum.OK_Idle
         Catch ex As TimeoutException
+            logger.Error("Read Operation Timedout.")
             Throw New CommExceptions("Read Operation Timedout.")
         Catch ex As NoDataRecievedException
             'We can recall this function again if there was no data received, but I can see this causing an infinite loop
             RcvDataFromComm()
             'Throw New Exception(ex.Message, ex)
         Catch ex As Exception
-            Console.Write(ex.Message)
+            logger.Error(ex.Message)
         End Try
 
     End Sub
@@ -787,7 +793,7 @@ Public MustInherit Class miSerialProtocolClass
                 If Me.CommState <> CommStateEnum.UnlinkedIdle And MessageState = MessageStateEnum.OK_Idle Then
                     comm.DiscardInBuffer()
                     body = Chr(CommCharEnum.SOH) & body & CalcCRC(body) & Chr(CommCharEnum.EOT)
-                    Console.Write("Outgoing >> " & body & vbNewLine)
+                    logger.Debug("Outgoing >> " & body & vbNewLine)
                     comm.Write(body)
                     RcvDataFromComm()
 

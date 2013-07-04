@@ -9,6 +9,7 @@ Namespace Instruments.Data
     Public Class InstrumentDataProvider
         Inherits DataProvider(Of IBaseInstrument)
 
+
         Public Sub New()
             MyBase.New()
         End Sub
@@ -21,11 +22,8 @@ Namespace Instruments.Data
             DataCoordinator.RegisterDataProvider(New InstrumentDataProvider("AllInstruments", "All Instruments", Nothing, params))
         End Sub
 
-        Protected Overrides Function FetchData(parameters As Dictionary(Of String, Object)) As Global.System.Collections.Generic.IEnumerable(Of IBaseInstrument)
-            'Return GetAllInstruments()
-        End Function
-
         Private Function CreateInstrument() As IBaseInstrument 'ByVal instrument As Prover.Model.instr) As IBaseInstrument
+            Return Nothing
         End Function
 
         Public Overrides Function GetIdentifier(ByVal element As IBaseInstrument) As String
@@ -85,12 +83,13 @@ Namespace Instruments.Data
                     Exit Sub
                 End If
             End If
-
-
             If instrument.CreatedDate Is Nothing Then instrument.CreatedDate = Date.Now()
             Session.Store(instrument)
             Session.SaveChanges()
         End Sub
 
+        Protected Overrides Function FetchData(parameters As Dictionary(Of String, Object)) As IEnumerable(Of IBaseInstrument)
+            Return Nothing
+        End Function
     End Class
 End Namespace

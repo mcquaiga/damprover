@@ -11,7 +11,6 @@
     <AssemblyName>Prover.Instruments.View</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <MyType>Custom</MyType>
-    <DontImportPostSharp>True</DontImportPostSharp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -77,12 +76,6 @@
     <Reference Include="NLog">
       <HintPath>..\src\packages\NLog.2.0.1.2\lib\net45\NLog.dll</HintPath>
     </Reference>
-    <Reference Include="PostSharp">
-      <HintPath>..\src\packages\PostSharp.2.1.7.30\lib\net20\PostSharp.dll</HintPath>
-    </Reference>
-    <Reference Include="PostSharp.NotifyPropertyChanged">
-      <HintPath>..\src\packages\PostSharp.NotifyPropertyChanged.0.4.1.0\lib\net35\PostSharp.NotifyPropertyChanged.dll</HintPath>
-    </Reference>
     <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.ComponentModel.Composition.Registration" />
     <Reference Include="System.Core" />
@@ -126,8 +119,8 @@
     <Compile Include="InstrumentsViewModule.vb" />
     <Compile Include="ViewModel\IInstrumentDetailsVM.vb" />
     <Compile Include="ViewModel\IInstrumentsListPageVM.vb" />
-    <Compile Include="ViewModel\IToolBarVM.vb" />
-    <Compile Include="ViewModel\ToolBarVM.vb" />
+    <Compile Include="ViewModel\IMainMenuVM.vb" />
+    <Compile Include="ViewModel\MainMenuVM.vb" />
     <Compile Include="Views\InstrumentDetails.xaml.vb">
       <DependentUpon>InstrumentDetails.xaml</DependentUpon>
     </Compile>
@@ -156,8 +149,8 @@
     <Compile Include="Views\InstrumentsListPage.xaml.vb">
       <DependentUpon>InstrumentsListPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\ToolBar.xaml.vb">
-      <DependentUpon>ToolBar.xaml</DependentUpon>
+    <Compile Include="Views\MainMenu.xaml.vb">
+      <DependentUpon>MainMenu.xaml</DependentUpon>
     </Compile>
     <EmbeddedResource Include="My Project\Resources.resx">
       <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
@@ -170,6 +163,12 @@
       <LastGenOutput>Settings.Designer.vb</LastGenOutput>
     </None>
     <AppDesigner Include="My Project\" />
+    <Content Include="NLog.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <None Include="NLog.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
@@ -180,7 +179,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\ToolBar.xaml">
+    <Page Include="Views\MainMenu.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -216,5 +215,4 @@
     <Resource Include="Themes\Icons\search.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
-  <Import Project="..\src\packages\PostSharp.2.1.7.30\tools\PostSharp.targets" Condition="Exists('..\src\packages\PostSharp.2.1.7.30\tools\PostSharp.targets')" />
 </Project>

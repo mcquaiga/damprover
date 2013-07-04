@@ -28,24 +28,21 @@ Public Class InstrumentsViewModule
     End Sub
 
     Protected Overridable Sub RegisterTypes()
-        _container.RegisterType(Of IInstrumentsListPageVM, InstrumentsListPageVM)("InstrumentsListPageVM")
-        _container.RegisterType(Of IView(Of IInstrumentsListPageVM), InstrumentsListPage)("InstrumentsListPageView")
 
-        _container.RegisterType(Of IInstrumentDetailsVM, InstrumentDetailsVM)()
-        _container.RegisterType(Of IView(Of IInstrumentDetailsVM), InstrumentDetails)("InstrumentDetailsView")
 
-        _container.RegisterType(Of IToolBarVM, ToolBarVM)("ToolBar")
-        _container.RegisterType(Of IView(Of IToolBarVM), ToolBar)("ToolBarview")
+        _container.RegisterType(Of IMainMenuVM, MainMenuVM)()
+        _container.RegisterType(Of IView(Of IMainMenuVM), MainMenu)()
 
     End Sub
 
     Public Sub Initialize() Implements IModule.Initialize
 
         RegisterTypes()
-        'Dim myView = _container.Resolve(Of IInstrumentsListPageVM)()
 
-        '_regionManager.RegisterViewWithRegion(RegionNames.InstrumentsRegion, GetType(InstrumentsListPage))
-        _regionManager.RegisterViewWithRegion(RegionNames.InstrumentsRegion, GetType(ToolBar))
+        ' _regionManager.RegisterViewWithRegion(RegionNames.InstrumentsRegion, GetType(MainMenu))
+        '_regionManager.RegisterViewWithRegion(RegionNames.InstrumentsRegion, GetType(InstrumentDetails))
+        _regionManager.RegisterViewWithRegion(RegionNames.InstrumentsRegion, GetType(MainMenu))
+        '_regionManager.AddToRegion(RegionNames.InstrumentsRegion, GetType(MainMenu))
 
     End Sub
 

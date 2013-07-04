@@ -5,6 +5,7 @@ Imports Newtonsoft.Json
 Imports Newtonsoft.Json.Linq
 Imports System.ComponentModel
 Imports System.Runtime.CompilerServices
+Imports System.Collections.ObjectModel
 
 Namespace Instruments.Data
 
@@ -23,12 +24,12 @@ Namespace Instruments.Data
 
         Sub New()
             ItemFile = New Dictionary(Of Integer, String)
-            PressureTests = New List(Of IPressureFactorClass)
+            PressureTests = New ObservableCollection(Of IPressureFactorClass)
             PressureTests.Add(New PressureFactorClass(1))
             PressureTests.Add(New PressureFactorClass(2))
             PressureTests.Add(New PressureFactorClass(3))
 
-            TemperatureTests = New List(Of ITemperatureClass)
+            TemperatureTests = New ObservableCollection(Of ITemperatureClass)
             TemperatureTests.Add(New TemperatureClass(1))
             TemperatureTests.Add(New TemperatureClass(2))
             TemperatureTests.Add(New TemperatureClass(3))
@@ -46,18 +47,10 @@ Namespace Instruments.Data
         Public Property ItemFile As Dictionary(Of Integer, String) Implements IBaseInstrument.ItemFile
         Public Property InspectionID As Integer? Implements IBaseInstrument.InspectionID
 
-        Private _pressure As List(Of IPressureFactorClass)
 
-        Public Property PressureTests As List(Of IPressureFactorClass) Implements IBaseInstrument.PressureTests
-            Get
-                Return _pressure
-            End Get
-            Set(value As List(Of IPressureFactorClass))
-                _pressure = value
-                NotifyPropertyChanged("PressureTests")
-            End Set
-        End Property
-        Public Property TemperatureTests As List(Of ITemperatureClass) Implements IBaseInstrument.TemperateTests
+        Public Property PressureTests As ObservableCollection(Of IPressureFactorClass) Implements IBaseInstrument.PressureTests
+          
+        Public Property TemperatureTests As ObservableCollection(Of ITemperatureClass) Implements IBaseInstrument.TemperateTests
         Public Property VolumeTests As List(Of IVolume) Implements IBaseInstrument.VolumeTests
 
         Public ReadOnly Property InstrumenGuID() As Guid Implements IBaseInstrument.InstrumentGuid

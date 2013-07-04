@@ -12,7 +12,6 @@
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <MyType>Custom</MyType>
     <ExpressionBlendVersion>5.0.40218.0</ExpressionBlendVersion>
-    <DontImportPostSharp>True</DontImportPostSharp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -87,12 +86,6 @@
     <Reference Include="NLog">
       <HintPath>..\src\packages\NLog.2.0.1.2\lib\net45\NLog.dll</HintPath>
     </Reference>
-    <Reference Include="PostSharp">
-      <HintPath>..\src\packages\PostSharp.2.1.7.30\lib\net20\PostSharp.dll</HintPath>
-    </Reference>
-    <Reference Include="PostSharp.NotifyPropertyChanged">
-      <HintPath>..\src\packages\PostSharp.NotifyPropertyChanged.0.4.1.0\lib\net35\PostSharp.NotifyPropertyChanged.dll</HintPath>
-    </Reference>
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
@@ -125,6 +118,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Startup\ProverBootstrapper.vb" />
+    <Compile Include="ViewModel\IMainVM.vb" />
     <Compile Include="ViewModel\MainViewModel.vb" />
     <Compile Include="Windows\MainWindow.xaml.vb">
       <DependentUpon>MainWindow.xaml</DependentUpon>
@@ -186,6 +180,12 @@
       <LastGenOutput>Settings.Designer.vb</LastGenOutput>
     </None>
     <AppDesigner Include="My Project\" />
+    <Content Include="NLog.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <None Include="NLog.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
@@ -200,10 +200,6 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Themes\SimpleStyles.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Windows\MainMenuItems.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -245,5 +241,4 @@
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
-  <Import Project="..\src\packages\PostSharp.2.1.7.30\tools\PostSharp.targets" Condition="Exists('..\src\packages\PostSharp.2.1.7.30\tools\PostSharp.targets')" />
 </Project>

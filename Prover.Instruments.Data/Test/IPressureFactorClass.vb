@@ -37,7 +37,7 @@ Public Interface IPressureFactorClass
     Property Items As Dictionary(Of Integer, String)
     Property GaugePressure As Double
     Property AtmosphericPressure() As Double
-    ReadOnly Property LevelIndex As String
+
     ReadOnly Property PressureUnits As UnitsEnum
     ReadOnly Property Transducer() As TransducerType
     ReadOnly Property BasePressure As Double
@@ -47,6 +47,9 @@ Public Interface IPressureFactorClass
     ReadOnly Property PercentError() As Double
     ReadOnly Property ActualPressureFactor() As Double
     ReadOnly Property hasPassed As Boolean
+
+    ReadOnly Property LevelIndex As Integer
+    ReadOnly Property LevelDescription As String
 
     Sub NotifyPropertyChanged(<CallerMemberName()> Optional ByVal propertyName As String = Nothing)
 

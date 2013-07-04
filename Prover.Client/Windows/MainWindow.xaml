@@ -62,10 +62,11 @@
                     </Button>
                 </WrapPanel>
             </Grid>
+            <!--  <ContentControl prism:RegionManager.RegionName="{x:Static regions:RegionNames.ContentRegion}" />  -->
             <Grid>
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="*" />
-                    <RowDefinition Height="9*" />
+                    <RowDefinition Height="1*" />
+                    <RowDefinition Height="10*" />
                 </Grid.RowDefinitions>
 
                 <ContentControl Grid.Row="1" prism:RegionManager.RegionName="{x:Static regions:RegionNames.InstrumentsRegion}" />

@@ -1,7 +1,7 @@
 ﻿Imports Prover.Data.ProviderModel
 Imports miSerialProtocol.InstrumentTypeCode
 Imports miSerialProtocol.BaudRateEnum
-
+Imports System.Collections.ObjectModel
 Imports System.IO.Ports
 Imports Newtonsoft.Json
 Imports Newtonsoft.Json.Linq
@@ -62,6 +62,9 @@ Public Interface IBaseInstrument
     End Enum
 #End Region
 
+    Property PressureTests As ObjectModel.ObservableCollection(Of IPressureFactorClass)
+    Property TemperateTests As ObjectModel.ObservableCollection(Of ITemperatureClass)
+
     Function IsLiveSuper() As FixedFactors
     Function IsLivePressure() As FixedFactors
     Function IsLiveTemperate() As FixedFactors
@@ -76,8 +79,6 @@ Public Interface IBaseInstrument
     Property CreatedDate As DateTime?
 
     Property ItemFile As Dictionary(Of Integer, String)
-    Property PressureTests As List(Of IPressureFactorClass)
-    Property TemperateTests As List(Of ITemperatureClass)
     Property VolumeTests As List(Of IVolume)
 
     ReadOnly Property PulseASelect As PulseOutputValues

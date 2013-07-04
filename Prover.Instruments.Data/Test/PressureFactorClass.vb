@@ -25,11 +25,13 @@ Public Class PressureFactorClass
 
     Sub New(Level As Integer)
         MyBase.New()
+        _levelIndex = Level
     End Sub
 
 #Region "Properties"
 
     Public Property GaugePressure As Double Implements IPressureFactorClass.GaugePressure
+
 
     Public Property AtmosphericPressure() As Double Implements IPressureFactorClass.AtmosphericPressure
         Get
@@ -119,12 +121,20 @@ Public Class PressureFactorClass
         End Get
     End Property
 
-    Public ReadOnly Property LevelIndex As String Implements IPressureFactorClass.LevelIndex
+    Public ReadOnly Property LevelIndex As Integer Implements IPressureFactorClass.LevelIndex
         Get
             Return _levelIndex
         End Get
     End Property
+
+    Public ReadOnly Property LevelDescription As String Implements IPressureFactorClass.LevelDescription
+        Get
+            Return "P" + CStr(_levelIndex)
+        End Get
+    End Property
+
 #End Region
+
 
 #Region "Methods"
 

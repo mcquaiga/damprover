@@ -3,7 +3,6 @@ Imports Microsoft.Practices.Prism
 Imports Microsoft.Practices.Prism.Regions
 Imports Microsoft.Practices.Prism.Modularity
 Imports Prover
-Imports Prover.Instruments.ViewModels
 
 <Modularity.Module(ModuleName:="Instruments", OnDemand:=False)> _
 Public Class InstrumentsModule

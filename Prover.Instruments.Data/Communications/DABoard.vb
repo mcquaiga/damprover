@@ -45,7 +45,7 @@ Public Class DABoard
 
     'This returns a 1 integer if a pulse is detected and 0 if it is not
     Public Overridable Function ReadPulse() As Integer
-
+        Return 0
     End Function
 
     Private disposedValue As Boolean = False        ' To detect redundant calls

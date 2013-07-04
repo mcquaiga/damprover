@@ -18,29 +18,29 @@ Public Class ProverBootstrapper
         MyBase.New()
     End Sub
 
-
     Protected Overrides Function CreateShell() As System.Windows.DependencyObject
+
+        Container.RegisterType(Of IMainVM, MainViewModel)()
+        Container.RegisterType(Of IView(Of IMainVM), MainWindow)()
         _main = Container.Resolve(Of MainWindow)()
         Return _main
     End Function
 
     Protected Overrides Sub ConfigureContainer()
         MyBase.ConfigureContainer()
-
     End Sub
 
     Protected Overrides Sub InitializeShell()
         MyBase.InitializeShell()
-
         Application.Current.MainWindow.Show()
     End Sub
 
-    'Protected Overrides Sub InitializeModules()
-    '    MyBase.InitializeModules()
-    'End Sub
+    Protected Overrides Sub InitializeModules()
+        MyBase.InitializeModules()
+    End Sub
 
     Protected Overrides Sub ConfigureModuleCatalog()
-        'MyBase.ConfigureModuleCatalog()
+
         Dim InstrumentModuleType As Type = GetType(InstrumentsViewModule)
         ModuleCatalog.AddModule(New ModuleInfo(InstrumentModuleType.Name, InstrumentModuleType.AssemblyQualifiedName))
 

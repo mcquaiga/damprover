@@ -1,4 +1,3 @@
-Imports Prover.Prover.IVolume
 Imports Prover.IVolume
 
 Public Class Volume
@@ -204,6 +203,7 @@ Public Class Volume
             Case InstrumentVolumeUnitsEnum.m3xPoint1
                 Return True
         End Select
+        Return False
     End Function
 
     Public Function GetVolumeMultipliers(ByVal MultiplierCode As InstrumentVolumeUnitsEnum) As Double
@@ -240,7 +240,7 @@ Public Class Volume
             Case InstrumentVolumeUnitsEnum.CFx10000
                 Return 10000
         End Select
-
+        Return 0
     End Function
 
     Public Function GetMeterIndexRate(ByVal MeterCode As InstrumentMeterIndexCodesEnum)
