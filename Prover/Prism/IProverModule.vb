@@ -2,8 +2,8 @@
 Imports System.Windows.Input
 
 Public Interface IProverModule
-    Property Title As String
-    Property Icon As String
-    Property ToolTipText As String
-    Property StartCommand As ICommand
+    ReadOnly Property Title As String
+    ReadOnly Property Icon As String
+    ReadOnly Property ToolTipText As String
+    ReadOnly Property StartCommand As ICommand
 End Interface

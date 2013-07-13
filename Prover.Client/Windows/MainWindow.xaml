@@ -5,74 +5,95 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:prism="http://www.codeplex.com/prism"
         xmlns:regions="clr-namespace:Prover;assembly=Prover"
-        Title="Prover"
+        Title="DAM Prover"
+        Background="{DynamicResource MainBackgroundColour}"
         mc:Ignorable="d">
 
     <Window.Resources />
-
-    <Grid Background="White">
-        <DockPanel>
-            <Grid Margin="10,10,10,10"
-                  HorizontalAlignment="Stretch"
-                  DockPanel.Dock="Top">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition />
-                    <ColumnDefinition />
-                </Grid.ColumnDefinitions>
-                <WrapPanel Grid.Column="0" Orientation="Horizontal">
-                    <Button Background="#FF200074"
-                            BorderBrush="#FF200074"
-                            Command=""
-                            CommandParameter="">
-                        <Button.OpacityMask>
-                            <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
-                                <GradientStop Offset="0" Color="Black" />
-                                <GradientStop Offset="1" Color="White" />
-                            </LinearGradientBrush>
-                        </Button.OpacityMask>
-                        <Button.Content>
-                            <Border Width="64"
-                                    Height="64"
-                                    Opacity="1"
-                                    RenderTransformOrigin="0.5,0.5">
-                                <Image Margin="4"
-                                       Source="/Prover.Client;component/Resources/Home.png"
-                                       Stretch="Uniform" />
-                            </Border>
-                        </Button.Content>
-                    </Button>
-                </WrapPanel>
-                <WrapPanel Grid.Column="1"
-                           HorizontalAlignment="Right"
-                           Orientation="Horizontal">
-                    <Button Background="#FF200074"
-                            Command=""
-                            CommandParameter="">
-                        <Button.Content>
-                            <Border Width="64"
-                                    Height="64"
-                                    BorderThickness="0"
-                                    Opacity="1"
-                                    RenderTransformOrigin="0.5,0.5">
-                                <Image Margin="4"
-                                       Source="/Prover.Client;component/Resources/Settings2.png"
-                                       Stretch="Uniform" />
-                            </Border>
-                        </Button.Content>
-                    </Button>
-                </WrapPanel>
-            </Grid>
-            <!--  <ContentControl prism:RegionManager.RegionName="{x:Static regions:RegionNames.ContentRegion}" />  -->
-            <Grid>
+    <DockPanel>
+        <Grid Height="50"
+              Margin="0,10"
+              Background="{DynamicResource HeaderColour}"
+              DockPanel.Dock="Top">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <TextBlock Margin="15,0,0,0"
+                       VerticalAlignment="Center"
+                       FontFamily="Calibri Light"
+                       FontSize="{DynamicResource LargeFontSize}"
+                       Foreground="{DynamicResource HeaderFontColour}"
+                       Text="D.A.M. PROVER" />
+            <Grid Grid.Column="1">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="1*" />
-                    <RowDefinition Height="10*" />
+                    <RowDefinition />
+                    <RowDefinition />
                 </Grid.RowDefinitions>
 
-                <ContentControl Grid.Row="1" prism:RegionManager.RegionName="{x:Static regions:RegionNames.InstrumentsRegion}" />
-                <!--  <ContentControl prism:RegionManager.RegionName="{x:Static regions:RegionNames.ContentRegion}" />  -->
+                <ItemsControl x:Name="MenuItemsControl"
+                              Grid.Row="0"
+                              prism:RegionManager.RegionName="{x:Static regions:RegionNames.MenuRegion}">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <WrapPanel />
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Button Width="125"
+                                    Height="25"
+                                    Background="{x:Null}"
+                                    BorderBrush="{x:Null}"
+                                    BorderThickness="0"
+                                    Command="{Binding StartCommand}"
+                                    Foreground="{x:Null}"
+                                    Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}">
+                                <Grid>
+                                    <TextBlock Foreground="{DynamicResource MainBackgroundColour}" Text="{Binding Title}" />
+                                </Grid>
+                            </Button>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
 
+                </ItemsControl>
+                <Border Grid.Row="1"
+                        Grid.Column="1"
+                        BorderBrush="Gray"
+                        BorderThickness="0,1,0,0">
+                    <ItemsControl x:Name="SubMenuItemsControl"
+                                  Grid.Row="0"
+                                  prism:RegionManager.RegionName="{x:Static regions:RegionNames.SubMenuRegion}">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <WrapPanel />
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <Button Width="125"
+                                        Height="25"
+                                        Background="{x:Null}"
+                                        BorderBrush="{x:Null}"
+                                        BorderThickness="0"
+                                        Command="{Binding StartCommand}"
+                                        Foreground="{x:Null}"
+                                        Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}">
+                                    <Grid>
+                                        <TextBlock Foreground="{DynamicResource MainBackgroundColour}" Text="{Binding Title}" />
+                                    </Grid>
+                                </Button>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </Border>
             </Grid>
-        </DockPanel>
-    </Grid>
+            <!--  <ContentControl prism:RegionManager.RegionName="{x:Static regions:RegionNames.ContentRegion}" />  -->
+        </Grid>
+        <Grid DockPanel.Dock="Bottom">
+            <!--  <ContentControl prism:RegionManager.RegionName="{x:Static regions:RegionNames.NavigationRegion}" />  -->
+            <ContentControl Margin="10,10,0,0" prism:RegionManager.RegionName="{x:Static regions:RegionNames.MainRegion}" />
+        </Grid>
+        <!--  <ContentControl prism:RegionManager.RegionName="{x:Static regions:RegionNames.ContentRegion}" />  -->
+    </DockPanel>
 </Window>

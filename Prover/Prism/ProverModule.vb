@@ -4,20 +4,40 @@ Imports System.Windows.Input
 Public Class ProverModule
     Implements IProverModule
 
-    Sub New(ModuleTitle As String, ModuleIcon As String, ModuleToolTipText As String, ModuleStartCommand As Commands.DelegateCommand(Of Object))
-        Icon = ModuleIcon
-        Title = ModuleTitle
-        ToolTipText = ModuleToolTipText
-        StartCommand = ModuleStartCommand
+    Private _title As String
+    Private _startCommand As ICommand
+    Private _toolTipText As String
+    Private _icon As String
+
+    Sub New(Title As String, StartCommand As ICommand, ToolTipText As String, Icon As String)
+        _title = Title
+        _startCommand = StartCommand
+        _toolTipText = ToolTipText
+        _icon = Icon
     End Sub
 
-    Public Property Icon As String Implements IProverModule.Icon
+    Public ReadOnly Property Icon As String Implements IProverModule.Icon
+        Get
+            Return _icon
 
-    Public Property Title As String Implements IProverModule.Title
+        End Get
+    End Property
 
-    Public Property ToolTipText As String Implements IProverModule.ToolTipText
+    Public ReadOnly Property StartCommand As ICommand Implements IProverModule.StartCommand
+        Get
+            Return _startCommand
+        End Get
+    End Property
 
-    Public Property StartCommand As ICommand Implements IProverModule.StartCommand
+    Public ReadOnly Property Title As String Implements IProverModule.Title
+        Get
+            Return _title
+        End Get
+    End Property
 
-
+    Public ReadOnly Property ToolTipText As String Implements IProverModule.ToolTipText
+        Get
+            Return _toolTipText
+        End Get
+    End Property
 End Class

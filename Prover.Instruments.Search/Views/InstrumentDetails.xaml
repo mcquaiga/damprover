@@ -74,7 +74,7 @@
     </UserControl.Resources>
 
     <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
-        <StackPanel Background="White">
+        <StackPanel>
             <!--  <ContentControl Content="{Binding Source={StaticResource Instrument}, Mode=OneWay}" />  -->
 
             <Grid Visibility="{Binding ShowCommButtons, UpdateSourceTrigger=PropertyChanged}">
@@ -85,14 +85,16 @@
                     <RowDefinition />
                 </Grid.RowDefinitions>
                 <StackPanel Grid.Row="0">
-                    <TextBlock Text="Instrument" />
+                    <TextBlock Text="Instrument" Foreground="{DynamicResource HeaderColour}" />
                     <WrapPanel>
-                        <Button Command="{Binding MiniMaxCommand}" Content="MiniMax" />
-                        <Button>EC300</Button>
+                        <Button Command="{Binding MiniMaxCommand}"
+                                Content="MiniMax"
+                                Style="{StaticResource SimpleButton}" />
+                        <Button Style="{StaticResource SimpleButton}">EC300</Button>
                     </WrapPanel>
                 </StackPanel>
                 <StackPanel Grid.Row="1">
-                    <TextBlock Grid.Row="1" Text="Communications Port" />
+                    <TextBlock Grid.Row="1" Text="Communications Port" Foreground="{DynamicResource HeaderColour}" />
                     <ItemsControl Margin="5"
                                   ItemTemplate="{StaticResource ResourceKey=CommPorts}"
                                   ItemsSource="{Binding CommPorts}">
@@ -123,11 +125,11 @@
             <Grid Margin="15">
                 <StackPanel>
                     <!--  Basic Details Info  -->
-                    <TextBlock Foreground="Blue">Serial Number:</TextBlock>
+                    <TextBlock Foreground="{DynamicResource HeaderColour}">Serial Number:</TextBlock>
                     <TextBlock Foreground="Blue" Text="{Binding Instrument.SerialNumber, UpdateSourceTrigger=PropertyChanged}" />
 
 
-                    <Expander Foreground="Blue"
+                    <Expander Foreground="{DynamicResource HeaderColour}"
                               Header="Pressure"
                               Visibility="{Binding IsLivePressure,
                                                    Converter={StaticResource VisibilityOfBool},
@@ -166,7 +168,7 @@
                             </DataGrid>
                         </Grid>
                     </Expander>
-                    <Expander Foreground="Blue"
+                    <Expander Foreground="{DynamicResource HeaderColour}"
                               Header="Temperature"
                               Visibility="{Binding IsLiveTemperature,
                                                    Converter={StaticResource VisibilityOfBool}}">
@@ -200,7 +202,7 @@
                             </DataGrid.Columns>
                         </DataGrid>
                     </Expander>
-                    <Expander Foreground="Blue" Header="Volume">
+                    <Expander Foreground="{DynamicResource HeaderColour}" Header="Volume">
                         <ListBox ItemsSource="{Binding Instrument.VolumeTests}">
                             <ListBox.ItemTemplate>
                                 <DataTemplate>
@@ -211,7 +213,7 @@
                     </Expander>
 
 
-                    <Expander Foreground="Blue" Header="Item File">
+                    <Expander Foreground="{DynamicResource HeaderColour}" Header="Item File">
                         <DataGrid AutoGenerateColumns="False" ItemsSource="{Binding ItemValuesWithDescriptions, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}">
 
                             <DataGrid.Columns>
@@ -223,8 +225,12 @@
                         </DataGrid>
                     </Expander>
 
-                    <Button Command="{Binding SaveCommand}" Content="Save" />
-                    <Button Command="{Binding CancelCommand}" Content="Cancel" />
+                    <Button Command="{Binding SaveCommand}"
+                            Content="Save"
+                            Style="{StaticResource SimpleButton}" />
+                    <Button Command="{Binding CancelCommand}"
+                            Content="Cancel"
+                            Style="{StaticResource SimpleButton}" />
                 </StackPanel>
             </Grid>
         </StackPanel>

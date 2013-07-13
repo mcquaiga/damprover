@@ -128,6 +128,7 @@
     <Compile Include="DataProviderModel\DocumentStore.vb" />
     <Compile Include="Interfaces\IApplicationNavigation.vb" />
     <Compile Include="Interfaces\INavigationBlock.vb" />
+    <Compile Include="IProverSubModule.vb" />
     <Compile Include="IView.vb" />
     <Compile Include="MediatorHelper.vb" />
     <Compile Include="Prism\IProverModule.vb" />

@@ -8,6 +8,7 @@ Imports System.Globalization
 Imports System.Windows
 Imports Prover
 Imports Prover.Instruments.View
+Imports Prover.Dashboard
 
 Public Class ProverBootstrapper
     Inherits UnityExtensions.UnityBootstrapper
@@ -41,8 +42,13 @@ Public Class ProverBootstrapper
 
     Protected Overrides Sub ConfigureModuleCatalog()
 
+        Dim DashboardModuleType As Type = GetType(DashboardModule)
+        ModuleCatalog.AddModule(New ModuleInfo(DashboardModuleType.Name, DashboardModuleType.AssemblyQualifiedName))
+
         Dim InstrumentModuleType As Type = GetType(InstrumentsViewModule)
         ModuleCatalog.AddModule(New ModuleInfo(InstrumentModuleType.Name, InstrumentModuleType.AssemblyQualifiedName))
+
+        
 
     End Sub
 End Class

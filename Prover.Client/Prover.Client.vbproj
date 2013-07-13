@@ -195,9 +195,18 @@
     <None Include="Resources\MiniMax_Rotary_Thumb1_NEW_Lg.jpg" />
   </ItemGroup>
   <ItemGroup>
+    <Page Include="My Project\DesignTimeResources.xaml" Condition="'$(DesignTime)'=='true' OR ('$(SolutionPath)'!='' AND Exists('$(SolutionPath)') AND '$(BuildingInsideVisualStudio)'!='true' AND '$(BuildingInsideExpressionBlend)'!='true')">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+      <ContainsDesignTimeResources>true</ContainsDesignTimeResources>
+    </Page>
     <Page Include="Themes\Button.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Themes\DataTemplate\MainMenu.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Themes\SimpleStyles.xaml">
       <SubType>Designer</SubType>
@@ -209,6 +218,10 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Prover.Dashboard\Prover.Dashboard.vbproj">
+      <Project>{d7f8a781-55fa-467b-b374-b31c63de63c7}</Project>
+      <Name>Prover.Dashboard</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Prover.Instruments.Data\Prover.Instruments.Data.vbproj">
       <Project>{4a9fb13d-8615-4fb5-858b-7ecb3f0ddee0}</Project>
       <Name>Prover.Instruments.Data</Name>
@@ -231,6 +244,24 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <BlendEmbeddedFont Include="Fonts\calibril.ttf">
+      <IsSystemFont>True</IsSystemFont>
+      <All>True</All>
+      <AutoFill>True</AutoFill>
+      <Uppercase>True</Uppercase>
+      <Lowercase>True</Lowercase>
+      <Numbers>True</Numbers>
+      <Punctuation>True</Punctuation>
+    </BlendEmbeddedFont>
+    <BlendEmbeddedFont Include="Fonts\calibrili.ttf">
+      <IsSystemFont>True</IsSystemFont>
+      <All>True</All>
+      <AutoFill>True</AutoFill>
+      <Uppercase>True</Uppercase>
+      <Lowercase>True</Lowercase>
+      <Numbers>True</Numbers>
+      <Punctuation>True</Punctuation>
+    </BlendEmbeddedFont>
     <Resource Include="Resources\Home.png" />
   </ItemGroup>
   <ItemGroup>
@@ -241,4 +272,5 @@
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
+  <Import Project="$(MSBuildExtensionsPath)\Microsoft\Expression\Blend\.NETFramework\v4.5\Microsoft.Expression.Blend.WPF.targets" />
 </Project>

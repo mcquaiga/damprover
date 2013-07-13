@@ -33,8 +33,23 @@ Namespace ViewModels
             _container.RegisterType(Of IView(Of IInstrumentDetailsVM), InstrumentDetails)()
             _container.RegisterType(Of Object, InstrumentDetails)("Details")
 
-            _regionManager.Regions(RegionNames.InstrumentsRegion).RequestNavigate(New Uri("Details", UriKind.Relative))
+            _regionManager.Regions(RegionNames.MainRegion).RequestNavigate(New Uri("Details", UriKind.Relative))
+        End Sub
 
+        Private _startViewInstrumentsCommand = New Microsoft.Practices.Prism.Commands.DelegateCommand(AddressOf StartViewInstruments)
+        Public ReadOnly Property StartViewInstrumentsCommand As ICommand Implements IMainMenuVM.StartViewInstrumentsCommand
+            Get
+                Return _startViewInstrumentsCommand
+
+            End Get
+        End Property
+
+        Private Sub StartViewInstruments()
+            _container.RegisterType(Of IInstrumentsListPageVM, InstrumentsListPageVM)()
+            _container.RegisterType(Of IView(Of IInstrumentsListPageVM), InstrumentsListPage)()
+            _container.RegisterType(Of Object, InstrumentListAndDetails)("ViewInstruments")
+
+            _regionManager.Regions(RegionNames.MainRegion).RequestNavigate(New Uri("ViewInstruments", UriKind.Relative))
         End Sub
 
     End Class
