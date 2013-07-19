@@ -10,6 +10,7 @@ Namespace ViewModels
     Public Class InstrumentDetailsVM
         Implements IInstrumentDetailsVM, INotifyPropertyChanged
 
+        Private _progress As Progress(Of Tuple(Of String, Integer))
         Private Property InstrumentType As String
         Public Property Items As List(Of ItemClass)
         Private _Instrument As IBaseInstrument
@@ -18,10 +19,13 @@ Namespace ViewModels
         Private _provider As New InstrumentDataProvider
         Private _pressurelevelIndex As List(Of String)
         Private _templevelIndex As List(Of Integer)
+        Private _volume As IVolume
 
         Sub New(events As IEventAggregator)
             _events = events
             _events.GetEvent(Of SelectedInstrumentChangedEvent).Subscribe(AddressOf ShowInstrument)
+
+            _progress = New Progress(Of Tuple(Of String, Integer))(AddressOf ReportProgress)
         End Sub
 
         Public ReadOnly Property ItemValuesWithDescriptions As Dictionary(Of ItemClass, String)
@@ -80,27 +84,7 @@ Namespace ViewModels
             End Get
         End Property
 
-        Public Sub LoadItemDescriptions()
-            If Not Instrument Is Nothing Then
-                If Instrument.InstrumentType = InstrumentTypeCode.MiniMax Then
-                    Me.Items = MiniMaxInstrument.LoadInstrumentItems()
-                End If
-
-                NotifyPropertyChanged("ItemValuesWithDescriptions")
-            End If
-        End Sub
-
-        Public Sub FetchInstrumentInformation()
-            If Instrument Is Nothing Then MessageBox.Show("Select an Instrument Type.")
-
-            LoadItemDescriptions()
-            Instrument.ItemFile = InstrumentCommunications.DownloadItemFile(Instrument)
-
-            NotifyPropertyChanged("ItemValuesWithDescriptions")
-            NotifyPropertyChanged("Instrument")
-
-        End Sub
-
+      
         Public ReadOnly Property CommPorts As ObjectModel.ReadOnlyCollection(Of String) Implements IInstrumentDetailsVM.CommPorts
             Get
                 Return CommunicationPorts.GetAllCommPorts()
@@ -179,6 +163,32 @@ Namespace ViewModels
             NotifyPropertyChanged("Instruments")
         End Sub
 
+        Public Sub LoadItemDescriptions()
+            If Not Instrument Is Nothing Then
+                If Instrument.InstrumentType = InstrumentTypeCode.MiniMax Then
+                    Me.Items = MiniMaxInstrument.LoadInstrumentItems()
+                End If
+
+                NotifyPropertyChanged("ItemValuesWithDescriptions")
+            End If
+        End Sub
+
+        Public Async Function FetchInstrumentInformation() As Task
+            If Instrument Is Nothing Then MessageBox.Show("Select an Instrument Type.")
+
+            LoadItemDescriptions()
+            Try
+                Instrument.ItemFile = Await InstrumentCommunications.DownloadItemFile(Instrument, _progress)
+                Instrument.VolumeTest.BeforeItems = Instrument.ItemFile
+            Catch ex As Exception
+                MsgBox(ex.Message, MsgBoxStyle.OkOnly + MsgBoxStyle.Information, "Error")
+            End Try
+
+            NotifyPropertyChanged("ItemValuesWithDescriptions")
+            NotifyPropertyChanged("Instrument")
+
+        End Function
+
 #End Region
 
 #Region "Commands"
@@ -244,6 +254,11 @@ Namespace ViewModels
         Private Sub NotifyPropertyChanged(<CallerMemberName()> Optional ByVal propertyName As String = Nothing)
             RaiseEvent PropertyChanged(Me, New PropertyChangedEventArgs(propertyName))
         End Sub
+
+        Private Function ReportProgress() As Object
+            Console.WriteLine("Not implemented.")
+            Return Nothing
+        End Function
 
 
 

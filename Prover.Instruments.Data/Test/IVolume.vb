@@ -1,19 +1,20 @@
-﻿Public Class IVolume
+﻿Public Interface IVolume
+
 
 #Region "Enums"
-    Public Enum EVCTypeEnum
+    Enum EVCTypeEnum
         Pressure
         Temperature
         PressureTemperature
     End Enum
 
-    Public Enum GeneralVolumeItems
+    Enum GeneralVolumeItems
         CorrectedMultiplier = 90
         UnCorrectedMultiplier = 92
         MeterIndexRate = 98
     End Enum
 
-    Public Enum VolumeTestItems
+    Enum VolumeTestItems
         UnCorrectedVolume = 2
         CorrectedVolume = 0
         HighResCorrected = 113
@@ -21,7 +22,7 @@
         HighResUnCorrected = 892
     End Enum
 
-    Public Enum InstrumentVolumeUnitsEnum
+    Enum InstrumentVolumeUnitsEnum
         CuFT = 0
         CuFTx10 = 1
         CuFTx100 = 2
@@ -45,7 +46,7 @@
         KiloWattHrs = 20
     End Enum
 
-    Public Enum InstrumentMeterIndexCodesEnum
+    Enum InstrumentMeterIndexCodesEnum
         CF1 = 0
         CF5 = 1
         CF10 = 2
@@ -64,22 +65,24 @@
 
     End Enum
 #End Region
+    Property BeforeItems As Dictionary(Of Integer, String)
+    Property AfterItems As Dictionary(Of Integer, String)
 
-    Property TrueCorrected As Double 'Calculated Corrected Volume = (TempFactor * PressureFactor * Fpv2Factor * InputUncVolume)
-    Property EvcCorrected As Double 'End Reading - Start Reading / Corrected Multiplier
+    ReadOnly Property TrueCorrected As Double 'Calculated Corrected Volume = (TempFactor * PressureFactor * Fpv2Factor * InputUncVolume)
+    ReadOnly Property EvcCorrected As Double 'End Reading - Start Reading / Corrected Multiplier
     Property TempFactor As Double
     Property PressureFactor As Double
     Property Fpv2 As Double
-    Property InputUncVolume As Double
-    Property EndCorrected As Double
-    Property StartCorrected As Double
-    Property CorrectedMultiplier As Double
-    Property UncorrectedMutliplier As Double
+    ReadOnly Property InputUncVolume As Double
+    ReadOnly Property EndCorrected As Double
+    ReadOnly Property StartCorrected As Double
+    ReadOnly Property CorrectedMultiplier As Double
+    ReadOnly Property UncorrectedMutliplier As Double
     Property AppliedInput As Double
     Property DriveRate As Double '
     Property EVCType As EVCTypeEnum
-    Property StartunCorrected As Double
-    Property EndUnCorrected As Double
+    ReadOnly Property StartunCorrected As Double
+    ReadOnly Property EndUnCorrected As Double
     Property PulserA As Double
     Property PulserB As Double
     Property MeterDisplacement As Double
@@ -92,4 +95,4 @@
     Property MechReading As Integer
     Property VolumeData As String
 
-End Class
+End Interface

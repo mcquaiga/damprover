@@ -64,6 +64,7 @@ Public Interface IBaseInstrument
 
     Property PressureTests As ObjectModel.ObservableCollection(Of IPressureFactorClass)
     Property TemperateTests As ObjectModel.ObservableCollection(Of ITemperatureClass)
+    Property VolumeTest As IVolume
 
     Function IsLiveSuper() As FixedFactors
     Function IsLivePressure() As FixedFactors
@@ -79,7 +80,6 @@ Public Interface IBaseInstrument
     Property CreatedDate As DateTime?
 
     Property ItemFile As Dictionary(Of Integer, String)
-    Property VolumeTests As List(Of IVolume)
 
     ReadOnly Property PulseASelect As PulseOutputValues
     ReadOnly Property PulseBSelect As PulseOutputValues

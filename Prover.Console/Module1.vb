@@ -63,7 +63,7 @@ Module Module1
 
         InstrumentCommunications.CommPort = "Com9"
         InstrumentCommunications.BaudRate = miSerialProtocol.BaudRateEnum.b38400
-        myinstrument.ItemFile = InstrumentCommunications.DownloadItemFile(myinstrument)
+        'myinstrument.ItemFile = InstrumentCommunications.DownloadItemFile(myinstrument)
 
 
         Dim p1 As New PressureFactorClass(1)

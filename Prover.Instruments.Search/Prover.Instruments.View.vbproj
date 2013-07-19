@@ -118,8 +118,10 @@
     <Compile Include="Events\SelectedInstrumentChangedEvent.vb" />
     <Compile Include="InstrumentsViewModule.vb" />
     <Compile Include="ViewModel\IInstrumentDetailsVM.vb" />
+    <Compile Include="ViewModel\IInstrumentsListAndDetailsVM.vb" />
     <Compile Include="ViewModel\IInstrumentsListPageVM.vb" />
     <Compile Include="ViewModel\IMainMenuVM.vb" />
+    <Compile Include="ViewModel\InstrumentsListAndDetailsVM.vb" />
     <Compile Include="ViewModel\MainMenuVM.vb" />
     <Compile Include="Views\InstrumentDetails.xaml.vb">
       <DependentUpon>InstrumentDetails.xaml</DependentUpon>

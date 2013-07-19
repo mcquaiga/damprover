@@ -1,14 +1,6 @@
-Imports Prover.IVolume
 
 Public Class Volume
-    Inherits FactorClass
-
-    Public Enum EVCTypeEnum
-        Pressure
-        Temperature
-        PressureTemperature
-    End Enum
-
+    Implements IVolume
 
 
     Sub New()
@@ -19,54 +11,55 @@ Public Class Volume
 
     Public Const CubicFeetToMeters = 0.0283168466
 
-    Public Property BeforeItems As Dictionary(Of Integer, String)
-    Public Property AfterItems As Dictionary(Of Integer, String)
+    Public Property BeforeItems As Dictionary(Of Integer, String) Implements IVolume.BeforeItems
+    Public Property AfterItems As Dictionary(Of Integer, String) Implements IVolume.AfterItems
 
-    Public Property EVCType() As EVCTypeEnum
-    Public Property TempFactor() As Double
-    Public Property PressureFactor() As Double
-    Public Property Fpv2Factor() As Double
-    Public Overridable Property DriveRate() As Double
-    Public Overridable Property MeterDisplacement() As Double
-    Public Overridable Property EVCMeterDisplacement() As Double
-    Public Property AppliedInput() As Double
+    Public Property EVCType() As IVolume.EVCTypeEnum Implements IVolume.EVCType
+    Public Property TempFactor() As Double Implements IVolume.TempFactor
+    Public Property PressureFactor() As Double Implements IVolume.PressureFactor
+    Public Property Fpv2Factor() As Double Implements IVolume.Fpv2
+    Public Overridable Property DriveRate() As Double Implements IVolume.DriveRate
+    Public Overridable Property MeterDisplacement() As Double Implements IVolume.MeterDisplacement
+    Public Overridable Property EVCMeterDisplacement() As Double Implements IVolume.EvcMeterDisplacement
+    Public Property AppliedInput() As Double Implements IVolume.AppliedInput
+
     Public ReadOnly Property EndCorrected() As Double
         Get
             Return AfterItems(0)
         End Get
     End Property
 
-    Public ReadOnly Property StartCorrected() As Double
+    Public ReadOnly Property StartCorrected() As Double Implements IVolume.StartCorrected
         Get
             Return BeforeItems(0)
         End Get
     End Property
 
-    Public ReadOnly Property StartUncorrected() As Double
+    Public ReadOnly Property StartUncorrected() As Double Implements IVolume.StartunCorrected
         Get
             Return BeforeItems(2)
         End Get
     End Property
 
-    Public ReadOnly Property EndUnCorrected() As Double
+    Public ReadOnly Property EndUnCorrected() As Double Implements IVolume.EndUnCorrected
         Get
             Return AfterItems(2)
         End Get
     End Property
 
-    Public ReadOnly Property UnCorrectedMultiplier() As Double
+    Public ReadOnly Property UnCorrectedMultiplier() As Double Implements IVolume.UncorrectedMutliplier
         Get
             Return BeforeItems(92)
         End Get
     End Property
 
-    Public ReadOnly Property CorrectedMultiplier() As Double
+    Public ReadOnly Property CorrectedMultiplier() As Double Implements IVolume.CorrectedMultiplier
         Get
             Return BeforeItems(90)
         End Get
     End Property
 
-    Public Overridable ReadOnly Property InputUncVolume() As Double
+    Public Overridable ReadOnly Property InputUncVolume() As Double Implements IVolume.InputUncVolume
         Get
             Return (DriveRate * AppliedInput)
         End Get
@@ -77,13 +70,13 @@ Public Class Volume
         End Get
     End Property
 
-    Public ReadOnly Property TrueCorrected() As Double
+    Public ReadOnly Property TrueCorrected() As Double Implements IVolume.TrueCorrected
         Get
-            If EVCType = EVCTypeEnum.Pressure Then
+            If EVCType = IVolume.EVCTypeEnum.Pressure Then
                 Return (PressureFactor * InputUncVolume)
-            ElseIf EVCType = EVCTypeEnum.Temperature Then
+            ElseIf EVCType = IVolume.EVCTypeEnum.Temperature Then
                 Return (TempFactor * InputUncVolume)
-            ElseIf EVCType = EVCTypeEnum.PressureTemperature Then
+            ElseIf EVCType = IVolume.EVCTypeEnum.PressureTemperature Then
                 Return (PressureFactor * TempFactor * Fpv2Factor * InputUncVolume)
             End If
             Return Nothing
@@ -97,7 +90,7 @@ Public Class Volume
         End Get
     End Property
 
-    Public ReadOnly Property EvcCorrected() As Double
+    Public ReadOnly Property EvcCorrected() As Double Implements IVolume.EvcCorrected
         Get
             Return (EndCorrected - StartCorrected) * CorrectedMultiplier
         End Get
@@ -147,20 +140,20 @@ Public Class Volume
 
     Public Overridable ReadOnly Property MeterTypeNumber() As Integer
         Get
-            Return Items(33)
+            Return BeforeItems(33)
         End Get
 
     End Property
 
-    Public Overridable ReadOnly Property UncCorMultiplerCode() As InstrumentVolumeUnitsEnum
+    Public Overridable ReadOnly Property UncCorMultiplerCode() As IVolume.InstrumentVolumeUnitsEnum
         Get
-            Return Items(92)
+            Return BeforeItems(92)
         End Get
     End Property
 
-    Public Overridable ReadOnly Property CorMultiplierCode() As InstrumentVolumeUnitsEnum
+    Public Overridable ReadOnly Property CorMultiplierCode() As IVolume.InstrumentVolumeUnitsEnum
         Get
-            Return Items(90)
+            Return BeforeItems(90)
         End Get
 
     End Property
@@ -190,92 +183,116 @@ Public Class Volume
     End Property
 #End Region
 
-    Public Function IsMetric(ByVal UncMultiplierCode As InstrumentVolumeUnitsEnum) As Boolean
+    Public Function IsMetric(ByVal UncMultiplierCode As IVolume.InstrumentVolumeUnitsEnum) As Boolean
         Select Case UncMultiplierCode
-            Case InstrumentVolumeUnitsEnum.m3
+            Case IVolume.InstrumentVolumeUnitsEnum.m3
                 Return True
-            Case InstrumentVolumeUnitsEnum.m3x10
+            Case IVolume.InstrumentVolumeUnitsEnum.m3x10
                 Return True
-            Case InstrumentVolumeUnitsEnum.m3x100
+            Case IVolume.InstrumentVolumeUnitsEnum.m3x100
                 Return True
-            Case InstrumentVolumeUnitsEnum.m3x1000
+            Case IVolume.InstrumentVolumeUnitsEnum.m3x1000
                 Return True
-            Case InstrumentVolumeUnitsEnum.m3xPoint1
+            Case IVolume.InstrumentVolumeUnitsEnum.m3xPoint1
                 Return True
         End Select
         Return False
     End Function
 
-    Public Function GetVolumeMultipliers(ByVal MultiplierCode As InstrumentVolumeUnitsEnum) As Double
+    Public Function GetVolumeMultipliers(ByVal MultiplierCode As IVolume.InstrumentVolumeUnitsEnum) As Double
 
         Select Case MultiplierCode
-            Case InstrumentVolumeUnitsEnum.CuFT
+            Case IVolume.InstrumentVolumeUnitsEnum.CuFT
                 Return 1
-            Case InstrumentVolumeUnitsEnum.CuFTx10
+            Case IVolume.InstrumentVolumeUnitsEnum.CuFTx10
                 Return 10
-            Case InstrumentVolumeUnitsEnum.CuFTx100
+            Case IVolume.InstrumentVolumeUnitsEnum.CuFTx100
                 Return 100
-            Case InstrumentVolumeUnitsEnum.CF
+            Case IVolume.InstrumentVolumeUnitsEnum.CF
                 Return 1
-            Case InstrumentVolumeUnitsEnum.CFx10
+            Case IVolume.InstrumentVolumeUnitsEnum.CFx10
                 Return 10
-            Case InstrumentVolumeUnitsEnum.CFx100
+            Case IVolume.InstrumentVolumeUnitsEnum.CFx100
                 Return 100
-            Case InstrumentVolumeUnitsEnum.CFx1000
+            Case IVolume.InstrumentVolumeUnitsEnum.CFx1000
                 Return 1000
-            Case InstrumentVolumeUnitsEnum.CCF
+            Case IVolume.InstrumentVolumeUnitsEnum.CCF
                 Return 100
-            Case InstrumentVolumeUnitsEnum.MCF
+            Case IVolume.InstrumentVolumeUnitsEnum.MCF
                 Return 1000
-            Case InstrumentVolumeUnitsEnum.m3xPoint1
+            Case IVolume.InstrumentVolumeUnitsEnum.m3xPoint1
                 Return 0.1
-            Case InstrumentVolumeUnitsEnum.m3
+            Case IVolume.InstrumentVolumeUnitsEnum.m3
                 Return 1
-            Case InstrumentVolumeUnitsEnum.m3x10
+            Case IVolume.InstrumentVolumeUnitsEnum.m3x10
                 Return 10
-            Case InstrumentVolumeUnitsEnum.m3x100
+            Case IVolume.InstrumentVolumeUnitsEnum.m3x100
                 Return 100
-            Case InstrumentVolumeUnitsEnum.m3x1000
+            Case IVolume.InstrumentVolumeUnitsEnum.m3x1000
                 Return 1000
-            Case InstrumentVolumeUnitsEnum.CFx10000
+            Case IVolume.InstrumentVolumeUnitsEnum.CFx10000
                 Return 10000
         End Select
         Return 0
     End Function
 
-    Public Function GetMeterIndexRate(ByVal MeterCode As InstrumentMeterIndexCodesEnum)
+    Public Function GetMeterIndexRate(ByVal MeterCode As IVolume.InstrumentMeterIndexCodesEnum)
         Select Case MeterCode
-            Case InstrumentMeterIndexCodesEnum.CF1
+            Case IVolume.InstrumentMeterIndexCodesEnum.CF1
                 Return 1
-            Case InstrumentMeterIndexCodesEnum.CF5
+            Case IVolume.InstrumentMeterIndexCodesEnum.CF5
                 Return 5
-            Case InstrumentMeterIndexCodesEnum.CF10
+            Case IVolume.InstrumentMeterIndexCodesEnum.CF10
                 Return 10
-            Case InstrumentMeterIndexCodesEnum.CF100
+            Case IVolume.InstrumentMeterIndexCodesEnum.CF100
                 Return 100
-            Case InstrumentMeterIndexCodesEnum.CF1000
+            Case IVolume.InstrumentMeterIndexCodesEnum.CF1000
                 Return 1000
-            Case InstrumentMeterIndexCodesEnum.m3Point1
+            Case IVolume.InstrumentMeterIndexCodesEnum.m3Point1
                 Return 0.1
-            Case InstrumentMeterIndexCodesEnum.m31
+            Case IVolume.InstrumentMeterIndexCodesEnum.m31
                 Return 1
-            Case InstrumentMeterIndexCodesEnum.m310
+            Case IVolume.InstrumentMeterIndexCodesEnum.m310
                 Return 10
-            Case InstrumentMeterIndexCodesEnum.m3100
+            Case IVolume.InstrumentMeterIndexCodesEnum.m3100
                 Return 100
-            Case InstrumentMeterIndexCodesEnum.CF10000
+            Case IVolume.InstrumentMeterIndexCodesEnum.CF10000
                 Return 10000
-            Case InstrumentMeterIndexCodesEnum.CF0
+            Case IVolume.InstrumentMeterIndexCodesEnum.CF0
                 Return 0
-            Case InstrumentMeterIndexCodesEnum.CF50
+            Case IVolume.InstrumentMeterIndexCodesEnum.CF50
                 Return 50
-            Case InstrumentMeterIndexCodesEnum.CF500
+            Case IVolume.InstrumentMeterIndexCodesEnum.CF500
                 Return 500
-            Case InstrumentMeterIndexCodesEnum.RotaryIntegeralMount
+            Case IVolume.InstrumentMeterIndexCodesEnum.RotaryIntegeralMount
                 Return 14
         End Select
 
         Return 0
     End Function
 
+
+    Public Property CorCode As IVolume.InstrumentVolumeUnitsEnum Implements IVolume.CorCode
+
+    Public ReadOnly Property EndCorrected1 As Double Implements IVolume.EndCorrected
+        Get
+
+        End Get
+    End Property
+
+    Public Property MaxUnCorrected As Double Implements IVolume.MaxUnCorrected
+
+    Public Property MechReading As Integer Implements IVolume.MechReading
+
+    Public Property MeterTypeNumber1 As Integer Implements IVolume.MeterTypeNumber
+
+    Public Property MeterTypeString As String Implements IVolume.MeterTypeString
+
+    Public Property PulserA As Double Implements IVolume.PulserA
+
+    Public Property PulserB As Double Implements IVolume.PulserB
+
+    Public Property UnCorCode As IVolume.InstrumentVolumeUnitsEnum Implements IVolume.UnCorCode
+
+    Public Property VolumeData As String Implements IVolume.VolumeData
 End Class

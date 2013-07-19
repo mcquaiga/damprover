@@ -4,16 +4,18 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:Prover.Instruments.View"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:prism="http://www.codeplex.com/prism"
+             xmlns:regions="clr-namespace:Prover;assembly=Prover"
              d:DesignHeight="300"
              d:DesignWidth="300"
              mc:Ignorable="d">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition />
-            <ColumnDefinition />
+            <ColumnDefinition Width="2*" />
         </Grid.ColumnDefinitions>
-        <local:InstrumentsListPage Grid.Column="0" />
-        <local:InstrumentDetails Grid.Column="1" />
+        <ContentControl Grid.Column="0" prism:RegionManager.RegionName="{x:Static regions:RegionNames.ListRegion}" />
+        <ContentControl Grid.Column="1" prism:RegionManager.RegionName="{x:Static regions:RegionNames.DetailsRegion}" />
 
     </Grid>
 </UserControl>

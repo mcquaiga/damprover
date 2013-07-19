@@ -1538,4 +1538,5 @@
     <System:Double x:Key="LargeFontSize">32</System:Double>
     <ControlTemplate x:Key="MenuModuleButton" TargetType="{x:Type Button}" />
     <SolidColorBrush x:Key="MainMenuModuleBrush" Color="#FFA2A2A2" />
+    <Style x:Key="SectionHeader" TargetType="{x:Type Border}"/>
 </ResourceDictionary>

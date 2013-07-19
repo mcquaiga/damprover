@@ -8,7 +8,7 @@
              x:Name="InstrumentsList"
              d:DesignHeight="300"
              d:DesignWidth="506"
-             mc:Ignorable="d">
+             mc:Ignorable="d" Foreground="{DynamicResource HeaderColour}">
 
 
     <UserControl.Resources>
@@ -18,14 +18,14 @@
                 <Image />
                 <StackPanel Orientation="Vertical">
                     <TextBlock Width="125"
-                               Foreground="Blue"
+                               Foreground="White"
                                Text="{Binding InstrumentType}" />
                     <TextBlock Width="125"
                                Margin="2"
                                HorizontalAlignment="Center"
                                VerticalAlignment="Center"
                                FontSize="22"
-                               Foreground="Blue"
+                               Foreground="White"
                                Text="{Binding SerialNumber}" />
                 </StackPanel>
                 <Grid Height="50"
@@ -85,7 +85,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />
             <RowDefinition Height="9*" />
-            <RowDefinition Height="2*" />
+           
         </Grid.RowDefinitions>
         <StackPanel Grid.Row="0"
                     Margin="10, 0, 0, 0"
@@ -109,14 +109,14 @@
                      Margin="10"
                      HorizontalContentAlignment="Stretch"
                      VerticalContentAlignment="Stretch"
-                     Background="White"
-                     BorderThickness="0"
+                     Background="{DynamicResource MainBackgroundColour}"
+                     BorderThickness="1"
                      ItemContainerStyle="{StaticResource InstrumentStyle}"
                      ItemTemplate="{StaticResource ResourceKey=inst}"
                      ItemsSource="{Binding Source={StaticResource Instruments}}"
                      SelectedItem="{Binding DataContext.SelectedInstrument,
                                             ElementName=InstrumentsList,
-                                            Mode=TwoWay}" />
+                                            Mode=TwoWay}" BorderBrush="{DynamicResource HeaderColour}" />
 
             <!--  Details  -->
             <!--

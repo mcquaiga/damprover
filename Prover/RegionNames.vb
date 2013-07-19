@@ -7,6 +7,8 @@
 
     Public Shared MainRegion As String = "MainRegion"
 
+    Public Shared ListRegion As String = "ListRegion"
+    Public Shared DetailsRegion As String = "DetailsRegion"
     Public Shared NavigationRegion As String = "NavigationRegion"
 
 

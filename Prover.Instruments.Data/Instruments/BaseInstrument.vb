@@ -33,8 +33,6 @@ Namespace Instruments.Data
             TemperatureTests.Add(New TemperatureClass(1))
             TemperatureTests.Add(New TemperatureClass(2))
             TemperatureTests.Add(New TemperatureClass(3))
-
-            VolumeTests = New List(Of IVolume)
         End Sub
 
 #Region "Properties"
@@ -51,7 +49,7 @@ Namespace Instruments.Data
         Public Property PressureTests As ObservableCollection(Of IPressureFactorClass) Implements IBaseInstrument.PressureTests
           
         Public Property TemperatureTests As ObservableCollection(Of ITemperatureClass) Implements IBaseInstrument.TemperateTests
-        Public Property VolumeTests As List(Of IVolume) Implements IBaseInstrument.VolumeTests
+        Public Property VolumeTest As IVolume Implements IBaseInstrument.VolumeTest
 
         Public ReadOnly Property InstrumenGuID() As Guid Implements IBaseInstrument.InstrumentGuid
             Get
