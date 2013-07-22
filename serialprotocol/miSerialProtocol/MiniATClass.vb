@@ -38,8 +38,8 @@ Public Class MiniATClass : Inherits miSerialProtocolClass
         ErrorItem = 439
     End Enum
 
-    Sub New(ByVal PortNumber As Integer, ByVal BaudRate As BaudRateEnum)
-        MyBase.New(PortNumber, BaudRate)
+    Sub New(CommPort As ICommPort)
+        MyBase.New(CommPort)
         Me.Instrument = InstrumentTypeCode.MiniAT
     End Sub
 

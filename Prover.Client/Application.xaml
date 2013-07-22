@@ -6,6 +6,8 @@
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="Themes\SimpleStyles.xaml" />
+                <ResourceDictionary Source="/Prover.Instruments.View;component/RadioButtonStyle.xaml"/>
+                <ResourceDictionary Source="Themes/RadioButtonStyle.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
 

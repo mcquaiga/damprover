@@ -1,4 +1,6 @@
-﻿Public Interface IVolume
+﻿Imports Raven.Imports.Newtonsoft.Json
+
+Public Interface IVolume
 
 
 #Region "Enums"
@@ -65,7 +67,10 @@
 
     End Enum
 #End Region
+
+    <JsonIgnore>
     Property BeforeItems As Dictionary(Of Integer, String)
+    <JsonIgnore>
     Property AfterItems As Dictionary(Of Integer, String)
 
     ReadOnly Property TrueCorrected As Double 'Calculated Corrected Volume = (TempFactor * PressureFactor * Fpv2Factor * InputUncVolume)

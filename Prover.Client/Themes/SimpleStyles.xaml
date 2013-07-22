@@ -107,21 +107,19 @@
                 <ControlTemplate TargetType="{x:Type Button}">
 
                     <!--  We use Grid as a root because it is easy to add more elements to customize the button  -->
-                    <Grid x:Name="Grid"
-                          Width="100"
-                          Height="50">
+                    <Grid x:Name="Grid">
 
                         <!--  Content Presenter is where the text content etc is placed by the control  -->
                         <!--  The bindings are useful so that the control can be parameterized without editing the template  -->
                         <Border x:Name="Border"
-                                Width="100"
-                                Height="50"
+								Height="50"
                                 Background="{TemplateBinding Background}"
                                 BorderBrush="{TemplateBinding BorderBrush}"
                                 BorderThickness="{TemplateBinding BorderThickness}"
                                 Padding="{TemplateBinding Padding}" />
 
                         <ContentPresenter Width="Auto"
+										Margin="5"
                                           HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                           VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                                           ContentTemplate="{TemplateBinding ContentTemplate}"
@@ -151,6 +149,7 @@
             </Setter.Value>
         </Setter>
         <Setter Property="Foreground" Value="White" />
+        <Setter Property="Width" Value="Auto"/>
     </Style>
 
     <Style x:Key="RadioButtonFocusVisual">
@@ -1463,6 +1462,21 @@
             </Setter.Value>
         </Setter>
     </Style>
+    <SolidColorBrush x:Key="HeaderColour" Color="#FF24B3F9" />
+
+	<Style x:Key="ItemDescriptions" TargetType="{x:Type TextBlock}">
+		<Setter Property="Foreground" Value="{DynamicResource HeaderColour}"/>
+		<Setter Property="OpacityMask" Value="Black"/>
+		<Setter Property="FontSize" Value="18.667"/>
+		<Setter Property="Height" Value="Auto"/>
+	</Style>
+
+	<Style x:Key="ItemValues" TargetType="{x:Type TextBlock}">
+		<Setter Property="Foreground" Value="White" />
+		<Setter Property="OpacityMask" Value="Black"/>
+		<Setter Property="FontSize" Value="18.667"/>
+		<Setter Property="Height" Value="Auto"/>
+	</Style>
 
     <!--  Simple TreeViewItem - The TreeViewItem template has a header which shows the Item and a Body which is an ItemsHost control which expands to show child items  -->
     <Style x:Key="SimpleTreeViewItem"
@@ -1532,7 +1546,6 @@
             </Setter.Value>
         </Setter>
     </Style>
-    <SolidColorBrush x:Key="HeaderColour" Color="#FF24B3F9" />
     <SolidColorBrush x:Key="MainBackgroundColour" Color="#FF242B33" />
     <SolidColorBrush x:Key="HeaderFontColour" Color="White" />
     <System:Double x:Key="LargeFontSize">32</System:Double>

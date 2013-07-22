@@ -120,7 +120,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Communications\CommPorts.vb" />
-    <Compile Include="Communications\DABoard.vb" />
     <Compile Include="Communications\DABoards\DigitalInputSubsystem.vb" />
     <Compile Include="Communications\DABoards\PCIDataAcqClass.vb" />
     <Compile Include="Communications\DABoards\SubsystemType.vb" />
@@ -134,6 +133,8 @@
     <Compile Include="Instruments\InstrumentDataContext.vb" />
     <Compile Include="Instruments\InstrumentDataProvider.vb" />
     <Compile Include="Instruments\ItemClass.vb" />
+    <Compile Include="Communications\DABoards\IBoard.vb" />
+    <Compile Include="Instruments\Types\EC300Instrument.vb" />
     <Compile Include="Test\ITemperatureClass.vb" />
     <Compile Include="Test\FactorClass.vb" />
     <Compile Include="Test\IPressureFactorClass.vb" />
@@ -179,6 +180,12 @@
       <CustomToolNamespace>My</CustomToolNamespace>
       <LastGenOutput>Settings.Designer.vb</LastGenOutput>
     </None>
+    <Content Include="EC300Items.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="MiniMaxItems.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="NLog.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

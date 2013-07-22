@@ -130,6 +130,8 @@ Public MustInherit Class miSerialProtocolClass
     Protected WithEvents comm As System.IO.Ports.SerialPort
     'Communication Port Settings
     'These must be set before calling connect or trying to open the serial port
+    Protected _commPort As ICommPort
+
     Protected i_CommPort As String
     Protected i_BaudRate As BaudRateEnum
     Protected i_Timeout As Integer
@@ -171,15 +173,9 @@ Public MustInherit Class miSerialProtocolClass
 
 #Region "Constructor and Destructor"
 
-    Public Sub New(ByVal PortName As String, ByVal BaudRate As BaudRateEnum, Optional ByVal Timeout As Integer = 50)
-        Try
-            Me.Port = PortName
-            Me.BaudRate = BaudRate
-            Me.Timeout = Timeout
-            Me.logger = LogManager.GetCurrentClassLogger()
-        Catch ex As Exception
-            Throw New Exception(ex.Message, ex)
-        End Try
+    Public Sub New(CommPort As ICommPort)
+        _commPort = CommPort
+        logger = LogManager.GetCurrentClassLogger()
     End Sub
 
     Public Overloads Sub Finalize()
@@ -208,7 +204,7 @@ Public MustInherit Class miSerialProtocolClass
             ' Dispose managed resources.
             If Not comm Is Nothing Then
                 logger.Debug("Disposing Serial Port Resources.")
-                comm.Close()
+                _commPort.ClosePort()
                 comm = Nothing
             End If
         End If
@@ -217,15 +213,9 @@ Public MustInherit Class miSerialProtocolClass
 
 #Region "Properties"
 
+    Public Property CommunicationsPort As ICommPort
 
-    Public Property Port() As String
-        Get
-            Return i_CommPort
-        End Get
-        Set(ByVal value As String)
-            i_CommPort = value
-        End Set
-    End Property
+
 
     Public Property AccessCode() As Integer
         Get
@@ -236,23 +226,6 @@ Public MustInherit Class miSerialProtocolClass
         End Set
     End Property
 
-    Public Property BaudRate() As BaudRateEnum
-        Get
-            Return i_BaudRate
-        End Get
-        Set(ByVal value As BaudRateEnum)
-            i_BaudRate = value
-        End Set
-    End Property
-
-    Public Property Timeout() As Integer
-        Get
-            Return i_Timeout
-        End Get
-        Set(ByVal value As Integer)
-            i_Timeout = value
-        End Set
-    End Property
 
     Protected Property CommState() As CommStateEnum
         Get
@@ -365,9 +338,9 @@ Public MustInherit Class miSerialProtocolClass
                 CommState = CommStateEnum.WakingItUp
                 'After send EOT and ENQ we can expect a one character response from the instrument
                 'Wake up the instrument
-                comm.Write(Chr(CommCharEnum.EOT))
+                SendDataToComm(Chr(CommCharEnum.EOT))
                 System.Threading.Thread.Sleep(150)
-                comm.Write(Chr(CommCharEnum.ENQ))
+                SendDataToComm(Chr(CommCharEnum.ENQ))
                 RcvDataFromComm()
                 return_code = GetReturnCode()
                 'Attempt to connect if there was no error or if we get an Invalid Enquiry(30) back from the instrument, which means the instrument is stuck
@@ -484,7 +457,6 @@ Public MustInherit Class miSerialProtocolClass
         Dim i_Double As Double
 
         Try
-            comm.DiscardInBuffer()
             CommState = CommStateEnum.ReadingItem
             cmd = "RD" & Chr(CommCharEnum.STX) & ItemNumber.ToString.PadLeft(3, "0") & Chr(CommCharEnum.ETX)
             SendDataToComm(cmd)
@@ -526,7 +498,7 @@ Public MustInherit Class miSerialProtocolClass
         Dim Downloaded As New Dictionary(Of Integer, String)
 
 
-        comm.DiscardInBuffer()
+        'comm.DiscardInBuffer()
         ItemToDownload = Items.Count
 
         If Items.Count < 15 Then
@@ -583,6 +555,36 @@ Public MustInherit Class miSerialProtocolClass
         Return Downloaded
     End Function
 
+    Public Sub OpenCommPort()
+        Try
+            If Not _commPort Is Nothing Then
+                If Not _commPort.IsOpen Then
+                    With _commPort
+                        'This will throw an exception if the port is already in use
+                        Try
+                            .OpenPort()
+                        Catch ex As Exception
+                            logger.Error(ex.Message)
+                            Throw New CommInUseException("Comm Port")
+                        End Try
+                        CommState = CommStateEnum.UnlinkedIdle
+                    End With
+                End If
+            Else
+                Throw New Exception("No communications port object.")
+            End If
+        Catch ex As CommInUseException
+            If MessageBox.Show(ex.Message & " Try Again?", "Serial Port Error", MessageBoxButtons.RetryCancel, MessageBoxIcon.Error) = DialogResult.Retry Then
+                Me.OpenCommPort()
+            Else
+                Throw New Exception("Connection Cancelled.", ex)
+            End If
+        Catch ex As Exception
+            logger.Error(ex.Message)
+            Throw New Exception(ex.Message)
+        End Try
+    End Sub
+
     'Clear all alarms for the instrument
     'First read the group of alarms and then reset them based on those that are set off
     Public Function ResetAlarms(ByVal Items As List(Of Integer)) As InstrumentErrorsEnum
@@ -628,41 +630,7 @@ Public MustInherit Class miSerialProtocolClass
 #Region "Protected"
     'This function makes sure everything is in the right condition and opens the comm port
     'Always open the comm port with this function 
-    Protected Sub OpenCommPort()
-        Try
-            If Not comm Is Nothing Then
-                If Not comm.IsOpen Then
-                    With comm
-                        .PortName = Me.Port
-                        .BaudRate = Me.BaudRate
-                        .NewLine = "\\"
-                        .ReadTimeout = 200
-                        .WriteTimeout = 150
-                        'This will throw an exception if the port is already in use
-                        Try
-                            .Open()
-                        Catch ex As Exception
-                            logger.Error(ex.Message)
-                            Throw New CommInUseException(comm.PortName)
-                        End Try
-                        CommState = CommStateEnum.UnlinkedIdle
-                    End With
-                End If
-            Else
-                comm = New System.IO.Ports.SerialPort
-                OpenCommPort()
-            End If
-        Catch ex As CommInUseException
-            If MessageBox.Show(ex.Message & " Try Again?", "Serial Port Error", MessageBoxButtons.RetryCancel, MessageBoxIcon.Error) = DialogResult.Retry Then
-                Me.OpenCommPort()
-            Else
-                Throw New Exception("Connection Cancelled.", ex)
-            End If
-        Catch ex As Exception
-            logger.Error(ex.Message)
-            Throw New Exception(ex.Message)
-        End Try
-    End Sub
+   
 
     'We can call this function whenever we're expecting a acknowledgement from the instrument
     'This will return NoError if we receive 00 from the instrument or a simple [ACK] in the case of when were Signing on to the instrument
@@ -732,9 +700,9 @@ Public MustInherit Class miSerialProtocolClass
             MessageState = MessageStateEnum.WaitingForReceiveEvent
             System.Threading.Thread.Sleep(200)
 
-            Do Until comm.BytesToRead = 0
-                logger.Trace("Bytes in Comm Buffer: " & comm.BytesToRead & vbNewLine)
-                IncomingData += comm.ReadExisting
+            Do Until _commPort.BytesToRead = 0
+                logger.Trace("Bytes in Comm Buffer: " & _commPort.BytesToRead & vbNewLine)
+                IncomingData += _commPort.ReceiveDataFromPort
                 System.Threading.Thread.Sleep(50)
             Loop
 
@@ -789,14 +757,13 @@ Public MustInherit Class miSerialProtocolClass
     'This allows for error correction and the proper flow, logging may be added at a later date as well
     Protected Sub SendDataToComm(ByVal body As String)
         Try
-            If comm.IsOpen Then
+            If _commPort.IsOpen Then
                 If Me.CommState <> CommStateEnum.UnlinkedIdle And MessageState = MessageStateEnum.OK_Idle Then
-                    comm.DiscardInBuffer()
+                    _commPort.DiscardInBuffer()
                     body = Chr(CommCharEnum.SOH) & body & CalcCRC(body) & Chr(CommCharEnum.EOT)
                     logger.Debug("Outgoing >> " & body & vbNewLine)
-                    comm.Write(body)
+                    _commPort.SendDataToPort(body)
                     RcvDataFromComm()
-
                 Else
                     Me.Connect()
                     SendDataToComm(body)

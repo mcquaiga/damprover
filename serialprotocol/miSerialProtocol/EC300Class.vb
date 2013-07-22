@@ -37,12 +37,9 @@ Public Class EC300Class : Inherits miSerialProtocolClass
     'At any rate, after the error message, the port does not work until I restart the computer.
     'When this protocol tries to access the port it is freezing the application. e
 
-    Private _irda
-
-    Sub New(ByVal PortNumber As Integer, ByVal BaudRate As BaudRateEnum)
-        MyBase.New(0, BaudRate)
+    Sub New(CommPort As ICommPort)
+        MyBase.New(CommPort)
         Me.Instrument = InstrumentTypeCode.EC300
-        Dim irda As IrDAService
     End Sub
 
     Public Overrides Sub Connect()
@@ -55,16 +52,16 @@ Public Class EC300Class : Inherits miSerialProtocolClass
 
             'Override the write timeout from the OpenCommPort method
             'The infared connection is a little slower then the serial port.
-            comm.WriteTimeout = 7500
+
 
             If CommState = CommStateEnum.UnlinkedIdle Then
                 MessageState = MessageStateEnum.OK_Idle
                 CommState = CommStateEnum.WakingItUp
                 'After send EOT and ENQ we can expect a one character response from the instrument
                 'Wake up the instrument
-                comm.Write(Chr(CommCharEnum.EOT))
+                _commPort.SendDataToPort(Chr(CommCharEnum.EOT))
                 System.Threading.Thread.Sleep(150)
-                comm.Write(Chr(CommCharEnum.ENQ))
+                _commPort.SendDataToPort(Chr(CommCharEnum.ENQ))
                 RcvDataFromComm()
                 return_code = GetReturnCode()
                 'Attempt to connect if there was no error or if we get an Invalid Enquiry(30) back from the instrument, which means the instrument is stuck
@@ -77,7 +74,6 @@ Public Class EC300Class : Inherits miSerialProtocolClass
                     return_code = GetReturnCode()
                     If return_code = InstrumentErrorsEnum.NoError Then
                         CommState = CommStateEnum.LinkedIdle
-                        comm.WriteTimeout = 1000
                     Else
                         Throw New InstrumentCommunicationException(return_code)
                     End If
@@ -107,8 +103,6 @@ Public Class EC300Class : Inherits miSerialProtocolClass
             Else
                 Throw New CommExceptions("Connection cancelled.")
             End If
-        Catch ex As Exception
-            Throw New Exception(ex.Message, ex)
         End Try
     End Sub
 

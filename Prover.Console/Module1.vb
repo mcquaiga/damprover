@@ -1,36 +1,46 @@
 ﻿Imports Prover.Data.ProviderModel
 Imports Prover
+Imports System
 Imports System.Xml
 Imports System.Xml.Serialization
 Imports Newtonsoft.Json
 Imports System.Net
 Imports System.Net.Sockets
 Imports Prover.Instruments.Data
+Imports InTheHand.Net
+Imports InTheHand.Net.Sockets
 
 
 Module Module1
+
+    '
+    ' User selects the first peer!  Do this in your UI...
+    '
+    Const SelectPeerNum As Integer = 0
+
+    '
+    ' The Service Name to use.  We are using IrCOMM, which has the 
+    ' Service Name "IrDA:IrCOMM" and it uses IrCOMM Cooked/9-wire mode 
+    ' which we enable with setsockopt ( IRLMP_9WIRE_MODE ).
+    '
+    Const ServiceName As String = "IrDA:IrCOMM"
 
     Sub Main()
         'LoadCustomers()
         'loadinstruments()
         'GetAllInstruments()
-        saveinstrument()
         'InstrumentByGuid()
     End Sub
 
-    Public Sub LoadCustomers()
 
-        'CustomersProvider.RegisterInstances()
-        'Dim c = DataCoordinator.GetData(Of ICustomers)("AllCustomers", New Dictionary(Of String, Object) From {{"time", DateTime.Now()}})
 
-    End Sub
 
-    Public Sub loadinstruments()
+    Public Async Sub loadinstruments()
         InstrumentDataProvider.RegisterInstances()
         Dim i = DataCoordinator.GetData(Of IBaseInstrument)("AllInstruments", New Dictionary(Of String, Object) From {{"time", DateTime.Now()}})
 
         Dim myInstrument As New MiniMaxInstrument()
-        Dim y = InstrumentCommunications.DownloadItemFile(myInstrument)
+        Dim y = Await InstrumentCommunications.DownloadItemFileAsync(myInstrument)
 
     End Sub
 
@@ -66,38 +76,40 @@ Module Module1
         'myinstrument.ItemFile = InstrumentCommunications.DownloadItemFile(myinstrument)
 
 
-        Dim p1 As New PressureFactorClass(1)
-        p1.Items = InstrumentCommunications.DownloadPressureItems(myinstrument)
-        p1.GaugePressure = 80
-        myinstrument.PressureTests.Add(p1)
+        'Dim p1 As New PressureFactorClass(1)
+        'p1.Items = InstrumentCommunications.DownloadPressureItems(myinstrument)
+        'p1.GaugePressure = 80
+        'myinstrument.PressureTests.Add(p1)
 
-        Dim p2 As New PressureFactorClass(2)
-        p2.Items = InstrumentCommunications.DownloadPressureItems(myinstrument)
-        p2.GaugePressure = 60
-        myinstrument.PressureTests.Add(p2)
+        'Dim p2 As New PressureFactorClass(2)
+        'p2.Items = InstrumentCommunications.DownloadPressureItems(myinstrument)
+        'p2.GaugePressure = 60
+        'myinstrument.PressureTests.Add(p2)
 
-        Dim p3 As New PressureFactorClass(3)
-        p3.Items = InstrumentCommunications.DownloadPressureItems(myinstrument)
-        p3.GaugePressure = 20
-        myinstrument.PressureTests.Add(p3)
+        'Dim p3 As New PressureFactorClass(3)
+        'p3.Items = InstrumentCommunications.DownloadPressureItems(myinstrument)
+        'p3.GaugePressure = 20
+        'myinstrument.PressureTests.Add(p3)
 
-        Dim t1 As New TemperatureClass(1)
-        t1.Items = InstrumentCommunications.DownloadTemperatureItems(myinstrument)
-        t1.GaugeTemperature = 90
-        myinstrument.TemperatureTests.Add(t1)
+        'Dim t1 As New TemperatureClass(1)
+        't1.Items = InstrumentCommunications.DownloadTemperatureItems(myinstrument)
+        't1.GaugeTemperature = 90
+        'myinstrument.TemperatureTests.Add(t1)
 
-        Dim t2 As New TemperatureClass(2)
-        t2.Items = InstrumentCommunications.DownloadTemperatureItems(myinstrument)
-        t2.GaugeTemperature = 60
-        myinstrument.TemperatureTests.Add(t2)
+        'Dim t2 As New TemperatureClass(2)
+        't2.Items = InstrumentCommunications.DownloadTemperatureItems(myinstrument)
+        't2.GaugeTemperature = 60
+        'myinstrument.TemperatureTests.Add(t2)
 
-        Dim t3 As New TemperatureClass(3)
-        t3.Items = InstrumentCommunications.DownloadTemperatureItems(myinstrument)
-        t3.GaugeTemperature = 32
-        myinstrument.TemperatureTests.Add(t3)
+        'Dim t3 As New TemperatureClass(3)
+        't3.Items = InstrumentCommunications.DownloadTemperatureItems(myinstrument)
+        't3.GaugeTemperature = 32
+        'myinstrument.TemperatureTests.Add(t3)
 
 
         Dim js = JsonConvert.SerializeObject(myinstrument)
         myprovider.UpsertInstrument(myinstrument, Nothing)
     End Sub
+
+
 End Module

@@ -1,3 +1,4 @@
+Imports Newtonsoft.Json
 
 Public Class Volume
     Implements IVolume
@@ -11,7 +12,11 @@ Public Class Volume
 
     Public Const CubicFeetToMeters = 0.0283168466
 
+
+    <JsonIgnore>
     Public Property BeforeItems As Dictionary(Of Integer, String) Implements IVolume.BeforeItems
+
+    <JsonIgnore>
     Public Property AfterItems As Dictionary(Of Integer, String) Implements IVolume.AfterItems
 
     Public Property EVCType() As IVolume.EVCTypeEnum Implements IVolume.EVCType
@@ -25,36 +30,42 @@ Public Class Volume
 
     Public ReadOnly Property EndCorrected() As Double
         Get
+            If IsNothing(AfterItems) Then Return Nothing
             Return AfterItems(0)
         End Get
     End Property
 
     Public ReadOnly Property StartCorrected() As Double Implements IVolume.StartCorrected
         Get
-            Return BeforeItems(0)
+            If IsNothing(BeforeItems) Then Return Nothing
+            Return BeforeItems(0) '+ BeforeItems(113)
         End Get
     End Property
 
     Public ReadOnly Property StartUncorrected() As Double Implements IVolume.StartunCorrected
         Get
+            If IsNothing(BeforeItems) Then Return Nothing
             Return BeforeItems(2)
         End Get
     End Property
 
     Public ReadOnly Property EndUnCorrected() As Double Implements IVolume.EndUnCorrected
         Get
+            If IsNothing(AfterItems) Then Return Nothing
             Return AfterItems(2)
         End Get
     End Property
 
     Public ReadOnly Property UnCorrectedMultiplier() As Double Implements IVolume.UncorrectedMutliplier
         Get
+            If IsNothing(BeforeItems) Then Return Nothing
             Return BeforeItems(92)
         End Get
     End Property
 
     Public ReadOnly Property CorrectedMultiplier() As Double Implements IVolume.CorrectedMultiplier
         Get
+            If IsNothing(BeforeItems) Then Return Nothing
             Return BeforeItems(90)
         End Get
     End Property
@@ -140,6 +151,7 @@ Public Class Volume
 
     Public Overridable ReadOnly Property MeterTypeNumber() As Integer
         Get
+            If IsNothing(BeforeItems) Then Return Nothing
             Return BeforeItems(33)
         End Get
 
@@ -147,12 +159,14 @@ Public Class Volume
 
     Public Overridable ReadOnly Property UncCorMultiplerCode() As IVolume.InstrumentVolumeUnitsEnum
         Get
+            If IsNothing(BeforeItems) Then Return Nothing
             Return BeforeItems(92)
         End Get
     End Property
 
     Public Overridable ReadOnly Property CorMultiplierCode() As IVolume.InstrumentVolumeUnitsEnum
         Get
+            If IsNothing(BeforeItems) Then Return Nothing
             Return BeforeItems(90)
         End Get
 

@@ -1,4 +1,5 @@
-Public Class USBDataAcqClass : Inherits DABoard
+Public Class USBDataAcqClass
+    Implements IBoard
 
     Enum MotorValues As Short
         mStart = 1023
@@ -35,22 +36,22 @@ Public Class USBDataAcqClass : Inherits DABoard
         End If
     End Sub
 
-    Public Overrides Sub Dispose(ByVal disposing As Boolean)
+    Public Sub Dispose(ByVal disposing As Boolean) Implements IBoard.Dispose
         If Not pBoard Is Nothing Then
             pBoard.DeviceLogout()
-            ULStat = MccDaq.MccService.WinBufFree(ADMemHandle)
+            ULStat = MccDaq.MccService.WinBufFreeEx(ADMemHandle)
         End If
         pBoard = Nothing
     End Sub
 
 #Region "Properties"
-    Public Overrides ReadOnly Property StartMotor() As Short
+    Public ReadOnly Property StartMotor() As Short Implements IBoard.StartMotor
         Get
             Return MotorValues.mStart
         End Get
     End Property
 
-    Public Overrides ReadOnly Property StopMotor() As Short
+    Public ReadOnly Property StopMotor() As Short Implements IBoard.StopMotor
         Get
             Return MotorValues.mStop
         End Get
@@ -59,17 +60,17 @@ Public Class USBDataAcqClass : Inherits DABoard
 
 
 #Region "Methods"
-    Public Overrides Function CheckBoard() As Boolean
+    Public Function CheckBoard() As Boolean Implements IBoard.CheckBoard
         Return True
     End Function
 
-    Public Overrides Sub PulseOut(ByVal value As Integer)
+    Public Sub PulseOut(ByVal value As Integer) Implements IBoard.PulseOut
         pBoard.AOut(pChannelNum, MccDaq.Range.UniPt5Volts, CShort(value))
         IsPulseOut = True
     End Sub
 
     'This returns a 1 integer if a pulse is detected and 0 if it is not
-    Public Overrides Function ReadPulse() As Integer
+    Public Function ReadPulse() As Integer Implements IBoard.ReadPulse
         Dim value As UShort = 0
 
         ULStat = pBoard.DIn(pChannelType, value)

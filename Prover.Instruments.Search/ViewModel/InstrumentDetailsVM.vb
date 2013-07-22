@@ -21,6 +21,9 @@ Namespace ViewModels
         Private _templevelIndex As List(Of Integer)
         Private _volume As IVolume
 
+        Private _irdaPort As IrDAPort
+        Private _serialPort As SerialPort
+
         Sub New(events As IEventAggregator)
             _events = events
             _events.GetEvent(Of SelectedInstrumentChangedEvent).Subscribe(AddressOf ShowInstrument)
@@ -85,9 +88,11 @@ Namespace ViewModels
         End Property
 
       
-        Public ReadOnly Property CommPorts As ObjectModel.ReadOnlyCollection(Of String) Implements IInstrumentDetailsVM.CommPorts
+        Public ReadOnly Property CommPorts As List(Of String) Implements IInstrumentDetailsVM.CommPorts
             Get
-                Return CommunicationPorts.GetAllCommPorts()
+                Dim ports As List(Of String) = CommunicationPorts.GetAllCommPorts().ToList()
+                ports.Add("IrDA")
+                Return ports
             End Get
         End Property
 
@@ -126,7 +131,7 @@ Namespace ViewModels
         End Sub
 
         Public Sub SetCommPort(CommPort As String)
-            InstrumentCommunications.CommPort = CommPort
+            InstrumentCommunications.CommPortName = CommPort
         End Sub
 
         Public Sub Save()
@@ -137,10 +142,16 @@ Namespace ViewModels
             Me.Instrument = New MiniMaxInstrument()
         End Sub
 
-        Public Sub FetchPressureItemsByLevel(LevelIndex As Integer)
+        Sub CreateNewEC300Object()
+            Me.Instrument = New EC300Instrument()
+        End Sub
+
+
+
+        Public Async Function FetchPressureItemsByLevel(LevelIndex As Integer) As Task
 
             Dim p As New PressureFactorClass(LevelIndex)
-            p.Items = InstrumentCommunications.DownloadPressureItems(Me.Instrument)
+            p.Items = Await InstrumentCommunications.DownloadPressureItemsAsync(Me.Instrument)
 
             Instrument.PressureTests.Remove(Instrument.PressureTests.Where(Function(x) x.LevelIndex = LevelIndex).FirstOrDefault())
             Instrument.PressureTests.Add(p)
@@ -148,11 +159,11 @@ Namespace ViewModels
 
 
             NotifyPropertyChanged("Instrument")
-        End Sub
+        End Function
 
-        Public Sub FetchTemperatureItemsByLevel(LevelIndex As Integer)
+        Public Async Function FetchTemperatureItemsByLevel(LevelIndex As Integer) As Task
             Dim t As New TemperatureClass(LevelIndex)
-            t.Items = InstrumentCommunications.DownloadTemperatureItems(Me.Instrument)
+            t.Items = Await InstrumentCommunications.DownloadTemperatureItemsAsync(Me.Instrument)
 
             Instrument.TemperateTests.Remove(Instrument.TemperateTests.Where(Function(x) (x.LevelIndex = LevelIndex)).FirstOrDefault())
             Instrument.TemperateTests.Add(t)
@@ -161,7 +172,7 @@ Namespace ViewModels
 
 
             NotifyPropertyChanged("Instruments")
-        End Sub
+        End Function
 
         Public Sub LoadItemDescriptions()
             If Not Instrument Is Nothing Then
@@ -169,16 +180,23 @@ Namespace ViewModels
                     Me.Items = MiniMaxInstrument.LoadInstrumentItems()
                 End If
 
+                If Instrument.InstrumentType = InstrumentTypeCode.EC300 Then
+                    Me.Items = EC300Instrument.LoadInstrumentItems()
+                End If
+
                 NotifyPropertyChanged("ItemValuesWithDescriptions")
             End If
         End Sub
 
         Public Async Function FetchInstrumentInformation() As Task
-            If Instrument Is Nothing Then MessageBox.Show("Select an Instrument Type.")
+            If Instrument Is Nothing Then
+                MessageBox.Show("Select an Instrument Type.")
+                Return
+            End If
 
             LoadItemDescriptions()
             Try
-                Instrument.ItemFile = Await InstrumentCommunications.DownloadItemFile(Instrument, _progress)
+                Instrument.ItemFile = Await InstrumentCommunications.DownloadItemFileAsync(Instrument, _progress)
                 Instrument.VolumeTest.BeforeItems = Instrument.ItemFile
             Catch ex As Exception
                 MsgBox(ex.Message, MsgBoxStyle.OkOnly + MsgBoxStyle.Information, "Error")
@@ -186,6 +204,12 @@ Namespace ViewModels
 
             NotifyPropertyChanged("ItemValuesWithDescriptions")
             NotifyPropertyChanged("Instrument")
+
+        End Function
+
+
+        Public Async Function RunInstrumentTest() As Task
+
 
         End Function
 
@@ -230,6 +254,15 @@ Namespace ViewModels
             End Get
         End Property
 
+        Private _EC300Command = New Microsoft.Practices.Prism.Commands.DelegateCommand(AddressOf CreateNewEC300Object)
+        Public ReadOnly Property EC300Command As ICommand Implements IInstrumentDetailsVM.EC300Command
+            Get
+                Return _EC300Command
+            End Get
+        End Property
+
+
+
         Private _fetchPressureCommand = New Microsoft.Practices.Prism.Commands.DelegateCommand(Of Integer?)(AddressOf FetchPressureItemsByLevel)
         Public ReadOnly Property fetchPressureCommand As ICommand Implements IInstrumentDetailsVM.FetchPressureItemsByLevelCommand
             Get
@@ -259,6 +292,7 @@ Namespace ViewModels
             Console.WriteLine("Not implemented.")
             Return Nothing
         End Function
+
 
 
 

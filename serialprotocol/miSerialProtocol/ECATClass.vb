@@ -24,8 +24,8 @@ Public Class ECATClass
         AlarmOuput = 108
     End Enum
 
-    Sub New(ByVal PortNumber As Integer, ByVal BaudRate As ECATClass.BaudRateEnum)
-        MyBase.New(PortNumber, BaudRate)
+    Sub New(CommPort As ICommPort)
+        MyBase.New(CommPort)
         Me.Instrument = InstrumentTypeCode.ECAT
     End Sub
 

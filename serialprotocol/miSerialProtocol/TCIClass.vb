@@ -35,8 +35,8 @@ Public Class TCIClass : Inherits miSerialProtocolClass
     'At any rate, after the error message, the port does not work until I restart the computer.
     'When this protocol tries to access the port it is freezing the application. e
 
-    Sub New(ByVal PortNumber As Integer, ByVal BaudRate As BaudRateEnum)
-        MyBase.New(PortNumber, BaudRate)
+    Sub New(CommPort As ICommPort)
+        MyBase.New(CommPort)
         Me.Instrument = InstrumentTypeCode.TCI
     End Sub
 

@@ -1,96 +1,113 @@
-Public Class USBDataAcqClass : Inherits DABoard
-
-    '    Enum MotorValues As Short
-    '        mStart = 1023
-    '        mStop = 0
-    '    End Enum
-
-    '    Enum OutputPorts
-    '        DAOut0 = 0
-    '        DAOut1 = 1
-    '    End Enum
+Public Class USBDataAcqClass
+    Implements IBoard
 
 
-    '    Private pBoard As MccDaq.MccBoard
-    '    Private pChannelType As MccDaq.DigitalPortType
-    '    Private pChannelNum As Integer
-    '    Private Direction As MccDaq.DigitalPortDirection
-    '    Private ULStat As MccDaq.ErrorInfo
 
-    '    Private ADMemHandle As Integer
-    '    Private DAMemHandle As Integer
-    '    Private DataArray As UShort
+    Enum MotorValues As Short
+        mStart = 1023
+        mStop = 0
+    End Enum
 
-    '    Private IsPulseOut As Boolean
-
-    '    Protected PulseIsCleared As Boolean = True
-
-    '    Sub New(ByVal BoardNumber As Integer, ByVal ChannelType As MccDaq.DigitalPortType, ByVal ChannelNumber As Integer)
-    '        pBoard = New MccDaq.MccBoard(BoardNumber) 'Will more often be zero
-    '        pChannelNum = ChannelNumber
-    '        pChannelType = ChannelType
-    '        ULStat = MccDaq.MccService.WinBufToArray(ADMemHandle, DataArray, 0, 10)
-    '        If ADMemHandle = 0 Then
-
-    '        End If
-    '    End Sub
-
-    '    Public Overrides Sub Dispose(ByVal disposing As Boolean)
-    '        If Not pBoard Is Nothing Then
-    '            pBoard.DeviceLogout()
-    '            ULStat = MccDaq.MccService.WinBufFree(ADMemHandle)
-    '        End If
-    '        pBoard = Nothing
-    '    End Sub
-
-    '#Region "Properties"
-    '    Public Overrides ReadOnly Property StartMotor() As Short
-    '        Get
-    '            Return MotorValues.mStart
-    '        End Get
-    '    End Property
-
-    '    Public Overrides ReadOnly Property StopMotor() As Short
-    '        Get
-    '            Return MotorValues.mStop
-    '        End Get
-    '    End Property
-    '#End Region
+    Enum OutputPorts
+        DAOut0 = 0
+        DAOut1 = 1
+    End Enum
 
 
-    '#Region "Methods"
-    '    Public Overrides Function CheckBoard() As Boolean
-    '        Return True
-    '    End Function
+    Private _board As MccDaq.MccBoard
+    Private _channelType As MccDaq.DigitalPortType
+    Private _channelNum As Integer
+    Private _direction As MccDaq.DigitalPortDirection
+    Private _ulStat As MccDaq.ErrorInfo
 
-    '    Public Overrides Sub PulseOut(ByVal value As Integer)
-    '        pBoard.AOut(pChannelNum, MccDaq.Range.UniPt5Volts, CShort(value))
-    '        IsPulseOut = True
-    '    End Sub
+    Private ADMemHandle As Integer
+    Private DAMemHandle As Integer
+    Private DataArray As UShort
 
-    '    'This returns a 1 integer if a pulse is detected and 0 if it is not
-    '    Public Overrides Function ReadPulse() As Integer
-    '        Dim value As UShort = 0
+    Private IsPulseOut As Boolean
 
-    '        ULStat = pBoard.DIn(pChannelType, value)
+    Protected PulseIsCleared As Boolean = True
 
-    '        If ULStat.Value = MccDaq.ErrorInfo.ErrorCode.NoErrors Then
-    '            If value <> 255 Then
-    '                If PulseIsCleared Then
-    '                    Console.Write("Pulse Read: " & value & vbNewLine)
-    '                    PulseIsCleared = False
-    '                    Return 1
-    '                Else
-    '                    Return 0
-    '                End If
-    '            Else
-    '                PulseIsCleared = True
-    '                Return 0
-    '            End If
-    '        Else
-    '            MessageBox.Show(ULStat.Message, "Pulse Input Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
-    '        End If
-    '    End Function
+    Sub New(ByVal BoardNumber As Integer, ByVal ChannelType As MccDaq.DigitalPortType, ByVal ChannelNumber As Integer)
+        _board = New MccDaq.MccBoard(BoardNumber) 'Will more often be zero
+        _channelNum = ChannelNumber
+        _channelType = ChannelType
+        _ulStat = MccDaq.MccService.WinBufToArray(ADMemHandle, DataArray, 0, 10)
+        If ADMemHandle = 0 Then
 
-    '#End Region
+        End If
+    End Sub
+
+    Public Sub Dispose(ByVal disposing As Boolean) Implements IBoard.Dispose
+        If Not _board Is Nothing Then
+            _board.DeviceLogout()
+            _ulStat = MccDaq.MccService.WinBufFreeEx(ADMemHandle)
+        End If
+        _board = Nothing
+    End Sub
+
+#Region "Properties"
+    Public ReadOnly Property StartMotor() As Short Implements IBoard.StartMotor
+        Get
+            Return MotorValues.mStart
+        End Get
+    End Property
+
+    Public ReadOnly Property StopMotor() As Short Implements IBoard.StopMotor
+        Get
+            Return MotorValues.mStop
+        End Get
+    End Property
+#End Region
+
+
+#Region "Methods"
+    Public Function CheckBoard() As Boolean Implements IBoard.CheckBoard
+        Return True
+    End Function
+
+    Public Sub PulseOut(ByVal value As Integer) Implements IBoard.PulseOut
+        _board.AOut(_channelNum, MccDaq.Range.UniPt5Volts, CShort(value))
+        IsPulseOut = True
+    End Sub
+
+    'This returns a 1 integer if a pulse is detected and 0 if it is not
+    Public Function ReadPulse() As Integer Implements IBoard.ReadPulse
+        Dim value As UShort = 0
+
+        _ulStat = _board.DIn(_channelType, value)
+
+        If _ulStat.Value = MccDaq.ErrorInfo.ErrorCode.NoErrors Then
+            If value <> 255 Then
+                If PulseIsCleared Then
+                    Console.Write("Pulse Read: " & value & vbNewLine)
+                    PulseIsCleared = False
+                    Return 1
+                Else
+                    Return 0
+                End If
+            Else
+                PulseIsCleared = True
+                Return 0
+            End If
+        Else
+            'MessageBox.Show(ULStat.Message, "Pulse Input Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        End If
+        Return 0
+    End Function
+
+#End Region
+
+
+    Public Property boardName As String Implements IBoard.board
+
+    Public Sub Config() Implements IBoard.Config
+
+    End Sub
+
+    Public Property data_flow As Integer Implements IBoard.data_flow
+
+    Public Property disposedValue As Boolean Implements IBoard.disposedValue
+
+    Public Property ss_num As Integer Implements IBoard.ss_num
 End Class

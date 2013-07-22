@@ -1,6 +1,6 @@
 'Imports OpenLayers.Base
 
-Public Class PCIDataAcqClass : Inherits DABoard
+Public Class PCIDataAcqClass
 
     '    Public Enum MotorValues
     '        mStart = 254

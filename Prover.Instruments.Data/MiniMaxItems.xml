@@ -1,0 +1,43 @@
+<InstrumentItems>
+	<item number="0" code="COR_VOL" shortDescription="Corrected Vol" description="Corrected Volume"/>
+	<item number="1" code="PRESS_COR_VOL" shortDescription="Press Cor Vol" description="Pressure Corrected Volume"/>
+	<item number="2" code="UNCOR_VOL" shortDescription="UnCor Vol" description="Uncorrected Volume"/>
+	<item number="5" code="PULSER_A" shortDescription="Pulser A #" description="Pulser A # o"/>
+	<item number="6" code="PULSER_B" shortDescription="Pulser B #" description="Pulser B # o"/>
+	<item number="8" code="GAS_PRESS" shortDescription="Gas Press" description="Gas Pressure" isPressure="true"/>
+	<item number="10" shortDescription="Press High A" description="Pressure High Alarm" isAlarm ="true"/>
+	<item number="11" shortDescription="Press Low A" description="Pressure Low Alarm" isAlarm="true"/>
+	<item number="12" shortDescription="P Cal Atmos" description="Pressure Corrected Atmospheric"/>
+	<item number="13" code="BASE_PRESS" shortDescription="Base Press" description="Base Pressure" isPressure="true"/>
+	<item number="14" code="ATM_PRESS" shortDescription="ATM Press" description="ATM Pressure" isPressure="true"/>
+	<item number="15" shortDescription="P Cal Zero P" description="Pressure Cal Zero P"/>
+	<item number="16" shortDescription="P Cal Span P" description="Corrected Volume"/>
+	<item number="17" shortDescription="Pressure Cal" description="Corrected Volume"/>
+	<item number="18" shortDescription="Prev1 Pressu" description="Corrected Volume"/>
+	<item number="19" shortDescription="Prev2 Pressu" description="Corrected Volume"/>
+	<item number="20" shortDescription="Pressure Cal" description="Corrected Volume"/>
+	<item number="21" shortDescription="Prev1 Pressu" description="Corrected Volume"/>
+	<item number="22" shortDescription="Prev2 Pressu" description="Corrected Volume"/>
+	<item number="23" shortDescription="Min PCal Poi" description="Corrected Volume"/>
+	<item number="24" shortDescription="Excess PCal" description="Corrected Volume"/>
+	<item number="25" shortDescription="Pressure Ran" description="Corrected Volume"/>
+	<item number="26" shortDescription="Gas Temperat" description="Corrected Volume" isTemperature="true"/>
+	<item number="27" shortDescription="Gas Temp Lo" description="Corrected Volume" isTemperature="true" />
+	<item number="28" shortDescription="Gas Temp Hi" description="Corrected Volume" isTemperature="true" />
+	<item number="29" shortDescription="Reference Te" description="Corrected Volume"/>
+	<item number="30" shortDescription="Reference Te" description="Corrected Volume"/>
+	<item number="31" shortDescription="Case Tempera" description="Corrected Volume"/>
+	<item number="32" shortDescription="Case Temp Ma" description="Corrected Volume"/>
+	<item number="33" shortDescription="Case Temp Mi" description="Corrected Volume"/>
+	<item number="34" shortDescription="Base Tempera" description="Corrected Volume" isTemperature="true" />
+	<item number="35" shortDescription="Temperature" description="Corrected Volume" isTemperature="true"/>
+	<item number="44" code="PRESS_FACTOR" shortDescription="Press Factor" description="Pressure Factor" isPressure="true"/>
+	<item number="45" code="TEMP_FACTOR" shortDescription="Temperature Factor" description="Temperature Factor" isTemperature="true"/>
+	<item number="47" code="UNSQRD_SUPER_FACTOR" shortDescription="Unsqrd. Super Factor" description="Unsquared Supercompresibility Factor" isPressure="true"/>
+	<item number="62" code="SERIAL_NUM" shortDescription="Serial Number" description="Serial Number"/>
+	<item number="87" code="PRESS_UNITS" shortDescription="Press Units" description="Pressure Units" isPressure="true" />
+	<item number="89" code="TEMP_UNITS" shortDescription="Temperature Units" description="Temperature Units" isTemperature="true" />
+	<item number="109" code="FIXED_PRESS_FACTOR" shortDescription="F Press Factor" description="Fixed Pressure Factor" isPressure="true"/>
+	<item number="111" code="FIXED_TEMP_FACTOR" shortDescription="F Temp Factor" description="Fixed Temp Factor" isTemperature="true"/>
+	<item number="112" code="TRANSDUCER_TYPE" shortDescription="Transducer Type" description="Transducer Type" isPressure="true"/>
+</InstrumentItems>

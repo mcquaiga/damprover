@@ -31,8 +31,8 @@ Public Class MiniMaxClass : Inherits miSerialProtocolClass
         UnSupported = 336
     End Enum
 
-    Sub New(ByVal PortName As String, ByVal BaudRate As BaudRateEnum)
-        MyBase.New(PortName, BaudRate)
+    Sub New(CommPort As ICommPort)
+        MyBase.New(CommPort)
         Me.Instrument = InstrumentTypeCode.MiniMax
     End Sub
 
