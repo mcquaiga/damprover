@@ -11,6 +11,8 @@
     Public Shared DetailsRegion As String = "DetailsRegion"
     Public Shared NavigationRegion As String = "NavigationRegion"
 
+    Public Shared NotificationRegion As String = "NotificationRegion"
+
 
 End Class
 

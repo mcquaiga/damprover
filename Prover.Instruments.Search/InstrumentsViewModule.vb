@@ -77,9 +77,8 @@ Public Class InstrumentsViewModule
         'End If
 
         '_regionManager.Regions(RegionNames.SubMenuRegion).Remove(ViewTest)
-
-        _regionManager.Regions(RegionNames.SubMenuRegion).Add(NewTest)
-        _regionManager.Regions(RegionNames.SubMenuRegion).Add(ViewTest)
+            _regionManager.Regions(RegionNames.SubMenuRegion).Add(NewTest)
+            _regionManager.Regions(RegionNames.SubMenuRegion).Add(ViewTest)
     End Sub
 
     Private Sub StartNewTestCommand()

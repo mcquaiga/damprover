@@ -28,7 +28,7 @@ Public Class Volume
     Public Overridable Property EVCMeterDisplacement() As Double Implements IVolume.EvcMeterDisplacement
     Public Property AppliedInput() As Double Implements IVolume.AppliedInput
 
-    Public ReadOnly Property EndCorrected() As Double
+    Public ReadOnly Property EndCorrected() As Double Implements IVolume.EndCorrected
         Get
             If IsNothing(AfterItems) Then Return Nothing
             Return AfterItems(0)
@@ -288,11 +288,6 @@ Public Class Volume
 
     Public Property CorCode As IVolume.InstrumentVolumeUnitsEnum Implements IVolume.CorCode
 
-    Public ReadOnly Property EndCorrected1 As Double Implements IVolume.EndCorrected
-        Get
-
-        End Get
-    End Property
 
     Public Property MaxUnCorrected As Double Implements IVolume.MaxUnCorrected
 

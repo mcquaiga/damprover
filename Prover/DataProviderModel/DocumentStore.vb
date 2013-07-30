@@ -1,4 +1,5 @@
 ﻿Imports Raven.Client.Document
+Imports System.Configuration
 
 Namespace Data.ProviderModel
     Public NotInheritable Class ProverDocuments
@@ -9,8 +10,7 @@ Namespace Data.ProviderModel
         Private Shared ReadOnly _docStore As New Lazy(Of DocumentStore) _
             (Function()
                  Dim docStore = New DocumentStore() With { _
-                    .Url = "http://localhost:8080",
-                    .DefaultDatabase = "prover"
+                    .ConnectionStringName = "DBServer"
                 }
                  docStore.Initialize()
 

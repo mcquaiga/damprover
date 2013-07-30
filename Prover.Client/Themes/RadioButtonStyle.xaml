@@ -5,44 +5,60 @@
                     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                     mc:Ignorable="d">
 
-	<Style TargetType="{x:Type RadioButton}" x:Key="radio2">
-		<Setter Property="Template">
-		<Setter.Value>
-			<ControlTemplate TargetType="{x:Type RadioButton}">
-				<BulletDecorator Background="transparent" Cursor="Hand">
-					<BulletDecorator.Bullet>
-						<Grid Height="36" Width="36"><!--Define size of the Bullet-->
-						<Image HorizontalAlignment="Stretch"
-                           VerticalAlignment="Stretch"
-						   Stretch="Uniform"
-                           Name="TickMark" 
-						   Source="Resources/check_mark_green.png"/>
-								
- 
-							<Border CornerRadius="0,0,0,0" BorderBrush="#FF565656" BorderThickness="2" d:IsHidden="True" />
- 
-						</Grid>
-					</BulletDecorator.Bullet>
- 
-					<!--Text element-->
-						<Border Background="{DynamicResource MainBackgroundColour}" CornerRadius="0,0,0,0" Width="100" Height="36">
-							<TextBlock Margin="3,1,0,0" Foreground="#FFFFFFFF" FontFamily="Calibri" FontSize="18" VerticalAlignment="Center">
-								<ContentPresenter />
-							</TextBlock>
-						</Border>
-				</BulletDecorator>
-                         
- 
-				<!--If item is checked, trigger the visibility of the mark-->
-				<ControlTemplate.Triggers>
-					<Trigger Property="IsChecked" Value="true">
-					   <Setter TargetName="TickMark" Property="Visibility" Value="Visible"/>
-					</Trigger>
- 
-				</ControlTemplate.Triggers>
-			</ControlTemplate>
-		</Setter.Value>
-		</Setter>
-		<Setter Property="IsChecked" Value="False"/>
-	</Style>
+    <Style x:Key="radio2" TargetType="{x:Type RadioButton}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type RadioButton}">
+                    <ControlTemplate.Resources>
+                        <Storyboard x:Key="checkmark" />
+                    </ControlTemplate.Resources>
+                    <BulletDecorator Background="transparent" Cursor="Hand">
+                        <BulletDecorator.Bullet>
+                            <Grid Width="36" Height="36">
+                                <!--  Define size of the Bullet  -->
+                                <Image Name="TickMark"
+                                       HorizontalAlignment="Stretch"
+                                       VerticalAlignment="Stretch"
+                                       Opacity="100"
+                                       Source="Resources/check.png"
+                                       Stretch="Uniform" />
+                                <Border BorderBrush="#FF565656"
+                                        BorderThickness="2"
+                                        CornerRadius="0,0,0,0"
+                                        d:IsHidden="True" />
+
+                            </Grid>
+                        </BulletDecorator.Bullet>
+
+                        <!--  Text element  -->
+                        <Border Width="100"
+                                Height="36"
+                                Background="{DynamicResource MainBackgroundColour}"
+                                CornerRadius="0,0,0,0">
+                            <TextBlock Margin="3,1,0,0"
+                                       VerticalAlignment="Center"
+                                       FontFamily="Calibri"
+                                       FontSize="18"
+                                       Foreground="#FFFFFFFF">
+                                <ContentPresenter />
+                            </TextBlock>
+                        </Border>
+                    </BulletDecorator>
+
+
+                    <!--  If item is checked, trigger the visibility of the mark  -->
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsChecked" Value="True">
+                            <Setter TargetName="TickMark" Property="Visibility" Value="Visible" />
+                        </Trigger>
+                        <Trigger Property="IsChecked" Value="False">
+                            <Setter TargetName="TickMark" Property="Visibility" Value="Hidden" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="IsChecked" Value="False" />
+    </Style>
 </ResourceDictionary>

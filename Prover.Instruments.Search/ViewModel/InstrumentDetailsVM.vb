@@ -1,5 +1,6 @@
 ﻿Imports Prover.Instruments.Data
 Imports Microsoft.Practices.Prism.Events
+Imports Microsoft.Practices.Prism.Regions
 Imports miSerialProtocol
 Imports System.Linq
 Imports System.ComponentModel
@@ -8,7 +9,8 @@ Imports System.Runtime.CompilerServices
 
 Namespace ViewModels
     Public Class InstrumentDetailsVM
-        Implements IInstrumentDetailsVM, INotifyPropertyChanged
+        Implements IInstrumentDetailsVM, INotifyPropertyChanged, IRegionMemberLifetime
+
 
         Private _progress As Progress(Of Tuple(Of String, Integer))
         Private Property InstrumentType As String
@@ -87,7 +89,7 @@ Namespace ViewModels
             End Get
         End Property
 
-      
+
         Public ReadOnly Property CommPorts As List(Of String) Implements IInstrumentDetailsVM.CommPorts
             Get
                 Dim ports As List(Of String) = CommunicationPorts.GetAllCommPorts().ToList()
@@ -203,6 +205,7 @@ Namespace ViewModels
             End Try
 
             NotifyPropertyChanged("ItemValuesWithDescriptions")
+            NotifyPropertyChanged("Volume")
             NotifyPropertyChanged("Instrument")
 
         End Function
@@ -297,5 +300,10 @@ Namespace ViewModels
 
 
 
+        Public ReadOnly Property KeepAlive As Boolean Implements IRegionMemberLifetime.KeepAlive
+            Get
+                Return False
+            End Get
+        End Property
     End Class
 End Namespace

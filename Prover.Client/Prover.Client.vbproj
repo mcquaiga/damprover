@@ -108,6 +108,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Notifications\INotificationManager.vb" />
+    <Compile Include="Notifications\NotificationManager.vb" />
+    <Compile Include="Prism\Events\INotification.vb" />
+    <Compile Include="Prism\Events\ProverNotification.vb" />
     <Compile Include="Resources\LocalizedResource.Designer.vb">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -161,7 +165,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <None Include="Themes\Resources\check_mark_green.png" />
+    <Resource Include="Themes\Resources\check.png" />
     <EmbeddedResource Include="My Project\Resources.resx">
       <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.vb</LastGenOutput>
@@ -288,9 +292,7 @@
   <ItemGroup>
     <Resource Include="Resources\Settings2.png" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Notifications\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\Expression\Blend\.NETFramework\v4.5\Microsoft.Expression.Blend.WPF.targets" />
 </Project>

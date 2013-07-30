@@ -23,6 +23,9 @@ Public Class ProverBootstrapper
 
         Container.RegisterType(Of IMainVM, MainViewModel)()
         Container.RegisterType(Of IView(Of IMainVM), MainWindow)()
+
+        Container.RegisterType(Of INotificationManager, NotificationManager)()
+
         _main = Container.Resolve(Of MainWindow)()
         Return _main
     End Function
@@ -47,8 +50,6 @@ Public Class ProverBootstrapper
 
         Dim InstrumentModuleType As Type = GetType(InstrumentsViewModule)
         ModuleCatalog.AddModule(New ModuleInfo(InstrumentModuleType.Name, InstrumentModuleType.AssemblyQualifiedName))
-
-        
 
     End Sub
 End Class
