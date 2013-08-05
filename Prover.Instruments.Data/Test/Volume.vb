@@ -285,9 +285,11 @@ Public Class Volume
         Return 0
     End Function
 
+    Public Function BeginTest()
+
+    End Function
 
     Public Property CorCode As IVolume.InstrumentVolumeUnitsEnum Implements IVolume.CorCode
-
 
     Public Property MaxUnCorrected As Double Implements IVolume.MaxUnCorrected
 

@@ -12,6 +12,7 @@ Namespace Instruments.Data
     Public MustInherit Class BaseInstrument
         Implements IBaseInstrument, INotifyPropertyChanged
 
+
         'This is the base class for all the Mercury Instruments
         'Seperate classes for each instrument must be created and inherited from this class
         'Only the properties and methods common to all instruments are created in this class
@@ -21,6 +22,9 @@ Namespace Instruments.Data
         Protected _instrumentJson As JObject
         Protected _pathToItemXML As String
         Private _instrumentGUID As Guid
+
+        Private __pressureTests As ObservableCollection(Of IPressureFactorClass)
+        Private __temperatureTests As ObservableCollection(Of ITemperatureClass)
 
         Sub New()
             ItemFile = New Dictionary(Of Integer, String)
@@ -47,7 +51,6 @@ Namespace Instruments.Data
 
 
         Public Property PressureTests As ObservableCollection(Of IPressureFactorClass) Implements IBaseInstrument.PressureTests
-          
         Public Property TemperatureTests As ObservableCollection(Of ITemperatureClass) Implements IBaseInstrument.TemperateTests
         Public Property VolumeTest As IVolume Implements IBaseInstrument.VolumeTest
 
@@ -119,7 +122,6 @@ Namespace Instruments.Data
         Private Sub NotifyPropertyChanged(<CallerMemberName()> Optional ByVal propertyName As String = Nothing)
             RaiseEvent PropertyChanged(Me, New PropertyChangedEventArgs(propertyName))
         End Sub
-
 
 
     End Class

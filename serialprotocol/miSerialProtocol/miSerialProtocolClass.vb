@@ -183,6 +183,7 @@ Public MustInherit Class miSerialProtocolClass
     End Sub
 
     Public Overloads Sub Dispose() Implements IDisposable.Dispose
+        _commPort.Dispose()
         Dispose(True)
         ' Take yourself off of the finalization queue
         ' to prevent finalization code for this object
@@ -338,9 +339,9 @@ Public MustInherit Class miSerialProtocolClass
                 CommState = CommStateEnum.WakingItUp
                 'After send EOT and ENQ we can expect a one character response from the instrument
                 'Wake up the instrument
-                SendDataToComm(Chr(CommCharEnum.EOT))
+                _commPort.SendDataToPort(Chr(CommCharEnum.EOT))
                 System.Threading.Thread.Sleep(150)
-                SendDataToComm(Chr(CommCharEnum.ENQ))
+                _commPort.SendDataToPort(Chr(CommCharEnum.ENQ))
                 RcvDataFromComm()
                 return_code = GetReturnCode()
                 'Attempt to connect if there was no error or if we get an Invalid Enquiry(30) back from the instrument, which means the instrument is stuck
@@ -716,8 +717,8 @@ Public MustInherit Class miSerialProtocolClass
 
             MessageState = MessageStateEnum.OK_Idle
         Catch ex As TimeoutException
-            logger.Error("Read Operation Timedout.")
-            Throw New CommExceptions("Read Operation Timedout.")
+            logger.Error("Read Operation Timed out.")
+            Throw New CommExceptions("Read Operation Timed out.")
         Catch ex As NoDataRecievedException
             'We can recall this function again if there was no data received, but I can see this causing an infinite loop
             RcvDataFromComm()

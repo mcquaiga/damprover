@@ -8,6 +8,7 @@ Public Class ItemClass
     Public Property IsPressure As Boolean
     Public Property IsTemperature As Boolean
     Public Property IsVolume As Boolean
+    Public Property ValueDescriptions As Dictionary(Of Integer, String)
 
 
     Sub New(Number As Integer, Code As String, ShortDescription As String, LongDescription As String, IsAlarm As Boolean, IsPressure As Boolean, IsTemperature As Boolean, IsVolume As Boolean)

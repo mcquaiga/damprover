@@ -31,9 +31,7 @@ Public Class USBDataAcqClass
         pChannelNum = ChannelNumber
         pChannelType = ChannelType
         ULStat = MccDaq.MccService.WinBufToArray(ADMemHandle, DataArray, 0, 10)
-        If ADMemHandle = 0 Then
-
-        End If
+        ULStat = MccDaq.MccService.ErrHandling(MccDaq.ErrorReporting.PrintAll, MccDaq.ErrorHandling.StopAll)
     End Sub
 
     Public Sub Dispose(ByVal disposing As Boolean) Implements IBoard.Dispose

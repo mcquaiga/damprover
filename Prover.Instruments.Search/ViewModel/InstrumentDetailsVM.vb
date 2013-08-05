@@ -1,4 +1,5 @@
 ﻿Imports Prover.Instruments.Data
+Imports Prover
 Imports Microsoft.Practices.Prism.Events
 Imports Microsoft.Practices.Prism.Regions
 Imports miSerialProtocol
@@ -42,7 +43,9 @@ Namespace ViewModels
                 If Items IsNot Nothing Then
                     For Each i In Items
                         If Instrument.ItemFile.Count > 0 Then
-                            iD.Add(i, Instrument.ItemFile(i.Number))
+                            If Instrument.ItemFile.ContainsKey(i.Number) Then
+                                iD.Add(i, Instrument.ItemFile(i.Number))
+                            End If
                         Else
                             iD.Add(i, Nothing)
                         End If
@@ -60,7 +63,7 @@ Namespace ViewModels
             Set(value As IBaseInstrument)
                 _Instrument = value
                 LoadItemDescriptions()
-                'NotifyPropertyChanged("Instrument")
+                NotifyPropertyChanged("Instrument")
             End Set
         End Property
 
@@ -157,9 +160,7 @@ Namespace ViewModels
 
             Instrument.PressureTests.Remove(Instrument.PressureTests.Where(Function(x) x.LevelIndex = LevelIndex).FirstOrDefault())
             Instrument.PressureTests.Add(p)
-            Instrument.PressureTests.OrderBy(Function(x) x.LevelIndex)
-
-
+            Instrument.PressureTests.BubbleSort()
             NotifyPropertyChanged("Instrument")
         End Function
 
@@ -295,10 +296,6 @@ Namespace ViewModels
             Console.WriteLine("Not implemented.")
             Return Nothing
         End Function
-
-
-
-
 
         Public ReadOnly Property KeepAlive As Boolean Implements IRegionMemberLifetime.KeepAlive
             Get

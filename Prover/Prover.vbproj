@@ -126,6 +126,7 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Converters\ListExtensions.vb" />
     <Compile Include="DataProviderModel\DocumentStore.vb" />
     <Compile Include="Interfaces\IApplicationNavigation.vb" />
     <Compile Include="Interfaces\INavigationBlock.vb" />
@@ -196,7 +197,6 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Converters\" />
     <Folder Include="Themes\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />

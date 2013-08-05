@@ -1,8 +1,6 @@
 Public Class USBDataAcqClass
     Implements IBoard
 
-
-
     Enum MotorValues As Short
         mStart = 1023
         mStop = 0
@@ -21,6 +19,7 @@ Public Class USBDataAcqClass
     Private _ulStat As MccDaq.ErrorInfo
 
     Private ADMemHandle As Integer
+    Private ADMemHandlePtr As New IntPtr(ADMemHandle)
     Private DAMemHandle As Integer
     Private DataArray As UShort
 
@@ -33,9 +32,7 @@ Public Class USBDataAcqClass
         _channelNum = ChannelNumber
         _channelType = ChannelType
         _ulStat = MccDaq.MccService.WinBufToArray(ADMemHandle, DataArray, 0, 10)
-        If ADMemHandle = 0 Then
-
-        End If
+        _ulStat = MccDaq.MccService.ErrHandling(MccDaq.ErrorReporting.PrintAll, MccDaq.ErrorHandling.StopAll)
     End Sub
 
     Public Sub Dispose(ByVal disposing As Boolean) Implements IBoard.Dispose

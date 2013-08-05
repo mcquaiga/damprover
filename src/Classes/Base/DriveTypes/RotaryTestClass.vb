@@ -32,8 +32,8 @@ Public Class RotaryTestClass : Inherits TestClass
                 Throw New Exception("No PCI board exists.")
             End If
         Else
-            Me.PulseA = New USBDataAcqClass(0, MccDaq.DigitalPortType.FirstPortA, My.Settings.PulserASubsystem)
-            Me.PulseB = New USBDataAcqClass(0, MccDaq.DigitalPortType.FirstPortB, My.Settings.PulserBSubsystem)
+            Me.PulseA = New USBDataAcqClass(0, MccDaq.DigitalPortType.FirstPortA, 0)
+            Me.PulseB = New USBDataAcqClass(0, MccDaq.DigitalPortType.FirstPortB, 1)
             Me.PulseOut = New USBDataAcqClass(0, 0, 0)
         End If
 

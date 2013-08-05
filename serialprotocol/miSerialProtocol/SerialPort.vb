@@ -3,6 +3,7 @@ Public Class SerialPort
     Implements ICommPort
 
 
+
     Private WithEvents comm As System.IO.Ports.SerialPort
     Private _portName As String
     Private _baudRate As BaudRateEnum
@@ -12,10 +13,11 @@ Public Class SerialPort
         _portName = PortName
         _baudRate = BaudRate
         _timeOut = Timeout
+        comm = New System.IO.Ports.SerialPort
     End Sub
 
     Public Sub ClosePort() Implements ICommPort.ClosePort
-
+        comm.Close()
     End Sub
 
     Public Sub OpenPort() Implements ICommPort.OpenPort
@@ -59,4 +61,9 @@ Public Class SerialPort
         Return comm.IsOpen()
     End Function
 
+    Public Sub Dispose() Implements ICommPort.Dispose
+        comm.Close()
+        comm.Dispose()
+        comm = Nothing
+    End Sub
 End Class

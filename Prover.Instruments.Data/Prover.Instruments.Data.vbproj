@@ -138,13 +138,13 @@
     <Compile Include="Test\ITemperatureClass.vb" />
     <Compile Include="Test\FactorClass.vb" />
     <Compile Include="Test\IPressureFactorClass.vb" />
-    <Compile Include="Test\ITestClass.vb" />
     <Compile Include="Test\IVolume.vb" />
     <Compile Include="Test\PressureFactorClass.vb" />
+    <Compile Include="Test\RotaryTest.vb" />
     <Compile Include="Test\SuperFactorClass.vb" />
     <Compile Include="Instruments\Types\MiniMaxInstrument.vb" />
     <Compile Include="Test\TemperatureClass.vb" />
-    <Compile Include="Test\TestClass.vb" />
+    <Compile Include="Test\ITestClass.vb" />
     <Compile Include="Test\Volume.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
@@ -208,6 +208,9 @@
     <Content Include="ResourceData\MeterIndexes.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Items\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

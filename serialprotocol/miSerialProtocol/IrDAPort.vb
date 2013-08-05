@@ -9,6 +9,7 @@ Public Class IrDAPort
     Implements ICommPort
 
 
+
     '
     ' User selects the first peer!  Do this in your UI...
     '
@@ -149,4 +150,10 @@ Public Class IrDAPort
     Public Function IsOpen() As Boolean Implements ICommPort.IsOpen
         Return cli.Connected
     End Function
+
+    Public Sub Dispose() Implements ICommPort.Dispose
+        cli.Close()
+        cli.Dispose()
+        cli = Nothing
+    End Sub
 End Class
