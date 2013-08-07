@@ -5,8 +5,6 @@ Imports Microsoft.Practices.Prism.Regions
 Public Class InstrumentDetails
     Implements IView(Of IInstrumentDetailsVM), IRegionMemberLifetime
 
-
-
     Sub New()
         InitializeComponent()
     End Sub

@@ -7,7 +7,8 @@ Imports Prover
 Imports Prover.Instruments.View.ViewModels
 
 Public Class InstrumentsListAndDetailsVM
-    Implements IInstrumentsListAndDetailsVM
+    Implements IInstrumentsListAndDetailsVM, IRegionMemberLifetime
+
 
 
     Private _container As IUnityContainer
@@ -15,4 +16,9 @@ Public Class InstrumentsListAndDetailsVM
 
 
 
+    Public ReadOnly Property KeepAlive As Boolean Implements IRegionMemberLifetime.KeepAlive
+        Get
+            Return False
+        End Get
+    End Property
 End Class

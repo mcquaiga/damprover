@@ -98,6 +98,7 @@
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Web.Services" />
     <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\src\packages\MvvmLightLibs.4.1.27.0\lib\net45\System.Windows.Interactivity.dll</HintPath>
     </Reference>
@@ -130,11 +131,15 @@
     <Compile Include="Communications\InstrumentCommunications.vb" />
     <Compile Include="Instruments\BaseInstrument.vb" />
     <Compile Include="Instruments\IBaseInstrument.vb" />
-    <Compile Include="Instruments\InstrumentDataContext.vb" />
     <Compile Include="Instruments\InstrumentDataProvider.vb" />
     <Compile Include="Instruments\ItemClass.vb" />
     <Compile Include="Communications\DABoards\IBoard.vb" />
     <Compile Include="Instruments\Types\EC300Instrument.vb" />
+    <Compile Include="Reports\Instrument.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Instrument.xsd</DependentUpon>
+    </Compile>
     <Compile Include="Test\ITemperatureClass.vb" />
     <Compile Include="Test\FactorClass.vb" />
     <Compile Include="Test\IPressureFactorClass.vb" />
@@ -169,12 +174,15 @@
       <CustomToolNamespace>My.Resources</CustomToolNamespace>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="Reports\InstrumentReport.rdlc" />
+    <EmbeddedResource Include="Reports\Test.rdlc" />
   </ItemGroup>
   <ItemGroup>
     <None Include="My Project\Application.myapp">
       <Generator>MyApplicationCodeGenerator</Generator>
       <LastGenOutput>Application.Designer.vb</LastGenOutput>
     </None>
+    <None Include="My Project\DataSources\Prover.Instruments.Data.BaseInstrument.datasource" />
     <None Include="My Project\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <CustomToolNamespace>My</CustomToolNamespace>
@@ -193,6 +201,17 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="packages.config" />
+    <None Include="Reports\Instrument.xsc">
+      <DependentUpon>Instrument.xsd</DependentUpon>
+    </None>
+    <None Include="Reports\Instrument.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>Instrument.Designer.vb</LastGenOutput>
+    </None>
+    <None Include="Reports\Instrument.xss">
+      <DependentUpon>Instrument.xsd</DependentUpon>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Prover\Prover.vbproj">

@@ -4,15 +4,14 @@ Imports Microsoft.Practices.Prism.Regions
 Imports Microsoft.Practices.Prism.Modularity
 Imports Microsoft.Practices.Prism.Events
 Imports Prover
-Imports Prover.Instruments.View.ViewModels
 
-<Modularity.Module(ModuleName:="InstrumentsView", OnDemand:=False)> _
-Public Class InstrumentsViewModule
+<Modularity.Module(ModuleName:="CertificatesView", OnDemand:=False)> _
+Public Class CertificatesViewModule
     Implements IModule, IProverModule
 
 
-    Private NewTest As ProverModule
-    Private ViewTest As ProverModule
+    Private NewCertificate As ProverModule
+    Private ViewCertificates As ProverModule
 
     Private _container As IUnityContainer
     Private _regionManager As IRegionManager
@@ -34,13 +33,7 @@ Public Class InstrumentsViewModule
 
     Protected Overridable Sub RegisterTypes()
         'Test and Details
-        _container.RegisterType(Of IInstrumentDetailsVM, InstrumentDetailsVM)()
-        _container.RegisterType(Of IView(Of IInstrumentDetailsVM), InstrumentDetails)()
-        _container.RegisterType(Of Object, InstrumentDetails)("InstrumentDetails")
 
-        _container.RegisterType(Of IInstrumentsListPageVM, InstrumentsListPageVM)()
-        _container.RegisterType(Of IView(Of IInstrumentsListPageVM), InstrumentsListPage)()
-        _container.RegisterType(Of Object, InstrumentsListPage)("InstrumentsList")
 
     End Sub
 
@@ -48,10 +41,6 @@ Public Class InstrumentsViewModule
 
         RegisterTypes()
 
-        NewTest = New ProverModule("New Test", _startNewTestCommand, "Begin testing a new instrument.", Nothing)
-        ViewTest = New ProverModule("View Tests", _startViewTestCommand, "View and Search Tests.", Nothing)
-
-        '_regionManager.RegisterViewWithRegion(RegionNames.MainRegion, GetType(MainMenu))
         _regionManager.Regions(RegionNames.MenuRegion).Add(Me)
         _regionManager.Regions(RegionNames.MenuRegion).Activate(Me)
 
@@ -66,22 +55,18 @@ Public Class InstrumentsViewModule
 
     Public ReadOnly Property Title As String Implements IProverModule.Title
         Get
-            Return "Instruments"
+            Return "Certificates"
         End Get
     End Property
 
 
     Private Sub ShowInstrumentsSubMenu()
-        If Not _regionManager.Regions(RegionNames.SubMenuRegion).Views.Contains(NewTest) Then
-            _regionManager.Regions(RegionNames.SubMenuRegion).Add(NewTest)
-        End If
-        If Not _regionManager.Regions(RegionNames.SubMenuRegion).Views.Contains(ViewTest) Then
-            _regionManager.Regions(RegionNames.SubMenuRegion).Add(ViewTest)
-        End If
+        _regionManager.Regions(RegionNames.SubMenuRegion).Add(NewCertificate)
+        _regionManager.Regions(RegionNames.SubMenuRegion).Add(ViewCertificates)
     End Sub
 
     Private Sub StartNewTestCommand()
-        _regionManager.RequestNavigate(RegionNames.MainRegion, New Uri("InstrumentDetails", UriKind.Relative))
+
     End Sub
 
     Private Function CanStartInstrumentListView() As Boolean
@@ -101,7 +86,6 @@ Public Class InstrumentsViewModule
     End Property
 
     Private Sub StartViewTestCommand()
-        _regionManager.RequestNavigate(RegionNames.MainRegion, New Uri("InstrumentsList", UriKind.Relative))
 
     End Sub
 
