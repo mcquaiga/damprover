@@ -9,7 +9,7 @@ Namespace Instruments.Data
         Sub New()
             MyBase.New()
             InstrumentType = InstrumentTypeCode.MiniMax
-
+            MyBase.Items = LoadInstrumentItems()
             MyBase.VolumeTest = New Volume()
         End Sub
 

@@ -41,6 +41,7 @@ Namespace Instruments.Data
 
 #Region "Properties"
 
+        Public Property Items As List(Of ItemClass)
         'Public Property Items As List(Of ItemClass) Implements IBaseInstrument.Items
         Public Property ID As String Implements IBaseInstrument.ID
         Public Property CreatedDate As DateTime? Implements IBaseInstrument.CreatedDate
@@ -48,7 +49,6 @@ Namespace Instruments.Data
         Public Property InstrumentDriveType() As IBaseInstrument.DriveType Implements IBaseInstrument.InstrumentDriveType
         Public Property ItemFile As Dictionary(Of Integer, String) Implements IBaseInstrument.ItemFile
         Public Property InspectionID As Integer? Implements IBaseInstrument.InspectionID
-
 
         Public Property PressureTests As ObservableCollection(Of IPressureFactorClass) Implements IBaseInstrument.PressureTests
         Public Property TemperatureTests As ObservableCollection(Of ITemperatureClass) Implements IBaseInstrument.TemperateTests

@@ -864,7 +864,8 @@ Public MustInherit Class miSerialProtocolClass
         ElseIf IncomingString.Length = 19 Then
             'If it equals 19 then we received only one item back, sending the data to ParseRD
             Return ParseRD(IncomingString)
-       
+        Else
+            Throw New Exception("Invalid response.")
         End If
     End Function
 

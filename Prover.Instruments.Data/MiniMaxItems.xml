@@ -37,7 +37,12 @@
 	<item number="62" code="SERIAL_NUM" shortDescription="Serial Number" description="Serial Number"/>
 	<item number="87" code="PRESS_UNITS" shortDescription="Press Units" description="Pressure Units" isPressure="true" />
 	<item number="89" code="TEMP_UNITS" shortDescription="Temperature Units" description="Temperature Units" isTemperature="true" />
-	<item number="90" code="Corr Vol Units" shortDescription="Corr Vol Units" description="Corrected Volume Units" isVolume="true" />
+	<item number="90" code="Corr Vol Units" shortDescription="Corr Vol Units" description="Corrected Volume Units" isVolume="true">
+		<value id="0"  description="CuFT" numericvalue="1"/>
+		<value id="1" description="CuFTx10" numericvalue="10" />
+		<value id="2" description="CuFTx100" numericvalue="100" />
+		<value id="3" description="CF" numericvalue="1" />	
+	</item>
 	<item number="92" code="Uncorr Volume Units" shortDescription="Uncorr Volume Units" description="UnCorrected Volume Units" isVolume="true" />
 	<item number="109" code="FIXED_PRESS_FACTOR" shortDescription="F Press Factor" description="Fixed Pressure Factor" isPressure="true"/>
 	<item number="111" code="FIXED_TEMP_FACTOR" shortDescription="F Temp Factor" description="Fixed Temp Factor" isTemperature="true"/>

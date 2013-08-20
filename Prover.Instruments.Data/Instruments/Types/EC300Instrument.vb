@@ -9,14 +9,13 @@ Namespace Instruments.Data
         Sub New()
             MyBase.New()
             InstrumentType = InstrumentTypeCode.EC300
-
+            MyBase.Items = LoadInstrumentItems()
             MyBase.VolumeTest = New Volume()
         End Sub
 
 
 
 #Region "Methods"
-
 
         Overloads Shared Function LoadInstrumentItems() As List(Of ItemClass)
             Return ItemClass.LoadInstrumentItems(My.Application.Info.DirectoryPath + "\EC300Items.xml")

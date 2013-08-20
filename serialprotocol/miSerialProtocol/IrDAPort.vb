@@ -148,6 +148,9 @@ Public Class IrDAPort
     End Sub
 
     Public Function IsOpen() As Boolean Implements ICommPort.IsOpen
+        If cli Is Nothing Then
+            Return False
+        End If
         Return cli.Connected
     End Function
 
