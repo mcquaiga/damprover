@@ -149,10 +149,9 @@ Public Class Volume
 
     End Property
 
-    Public Overridable ReadOnly Property MeterTypeNumber() As Integer
+    Public Overridable ReadOnly Property MeterTypeNumber() As Integer?
         Get
-            If IsNothing(BeforeItems) Then Return Nothing
-            Return BeforeItems.Where(Function(x) x.Number = 33).SingleOrDefault.Value
+            Return Nothing
         End Get
 
     End Property

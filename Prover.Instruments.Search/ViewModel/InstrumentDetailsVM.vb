@@ -70,7 +70,7 @@ Namespace ViewModels
         Public ReadOnly Property IsNewInstrument As Boolean
             Get
                 If Instrument Is Nothing Then Return True
-                Return IsNothing(Instrument.ID)
+                Return False
             End Get
         End Property
 

@@ -9,33 +9,35 @@
 	<item number="12" shortDescription="P Cal Atmos" description="Pressure Corrected Atmospheric"/>
 	<item number="13" code="BASE_PRESS" shortDescription="Base Press" description="Base Pressure" isPressure="true"/>
 	<item number="14" code="ATM_PRESS" shortDescription="ATM Press" description="ATM Pressure" isPressure="true"/>
-	<item number="15" shortDescription="P Cal Zero P" description="Pressure Cal Zero P"/>
-	<item number="16" shortDescription="P Cal Span P" description="Corrected Volume"/>
-	<item number="17" shortDescription="Pressure Cal" description="Corrected Volume"/>
-	<item number="18" shortDescription="Prev1 Pressu" description="Corrected Volume"/>
-	<item number="19" shortDescription="Prev2 Pressu" description="Corrected Volume"/>
-	<item number="20" shortDescription="Pressure Cal" description="Corrected Volume"/>
-	<item number="21" shortDescription="Prev1 Pressu" description="Corrected Volume"/>
-	<item number="22" shortDescription="Prev2 Pressu" description="Corrected Volume"/>
-	<item number="23" shortDescription="Min PCal Poi" description="Corrected Volume"/>
-	<item number="24" shortDescription="Excess PCal" description="Corrected Volume"/>
-	<item number="25" shortDescription="Pressure Ran" description="Corrected Volume"/>
-	<item number="26" shortDescription="Gas Temperat" description="Corrected Volume" isTemperature="true"/>
+	
+	<item number="26" shortDescription="Gas Temperat" description="EVC Gas Temperature" isTemperature="true"/>
 	<item number="27" shortDescription="Gas Temp Lo" description="Corrected Volume" isTemperature="true" />
 	<item number="28" shortDescription="Gas Temp Hi" description="Corrected Volume" isTemperature="true" />
-	<item number="29" shortDescription="Reference Te" description="Corrected Volume"/>
-	<item number="30" shortDescription="Reference Te" description="Corrected Volume"/>
-	<item number="31" shortDescription="Case Tempera" description="Corrected Volume"/>
-	<item number="32" shortDescription="Case Temp Ma" description="Corrected Volume"/>
-	<item number="33" shortDescription="Case Temp Mi" description="Corrected Volume"/>
-	<item number="34" shortDescription="Base Tempera" description="Corrected Volume" isTemperature="true" />
-	<item number="35" shortDescription="Temperature" description="Corrected Volume" isTemperature="true"/>
+	<item number="34" shortDescription="Base Tempera" description="Base Temperature" isTemperature="true" />
+	<item number="35" shortDescription="Temperature" description="EVC Temperature"/>
 	<item number="44" code="PRESS_FACTOR" shortDescription="Press Factor" description="Pressure Factor" isPressure="true"/>
 	<item number="45" code="TEMP_FACTOR" shortDescription="Temperature Factor" description="Temperature Factor" isTemperature="true"/>
 	<item number="47" code="UNSQRD_SUPER_FACTOR" shortDescription="Unsqrd. Super Factor" description="Unsquared Supercompresibility Factor" isPressure="true"/>
 	<item number="62" code="SERIAL_NUM" shortDescription="Serial Number" description="Serial Number"/>
-	<item number="87" code="PRESS_UNITS" shortDescription="Press Units" description="Pressure Units" isPressure="true" />
-	<item number="89" code="TEMP_UNITS" shortDescription="Temperature Units" description="Temperature Units" isTemperature="true" />
+	<item number="87" code="PRESS_UNITS" shortDescription="Press Units" description="Pressure Units" isPressure="true">
+		<value id="0" description="PSIG" numericvalue="0"/>
+		<value id="1" description="PSIA" numericvalue="1"/>
+		<value id="2" description="kPa" numericvalue="2"/>
+		<value id="3" description="mPa" numericvalue="3"/>
+		<value id="4" description="BAR" numericvalue="4"/>
+		<value id="5" description="mBAR" numericvalue="5"/>
+		<value id="6" description="KGcm2" numericvalue="6"/>
+		<value id="7" description="inWC" numericvalue="7"/>
+		<value id="8" description="inHG" numericvalue="8"/>
+		<value id="9" description="mmHG" numericvalue="9"/>
+	</item>
+	
+	<item number="89" code="TEMP_UNITS" shortDescription="Temperature Units" description="Temperature Units" isTemperature="true">
+		<value id="0" description="F" numericvalue="0"/>
+		<value id="1" description="C" numericvalue="1"/>
+		<value id="2" description="R" numericvalue="2"/>
+		<value id="3" description="K" numericvalue="3"/>
+	</item>
 	
 	<item number="90" code="Corr Vol Units" shortDescription="Corr Vol Units" description="Corrected Volume Units" isVolume="true">
 		<value id="0" description="CuFT" numericvalue="1"/>
@@ -59,9 +61,30 @@
 		<value id="7" description="CCF" numericvalue="100" />
 		<value id="8" description="MCF" numericvalue="1000" />
 	</item>
-	
+	<item number="98" code="METER_INDEX" shortDescription="Meter Index Rate" description="Meter Index Rate" isVolume="true">
+		<value id="0" description="CF1" numericvalue="1"/>
+		<value id="1" description="CF5" numericvalue="5"/>
+		<value id="2" description="CF10" numericvalue="10"/>
+		<value id="3" description="CF100" numericvalue="100"/>
+		<value id="4" description="CF1000" numericvalue="1000"/>
+		<value id="5" description="m3x.1" numericvalue="0.1"/>
+		<value id="6" description="m3x1" numericvalue="1"/>
+		<value id="7" description="m3x10" numericvalue="10"/>
+		<value id="8" description="m3x100" numericvalue="100"/>
+		<value id="9" description="m3x1000" numericvalue="1000"/>
+		<value id="10" description="CF10000" numericvalue="10000"/>
+		<value id="11" description="CF0" numericvalue="0"/>
+		<value id="12" description="CF50" numericvalue="50"/>
+		<value id="13" description="CF500" numericvalue="500"/>
+		<value id="14" description="Rotary Integeral Mount" numericvalue="14"/>
+	</item>
 	
 	<item number="109" code="FIXED_PRESS_FACTOR" shortDescription="F Press Factor" description="Fixed Pressure Factor" isPressure="true"/>
 	<item number="111" code="FIXED_TEMP_FACTOR" shortDescription="F Temp Factor" description="Fixed Temp Factor" isTemperature="true"/>
-	<item number="112" code="TRANSDUCER_TYPE" shortDescription="Transducer Type" description="Transducer Type" isPressure="true"/>
+	<item number="112" code="TRANSDUCER_TYPE" shortDescription="Transducer Type" description="Transducer Type" isPressure="true">
+		<value id="0" description="Gauge" numericvalue="0" />
+		<value id="1" description="Absolute" numericvalue="1" />
+	</item>
+	<item number="113" code="HIGH_RES_CORRECTED" shortDescription="High Res COR" description="High Resolution Corrected Volume" isVolume="true" />
+	<item number="140" code="ENERGY" shortDescription="Energy" description="Energy" isVolume="true" />
 </InstrumentItems>

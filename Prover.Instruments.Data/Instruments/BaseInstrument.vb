@@ -43,7 +43,6 @@ Namespace Instruments.Data
 
         Public Property Items As List(Of ItemClass) Implements IBaseInstrument.Items
 
-        Public Property ID As String Implements IBaseInstrument.ID
         Public Property CreatedDate As DateTime? Implements IBaseInstrument.CreatedDate
         Public Property InstrumentType As miSerialProtocol.InstrumentTypeCode Implements IBaseInstrument.InstrumentType
         Public Property InstrumentDriveType() As IBaseInstrument.DriveType Implements IBaseInstrument.InstrumentDriveType

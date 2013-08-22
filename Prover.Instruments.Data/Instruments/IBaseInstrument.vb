@@ -76,11 +76,9 @@ Public Interface IBaseInstrument
     ReadOnly Property SerialNumber As String
     Property InstrumentDriveType As DriveType
 
-    Property ID As String
     Property CreatedDate As DateTime?
 
     Property Items As List(Of ItemClass)
-
 
     ReadOnly Property PulseASelect As PulseOutputValues
     ReadOnly Property PulseBSelect As PulseOutputValues

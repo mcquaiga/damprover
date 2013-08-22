@@ -1,14 +1,25 @@
+Imports Raven.Imports.Newtonsoft.Json
+
 Public Class ItemClass
 
     Public Property Number As Integer
+    <JsonIgnore>
     Public Property Code As String
+
     Public Property ShortDescription As String
+    <JsonIgnore>
     Public Property LongDescription As String
+    <JsonIgnore>
     Public Property Value As String
-    Public Property IsAlarm As Boolean
-    Public Property IsPressure As Boolean
-    Public Property IsTemperature As Boolean
-    Public Property IsVolume As Boolean
+    <JsonIgnore>
+    Public Property IsAlarm As Boolean?
+    <JsonIgnore>
+    Public Property IsPressure As Boolean?
+    <JsonIgnore>
+    Public Property IsTemperature As Boolean?
+    <JsonIgnore>
+    Public Property IsVolume As Boolean?
+    <JsonIgnore>
     Private Property ValueDescriptions As List(Of ItemDescriptions)
 
     ReadOnly Property DescriptionValue As String

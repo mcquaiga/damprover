@@ -88,6 +88,7 @@ Namespace Instruments.Data
         End Sub
 
         Public Sub UpsertInstrument(instrument As IBaseInstrument, Session As DocumentSession)
+
             If Session Is Nothing Then
                 Session = _docStore.OpenSession()
             Else
