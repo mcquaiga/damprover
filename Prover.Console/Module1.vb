@@ -40,7 +40,7 @@ Module Module1
         Dim i = DataCoordinator.GetData(Of IBaseInstrument)("AllInstruments", New Dictionary(Of String, Object) From {{"time", DateTime.Now()}})
 
         Dim myInstrument As New MiniMaxInstrument()
-        Dim y = Await InstrumentCommunications.DownloadItemFileAsync(myInstrument)
+        'Await InstrumentCommunications.DownloadItemFileAsync(myInstrument)
 
     End Sub
 

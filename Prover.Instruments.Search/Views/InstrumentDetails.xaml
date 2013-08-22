@@ -341,67 +341,68 @@
             </Border>
             <!--  Temperature - End  -->
 
-            <!--  Pressure Items  -->
-
-            <Border Margin="0"
-                    BorderBrush="White"
-                    BorderThickness="0,1,0,0"
-                    Padding="0">
+            <!--
+                Pressure Items
+                <Border Margin="0"
+                BorderBrush="White"
+                BorderThickness="0,1,0,0"
+                Padding="0" Visibility="Hidden">
                 <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="1*" />
-                        <ColumnDefinition Width="10*" />
-                    </Grid.ColumnDefinitions>
-                    <Border Grid.Column="0"
-                            HorizontalAlignment="Center"
-                            VerticalAlignment="Center"
-                            BorderBrush="White"
-                            BorderThickness="0,0,1,0">
-                        <TextBlock HorizontalAlignment=" Left"
-                                   FontSize="72"
-                                   Foreground="White">
-                            P
-                        </TextBlock>
-                    </Border>
-
-
-                    <Grid Grid.Column="1">
-                        <Grid.RowDefinitions>
-                            <RowDefinition />
-                            <RowDefinition />
-                        </Grid.RowDefinitions>
-                        <UniformGrid Grid.Row="0" Columns="8">
-                            <TextBlock />
-                            <TextBlock Style="{StaticResource ItemDescriptions}"
-                                       Text="Gauge"
-                                       TextWrapping="Wrap" />
-                            <TextBlock Style="{StaticResource ItemDescriptions}"
-                                       Text="ATM"
-                                       TextWrapping="Wrap" />
-                            <TextBlock Style="{StaticResource ItemDescriptions}"
-                                       Text="EVC P"
-                                       TextWrapping="Wrap" />
-                            <TextBlock Style="{StaticResource ItemDescriptions}"
-                                       Text="EVC Factor"
-                                       TextWrapping="Wrap" />
-                            <TextBlock Style="{StaticResource ItemDescriptions}"
-                                       Text="EVC Unsqr."
-                                       TextWrapping="Wrap" />
-                            <TextBlock Style="{StaticResource ItemDescriptions}"
-                                       Text="Actual P Factor"
-                                       TextWrapping="Wrap" />
-                            <TextBlock Style="{StaticResource ItemDescriptions}"
-                                       Text="% Error"
-                                       TextAlignment="right"
-                                       TextWrapping="Wrap" />
-                        </UniformGrid>
-                        <ItemsControl Grid.Row="1"
-                                      Margin="5"
-                                      ItemTemplate="{StaticResource ResourceKey=PressureItem}"
-                                      ItemsSource="{Binding Instrument.PressureTests}" />
-                    </Grid>
+                <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*" />
+                <ColumnDefinition Width="10*" />
+                </Grid.ColumnDefinitions>
+                <Border Grid.Column="0"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                BorderBrush="White"
+                BorderThickness="0,0,1,0">
+                <TextBlock HorizontalAlignment=" Left"
+                FontSize="72"
+                Foreground="White">
+                P
+                </TextBlock>
+                </Border>
+                
+                
+                <Grid Grid.Column="1">
+                <Grid.RowDefinitions>
+                <RowDefinition />
+                <RowDefinition />
+                </Grid.RowDefinitions>
+                <UniformGrid Grid.Row="0" Columns="8">
+                <TextBlock />
+                <TextBlock Style="{StaticResource ItemDescriptions}"
+                Text="Gauge"
+                TextWrapping="Wrap" />
+                <TextBlock Style="{StaticResource ItemDescriptions}"
+                Text="ATM"
+                TextWrapping="Wrap" />
+                <TextBlock Style="{StaticResource ItemDescriptions}"
+                Text="EVC P"
+                TextWrapping="Wrap" />
+                <TextBlock Style="{StaticResource ItemDescriptions}"
+                Text="EVC Factor"
+                TextWrapping="Wrap" />
+                <TextBlock Style="{StaticResource ItemDescriptions}"
+                Text="EVC Unsqr."
+                TextWrapping="Wrap" />
+                <TextBlock Style="{StaticResource ItemDescriptions}"
+                Text="Actual P Factor"
+                TextWrapping="Wrap" />
+                <TextBlock Style="{StaticResource ItemDescriptions}"
+                Text="% Error"
+                TextAlignment="right"
+                TextWrapping="Wrap" />
+                </UniformGrid>
+                <ItemsControl Grid.Row="1"
+                Margin="5"
+                ItemTemplate="{StaticResource ResourceKey=PressureItem}"
+                ItemsSource="{Binding Instrument.PressureTests}" />
                 </Grid>
-            </Border>
+                </Grid>
+                </Border>
+            -->
             <Border Margin="0"
                     BorderBrush="White"
                     BorderThickness="0,1,0,0"

@@ -13,6 +13,7 @@ Namespace Instruments.Data
         Implements IBaseInstrument, INotifyPropertyChanged
 
 
+
         'This is the base class for all the Mercury Instruments
         'Seperate classes for each instrument must be created and inherited from this class
         'Only the properties and methods common to all instruments are created in this class
@@ -27,7 +28,6 @@ Namespace Instruments.Data
         Private __temperatureTests As ObservableCollection(Of ITemperatureClass)
 
         Sub New()
-            ItemFile = New Dictionary(Of Integer, String)
             PressureTests = New ObservableCollection(Of IPressureFactorClass)
             PressureTests.Add(New PressureFactorClass(1))
             PressureTests.Add(New PressureFactorClass(2))
@@ -41,13 +41,12 @@ Namespace Instruments.Data
 
 #Region "Properties"
 
-        Public Property Items As List(Of ItemClass)
-        'Public Property Items As List(Of ItemClass) Implements IBaseInstrument.Items
+        Public Property Items As List(Of ItemClass) Implements IBaseInstrument.Items
+
         Public Property ID As String Implements IBaseInstrument.ID
         Public Property CreatedDate As DateTime? Implements IBaseInstrument.CreatedDate
         Public Property InstrumentType As miSerialProtocol.InstrumentTypeCode Implements IBaseInstrument.InstrumentType
         Public Property InstrumentDriveType() As IBaseInstrument.DriveType Implements IBaseInstrument.InstrumentDriveType
-        Public Property ItemFile As Dictionary(Of Integer, String) Implements IBaseInstrument.ItemFile
         Public Property InspectionID As Integer? Implements IBaseInstrument.InspectionID
 
         Public Property PressureTests As ObservableCollection(Of IPressureFactorClass) Implements IBaseInstrument.PressureTests
@@ -66,7 +65,7 @@ Namespace Instruments.Data
 
         Public ReadOnly Property SerialNumber As String Implements IBaseInstrument.SerialNumber
             Get
-                Return GetItemValue(62) 'GetItemValue((From i In Items Where i.Code = "SERIAL_NUM").FirstOrDefault.Number)
+                Return Items.Where(Function(x) x.Number = 62).SingleOrDefault.Value
             End Get
         End Property
 
@@ -84,26 +83,17 @@ Namespace Instruments.Data
         End Property
 
 
-        Public Overridable Function GetItemValue(ItemNumber As Integer) As String Implements IBaseInstrument.GetItemValue
-            Dim y As String
-            Try
-                y = ItemFile.Item(ItemNumber.ToString)
-            Catch ex As Exception
-                Return Nothing
-            End Try
-            Return y
-        End Function
 
         Public Overridable Function IsLivePressure() As IBaseInstrument.FixedFactors Implements IBaseInstrument.IsLivePressure
-            Return GetItemValue(IBaseInstrument.FixedFactorItems.FixedPressure)
+            Return Items.Where(Function(x) x.Number = IBaseInstrument.FixedFactorItems.FixedPressure).SingleOrDefault.Value
         End Function
 
         Public Overridable Function IsLiveTemperate() As IBaseInstrument.FixedFactors Implements IBaseInstrument.IsLiveTemperate
-            Return GetItemValue(IBaseInstrument.FixedFactorItems.FixedTempFactor)
+            Return Items.Where(Function(x) x.Number = IBaseInstrument.FixedFactorItems.FixedTempFactor).SingleOrDefault.Value
         End Function
 
         Public Overridable Function IsLiveSuper() As IBaseInstrument.FixedFactors Implements IBaseInstrument.IsLiveSuper
-            Return GetItemValue(IBaseInstrument.FixedFactorItems.FixedSuperFactor)
+            Return Items.Where(Function(x) x.Number = IBaseInstrument.FixedFactorItems.FixedSuperFactor).SingleOrDefault.Value
         End Function
 
         Shared Function LoadInstrumentItems() As List(Of ItemClass)

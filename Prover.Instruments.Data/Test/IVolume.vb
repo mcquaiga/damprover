@@ -69,9 +69,9 @@ Public Interface IVolume
 #End Region
 
     <JsonIgnore>
-    Property BeforeItems As Dictionary(Of Integer, String)
+    Property BeforeItems As List(Of ItemClass)
     <JsonIgnore>
-    Property AfterItems As Dictionary(Of Integer, String)
+    Property AfterItems As List(Of ItemClass)
 
     ReadOnly Property TrueCorrected As Double 'Calculated Corrected Volume = (TempFactor * PressureFactor * Fpv2Factor * InputUncVolume)
     ReadOnly Property EvcCorrected As Double 'End Reading - Start Reading / Corrected Multiplier
@@ -81,8 +81,8 @@ Public Interface IVolume
     ReadOnly Property InputUncVolume As Double
     ReadOnly Property EndCorrected As Double
     ReadOnly Property StartCorrected As Double
-    ReadOnly Property CorrectedMultiplier As Double
-    ReadOnly Property UncorrectedMutliplier As Double
+    ReadOnly Property CorrectedMultiplier As Decimal
+    ReadOnly Property UncorrectedMutliplier As Decimal
     Property AppliedInput As Double
     Property DriveRate As Double '
     Property EVCType As EVCTypeEnum

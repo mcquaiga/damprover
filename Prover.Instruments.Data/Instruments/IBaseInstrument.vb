@@ -79,13 +79,11 @@ Public Interface IBaseInstrument
     Property ID As String
     Property CreatedDate As DateTime?
 
-    Property ItemFile As Dictionary(Of Integer, String)
+    Property Items As List(Of ItemClass)
+
 
     ReadOnly Property PulseASelect As PulseOutputValues
     ReadOnly Property PulseBSelect As PulseOutputValues
     Property InspectionID As Integer?
-
-    Function GetItemValue(ItemNumber As Integer) As String
-
 
 End Interface

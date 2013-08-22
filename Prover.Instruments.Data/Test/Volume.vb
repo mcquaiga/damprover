@@ -4,20 +4,20 @@ Public Class Volume
     Implements IVolume
 
 
-    Sub New()
+    Sub New(VolumeItems As List(Of ItemClass))
         MyBase.New()
+        BeforeItems = VolumeItems
+        AfterItems = VolumeItems
     End Sub
 
 #Region "Properties"
 
     Public Const CubicFeetToMeters = 0.0283168466
 
-
     <JsonIgnore>
-    Public Property BeforeItems As Dictionary(Of Integer, String) Implements IVolume.BeforeItems
-
+    Public Property BeforeItems As List(Of ItemClass) Implements IVolume.BeforeItems
     <JsonIgnore>
-    Public Property AfterItems As Dictionary(Of Integer, String) Implements IVolume.AfterItems
+    Public Property AfterItems As List(Of ItemClass) Implements IVolume.AfterItems
 
     Public Property EVCType() As IVolume.EVCTypeEnum Implements IVolume.EVCType
     Public Property TempFactor() As Double Implements IVolume.TempFactor
@@ -31,42 +31,42 @@ Public Class Volume
     Public ReadOnly Property EndCorrected() As Double Implements IVolume.EndCorrected
         Get
             If IsNothing(AfterItems) Then Return Nothing
-            Return AfterItems(0)
+            Return AfterItems.Where(Function(x) x.Number = 0).SingleOrDefault.Value
         End Get
     End Property
 
     Public ReadOnly Property StartCorrected() As Double Implements IVolume.StartCorrected
         Get
             If IsNothing(BeforeItems) Then Return Nothing
-            Return BeforeItems(0) '+ BeforeItems(113)
+            Return BeforeItems.Where(Function(x) x.Number = 0).SingleOrDefault.Value
         End Get
     End Property
 
     Public ReadOnly Property StartUncorrected() As Double Implements IVolume.StartunCorrected
         Get
             If IsNothing(BeforeItems) Then Return Nothing
-            Return BeforeItems(2)
+            Return BeforeItems.Where(Function(x) x.Number = 2).SingleOrDefault.Value
         End Get
     End Property
 
     Public ReadOnly Property EndUnCorrected() As Double Implements IVolume.EndUnCorrected
         Get
             If IsNothing(AfterItems) Then Return Nothing
-            Return AfterItems(2)
+            Return AfterItems.Where(Function(x) x.Number = 2).SingleOrDefault.Value
         End Get
     End Property
 
-    Public ReadOnly Property UnCorrectedMultiplier() As Double Implements IVolume.UncorrectedMutliplier
+    Public ReadOnly Property UnCorrectedMultiplier() As Decimal Implements IVolume.UncorrectedMutliplier
         Get
             If IsNothing(BeforeItems) Then Return Nothing
-            Return BeforeItems(92)
+            Return BeforeItems.Where(Function(x) x.Number = 92).SingleOrDefault.NumericValue
         End Get
     End Property
 
-    Public ReadOnly Property CorrectedMultiplier() As Double Implements IVolume.CorrectedMultiplier
+    Public ReadOnly Property CorrectedMultiplier() As Decimal Implements IVolume.CorrectedMultiplier
         Get
-            If IsNothing(BeforeItems) Then Return Nothing
-            Return BeforeItems(90)
+            If IsNothing(BeforeItems) Or BeforeItems.Count = 0 Then Return Nothing
+            Return BeforeItems.Where(Function(x) x.Number = 90).SingleOrDefault.NumericValue
         End Get
     End Property
 
@@ -152,7 +152,7 @@ Public Class Volume
     Public Overridable ReadOnly Property MeterTypeNumber() As Integer
         Get
             If IsNothing(BeforeItems) Then Return Nothing
-            Return BeforeItems(33)
+            Return BeforeItems.Where(Function(x) x.Number = 33).SingleOrDefault.Value
         End Get
 
     End Property
@@ -160,14 +160,14 @@ Public Class Volume
     Public Overridable ReadOnly Property UncCorMultiplerCode() As IVolume.InstrumentVolumeUnitsEnum
         Get
             If IsNothing(BeforeItems) Then Return Nothing
-            Return BeforeItems(92)
+            Return BeforeItems.Where(Function(x) x.Number = 92).SingleOrDefault.Value
         End Get
     End Property
 
     Public Overridable ReadOnly Property CorMultiplierCode() As IVolume.InstrumentVolumeUnitsEnum
         Get
             If IsNothing(BeforeItems) Then Return Nothing
-            Return BeforeItems(90)
+            Return BeforeItems.Where(Function(x) x.Number = 90).SingleOrDefault.Value
         End Get
 
     End Property

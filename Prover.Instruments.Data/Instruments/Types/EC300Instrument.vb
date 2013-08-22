@@ -10,7 +10,7 @@ Namespace Instruments.Data
             MyBase.New()
             InstrumentType = InstrumentTypeCode.EC300
             MyBase.Items = LoadInstrumentItems()
-            MyBase.VolumeTest = New Volume()
+            MyBase.VolumeTest = New Volume(Items.Where(Function(x) x.IsVolume = True).ToList)
         End Sub
 
 

@@ -13,8 +13,8 @@ Namespace Instruments.Data
         'Private Shared _
 
 
-        Public Shared Function DownloadItemFileAsync(Instrument As IBaseInstrument, Optional Progress As IProgress(Of Tuple(Of String, Integer)) = Nothing) As Task(Of Dictionary(Of Integer, String))
-            Return Task.Run(Function()
+        Public Shared Function DownloadItemFileAsync(Instrument As IBaseInstrument, Optional Progress As IProgress(Of Tuple(Of String, Integer)) = Nothing) As Task
+            Return Task.Run(Sub()
                                 If CommPortName Is Nothing Or IsNothing(BaudRate) Then
                                     Throw New Exception("Comm Port and Baud Rate must be set.")
                                 End If
@@ -39,8 +39,11 @@ Namespace Instruments.Data
                                 _miSerial.Connect()
                                 Dim downloads = _miSerial.RG((From i In _items Select i.Number).ToList)
                                 _miSerial.Disconnect()
-                                Return downloads
-                            End Function)
+
+                                For Each item In downloads
+                                    Instrument.Items.Where(Function(x) x.Number = item.Key).SingleOrDefault.Value = item.Value
+                                Next
+                            End Sub)
         End Function
 
 
@@ -72,7 +75,6 @@ Namespace Instruments.Data
                                 Select Case Instrument.InstrumentType
                                     Case InstrumentTypeCode.MiniMax
                                         _miSerial = New miSerialProtocol.MiniMaxClass(CommPort)
-                                        _items = (From i In MiniMaxInstrument.LoadInstrumentItems() Where i.IsTemperature = True).ToList
                                     Case InstrumentTypeCode.EC300
                                         _miSerial = New miSerialProtocol.EC300Class(CommPort)
                                     Case Else
@@ -80,8 +82,9 @@ Namespace Instruments.Data
                                 End Select
 
                                 _miSerial.Connect()
-                                Dim downloads = _miSerial.RG((From i In _items Select i.Number).ToList)
+                                Dim downloads = _miSerial.RG((From i In (Instrument.Items.Where(Function(x) x.IsTemperature = True)) Select i.Number).ToList)
                                 _miSerial.Disconnect()
+
 
                                 Return downloads
                             End Function)

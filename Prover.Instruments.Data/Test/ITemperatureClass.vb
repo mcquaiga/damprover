@@ -25,7 +25,6 @@ Public Interface ITemperatureClass
     ReadOnly Property hasPassed As Boolean
 
     ReadOnly Property LevelIndex As Integer
-
     ReadOnly Property LevelDescription As String
 
 

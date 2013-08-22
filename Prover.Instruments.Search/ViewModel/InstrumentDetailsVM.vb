@@ -42,13 +42,13 @@ Namespace ViewModels
                 End If
                 If Items IsNot Nothing Then
                     For Each i In Items
-                        If Instrument.ItemFile.Count > 0 Then
-                            If Instrument.ItemFile.ContainsKey(i.Number) Then
-                                iD.Add(i, Instrument.ItemFile(i.Number))
-                            End If
-                        Else
-                            iD.Add(i, Nothing)
-                        End If
+                        'If Instrument.Items.Count > 0 Then
+                        '    If Instrument.Items.ContainsKey(i.Number) Then
+                        '        iD.Add(i, Instrument.Items(i.Number))
+                        '    End If
+                        'Else
+                        '    iD.Add(i, Nothing)
+                        'End If
 
                     Next
                 End If
@@ -199,8 +199,7 @@ Namespace ViewModels
 
             LoadItemDescriptions()
             Try
-                Instrument.ItemFile = Await InstrumentCommunications.DownloadItemFileAsync(Instrument, _progress)
-                Instrument.VolumeTest.BeforeItems = Instrument.ItemFile
+                Await InstrumentCommunications.DownloadItemFileAsync(Instrument, _progress)
             Catch ex As Exception
                 MsgBox(ex.Message, MsgBoxStyle.OkOnly + MsgBoxStyle.Information, "Error")
             End Try

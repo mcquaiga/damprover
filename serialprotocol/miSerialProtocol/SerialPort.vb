@@ -21,23 +21,24 @@ Public Class SerialPort
     End Sub
 
     Public Sub OpenPort() Implements ICommPort.OpenPort
-        If Not comm Is Nothing Then
-            If Not comm.IsOpen Then
-                With comm
-                    .PortName = _portName
-                    .BaudRate = _baudRate
-                    .NewLine = "\\"
-                    .ReadTimeout = 200
-                    .WriteTimeout = 150
-                    'This will throw an exception if the port is already in use
-                    Try
-                        .Open()
-                    Catch ex As Exception
-                        'logger.Error(ex.Message)
-                        Throw New CommInUseException(comm.PortName)
-                    End Try
-                End With
-            End If
+        If comm Is Nothing Then
+            comm = New System.IO.Ports.SerialPort
+        End If
+        If Not comm.IsOpen Then
+            With comm
+                .PortName = _portName
+                .BaudRate = _baudRate
+                .NewLine = "\\"
+                .ReadTimeout = 200
+                .WriteTimeout = 150
+                'This will throw an exception if the port is already in use
+                Try
+                    .Open()
+                Catch ex As Exception
+                    'logger.Error(ex.Message)
+                    Throw New CommInUseException(comm.PortName)
+                End Try
+            End With
         End If
     End Sub
 
@@ -58,12 +59,13 @@ Public Class SerialPort
     End Sub
 
     Public Function IsOpen() As Boolean Implements ICommPort.IsOpen
+        If comm Is Nothing Then Return False
         Return comm.IsOpen()
     End Function
 
     Public Sub Dispose() Implements ICommPort.Dispose
         comm.Close()
         comm.Dispose()
-        comm = Nothing
+
     End Sub
 End Class

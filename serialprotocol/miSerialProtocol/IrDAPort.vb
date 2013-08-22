@@ -83,7 +83,9 @@ Public Class IrDAPort
 
 
     Private Sub LoadIrda()
-        cli = New IrDAClient
+        If cli Is Nothing Then
+            cli = New IrDAClient
+        End If
         ' Set IrCOMM Cooked/9-wire mode.
         cli.Client.SetSocketOption( _
             CType(IrDASocketOptionLevel.IrLmp, SocketOptionLevel), _
@@ -157,6 +159,5 @@ Public Class IrDAPort
     Public Sub Dispose() Implements ICommPort.Dispose
         cli.Close()
         cli.Dispose()
-        cli = Nothing
     End Sub
 End Class

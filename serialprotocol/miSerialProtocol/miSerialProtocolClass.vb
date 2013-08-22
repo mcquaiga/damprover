@@ -410,7 +410,6 @@ Public MustInherit Class miSerialProtocolClass
 
             'Give the instrument half a second 
             System.Threading.Thread.Sleep(500)
-            Me.Dispose()
         End If
     End Sub
 
@@ -558,21 +557,17 @@ Public MustInherit Class miSerialProtocolClass
 
     Public Sub OpenCommPort()
         Try
-            If Not _commPort Is Nothing Then
-                If Not _commPort.IsOpen Then
-                    With _commPort
-                        'This will throw an exception if the port is already in use
-                        Try
-                            .OpenPort()
-                        Catch ex As Exception
-                            logger.Error(ex.Message)
-                            Throw New CommInUseException("Comm Port")
-                        End Try
-                        CommState = CommStateEnum.UnlinkedIdle
-                    End With
-                End If
-            Else
-                Throw New Exception("No communications port object.")
+            If Not _commPort.IsOpen And CommState <> CommStateEnum.LinkedIdle Then
+                With _commPort
+                    'This will throw an exception if the port is already in use
+                    Try
+                        .OpenPort()
+                    Catch ex As Exception
+                        logger.Error(ex.Message)
+                        Throw New CommInUseException("Comm Port")
+                    End Try
+                    CommState = CommStateEnum.UnlinkedIdle
+                End With
             End If
         Catch ex As CommInUseException
             If MessageBox.Show(ex.Message & " Try Again?", "Serial Port Error", MessageBoxButtons.RetryCancel, MessageBoxIcon.Error) = DialogResult.Retry Then
