@@ -28,17 +28,17 @@ Public Class Volume
     Public Overridable Property EVCMeterDisplacement() As Double Implements IVolume.EvcMeterDisplacement
     Public Property AppliedInput() As Double Implements IVolume.AppliedInput
 
-    Public ReadOnly Property EndCorrected() As Double Implements IVolume.EndCorrected
-        Get
-            If IsNothing(AfterItems) Then Return Nothing
-            Return AfterItems.Where(Function(x) x.Number = 0).SingleOrDefault.Value
-        End Get
-    End Property
-
     Public ReadOnly Property StartCorrected() As Double Implements IVolume.StartCorrected
         Get
             If IsNothing(BeforeItems) Then Return Nothing
             Return BeforeItems.Where(Function(x) x.Number = 0).SingleOrDefault.Value
+        End Get
+    End Property
+
+    Public ReadOnly Property EndCorrected() As Double Implements IVolume.EndCorrected
+        Get
+            If IsNothing(AfterItems) Then Return Nothing
+            Return AfterItems.Where(Function(x) x.Number = 0).SingleOrDefault.Value
         End Get
     End Property
 
@@ -65,7 +65,7 @@ Public Class Volume
 
     Public ReadOnly Property CorrectedMultiplier() As Decimal Implements IVolume.CorrectedMultiplier
         Get
-            If IsNothing(BeforeItems) Or BeforeItems.Count = 0 Then Return Nothing
+            If IsNothing(BeforeItems) OrElse BeforeItems.Count = 0 Then Return Nothing
             Return BeforeItems.Where(Function(x) x.Number = 90).SingleOrDefault.NumericValue
         End Get
     End Property

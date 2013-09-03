@@ -55,9 +55,9 @@ Public Class TemperatureClass
     Public ReadOnly Property TemperatureFactor() As Double Implements ITemperatureClass.TemperatureFactor
         Get
             If TemperatureUnits = ITemperatureClass.UnitsEnum.C Or TemperatureUnits = ITemperatureClass.UnitsEnum.K Then
-                Return (MetericTempCorrection + BaseTemperature) / (GaugeTemperature + MetericTempCorrection)
+                Return Math.Round((MetericTempCorrection + BaseTemperature) / (GaugeTemperature + MetericTempCorrection), 4)
             ElseIf TemperatureUnits = ITemperatureClass.UnitsEnum.F Or TemperatureUnits = ITemperatureClass.UnitsEnum.R Then
-                Return (TempCorrection + BaseTemperature) / (GaugeTemperature + TempCorrection)
+                Return Math.Round((TempCorrection + BaseTemperature) / (GaugeTemperature + TempCorrection), 4)
             End If
 
             Return 0
@@ -66,7 +66,7 @@ Public Class TemperatureClass
 
     Public ReadOnly Property PercentError() As Double Implements ITemperatureClass.PercentError
         Get
-            Return ((EVCFactor - TemperatureFactor) / TemperatureFactor) * 100
+            Return Math.Round(((EVCFactor - TemperatureFactor) / TemperatureFactor) * 100, 2)
         End Get
     End Property
 

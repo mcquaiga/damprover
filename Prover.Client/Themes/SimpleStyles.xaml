@@ -962,6 +962,9 @@
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
+        <Setter Property="Height" Value="Auto"/>
+        <Setter Property="FontSize" Value="18.667"/>
+        <Setter Property="BorderThickness" Value="0"/>
     </Style>
 
     <!--  Simple Label - This template is just a ContentPresenter that shows the content of the Label  -->
@@ -1467,8 +1470,10 @@
     <Style x:Key="ItemDescriptions" TargetType="{x:Type TextBlock}">
         <Setter Property="Foreground" Value="{DynamicResource HeaderColour}" />
         <Setter Property="OpacityMask" Value="Black" />
+        <Setter Property="Margin" Value="5,5,5,5" />
         <Setter Property="FontSize" Value="18.667" />
         <Setter Property="Height" Value="Auto" />
+        <Setter Property="FontFamily" Value="Euphemia" />
     </Style>
 
     <Style x:Key="ItemValues" TargetType="{x:Type TextBlock}">
@@ -1546,7 +1551,7 @@
             </Setter.Value>
         </Setter>
     </Style>
-    <SolidColorBrush x:Key="MainBackgroundColour" Color="#FF242B33" />
+    <SolidColorBrush x:Key="MainBackgroundColour" Color="#FF444444" />
     <SolidColorBrush x:Key="HeaderFontColour" Color="White" />
     <System:Double x:Key="LargeFontSize">32</System:Double>
     <ControlTemplate x:Key="MenuModuleButton" TargetType="{x:Type Button}" />

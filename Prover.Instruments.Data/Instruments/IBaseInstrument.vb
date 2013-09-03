@@ -62,9 +62,11 @@ Public Interface IBaseInstrument
     End Enum
 #End Region
 
-    Property PressureTests As ObjectModel.ObservableCollection(Of IPressureFactorClass)
-    Property TemperateTests As ObjectModel.ObservableCollection(Of ITemperatureClass)
+    Property PressureTests As List(Of IPressureFactorClass)
+    Property TemperateTests As List(Of ITemperatureClass)
     Property VolumeTest As IVolume
+
+
 
     Function IsLiveSuper() As FixedFactors
     Function IsLivePressure() As FixedFactors
@@ -73,7 +75,11 @@ Public Interface IBaseInstrument
     Property InstrumentType As miSerialProtocol.InstrumentTypeCode
 
     ReadOnly Property InstrumentGuid As Guid
+
     ReadOnly Property SerialNumber As String
+    ReadOnly Property SiteNumber1 As String
+    ReadOnly Property SiteNumber2 As String
+
     Property InstrumentDriveType As DriveType
 
     Property CreatedDate As DateTime?

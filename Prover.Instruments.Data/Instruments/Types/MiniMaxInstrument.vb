@@ -8,8 +8,8 @@ Namespace Instruments.Data
 
         Sub New()
             MyBase.New()
-            InstrumentType = InstrumentTypeCode.MiniMax
             MyBase.Items = LoadInstrumentItems()
+            InstrumentType = InstrumentTypeCode.MiniMax
             MyBase.VolumeTest = New Volume(Items.Where(Function(x) x.IsVolume = True).ToList)
         End Sub
 

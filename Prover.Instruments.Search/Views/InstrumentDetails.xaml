@@ -79,7 +79,10 @@
                             Style="{StaticResource SimpleButton}" />
                 </StackPanel>
                 <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-                    <TextBox Text="{Binding GaugeTemperature, UpdateSourceTrigger=PropertyChanged}" />
+                    <TextBox Width="150"
+                             Style="{DynamicResource SimpleTextBox}"
+                             Text="{Binding GaugeTemperature,
+                                            UpdateSourceTrigger=PropertyChanged}" />
                 </StackPanel>
 
                 <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
@@ -153,6 +156,7 @@
                         <RowDefinition />
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
                         <ColumnDefinition />
                         <ColumnDefinition />
                     </Grid.ColumnDefinitions>
@@ -265,13 +269,25 @@
                             <WrapPanel>
                                 <StackPanel Orientation="horizontal">
                                     <StackPanel Margin="5">
-                                        <TextBlock Style="{StaticResource ItemValues}" Text="{Binding Instrument.SerialNumber, UpdateSourceTrigger=PropertyChanged}" />
+                                        <TextBlock HorizontalAlignment="Right"
+                                                   Style="{StaticResource ItemValues}"
+                                                   Text="{Binding Instrument.SerialNumber,
+                                                                  UpdateSourceTrigger=PropertyChanged}" />
                                         <TextBlock Style="{StaticResource ItemDescriptions}" Text="Serial Number" />
                                     </StackPanel>
                                     <StackPanel Margin="5">
-                                        <TextBlock Style="{StaticResource ItemValues}" Text="{Binding Instrument.CompanyNumber, UpdateSourceTrigger=PropertyChanged}" />
-                                        <TextBlock Style="{StaticResource ItemDescriptions}" Text="Company Number" />
-
+                                        <TextBlock HorizontalAlignment="Right"
+                                                   Style="{StaticResource ItemValues}"
+                                                   Text="{Binding Instrument.SiteNumber1,
+                                                                  UpdateSourceTrigger=PropertyChanged}" />
+                                        <TextBlock Style="{StaticResource ItemDescriptions}" Text="Site Number 1" />
+                                    </StackPanel>
+                                    <StackPanel Margin="5">
+                                        <TextBlock HorizontalAlignment="Right"
+                                                   Style="{StaticResource ItemValues}"
+                                                   Text="{Binding Instrument.SiteNumber2,
+                                                                  UpdateSourceTrigger=PropertyChanged}" />
+                                        <TextBlock Style="{StaticResource ItemDescriptions}" Text="Site Number 2" />
                                     </StackPanel>
                                 </StackPanel>
                             </WrapPanel>
@@ -334,7 +350,7 @@
                         <ItemsControl Grid.Row="1"
                                       Margin="5"
                                       ItemTemplate="{StaticResource ResourceKey=TemperatureItem}"
-                                      ItemsSource="{Binding Instrument.TemperatureTests}" />
+                                      ItemsSource="{Binding TemperatureTests}" />
                     </Grid>
 
                 </Grid>
@@ -441,7 +457,7 @@
                             <RowDefinition />
                         </Grid.RowDefinitions>
                         <Grid Grid.Row="0" Grid.ColumnSpan="2">
-                            <UniformGrid Columns="4">
+                            <UniformGrid Columns="3">
                                 <StackPanel>
                                     <TextBlock Style="{StaticResource ItemValues}" Text="{Binding Instrument.VolumeTest.CorrectedMultiplier, UpdateSourceTrigger=PropertyChanged}" />
                                     <TextBlock Style="{StaticResource ItemDescriptions}">Corrected Multiplier</TextBlock>
@@ -502,10 +518,12 @@
                                 Margin="5,5,5,5"
                                 BorderBrush="White"
                                 BorderThickness="0,1,0,0">
-                            <Grid Grid.Row="2" Grid.ColumnSpan="2">
-                                <WrapPanel>
-                                    <StackPanel>
-                                        <TextBlock Style="{StaticResource ItemValues}" Text="{Binding Instrument.VolumeTest.AppliedInput, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
+                            <Grid Grid.Row="2"
+                                  Grid.ColumnSpan="2"
+                                  Margin="0,10,0,0">
+                                <WrapPanel HorizontalAlignment="Center">
+                                    <StackPanel HorizontalAlignment="Center">
+                                        <TextBox Style="{DynamicResource SimpleTextBox}" Text="{Binding Instrument.VolumeTest.AppliedInput, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
                                         <TextBlock Style="{StaticResource ItemDescriptions}">Applied Input</TextBlock>
                                     </StackPanel>
 

@@ -6,6 +6,7 @@ Imports miSerialProtocol
 Imports System.Linq
 Imports System.ComponentModel
 Imports System.Runtime.CompilerServices
+Imports System.Collections.ObjectModel
 
 
 Namespace ViewModels
@@ -23,6 +24,7 @@ Namespace ViewModels
         Private _pressurelevelIndex As List(Of String)
         Private _templevelIndex As List(Of Integer)
         Private _volume As IVolume
+
 
         Private _irdaPort As IrDAPort
         Private _serialPort As SerialPort
@@ -123,6 +125,13 @@ Namespace ViewModels
             End Get
         End Property
 
+        Public ReadOnly Property TemperatureTests As ObservableCollection(Of ITemperatureClass)
+            Get
+                If _Instrument Is Nothing OrElse _Instrument.TemperateTests Is Nothing Then Return Nothing
+                Return New ObservableCollection(Of ITemperatureClass)(From t As ITemperatureClass In _Instrument.TemperateTests Order By t.LevelIndex)
+            End Get
+        End Property
+
 #Region "Methods"
 
         Public Sub ShowInstrument(instrument As IBaseInstrument)
@@ -160,7 +169,7 @@ Namespace ViewModels
 
             Instrument.PressureTests.Remove(Instrument.PressureTests.Where(Function(x) x.LevelIndex = LevelIndex).FirstOrDefault())
             Instrument.PressureTests.Add(p)
-            Instrument.PressureTests.BubbleSort()
+
             NotifyPropertyChanged("Instrument")
         End Function
 
@@ -168,13 +177,13 @@ Namespace ViewModels
             Dim t As New TemperatureClass(LevelIndex)
             t.Items = Await InstrumentCommunications.DownloadTemperatureItemsAsync(Me.Instrument)
 
-            Instrument.TemperateTests.Remove(Instrument.TemperateTests.Where(Function(x) (x.LevelIndex = LevelIndex)).FirstOrDefault())
-            Instrument.TemperateTests.Add(t)
-            Instrument.TemperateTests.OrderBy(Function(x) x.LevelIndex)
+            Dim temp = Instrument.TemperateTests.Where(Function(x) (x.LevelIndex = LevelIndex)).FirstOrDefault()
+            temp.Items = t.Items
 
-
+            temp = Nothing
 
             NotifyPropertyChanged("Instruments")
+            NotifyPropertyChanged("TemperatureTests")
         End Function
 
         Public Sub LoadItemDescriptions()
@@ -206,6 +215,7 @@ Namespace ViewModels
 
             NotifyPropertyChanged("ItemValuesWithDescriptions")
             NotifyPropertyChanged("Volume")
+            NotifyPropertyChanged("TemperatureTests")
             NotifyPropertyChanged("Instrument")
 
         End Function

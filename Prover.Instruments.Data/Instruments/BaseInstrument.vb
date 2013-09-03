@@ -12,8 +12,6 @@ Namespace Instruments.Data
     Public MustInherit Class BaseInstrument
         Implements IBaseInstrument, INotifyPropertyChanged
 
-
-
         'This is the base class for all the Mercury Instruments
         'Seperate classes for each instrument must be created and inherited from this class
         'Only the properties and methods common to all instruments are created in this class
@@ -24,16 +22,15 @@ Namespace Instruments.Data
         Protected _pathToItemXML As String
         Private _instrumentGUID As Guid
 
-        Private __pressureTests As ObservableCollection(Of IPressureFactorClass)
-        Private __temperatureTests As ObservableCollection(Of ITemperatureClass)
+
 
         Sub New()
-            PressureTests = New ObservableCollection(Of IPressureFactorClass)
-            PressureTests.Add(New PressureFactorClass(1))
-            PressureTests.Add(New PressureFactorClass(2))
-            PressureTests.Add(New PressureFactorClass(3))
+            'PressureTests = New List(Of IPressureFactorClass)
+            'PressureTests.Add(New PressureFactorClass(1))
+            'PressureTests.Add(New PressureFactorClass(2))
+            'PressureTests.Add(New PressureFactorClass(3))
 
-            TemperatureTests = New ObservableCollection(Of ITemperatureClass)
+            TemperatureTests = New List(Of ITemperatureClass)
             TemperatureTests.Add(New TemperatureClass(1))
             TemperatureTests.Add(New TemperatureClass(2))
             TemperatureTests.Add(New TemperatureClass(3))
@@ -48,8 +45,8 @@ Namespace Instruments.Data
         Public Property InstrumentDriveType() As IBaseInstrument.DriveType Implements IBaseInstrument.InstrumentDriveType
         Public Property InspectionID As Integer? Implements IBaseInstrument.InspectionID
 
-        Public Property PressureTests As ObservableCollection(Of IPressureFactorClass) Implements IBaseInstrument.PressureTests
-        Public Property TemperatureTests As ObservableCollection(Of ITemperatureClass) Implements IBaseInstrument.TemperateTests
+        Public Property PressureTests As List(Of IPressureFactorClass) Implements IBaseInstrument.PressureTests
+        Public Property TemperatureTests As List(Of ITemperatureClass) Implements IBaseInstrument.TemperateTests
         Public Property VolumeTest As IVolume Implements IBaseInstrument.VolumeTest
 
         Public ReadOnly Property InstrumenGuID() As Guid Implements IBaseInstrument.InstrumentGuid
@@ -68,6 +65,18 @@ Namespace Instruments.Data
             End Get
         End Property
 
+
+        Public ReadOnly Property SiteNumber1 As String Implements IBaseInstrument.SiteNumber1
+            Get
+                Return Items.Where(Function(x) x.Number = 200).SingleOrDefault.Value
+            End Get
+        End Property
+
+        Public ReadOnly Property SiteNumbe2 As String Implements IBaseInstrument.SiteNumber2
+            Get
+                Return Items.Where(Function(x) x.Number = 201).SingleOrDefault.Value
+            End Get
+        End Property
 
         Public ReadOnly Property PulseASelect() As IBaseInstrument.PulseOutputValues Implements IBaseInstrument.PulseASelect
             Get

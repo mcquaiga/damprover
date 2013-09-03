@@ -37,8 +37,8 @@
                                 CornerRadius="0,0,0,0">
                             <TextBlock Margin="3,1,0,0"
                                        VerticalAlignment="Center"
-                                       FontFamily="Calibri"
                                        FontSize="18"
+									   FontFamily="Candara"
                                        Foreground="#FFFFFFFF">
                                 <ContentPresenter />
                             </TextBlock>
@@ -60,5 +60,6 @@
             </Setter.Value>
         </Setter>
         <Setter Property="IsChecked" Value="False" />
+        <Setter Property="ClickMode" Value="Press"/>
     </Style>
 </ResourceDictionary>
