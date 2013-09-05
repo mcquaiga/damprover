@@ -3,6 +3,9 @@ Imports Newtonsoft.Json
 Public Class Volume
     Implements IVolume
 
+    Sub New()
+
+    End Sub
 
     Sub New(VolumeItems As List(Of ItemClass))
         MyBase.New()

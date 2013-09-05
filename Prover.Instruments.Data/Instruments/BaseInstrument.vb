@@ -52,7 +52,7 @@ Namespace Instruments.Data
         Public ReadOnly Property SerialNumber As String Implements IBaseInstrument.SerialNumber
             Get
                 If Items Is Nothing Then Return Nothing
-                Return Items.Where(Function(x) x.Number = 62).SingleOrDefault.Value
+                Return Items.Where(Function(x) x.Number = 62).SingleOrDefault.DescriptionValue
             End Get
         End Property
 
@@ -77,21 +77,56 @@ Namespace Instruments.Data
             End Get
         End Property
 
-        Public ReadOnly Property PulseASelect() As IBaseInstrument.PulseOutputValues Implements IBaseInstrument.PulseASelect
+        Public ReadOnly Property PulseASelect() As String Implements IBaseInstrument.PulseASelect
             Get
-                Return Nothing
+                Try
+                    Return Items.Where(Function(x) x.Number = 93).SingleOrDefault.DescriptionValue
+
+                Catch ex As Exception
+                    Return Nothing
+                End Try
             End Get
         End Property
 
-        Public ReadOnly Property PulseBSelect() As IBaseInstrument.PulseOutputValues Implements IBaseInstrument.PulseBSelect
+        Public ReadOnly Property PulseBSelect() As String Implements IBaseInstrument.PulseBSelect
             Get
-                Return Nothing
+                Try
+                    Return Items.Where(Function(x) x.Number = 94).SingleOrDefault.DescriptionValue
+                Catch ex As Exception
+                    Return Nothing
+                End Try
             End Get
         End Property
 
+        Public ReadOnly Property PulseAScaling() As Double Implements IBaseInstrument.PulseAScaling
+            Get
+                Try
+                    Return Items.Where(Function(x) x.Number = 56).SingleOrDefault.Value
+                Catch ex As Exception
+                    Return Nothing
+                End Try
+            End Get
+        End Property
 
+        Public ReadOnly Property PulseBScaling() As Double Implements IBaseInstrument.PulseBScaling
+            Get
+                Try
+                    Return Items.Where(Function(x) x.Number = 57).SingleOrDefault.Value
+                Catch ex As Exception
+                    Return Nothing
+                End Try
+            End Get
+        End Property
 
-       
+        Public ReadOnly Property FirmwareVersion As String Implements IBaseInstrument.FirmwareVersion
+            Get
+                Try
+                    Return Items.Where(Function(x) x.Number = 122).SingleOrDefault.Value
+                Catch ex As Exception
+                    Return Nothing
+                End Try
+            End Get
+        End Property
 
 #End Region
 

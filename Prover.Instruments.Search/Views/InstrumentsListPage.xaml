@@ -43,7 +43,7 @@
                     <StackPanel Grid.Row="1" Orientation="Horizontal" />
                     <StackPanel Grid.Row="2" Orientation="Horizontal">
                         <TextBlock Foreground="Blue" Text="I.C. #: " />
-                        <TextBlock Foreground="Blue" Text="{Binding ConnectionString}" />
+                        <TextBlock Foreground="Blue" Text="{Binding IC}" />
                     </StackPanel>
                     <StackPanel Grid.Row="3" Orientation="Horizontal">
                         <TextBlock Foreground="Blue" Text="Drive Type: " />

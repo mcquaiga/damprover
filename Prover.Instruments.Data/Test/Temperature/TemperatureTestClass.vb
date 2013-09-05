@@ -9,6 +9,10 @@ Public Class TemperatureTestClass
 
     Private _levelIndex As Integer
 
+    Sub New()
+
+    End Sub
+
     Sub New(Level As Integer, Items As List(Of ItemClass), Units As String, BaseTemperature As Double)
         MyBase.New()
         _levelIndex = Level

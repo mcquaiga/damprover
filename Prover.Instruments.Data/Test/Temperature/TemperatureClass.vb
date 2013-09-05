@@ -1,5 +1,4 @@
-﻿
-Imports Prover.Instruments.Data
+﻿Imports Prover.Instruments.Data
 Imports miSerialProtocol
 
 Public Class TemperatureClass

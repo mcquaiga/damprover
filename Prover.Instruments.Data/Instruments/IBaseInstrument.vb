@@ -66,6 +66,11 @@ Public Interface IBaseInstrument
     Property Temperature As TemperatureClass
     Property VolumeTest As IVolume
 
+    ReadOnly Property FirmwareVersion As String
+
+    ReadOnly Property PulseAScaling As Double
+    ReadOnly Property PulseBScaling As Double
+
     Function IsLiveSuper() As FixedFactors
     Function IsLivePressure() As FixedFactors
     Function IsLiveTemperate() As FixedFactors
@@ -83,8 +88,8 @@ Public Interface IBaseInstrument
 
     Property Items As List(Of ItemClass)
 
-    ReadOnly Property PulseASelect As PulseOutputValues
-    ReadOnly Property PulseBSelect As PulseOutputValues
+    ReadOnly Property PulseASelect As String
+    ReadOnly Property PulseBSelect As String
     Property InspectionID As Integer?
 
     Function DownloadSiteInformation() As Task

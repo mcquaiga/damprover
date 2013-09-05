@@ -12,7 +12,15 @@ Namespace Instruments.Data
             InstrumentType = InstrumentTypeCode.MiniMax
         End Sub
 
-
+        Public ReadOnly Property RotaryMeterType As String
+            Get
+                Try
+                    Return Items.Where(Function(x) x.Number = 200).SingleOrDefault.Value
+                Catch ex As Exception
+                    Return Nothing
+                End Try
+            End Get
+        End Property
 
 #Region "Methods"
 

@@ -266,40 +266,81 @@
                         </TextBlock>
                     </Border>
                     <Grid Grid.Column="1" Margin="15">
-
                         <StackPanel>
-
-                            <WrapPanel>
-                                <StackPanel Orientation="horizontal">
-                                    <StackPanel Margin="5">
-                                        <TextBlock HorizontalAlignment="Right"
-                                                   Style="{StaticResource ItemValues}"
-                                                   Text="{Binding Instrument.SerialNumber,
-                                                                  UpdateSourceTrigger=PropertyChanged}" />
-                                        <TextBlock HorizontalAlignment="Right"
-                                                   Style="{StaticResource ItemDescriptions}"
-                                                   Text="Serial Number" />
-                                    </StackPanel>
-                                    <StackPanel Margin="5">
-                                        <TextBlock HorizontalAlignment="Right"
-                                                   Style="{StaticResource ItemValues}"
-                                                   Text="{Binding Instrument.SiteNumber1,
-                                                                  UpdateSourceTrigger=PropertyChanged}" />
-                                        <TextBlock HorizontalAlignment="Right"
-                                                   Style="{StaticResource ItemDescriptions}"
-                                                   Text="Site Number 1" />
-                                    </StackPanel>
-                                    <StackPanel Margin="5">
-                                        <TextBlock HorizontalAlignment="Right"
-                                                   Style="{StaticResource ItemValues}"
-                                                   Text="{Binding Instrument.SiteNumber2,
-                                                                  UpdateSourceTrigger=PropertyChanged}" />
-                                        <TextBlock HorizontalAlignment="Right"
-                                                   Style="{StaticResource ItemDescriptions}"
-                                                   Text="Site Number 2" />
-                                    </StackPanel>
+                            <UniformGrid Columns="5">
+                                <StackPanel Margin="5">
+                                    <TextBlock HorizontalAlignment="Right"
+                                               Style="{StaticResource ItemValues}"
+                                               Text="{Binding Instrument.SerialNumber,
+                                                              UpdateSourceTrigger=PropertyChanged}" />
+                                    <TextBlock HorizontalAlignment="Right"
+                                               Style="{StaticResource ItemDescriptions}"
+                                               Text="Serial Number" />
                                 </StackPanel>
-                            </WrapPanel>
+                                <StackPanel Margin="5">
+                                    <TextBlock HorizontalAlignment="Right"
+                                               Style="{StaticResource ItemValues}"
+                                               Text="{Binding Instrument.SiteNumber1,
+                                                              UpdateSourceTrigger=PropertyChanged}" />
+                                    <TextBlock HorizontalAlignment="Right"
+                                               Style="{StaticResource ItemDescriptions}"
+                                               Text="Site Number 1" />
+                                </StackPanel>
+                                <StackPanel Margin="5">
+                                    <TextBlock HorizontalAlignment="Right"
+                                               Style="{StaticResource ItemValues}"
+                                               Text="{Binding Instrument.SiteNumber2,
+                                                              UpdateSourceTrigger=PropertyChanged}" />
+                                    <TextBlock HorizontalAlignment="Right"
+                                               Style="{StaticResource ItemDescriptions}"
+                                               Text="Site Number 2" />
+                                </StackPanel>
+                                <StackPanel Margin="5">
+                                    <TextBlock HorizontalAlignment="Right"
+                                               Style="{StaticResource ItemValues}"
+                                               Text="{Binding Instrument.FirmwareVersion,
+                                                              UpdateSourceTrigger=PropertyChanged}" />
+                                    <TextBlock HorizontalAlignment="Right"
+                                               Style="{StaticResource ItemDescriptions}"
+                                               Text="Firmware Version" />
+                                </StackPanel>
+                                <StackPanel Margin="5">
+                                    <TextBlock HorizontalAlignment="Right"
+                                               Style="{StaticResource ItemValues}"
+                                               Text="{Binding Instrument.PulseASelect,
+                                                              UpdateSourceTrigger=PropertyChanged}" />
+                                    <TextBlock HorizontalAlignment="Right"
+                                               Style="{StaticResource ItemDescriptions}"
+                                               Text="Pulse A Select" />
+                                </StackPanel>
+                                <StackPanel Margin="5">
+                                    <TextBlock HorizontalAlignment="Right"
+                                               Style="{StaticResource ItemValues}"
+                                               Text="{Binding Instrument.PulseAScaling,
+                                                              UpdateSourceTrigger=PropertyChanged}" />
+                                    <TextBlock HorizontalAlignment="Right"
+                                               Style="{StaticResource ItemDescriptions}"
+                                               Text="Pulse A Scaling" />
+                                </StackPanel>
+                                <StackPanel Margin="5">
+                                    <TextBlock HorizontalAlignment="Right"
+                                               Style="{StaticResource ItemValues}"
+                                               Text="{Binding Instrument.PulseBSelect,
+                                                              UpdateSourceTrigger=PropertyChanged}" />
+                                    <TextBlock HorizontalAlignment="Right"
+                                               Style="{StaticResource ItemDescriptions}"
+                                               Text="Pulse B Select" />
+                                </StackPanel>
+                                <StackPanel Margin="5">
+                                    <TextBlock HorizontalAlignment="Right"
+                                               Style="{StaticResource ItemValues}"
+                                               Text="{Binding Instrument.PulseBScaling,
+                                                              UpdateSourceTrigger=PropertyChanged}" />
+                                    <TextBlock HorizontalAlignment="Right"
+                                               Style="{StaticResource ItemDescriptions}"
+                                               Text="Pulse B Scaling" />
+                                </StackPanel>
+                            </UniformGrid>
                         </StackPanel>
                     </Grid>
 

@@ -140,7 +140,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Instrument.xsd</DependentUpon>
     </Compile>
-    <Compile Include="Test\ITemperatureTestClass.vb" />
+    <Compile Include="Test\Temperature\ITemperatureTestClass.vb" />
     <Compile Include="Test\FactorClass.vb" />
     <Compile Include="Test\IPressureFactorClass.vb" />
     <Compile Include="Test\IVolume.vb" />
@@ -148,8 +148,8 @@
     <Compile Include="Test\RotaryTest.vb" />
     <Compile Include="Test\SuperFactorClass.vb" />
     <Compile Include="Instruments\Types\MiniMaxInstrument.vb" />
-    <Compile Include="Test\TemperatureClass.vb" />
-    <Compile Include="Test\TemperatureTestClass.vb" />
+    <Compile Include="Test\Temperature\TemperatureClass.vb" />
+    <Compile Include="Test\Temperature\TemperatureTestClass.vb" />
     <Compile Include="Test\ITestClass.vb" />
     <Compile Include="Test\Volume.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
