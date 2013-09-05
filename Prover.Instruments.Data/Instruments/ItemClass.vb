@@ -18,6 +18,8 @@ Public Class ItemClass
     <JsonIgnore>
     Public Property IsTemperature As Boolean?
     <JsonIgnore>
+    Public Property IsTemperatureTest As Boolean?
+    <JsonIgnore>
     Public Property IsVolume As Boolean?
     <JsonIgnore>
     Private Property ValueDescriptions As List(Of ItemDescriptions)
@@ -40,7 +42,7 @@ Public Class ItemClass
         End Get
     End Property
 
-    Sub New(Number As Integer, Code As String, ShortDescription As String, LongDescription As String, IsAlarm As Boolean?, IsPressure As Boolean?, IsTemperature As Boolean?, IsVolume As Boolean?, ValueDescriptions As List(Of ItemDescriptions))
+    Sub New(Number As Integer, Code As String, ShortDescription As String, LongDescription As String, IsAlarm As Boolean?, IsPressure As Boolean?, IsTemperature As Boolean?, IsTemperatureTest As Boolean?, IsVolume As Boolean?, ValueDescriptions As List(Of ItemDescriptions))
         Me.Number = Number
         Me.Code = Code
         Me.ShortDescription = ShortDescription
@@ -48,6 +50,7 @@ Public Class ItemClass
         Me.IsAlarm = IsAlarm
         Me.IsPressure = IsPressure
         Me.IsTemperature = IsTemperature
+        Me.IsTemperatureTest = IsTemperatureTest
         Me.IsVolume = IsVolume
         Me.ValueDescriptions = ValueDescriptions
     End Sub
@@ -66,6 +69,7 @@ Public Class ItemClass
                                             Not IsNothing(x.@isAlarm) AndAlso x.@isAlarm,
                                             Not IsNothing(x.@isPressure) AndAlso x.@isPressure,
                                             Not IsNothing(x.@isTemperature) AndAlso x.@isTemperature,
+                                            Not IsNothing(x.@isTemperatureTest) AndAlso x.@isTemperatureTest,
                                             Not IsNothing(x.@isVolume) AndAlso x.@isVolume,
                             (From y In x.Elements("value") Select New ItemDescriptions(y.@id, y.@description, y.@numericvalue)).ToList())
                 ).ToList()

@@ -22,18 +22,8 @@ Namespace Instruments.Data
         Protected _pathToItemXML As String
         Private _instrumentGUID As Guid
 
-
-
         Sub New()
-            'PressureTests = New List(Of IPressureFactorClass)
-            'PressureTests.Add(New PressureFactorClass(1))
-            'PressureTests.Add(New PressureFactorClass(2))
-            'PressureTests.Add(New PressureFactorClass(3))
 
-            TemperatureTests = New List(Of ITemperatureClass)
-            TemperatureTests.Add(New TemperatureClass(1))
-            TemperatureTests.Add(New TemperatureClass(2))
-            TemperatureTests.Add(New TemperatureClass(3))
         End Sub
 
 #Region "Properties"
@@ -46,7 +36,7 @@ Namespace Instruments.Data
         Public Property InspectionID As Integer? Implements IBaseInstrument.InspectionID
 
         Public Property PressureTests As List(Of IPressureFactorClass) Implements IBaseInstrument.PressureTests
-        Public Property TemperatureTests As List(Of ITemperatureClass) Implements IBaseInstrument.TemperateTests
+        Public Property Temperature As TemperatureClass Implements IBaseInstrument.Temperature
         Public Property VolumeTest As IVolume Implements IBaseInstrument.VolumeTest
 
         Public ReadOnly Property InstrumenGuID() As Guid Implements IBaseInstrument.InstrumentGuid
@@ -61,6 +51,7 @@ Namespace Instruments.Data
 
         Public ReadOnly Property SerialNumber As String Implements IBaseInstrument.SerialNumber
             Get
+                If Items Is Nothing Then Return Nothing
                 Return Items.Where(Function(x) x.Number = 62).SingleOrDefault.Value
             End Get
         End Property
@@ -68,13 +59,21 @@ Namespace Instruments.Data
 
         Public ReadOnly Property SiteNumber1 As String Implements IBaseInstrument.SiteNumber1
             Get
-                Return Items.Where(Function(x) x.Number = 200).SingleOrDefault.Value
+                Try
+                    Return Items.Where(Function(x) x.Number = 200).SingleOrDefault.Value
+                Catch ex As Exception
+                    Return Nothing
+                End Try
             End Get
         End Property
 
-        Public ReadOnly Property SiteNumbe2 As String Implements IBaseInstrument.SiteNumber2
+        Public ReadOnly Property SiteNumber2 As String Implements IBaseInstrument.SiteNumber2
             Get
-                Return Items.Where(Function(x) x.Number = 201).SingleOrDefault.Value
+                Try
+                    Return Items.Where(Function(x) x.Number = 201).SingleOrDefault.Value
+                Catch ex As Exception
+                    Return Nothing
+                End Try
             End Get
         End Property
 
@@ -92,6 +91,11 @@ Namespace Instruments.Data
 
 
 
+       
+
+#End Region
+
+#Region "Methods"
         Public Overridable Function IsLivePressure() As IBaseInstrument.FixedFactors Implements IBaseInstrument.IsLivePressure
             Return Items.Where(Function(x) x.Number = IBaseInstrument.FixedFactorItems.FixedPressure).SingleOrDefault.Value
         End Function
@@ -104,13 +108,44 @@ Namespace Instruments.Data
             Return Items.Where(Function(x) x.Number = IBaseInstrument.FixedFactorItems.FixedSuperFactor).SingleOrDefault.Value
         End Function
 
+
+        Public Overridable Async Function DownloadSiteInformation() As Task Implements IBaseInstrument.DownloadSiteInformation
+            Items = Await DownloadItems(Me.InstrumentType, Me.Items)
+
+            If Me.Temperature Is Nothing Then Temperature = New TemperatureClass(Me.Items)
+            If Me.VolumeTest Is Nothing Then VolumeTest = New Volume(Items)
+        End Function
+
+        Public Overridable Async Function DownloadTemperatureItems() As Task Implements IBaseInstrument.DownloadTemperatureItems
+            Await Temperature.DownloadTemperatureItems(InstrumentType)
+        End Function
+
+        Public Overridable Async Function DownloadTemperatureTestItems(LevelIndex As Integer) As Task Implements IBaseInstrument.DownloadTemperatureTestItems
+            Await Temperature.DownloadTemperatureTestItems(InstrumentType, LevelIndex)
+        End Function
+
+#Region "Shared stuff"
         Shared Function LoadInstrumentItems() As List(Of ItemClass)
             Return Nothing
         End Function
 
+        Public Shared Async Function DownloadItems(InstrumentType As InstrumentTypeCode, Items As List(Of ItemClass)) As Task(Of List(Of ItemClass))
+
+            Dim downloads = Await InstrumentCommunications.DownloadItemsAsync(InstrumentType, Items)
+
+            For Each item In downloads
+                Items.Where(Function(x) x.Number = item.Key).SingleOrDefault.Value = item.Value
+            Next
+
+            Return Items
+        End Function
 
 
 #End Region
+
+#End Region
+
+
 
         Public Event PropertyChanged As PropertyChangedEventHandler Implements INotifyPropertyChanged.PropertyChanged
 

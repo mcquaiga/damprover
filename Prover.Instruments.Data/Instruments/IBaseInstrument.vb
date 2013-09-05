@@ -63,17 +63,14 @@ Public Interface IBaseInstrument
 #End Region
 
     Property PressureTests As List(Of IPressureFactorClass)
-    Property TemperateTests As List(Of ITemperatureClass)
+    Property Temperature As TemperatureClass
     Property VolumeTest As IVolume
-
-
 
     Function IsLiveSuper() As FixedFactors
     Function IsLivePressure() As FixedFactors
     Function IsLiveTemperate() As FixedFactors
 
     Property InstrumentType As miSerialProtocol.InstrumentTypeCode
-
     ReadOnly Property InstrumentGuid As Guid
 
     ReadOnly Property SerialNumber As String
@@ -89,5 +86,9 @@ Public Interface IBaseInstrument
     ReadOnly Property PulseASelect As PulseOutputValues
     ReadOnly Property PulseBSelect As PulseOutputValues
     Property InspectionID As Integer?
+
+    Function DownloadSiteInformation() As Task
+    Function DownloadTemperatureItems() As Task
+    Function DownloadTemperatureTestItems(LevelIndex As Integer) As Task
 
 End Interface

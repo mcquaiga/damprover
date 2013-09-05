@@ -10,7 +10,6 @@ Namespace Instruments.Data
             MyBase.New()
             MyBase.Items = LoadInstrumentItems()
             InstrumentType = InstrumentTypeCode.MiniMax
-            MyBase.VolumeTest = New Volume(Items.Where(Function(x) x.IsVolume = True).ToList)
         End Sub
 
 
@@ -21,6 +20,10 @@ Namespace Instruments.Data
         Overloads Shared Function LoadInstrumentItems() As List(Of ItemClass)
             Return ItemClass.LoadInstrumentItems(My.Application.Info.DirectoryPath + "\MiniMaxItems.xml")
         End Function
+
+        Overloads Shared Sub DownloadInstrumentInformation()
+
+        End Sub
 
 #End Region
 

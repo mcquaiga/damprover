@@ -1,11 +1,7 @@
-﻿
-Public Interface ITemperatureClass
-    Enum UnitsEnum
-        C = 1
-        F = 0
-        R = 2
-        K = 3
-    End Enum
+﻿Imports miSerialProtocol
+
+Public Interface ITemperatureTestClass
+
     Enum TemperatureItems
         GasTemp = 26
         BaseTemp = 34
@@ -14,12 +10,15 @@ Public Interface ITemperatureClass
         FixedTempFactor = 111
     End Enum
 
-    Property Items As Dictionary(Of Integer, String)
-    ReadOnly Property TemperatureUnits() As UnitsEnum
+
+    Property Items As List(Of ItemClass)
+    Property TemperatureUnits() As String
+    Property BaseTemperature() As Double
+
     Property GaugeTemperature() As Double
     ReadOnly Property EVCTemperature() As Double
     ReadOnly Property EVCFactor() As Double
-    ReadOnly Property BaseTemperature() As Double
+
     ReadOnly Property TemperatureFactor() As Double
     ReadOnly Property PercentError() As Double
     ReadOnly Property hasPassed As Boolean
@@ -27,6 +26,7 @@ Public Interface ITemperatureClass
     ReadOnly Property LevelIndex As Integer
     ReadOnly Property LevelDescription As String
 
+    Function DownloadTestItems(InstrumentTypeCode As InstrumentTypeCode) As Task
 
 
 End Interface

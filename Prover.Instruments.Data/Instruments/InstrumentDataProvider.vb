@@ -87,18 +87,22 @@ Namespace Instruments.Data
             UpsertInstrument(Instrument, Nothing)
         End Sub
 
-        Public Sub UpsertInstrument(instrument As IBaseInstrument, Session As DocumentSession)
+        Public Async Sub UpsertInstrument(instrument As IBaseInstrument, Session As DocumentSession)
 
-            If Session Is Nothing Then
-                Session = _docStore.OpenSession()
-            Else
-                If Not Session.HasChanged(instrument) Then
-                    Exit Sub
-                End If
-            End If
-            If instrument.CreatedDate Is Nothing Then instrument.CreatedDate = Date.Now()
-            Session.Store(instrument)
-            Session.SaveChanges()
+            Await Task.Run(Sub()
+
+                               If Session Is Nothing Then
+                                   Session = _docStore.OpenSession()
+                               Else
+                                   If Not Session.HasChanged(instrument) Then
+                                       Exit Sub
+                                   End If
+                               End If
+                               If instrument.CreatedDate Is Nothing Then instrument.CreatedDate = Date.Now()
+                               Session.Store(instrument)
+                               Session.SaveChanges()
+                           End Sub
+            )
         End Sub
 
         Protected Overrides Function FetchData(parameters As Dictionary(Of String, Object)) As IEnumerable(Of IBaseInstrument)

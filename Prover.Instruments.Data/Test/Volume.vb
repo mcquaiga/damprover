@@ -6,8 +6,9 @@ Public Class Volume
 
     Sub New(VolumeItems As List(Of ItemClass))
         MyBase.New()
-        BeforeItems = VolumeItems
-        AfterItems = VolumeItems
+
+        BeforeItems = VolumeItems.Where(Function(x) x.IsVolume = True).ToList()
+        AfterItems = VolumeItems.Where(Function(x) x.IsVolume = True).ToList
     End Sub
 
 #Region "Properties"

@@ -4,7 +4,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:vm="clr-namespace:Prover.Instruments.View.ViewModels"
-             d:DesignWidth=""
+             d:DesignWidth="1000"
              mc:Ignorable="d">
 
     <UserControl.Resources>
@@ -148,7 +148,10 @@
 
                 <!--  <ContentControl Content="{Binding Source={StaticResource Instrument}, Mode=OneWay}" />  -->
 
-                <Grid Grid.Column="1" Visibility="{Binding ShowCommButtons, UpdateSourceTrigger=PropertyChanged}">
+                <Grid Grid.Column="1"
+                      Margin="15"
+                      Visibility="{Binding ShowCommButtons,
+                                           UpdateSourceTrigger=PropertyChanged}">
                     <Grid.RowDefinitions>
                         <RowDefinition />
                         <RowDefinition />
@@ -273,21 +276,27 @@
                                                    Style="{StaticResource ItemValues}"
                                                    Text="{Binding Instrument.SerialNumber,
                                                                   UpdateSourceTrigger=PropertyChanged}" />
-                                        <TextBlock Style="{StaticResource ItemDescriptions}" Text="Serial Number" />
+                                        <TextBlock HorizontalAlignment="Right"
+                                                   Style="{StaticResource ItemDescriptions}"
+                                                   Text="Serial Number" />
                                     </StackPanel>
                                     <StackPanel Margin="5">
                                         <TextBlock HorizontalAlignment="Right"
                                                    Style="{StaticResource ItemValues}"
                                                    Text="{Binding Instrument.SiteNumber1,
                                                                   UpdateSourceTrigger=PropertyChanged}" />
-                                        <TextBlock Style="{StaticResource ItemDescriptions}" Text="Site Number 1" />
+                                        <TextBlock HorizontalAlignment="Right"
+                                                   Style="{StaticResource ItemDescriptions}"
+                                                   Text="Site Number 1" />
                                     </StackPanel>
                                     <StackPanel Margin="5">
                                         <TextBlock HorizontalAlignment="Right"
                                                    Style="{StaticResource ItemValues}"
                                                    Text="{Binding Instrument.SiteNumber2,
                                                                   UpdateSourceTrigger=PropertyChanged}" />
-                                        <TextBlock Style="{StaticResource ItemDescriptions}" Text="Site Number 2" />
+                                        <TextBlock HorizontalAlignment="Right"
+                                                   Style="{StaticResource ItemDescriptions}"
+                                                   Text="Site Number 2" />
                                     </StackPanel>
                                 </StackPanel>
                             </WrapPanel>
@@ -322,9 +331,31 @@
                         <Grid.RowDefinitions>
                             <RowDefinition />
                             <RowDefinition />
+                            <RowDefinition />
                         </Grid.RowDefinitions>
+                        <UniformGrid Grid.Row="0" Columns="3">
+                            <StackPanel Margin="5">
+                                <TextBlock HorizontalAlignment="Right"
+                                           Style="{StaticResource ItemValues}"
+                                           Text="{Binding Instrument.Temperature.TemperatureUnits,
+                                                          UpdateSourceTrigger=PropertyChanged}" />
+                                <TextBlock HorizontalAlignment="Right"
+                                           Style="{StaticResource ItemDescriptions}"
+                                           Text="Units" />
+                            </StackPanel>
+                            <StackPanel Margin="5">
+                                <TextBlock HorizontalAlignment="Right"
+                                           Style="{StaticResource ItemValues}"
+                                           Text="{Binding Instrument.Temperature.BaseTemperature,
+                                                          UpdateSourceTrigger=PropertyChanged}" />
+                                <TextBlock HorizontalAlignment="Right"
+                                           Style="{StaticResource ItemDescriptions}"
+                                           Text="Base" />
+                            </StackPanel>
+                        </UniformGrid>
 
-                        <UniformGrid Grid.Row="0"
+
+                        <UniformGrid Grid.Row="1"
                                      Grid.Column="1"
                                      Margin="5"
                                      Columns="6">
@@ -347,7 +378,7 @@
                                        TextAlignment="right"
                                        TextWrapping="Wrap" />
                         </UniformGrid>
-                        <ItemsControl Grid.Row="1"
+                        <ItemsControl Grid.Row="2"
                                       Margin="5"
                                       ItemTemplate="{StaticResource ResourceKey=TemperatureItem}"
                                       ItemsSource="{Binding TemperatureTests}" />
@@ -555,7 +586,9 @@
                 </Expander>
             </Border>
             <WrapPanel HorizontalAlignment="right">
-                <Button Command="{Binding SaveCommand}"
+                <Button Width="150"
+                        Margin="10"
+                        Command="{Binding SaveCommand}"
                         Content="Save"
                         Style="{StaticResource SimpleButton}" />
                 <Button Command="{Binding CancelCommand}"

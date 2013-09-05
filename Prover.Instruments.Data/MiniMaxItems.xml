@@ -10,13 +10,13 @@
 	<item number="13" code="BASE_PRESS" shortDescription="Base Press" description="Base Pressure" isPressure="true"/>
 	<item number="14" code="ATM_PRESS" shortDescription="ATM Press" description="ATM Pressure" isPressure="true"/>
 	
-	<item number="26" shortDescription="Gas Temperat" description="EVC Gas Temperature" isTemperature="true"/>
+	<item number="26" shortDescription="Gas Temperat" description="EVC Gas Temperature" isTemperatureTest="true"/>
 	<item number="27" shortDescription="Gas Temp Lo" description="Corrected Volume" isTemperature="true" />
 	<item number="28" shortDescription="Gas Temp Hi" description="Corrected Volume" isTemperature="true" />
 	<item number="34" shortDescription="Base Tempera" description="Base Temperature" isTemperature="true" />
-	<item number="35" shortDescription="Temperature" description="EVC Temperature"/>
+	<item number="35" shortDescription="Temperature" description="EVC Temperature" isTemperatureTest="true"/>
 	<item number="44" code="PRESS_FACTOR" shortDescription="Press Factor" description="Pressure Factor" isPressure="true"/>
-	<item number="45" code="TEMP_FACTOR" shortDescription="Temperature Factor" description="Temperature Factor" isTemperature="true"/>
+	<item number="45" code="TEMP_FACTOR" shortDescription="Temperature Factor" description="Temperature Factor" isTemperatureTest="true"/>
 	<item number="47" code="UNSQRD_SUPER_FACTOR" shortDescription="Unsqrd. Super Factor" description="Unsquared Supercompresibility Factor" isPressure="true"/>
 	<item number="53" code="SPEC_GR" shortDescription="Specific Gravity" description="Specific Gravity" isSuper="true" />
 	<item number="54" code="N2" shortDescription="% N2" description="% N2" isSuper="true" />

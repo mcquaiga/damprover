@@ -47,10 +47,8 @@ Namespace Instruments.Data
         End Function
 
 
-        Public Shared Function DownloadPressureItemsAsync(Instrument As IBaseInstrument, Optional Progress As IProgress(Of Tuple(Of String, Integer)) = Nothing) As Task(Of Dictionary(Of Integer, String))
-            Return Task.Run(Function()
-
-
+        Public Shared Function DownloadPressureItemsAsync(Instrument As IBaseInstrument, Optional Progress As IProgress(Of Tuple(Of String, Integer)) = Nothing) As Task
+            Return Task.Run(Sub()
                                 Select Case Instrument.InstrumentType
                                     Case InstrumentTypeCode.MiniMax
                                         _miSerial = New miSerialProtocol.MiniMaxClass(CommPort)
@@ -64,14 +62,17 @@ Namespace Instruments.Data
                                 _miSerial.Connect()
                                 Dim downloads = _miSerial.RG((From i In _items Select i.Number).ToList)
                                 _miSerial.Disconnect()
-                                Return downloads
-                            End Function)
+
+                                For Each item In downloads
+                                    Instrument.Items.Where(Function(x) x.Number = item.Key).SingleOrDefault.Value = item.Value
+                                Next
+                            End Sub)
 
         End Function
 
 
-        Public Shared Function DownloadTemperatureItemsAsync(Instrument As IBaseInstrument, Optional Progress As IProgress(Of Tuple(Of String, Integer)) = Nothing) As Task(Of Dictionary(Of Integer, String))
-            Return Task.Run(Function()
+        Public Shared Function DownloadTemperatureItemsAsync(Instrument As IBaseInstrument, Test As ITemperatureTestClass, Optional Progress As IProgress(Of Tuple(Of String, Integer)) = Nothing) As Task
+            Return Task.Run(Sub()
                                 Select Case Instrument.InstrumentType
                                     Case InstrumentTypeCode.MiniMax
                                         _miSerial = New miSerialProtocol.MiniMaxClass(CommPort)
@@ -82,11 +83,45 @@ Namespace Instruments.Data
                                 End Select
 
                                 _miSerial.Connect()
-                                Dim downloads = _miSerial.RG((From i In (Instrument.Items.Where(Function(x) x.IsTemperature = True)) Select i.Number).ToList)
+                                Dim downloads = _miSerial.RG((From i In (Test.Items) Select i.Number).ToList)
                                 _miSerial.Disconnect()
 
 
+                                For Each item In downloads
+                                    Test.Items.Where(Function(x) x.Number = item.Key).SingleOrDefault.Value = item.Value
+                                Next
+                            End Sub)
+        End Function
+
+        Public Shared Function DownloadItemsAsync(InstrumentType As InstrumentTypeCode, Items As List(Of ItemClass), Optional Progress As IProgress(Of Tuple(Of String, Integer)) = Nothing) As Task(Of Dictionary(Of Integer, String))
+            Return Task.Run(Function()
+                                If CommPortName Is Nothing Or IsNothing(BaudRate) Then
+                                    Throw New Exception("Comm Port and Baud Rate must be set.")
+                                End If
+
+                                If CommPort Is Nothing Then
+                                    If CommPortName = "IrDA" Then
+                                        CommPort = New IrDAPort()
+                                    Else
+                                        CommPort = New SerialPort(CommPortName, BaudRate)
+                                    End If
+                                End If
+
+                                Select Case InstrumentType
+                                    Case InstrumentTypeCode.MiniMax
+                                        _miSerial = New miSerialProtocol.MiniMaxClass(CommPort)
+                                    Case InstrumentTypeCode.EC300
+                                        _miSerial = New miSerialProtocol.EC300Class(CommPort)
+                                    Case Else
+                                        _miSerial = New miSerialProtocol.TCIClass(CommPort)
+                                End Select
+
+                                _miSerial.Connect()
+                                Dim downloads = _miSerial.RG((From i In (Items) Select i.Number).ToList)
+                                _miSerial.Disconnect()
+
                                 Return downloads
+
                             End Function)
         End Function
 

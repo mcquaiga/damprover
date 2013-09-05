@@ -125,10 +125,10 @@ Namespace ViewModels
             End Get
         End Property
 
-        Public ReadOnly Property TemperatureTests As ObservableCollection(Of ITemperatureClass)
+        Public ReadOnly Property TemperatureTests As ObservableCollection(Of ITemperatureTestClass)
             Get
-                If _Instrument Is Nothing OrElse _Instrument.TemperateTests Is Nothing Then Return Nothing
-                Return New ObservableCollection(Of ITemperatureClass)(From t As ITemperatureClass In _Instrument.TemperateTests Order By t.LevelIndex)
+                If _Instrument Is Nothing OrElse _Instrument.Temperature Is Nothing OrElse _Instrument.Temperature.Tests Is Nothing Then Return Nothing
+                Return New ObservableCollection(Of ITemperatureTestClass)(From t As ITemperatureTestClass In _Instrument.Temperature.Tests Order By t.LevelIndex)
             End Get
         End Property
 
@@ -164,27 +164,20 @@ Namespace ViewModels
 
         Public Async Function FetchPressureItemsByLevel(LevelIndex As Integer) As Task
 
-            Dim p As New PressureFactorClass(LevelIndex)
-            p.Items = Await InstrumentCommunications.DownloadPressureItemsAsync(Me.Instrument)
+            'Dim p As New PressureFactorClass(LevelIndex)
+            'Await InstrumentCommunications.DownloadPressureItemsAsync(Instrument, _progress)
 
-            Instrument.PressureTests.Remove(Instrument.PressureTests.Where(Function(x) x.LevelIndex = LevelIndex).FirstOrDefault())
-            Instrument.PressureTests.Add(p)
+            'Instrument.PressureTests.Remove(Instrument.PressureTests.Where(Function(x) x.LevelIndex = LevelIndex).FirstOrDefault())
+            'Instrument.PressureTests.Add(p)
 
-            NotifyPropertyChanged("Instrument")
+            'NotifyPropertyChanged("Instrument")
         End Function
 
-        Public Async Function FetchTemperatureItemsByLevel(LevelIndex As Integer) As Task
-            Dim t As New TemperatureClass(LevelIndex)
-            t.Items = Await InstrumentCommunications.DownloadTemperatureItemsAsync(Me.Instrument)
-
-            Dim temp = Instrument.TemperateTests.Where(Function(x) (x.LevelIndex = LevelIndex)).FirstOrDefault()
-            temp.Items = t.Items
-
-            temp = Nothing
-
+        Public Async Sub FetchTemperatureItemsByLevel(LevelIndex As Integer)
+            Await Instrument.DownloadTemperatureTestItems(LevelIndex)
             NotifyPropertyChanged("Instruments")
             NotifyPropertyChanged("TemperatureTests")
-        End Function
+        End Sub
 
         Public Sub LoadItemDescriptions()
             If Not Instrument Is Nothing Then
@@ -208,7 +201,7 @@ Namespace ViewModels
 
             LoadItemDescriptions()
             Try
-                Await InstrumentCommunications.DownloadItemFileAsync(Instrument, _progress)
+                Await Instrument.DownloadSiteInformation()
             Catch ex As Exception
                 MsgBox(ex.Message, MsgBoxStyle.OkOnly + MsgBoxStyle.Information, "Error")
             End Try
@@ -217,12 +210,6 @@ Namespace ViewModels
             NotifyPropertyChanged("Volume")
             NotifyPropertyChanged("TemperatureTests")
             NotifyPropertyChanged("Instrument")
-
-        End Function
-
-
-        Public Async Function RunInstrumentTest() As Task
-
 
         End Function
 
