@@ -24,23 +24,38 @@ Public Class ItemClass
     <JsonIgnore>
     Private Property ValueDescriptions As List(Of ItemDescriptions)
 
-    ReadOnly Property DescriptionValue As String
+    Private _descriptionValue As String
+    Private _numericValue As Double?
+
+    Public Property DescriptionValue As String
         Get
+            If Not _descriptionValue Is Nothing Then Return _descriptionValue
             If ValueDescriptions Is Nothing OrElse ValueDescriptions.Count = 0 Then Return Value
             Return ValueDescriptions.Where(Function(x) x.id = Me.Value).SingleOrDefault.description
         End Get
+        Set(value As String)
+            _descriptionValue = value
+        End Set
     End Property
 
-    ReadOnly Property NumericValue As Double
+    Public Property NumericValue As Double
         Get
-            'If ValueDescriptions Is Nothing OrElse ValueDescriptions.Count = 0 Then Return Value
+            If _numericValue.HasValue Then Return _numericValue
+            If ValueDescriptions Is Nothing OrElse ValueDescriptions.Count = 0 Then Return Value
             Try
                 Return ValueDescriptions.Where(Function(x) x.id = Me.Value).SingleOrDefault.NumericValue
             Catch ex As Exception
                 Return Value
             End Try
         End Get
+        Set(value As Double)
+            _numericValue = value
+        End Set
     End Property
+
+    Sub New()
+        _numericValue = Nothing
+    End Sub
 
     Sub New(Number As Integer, Code As String, ShortDescription As String, LongDescription As String, IsAlarm As Boolean?, IsPressure As Boolean?, IsTemperature As Boolean?, IsTemperatureTest As Boolean?, IsVolume As Boolean?, ValueDescriptions As List(Of ItemDescriptions))
         Me.Number = Number

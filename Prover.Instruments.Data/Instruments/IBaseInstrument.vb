@@ -62,6 +62,8 @@ Public Interface IBaseInstrument
     End Enum
 #End Region
 
+    Function StartRotaryTest() As Task
+
     Property PressureTests As List(Of IPressureFactorClass)
     Property Temperature As TemperatureClass
     Property VolumeTest As IVolume

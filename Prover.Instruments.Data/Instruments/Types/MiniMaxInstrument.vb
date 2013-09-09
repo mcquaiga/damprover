@@ -15,7 +15,7 @@ Namespace Instruments.Data
         Public ReadOnly Property RotaryMeterType As String
             Get
                 Try
-                    Return Items.Where(Function(x) x.Number = 200).SingleOrDefault.Value
+                    Return Items.Where(Function(x) x.Number = 432).SingleOrDefault.DescriptionValue
                 Catch ex As Exception
                     Return Nothing
                 End Try
@@ -29,9 +29,6 @@ Namespace Instruments.Data
             Return ItemClass.LoadInstrumentItems(My.Application.Info.DirectoryPath + "\MiniMaxItems.xml")
         End Function
 
-        Overloads Shared Sub DownloadInstrumentInformation()
-
-        End Sub
 
 #End Region
 

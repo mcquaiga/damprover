@@ -10,9 +10,9 @@ Public Class TemperatureClass
         Tests = New List(Of ITemperatureTestClass)
         If Not Items Is Nothing Then
             Me.TemperatureItems = Items.Where(Function(x) x.IsTemperature = True).ToList
+            Tests.Add(New TemperatureTestClass(0, Items, TemperatureUnits, BaseTemperature))
             Tests.Add(New TemperatureTestClass(1, Items, TemperatureUnits, BaseTemperature))
             Tests.Add(New TemperatureTestClass(2, Items, TemperatureUnits, BaseTemperature))
-            Tests.Add(New TemperatureTestClass(3, Items, TemperatureUnits, BaseTemperature))
         End If
     End Sub
 

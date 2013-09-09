@@ -68,6 +68,8 @@ Public Interface IVolume
     End Enum
 #End Region
 
+
+
     <JsonIgnore>
     Property BeforeItems As List(Of ItemClass)
     <JsonIgnore>
@@ -75,29 +77,36 @@ Public Interface IVolume
 
     ReadOnly Property TrueCorrected As Double 'Calculated Corrected Volume = (TempFactor * PressureFactor * Fpv2Factor * InputUncVolume)
     ReadOnly Property EvcCorrected As Double 'End Reading - Start Reading / Corrected Multiplier
-    Property TempFactor As Double
     Property PressureFactor As Double
     Property Fpv2 As Double
     ReadOnly Property InputUncVolume As Double
+
+    ReadOnly Property StartunCorrected As Double
     ReadOnly Property EndCorrected As Double
+
     ReadOnly Property StartCorrected As Double
+    ReadOnly Property EndUnCorrected As Double
+
     ReadOnly Property CorrectedMultiplier As Decimal
     ReadOnly Property UncorrectedMutliplier As Decimal
+    ReadOnly Property MaxUnCorrected As Double
+
     Property AppliedInput As Double
     Property DriveRate As Double '
     Property EVCType As EVCTypeEnum
-    ReadOnly Property StartunCorrected As Double
-    ReadOnly Property EndUnCorrected As Double
-    Property PulserA As Double
-    Property PulserB As Double
+
+
+    Property PulserACount As Double
+    Property PulserBCount As Double
     Property MeterDisplacement As Double
     Property EvcMeterDisplacement As Double
-    Property MaxUnCorrected As Double
     Property MeterTypeNumber As Integer
     Property MeterTypeString As String
-    Property UnCorCode As InstrumentVolumeUnitsEnum
-    Property CorCode As InstrumentVolumeUnitsEnum
     Property MechReading As Integer
     Property VolumeData As String
+    Property TemperatureTest As TemperatureTestClass
 
+
+
+    Function StartTest(InstrumentType As miSerialProtocol.InstrumentTypeCode) As Task
 End Interface

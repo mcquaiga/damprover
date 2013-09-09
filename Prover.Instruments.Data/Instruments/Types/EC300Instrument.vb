@@ -28,6 +28,8 @@ Namespace Instruments.Data
         Overloads Shared Function LoadInstrumentItems() As List(Of ItemClass)
             Return ItemClass.LoadInstrumentItems(My.Application.Info.DirectoryPath + "\EC300Items.xml")
         End Function
+
+
 #End Region
 
 

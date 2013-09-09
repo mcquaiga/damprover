@@ -1,17 +1,19 @@
 Imports Newtonsoft.Json
+Imports Prover.Instruments.Data
+Imports miSerialProtocol
 
 Public Class Volume
     Implements IVolume
 
-    Sub New()
 
+    Sub New()
     End Sub
 
-    Sub New(VolumeItems As List(Of ItemClass))
+    Sub New(Items As List(Of ItemClass))
         MyBase.New()
 
-        BeforeItems = VolumeItems.Where(Function(x) x.IsVolume = True).ToList()
-        AfterItems = VolumeItems.Where(Function(x) x.IsVolume = True).ToList
+        BeforeItems = Items.Where(Function(x) x.IsVolume = True).ToList()
+        AfterItems = Items.Where(Function(x) x.IsVolume = True).ToList
     End Sub
 
 #Region "Properties"
@@ -24,13 +26,41 @@ Public Class Volume
     Public Property AfterItems As List(Of ItemClass) Implements IVolume.AfterItems
 
     Public Property EVCType() As IVolume.EVCTypeEnum Implements IVolume.EVCType
-    Public Property TempFactor() As Double Implements IVolume.TempFactor
+
+
     Public Property PressureFactor() As Double Implements IVolume.PressureFactor
+
     Public Property Fpv2Factor() As Double Implements IVolume.Fpv2
+
     Public Overridable Property DriveRate() As Double Implements IVolume.DriveRate
+
     Public Overridable Property MeterDisplacement() As Double Implements IVolume.MeterDisplacement
+
     Public Overridable Property EVCMeterDisplacement() As Double Implements IVolume.EvcMeterDisplacement
+
     Public Property AppliedInput() As Double Implements IVolume.AppliedInput
+
+    Public Property MechReading As Integer Implements IVolume.MechReading
+
+    Public Property MeterTypeNumber1 As Integer Implements IVolume.MeterTypeNumber
+
+    Public Property MeterTypeString As String Implements IVolume.MeterTypeString
+
+    Public Property PulserACount As Double Implements IVolume.PulserACount
+
+    Public Property PulserBCount As Double Implements IVolume.PulserBCount
+
+    Public Property VolumeData As String Implements IVolume.VolumeData
+
+    Public Property TemperatureTest As TemperatureTestClass Implements IVolume.TemperatureTest
+
+    <JsonIgnore>
+    Public Property OutputBoard As IBoard
+    <JsonIgnore>
+    Public Property InputABoard As IBoard
+    <JsonIgnore>
+    Public Property InputBBoard As IBoard
+
 
     Public ReadOnly Property StartCorrected() As Double Implements IVolume.StartCorrected
         Get
@@ -90,9 +120,9 @@ Public Class Volume
             If EVCType = IVolume.EVCTypeEnum.Pressure Then
                 Return (PressureFactor * InputUncVolume)
             ElseIf EVCType = IVolume.EVCTypeEnum.Temperature Then
-                Return (TempFactor * InputUncVolume)
+                Return (TemperatureTest.TemperatureFactor * InputUncVolume)
             ElseIf EVCType = IVolume.EVCTypeEnum.PressureTemperature Then
-                Return (PressureFactor * TempFactor * Fpv2Factor * InputUncVolume)
+                Return (PressureFactor * TemperatureTest.TemperatureFactor * Fpv2Factor * InputUncVolume)
             End If
             Return Nothing
         End Get
@@ -139,12 +169,12 @@ Public Class Volume
         End Get
     End Property
 
-    'Public Overridable Property MaxUnCorrected() As Double
-    '    Get
-    '        Return MaxUnCorrected
-    '    End Get
+    Public Overridable ReadOnly Property MaxUnCorrected() As Double Implements IVolume.MaxUnCorrected
+        Get
+            Return 3
+        End Get
 
-    'End Property
+    End Property
 
     Public Overridable ReadOnly Property MeterTypeName() As String
         Get
@@ -183,6 +213,7 @@ Public Class Volume
 
 
     Public Property MechanicalReading() As Integer
+
     Public Overridable ReadOnly Property UncCorMechVolume() As Integer
         Get
             Return Math.Abs(MechanicalReading * Me.UnCorrectedMultiplier)
@@ -199,6 +230,44 @@ Public Class Volume
         End Get
     End Property
 #End Region
+
+#Region "Methods"
+
+    Public Function StartTest(InstrumentType As InstrumentTypeCode) As Task Implements IVolume.StartTest
+
+        Return Task.Run(Async Function()
+                            'We need to setup three subsystems, 1 output (motor), 2 inputs (pulses A/B)
+                            OutputBoard = New USBDataAcqClass(0, MccDaq.DigitalPortType.EighthPortA, 1)
+                            InputABoard = New USBDataAcqClass(0, MccDaq.DigitalPortType.ThirdPortB, 2)
+                            InputBBoard = New USBDataAcqClass(0, MccDaq.DigitalPortType.ThirdPortB, 2)
+
+                            'Reset Tachometer
+
+
+                            'Start Motor with Output Pulse
+                            OutputBoard.PulseOut(USBDataAcqClass.MotorValues.mStart)
+
+                            PulserACount = 0
+                            PulserBCount = 0
+
+                            'Begin Listening for incoming pulses
+                            Do While PulserACount < MaxUnCorrected
+                                PulserACount = InputABoard.ReadPulse()
+                                PulserBCount = InputBBoard.ReadPulse()
+                            Loop
+
+                            'Stop motor
+                            OutputBoard.PulseOut(USBDataAcqClass.MotorValues.mStop)
+
+                            'Finally read tachometer
+
+                            'Download post test items
+                            AfterItems = Await BaseInstrument.DownloadItems(InstrumentType, AfterItems)
+
+                        End Function)
+
+    End Function
+
 
     Public Function IsMetric(ByVal UncMultiplierCode As IVolume.InstrumentVolumeUnitsEnum) As Boolean
         Select Case UncMultiplierCode
@@ -288,25 +357,10 @@ Public Class Volume
         Return 0
     End Function
 
-    Public Function BeginTest()
 
-    End Function
 
-    Public Property CorCode As IVolume.InstrumentVolumeUnitsEnum Implements IVolume.CorCode
 
-    Public Property MaxUnCorrected As Double Implements IVolume.MaxUnCorrected
 
-    Public Property MechReading As Integer Implements IVolume.MechReading
+#End Region
 
-    Public Property MeterTypeNumber1 As Integer Implements IVolume.MeterTypeNumber
-
-    Public Property MeterTypeString As String Implements IVolume.MeterTypeString
-
-    Public Property PulserA As Double Implements IVolume.PulserA
-
-    Public Property PulserB As Double Implements IVolume.PulserB
-
-    Public Property UnCorCode As IVolume.InstrumentVolumeUnitsEnum Implements IVolume.UnCorCode
-
-    Public Property VolumeData As String Implements IVolume.VolumeData
 End Class

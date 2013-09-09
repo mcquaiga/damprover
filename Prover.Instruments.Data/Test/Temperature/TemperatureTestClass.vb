@@ -81,7 +81,7 @@ Public Class TemperatureTestClass
 
     Public ReadOnly Property LevelDescription As String Implements ITemperatureTestClass.LevelDescription
         Get
-            Return "T" + CStr(_levelIndex)
+            Return "T" + CStr(_levelIndex + 1)
         End Get
     End Property
 

@@ -6,9 +6,10 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:views="clr-namespace:Prover.Instruments.View"
              x:Name="InstrumentsList"
+             Foreground="{DynamicResource HeaderColour}"
              d:DesignHeight="300"
              d:DesignWidth="506"
-             mc:Ignorable="d" Foreground="{DynamicResource HeaderColour}">
+             mc:Ignorable="d">
 
 
     <UserControl.Resources>
@@ -38,18 +39,19 @@
                         <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
                     <StackPanel Grid.Row="0" Orientation="Horizontal">
-                        <TextBlock Foreground="Blue" Text="{Binding CreatedDate}" />
+                        <TextBlock Foreground="White" Text="{Binding CreatedDate}" />
                     </StackPanel>
                     <StackPanel Grid.Row="1" Orientation="Horizontal" />
                     <StackPanel Grid.Row="2" Orientation="Horizontal">
-                        <TextBlock Foreground="Blue" Text="I.C. #: " />
-                        <TextBlock Foreground="Blue" Text="{Binding IC}" />
+                        <TextBlock Foreground="White" Text="I.C. #: " />
+                        <TextBlock Foreground="White" Text="{Binding IC}" />
                     </StackPanel>
                     <StackPanel Grid.Row="3" Orientation="Horizontal">
-                        <TextBlock Foreground="Blue" Text="Drive Type: " />
-                        <TextBlock Foreground="Blue" Text="{Binding InstrumentDriveType}" />
+                        <TextBlock Foreground="White" Text="Drive Type: " />
+                        <TextBlock Foreground="White" Text="{Binding InstrumentDriveType}" />
                     </StackPanel>
                 </Grid>
+                <Grid />
             </StackPanel>
         </DataTemplate>
         <Style x:Key="InstrumentStyle" TargetType="{x:Type ListBoxItem}">
@@ -85,22 +87,28 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />
             <RowDefinition Height="9*" />
-           
+
         </Grid.RowDefinitions>
 
         <StackPanel Grid.Row="0"
                     Margin="10, 0, 0, 0"
                     Orientation=" Horizontal">
-            <Button Command="{Binding OneWeekFilterCommand}" Style="{DynamicResource SimpleButton}" Content="Last 7 Days"/>
-            <Button Command="{Binding OneMonthFilterCommand}" Style="{DynamicResource SimpleButton}" Content="Last 30 Days"/>
+            <Button Command="{Binding OneWeekFilterCommand}"
+                    Content="Last 7 Days"
+                    Style="{DynamicResource SimpleButton}" />
+            <Button Command="{Binding OneMonthFilterCommand}"
+                    Content="Last 30 Days"
+                    Style="{DynamicResource SimpleButton}" />
 
             <!--  <TextBlock HorizontalAlignment="Right">Serial Number:</TextBlock>  -->
         </StackPanel>
         <TextBox x:Name="SerialNumber"
-    		Width="125"
-    		Margin="0,0,10,0"
-    		HorizontalAlignment="Right"
-    		Text="{Binding Instruments.SerialNumber, UpdateSourceTrigger=PropertyChanged}" FontSize="26.667" />
+                 Width="125"
+                 Margin="0,0,10,0"
+                 HorizontalAlignment="Right"
+                 FontSize="26.667"
+                 Text="{Binding SerialNumber,
+                                UpdateSourceTrigger=PropertyChanged}" />
         <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
@@ -110,11 +118,14 @@
                      HorizontalContentAlignment="Stretch"
                      VerticalContentAlignment="Stretch"
                      Background="{DynamicResource MainBackgroundColour}"
+                     BorderBrush="{DynamicResource HeaderColour}"
                      BorderThickness="1"
                      ItemContainerStyle="{StaticResource InstrumentStyle}"
                      ItemTemplate="{StaticResource ResourceKey=inst}"
                      ItemsSource="{Binding Source={StaticResource Instruments}}"
-                     SelectedItem="{Binding DataContext.SelectedInstrument, ElementName=InstrumentsList, Mode=TwoWay}" BorderBrush="{DynamicResource HeaderColour}" />
+                     SelectedItem="{Binding DataContext.SelectedInstrument,
+                                            ElementName=InstrumentsList,
+                                            Mode=TwoWay}" />
 
             <!--  Details  -->
             <!--

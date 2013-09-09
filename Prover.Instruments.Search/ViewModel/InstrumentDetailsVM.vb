@@ -180,17 +180,17 @@ Namespace ViewModels
         End Sub
 
         Public Sub LoadItemDescriptions()
-            If Not Instrument Is Nothing Then
-                If Instrument.InstrumentType = InstrumentTypeCode.MiniMax Then
-                    Me.Items = MiniMaxInstrument.LoadInstrumentItems()
-                End If
+            'If Not Instrument Is Nothing Then
+            '    If Instrument.InstrumentType = InstrumentTypeCode.MiniMax Then
+            '        Me.Items = MiniMaxInstrument.LoadInstrumentItems()
+            '    End If
 
-                If Instrument.InstrumentType = InstrumentTypeCode.EC300 Then
-                    Me.Items = EC300Instrument.LoadInstrumentItems()
-                End If
+            '    If Instrument.InstrumentType = InstrumentTypeCode.EC300 Then
+            '        Me.Items = EC300Instrument.LoadInstrumentItems()
+            '    End If
 
-                NotifyPropertyChanged("ItemValuesWithDescriptions")
-            End If
+            '    NotifyPropertyChanged("ItemValuesWithDescriptions")
+            'End If
         End Sub
 
         Public Async Function FetchInstrumentInformation() As Task

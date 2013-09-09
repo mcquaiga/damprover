@@ -21,4 +21,5 @@ Public Class InstrumentDetails
             Return False
         End Get
     End Property
+
 End Class

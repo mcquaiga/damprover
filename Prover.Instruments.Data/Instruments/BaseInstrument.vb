@@ -159,6 +159,10 @@ Namespace Instruments.Data
             Await Temperature.DownloadTemperatureTestItems(InstrumentType, LevelIndex)
         End Function
 
+        Public Overridable Async Function StartRotaryTest() As Task Implements IBaseInstrument.StartRotaryTest
+            Await Me.VolumeTest.StartTest(Me.InstrumentType)
+        End Function
+
 #Region "Shared stuff"
         Shared Function LoadInstrumentItems() As List(Of ItemClass)
             Return Nothing

@@ -405,7 +405,7 @@
                                        Text="Gauge"
                                        TextWrapping="Wrap" />
                             <TextBlock Style="{StaticResource ItemDescriptions}"
-                                       Text="Instrument"
+                                       Text="EVC Temp."
                                        TextWrapping="Wrap" />
                             <TextBlock Style="{StaticResource ItemDescriptions}"
                                        Text="EVC Factor"
@@ -532,15 +532,15 @@
                             <UniformGrid Columns="3">
                                 <StackPanel>
                                     <TextBlock Style="{StaticResource ItemValues}" Text="{Binding Instrument.VolumeTest.CorrectedMultiplier, UpdateSourceTrigger=PropertyChanged}" />
-                                    <TextBlock Style="{StaticResource ItemDescriptions}">Corrected Multiplier</TextBlock>
+                                    <TextBlock Style="{StaticResource ItemDescriptions}">Corrected Multiplier (90)</TextBlock>
                                 </StackPanel>
                                 <StackPanel>
                                     <TextBlock Style="{StaticResource ItemValues}" Text="{Binding Instrument.VolumeTest.UnCorrectedMultiplier, UpdateSourceTrigger=PropertyChanged}" />
-                                    <TextBlock Style="{StaticResource ItemDescriptions}">UnCorrected Multiplier</TextBlock>
+                                    <TextBlock Style="{StaticResource ItemDescriptions}">UnCorrected Multiplier (92)</TextBlock>
                                 </StackPanel>
                                 <StackPanel>
                                     <TextBlock Style="{StaticResource ItemValues}" Text="{Binding Instrument.VolumeTest.DriveRate, UpdateSourceTrigger=PropertyChanged}" />
-                                    <TextBlock Style="{StaticResource ItemDescriptions}">Drive Rate</TextBlock>
+                                    <TextBlock Style="{StaticResource ItemDescriptions}">Drive Rate (98)</TextBlock>
                                 </StackPanel>
                             </UniformGrid>
 
@@ -593,15 +593,26 @@
                             <Grid Grid.Row="2"
                                   Grid.ColumnSpan="2"
                                   Margin="0,10,0,0">
-                                <WrapPanel HorizontalAlignment="Center">
+                                <UniformGrid Columns="4">
                                     <StackPanel HorizontalAlignment="Center">
-                                        <TextBox Style="{DynamicResource SimpleTextBox}" Text="{Binding Instrument.VolumeTest.AppliedInput, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
+                                        <TextBlock Style="{DynamicResource ItemValues}" Text="{Binding Instrument.VolumeTest.PulserAcount, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
+                                        <TextBlock Style="{StaticResource ItemDescriptions}">Pulse A Count</TextBlock>
+                                    </StackPanel>
+                                    <StackPanel HorizontalAlignment="Center">
+                                        <TextBlock Style="{DynamicResource ItemValues}" Text="{Binding Instrument.VolumeTest.PulserBCount, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
+                                        <TextBlock Style="{StaticResource ItemDescriptions}">Pulse B Count</TextBlock>
+                                    </StackPanel>
+                                    <StackPanel HorizontalAlignment="Center">
+                                        <TextBlock Style="{DynamicResource ItemValues}" Text="{Binding Instrument.VolumeTest.AppliedInput, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
                                         <TextBlock Style="{StaticResource ItemDescriptions}">Applied Input</TextBlock>
                                     </StackPanel>
 
-                                </WrapPanel>
+                                </UniformGrid>
                                 <StackPanel HorizontalAlignment="Right">
-                                    <Button Content="Start Test" Style="{StaticResource SimpleButton}" />
+                                    <Button Width="100"
+                                            Command="{Binding FetchInstrumentInfoCommand}"
+                                            Content="Start Test"
+                                            Style="{StaticResource SimpleButton}" />
                                 </StackPanel>
                             </Grid>
                         </Border>
@@ -611,21 +622,7 @@
 
             <Border Margin="15,0,15,5"
                     BorderBrush="White"
-                    BorderThickness="0,0,0,1">
-                <Expander FontSize="24"
-                          Foreground="White"
-                          Header="Item File">
-                    <DataGrid AutoGenerateColumns="False" ItemsSource="{Binding ItemValuesWithDescriptions, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}">
-
-                        <DataGrid.Columns>
-                            <DataGridTextColumn Binding="{Binding Key.Number}" Header="Item" />
-                            <DataGridTextColumn Binding="{Binding Key.ShortDescription}" Header="Desc." />
-                            <DataGridTextColumn Binding="{Binding Value}" Header="Value" />
-
-                        </DataGrid.Columns>
-                    </DataGrid>
-                </Expander>
-            </Border>
+                    BorderThickness="0,0,0,1" />
             <WrapPanel HorizontalAlignment="right">
                 <Button Width="150"
                         Margin="10"
