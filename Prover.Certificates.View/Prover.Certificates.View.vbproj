@@ -90,17 +90,12 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
-    <Page Include="View\CreateCertificateList.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Compile Include="CertificatesViewModule.vb" />
     <Compile Include="Events\CertificatesSelectedInstrumentEvents.vb" />
     <Compile Include="ViewModels\CreateCertificateListVM.vb" />
     <Compile Include="ViewModels\ICreateCertificateListVM.vb" />
-    <Compile Include="View\CreateCertificateList.xaml.vb">
-      <DependentUpon>CreateCertificateList.xaml</DependentUpon>
-      <SubType>Code</SubType>
+    <Compile Include="View\CreateCertificatesView.xaml.vb">
+      <DependentUpon>CreateCertificatesView.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -158,6 +153,12 @@
       <Project>{f397ca27-ec97-4b98-b8cf-e60eb1f399b9}</Project>
       <Name>Prover</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="View\CreateCertificatesView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>

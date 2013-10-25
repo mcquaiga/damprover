@@ -1,5 +1,4 @@
-﻿Imports System.ComponentModel.Composition
-Imports Prover.Instruments.View.ViewModels
+﻿Imports Prover.Instruments.View.ViewModels
 
 Public Class InstrumentsListPage
     Implements IView(Of IInstrumentsListPageVM)

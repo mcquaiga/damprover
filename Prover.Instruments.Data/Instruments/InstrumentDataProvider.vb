@@ -47,8 +47,8 @@ Namespace Instruments.Data
         Public Function GetInstrumentsWithNoCertificate() As List(Of IBaseInstrument)
             Dim session = _docStore.OpenSession()
 
-            Dim instr = (From i In session.Query(Of IBaseInstrument)()
-              Where i.InspectionID Is Nothing
+            Dim instr = (From i In session.Query(Of IBaseInstrument)("ByInspectionID")
+                    Where i.InspectionID Is Nothing
               Select i).ToList()
 
 

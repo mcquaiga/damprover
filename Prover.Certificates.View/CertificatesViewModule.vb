@@ -3,7 +3,6 @@ Imports Microsoft.Practices.Prism
 Imports Microsoft.Practices.Prism.Regions
 Imports Microsoft.Practices.Prism.Modularity
 Imports Microsoft.Practices.Prism.Events
-Imports Prover
 Imports Prover.Certificates.View.ViewModels
 
 <Modularity.Module(ModuleName:="CertificatesView", OnDemand:=False)> _
@@ -23,7 +22,7 @@ Public Class CertificatesViewModule
 
     Private _startCommand As New Microsoft.Practices.Prism.Commands.DelegateCommand(Of Object)(AddressOf ShowCertificatesSubMenu, AddressOf CanStartCertificatesListView)
 
-    Private _startNewCertCommand As New Microsoft.Practices.Prism.Commands.DelegateCommand(Of Object)(AddressOf StartNewTestCommand)
+    Private _startNewCertCommand As New Microsoft.Practices.Prism.Commands.DelegateCommand(Of Object)(AddressOf StartNewCertCommand)
     Private _startViewCertCommand As New Microsoft.Practices.Prism.Commands.DelegateCommand(Of Object)(AddressOf StartViewTestCommand)
 
     Public Sub New(Container As IUnityContainer, RegionManager As IRegionManager, events As IEventAggregator)
@@ -35,8 +34,8 @@ Public Class CertificatesViewModule
     Protected Overridable Sub RegisterTypes()
         ''Create New Certificates
         _container.RegisterType(Of ICreateCertificateListVM, CreateCertificatesListVM)()
-        _container.RegisterType(Of IView(Of ICreateCertificateListVM), CreateCertificateList)()
-        _container.RegisterType(Of Object, CreateCertificateList)("InstrumentDetails")
+        _container.RegisterType(Of IView(Of ICreateCertificateListVM), CreateCertificatesView)()
+        _container.RegisterType(Of Object, CreateCertificatesView)("CreateCertificates")
 
         '_container.RegisterType(Of IInstrumentsListPageVM, InstrumentsListPageVM)()
         '_container.RegisterType(Of IView(Of IInstrumentsListPageVM), InstrumentsListPage)()
@@ -77,8 +76,8 @@ Public Class CertificatesViewModule
         _regionManager.Regions(RegionNames.SubMenuRegion).Add(ViewCertificates)
     End Sub
 
-    Private Sub StartNewTestCommand()
-
+    Private Sub StartNewCertCommand()
+        _regionManager.RequestNavigate(RegionNames.MainRegion, New Uri("CreateCertificates", UriKind.Relative))
     End Sub
 
     Private Function CanStartCertificatesListView() As Boolean
