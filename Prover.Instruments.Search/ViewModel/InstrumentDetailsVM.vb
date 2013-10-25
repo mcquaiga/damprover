@@ -42,18 +42,7 @@ Namespace ViewModels
                 If Items Is Nothing Then
                     LoadItemDescriptions()
                 End If
-                If Items IsNot Nothing Then
-                    For Each i In Items
-                        'If Instrument.Items.Count > 0 Then
-                        '    If Instrument.Items.ContainsKey(i.Number) Then
-                        '        iD.Add(i, Instrument.Items(i.Number))
-                        '    End If
-                        'Else
-                        '    iD.Add(i, Nothing)
-                        'End If
-
-                    Next
-                End If
+               
                 Return iD
             End Get
         End Property
@@ -125,11 +114,14 @@ Namespace ViewModels
             End Get
         End Property
 
-        Public ReadOnly Property TemperatureTests As ObservableCollection(Of ITemperatureTestClass)
+        Public Property TemperatureTests As ObservableCollection(Of ITemperatureTestClass)
             Get
-                If _Instrument Is Nothing OrElse _Instrument.Temperature Is Nothing OrElse _Instrument.Temperature.Tests Is Nothing Then Return Nothing
-                Return New ObservableCollection(Of ITemperatureTestClass)(From t As ITemperatureTestClass In _Instrument.Temperature.Tests Order By t.LevelIndex)
+                If _Instrument Is Nothing Then Return Nothing
+                Return _Instrument.Temperature.Tests
             End Get
+            Set(value As ObservableCollection(Of ITemperatureTestClass))
+                _Instrument.Temperature.Tests = value
+            End Set
         End Property
 
 #Region "Methods"

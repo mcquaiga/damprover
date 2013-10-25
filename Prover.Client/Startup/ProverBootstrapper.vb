@@ -9,6 +9,7 @@ Imports System.Windows
 Imports Prover
 Imports Prover.Instruments.View
 Imports Prover.Dashboard
+Imports Prover.Certificates.View
 
 Public Class ProverBootstrapper
     Inherits UnityExtensions.UnityBootstrapper
@@ -50,6 +51,9 @@ Public Class ProverBootstrapper
 
         Dim InstrumentModuleType As Type = GetType(InstrumentsViewModule)
         ModuleCatalog.AddModule(New ModuleInfo(InstrumentModuleType.Name, InstrumentModuleType.AssemblyQualifiedName))
+
+        Dim CertificatesModuleType As Type = GetType(CertificatesViewModule)
+        ModuleCatalog.AddModule(New ModuleInfo(CertificatesModuleType.Name, CertificatesModuleType.AssemblyQualifiedName))
 
     End Sub
 End Class

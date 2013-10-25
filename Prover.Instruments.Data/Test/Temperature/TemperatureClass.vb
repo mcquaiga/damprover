@@ -1,13 +1,14 @@
 ﻿Imports Prover.Instruments.Data
 Imports miSerialProtocol
+Imports System.Collections.ObjectModel
 
 Public Class TemperatureClass
 
     Public Property TemperatureItems As List(Of ItemClass)
-    Public Property Tests As List(Of ITemperatureTestClass)
+    Public Property Tests As ObservableCollection(Of ITemperatureTestClass)
 
     Sub New(Items As List(Of ItemClass))
-        Tests = New List(Of ITemperatureTestClass)
+        Tests = New ObservableCollection(Of ITemperatureTestClass)
         If Not Items Is Nothing Then
             Me.TemperatureItems = Items.Where(Function(x) x.IsTemperature = True).ToList
             Tests.Add(New TemperatureTestClass(0, Items, TemperatureUnits, BaseTemperature))

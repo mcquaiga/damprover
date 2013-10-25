@@ -4,7 +4,6 @@ Imports Microsoft.Practices.Prism.Regions
 Imports Microsoft.Practices.Prism.Modularity
 Imports Microsoft.Practices.Prism.Events
 Imports Prover
-Imports Prover.Certificates.View.ViewModels
 
 <Modularity.Module(ModuleName:="CertificatesView", OnDemand:=False)> _
 Public Class CertificatesViewModule
@@ -34,9 +33,9 @@ Public Class CertificatesViewModule
 
     Protected Overridable Sub RegisterTypes()
         ''Create New Certificates
-        _container.RegisterType(Of ICreateCertificateListVM, CreateCertificatesListVM)()
-        _container.RegisterType(Of IView(Of ICreateCertificateListVM), CreateCertificateList)()
-        _container.RegisterType(Of Object, CreateCertificateList)("InstrumentDetails")
+        '_container.RegisterType(Of ICertiatesVM, InstrumentDetailsVM)()
+        '_container.RegisterType(Of IView(Of IInstrumentDetailsVM), InstrumentDetails)()
+        '_container.RegisterType(Of Object, InstrumentDetails)("InstrumentDetails")
 
         '_container.RegisterType(Of IInstrumentsListPageVM, InstrumentsListPageVM)()
         '_container.RegisterType(Of IView(Of IInstrumentsListPageVM), InstrumentsListPage)()

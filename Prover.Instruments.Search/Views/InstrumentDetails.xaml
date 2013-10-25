@@ -82,7 +82,8 @@
                     <TextBox Width="150"
                              Style="{DynamicResource SimpleTextBox}"
                              Text="{Binding GaugeTemperature,
-                                            UpdateSourceTrigger=PropertyChanged}" />
+                                            UpdateSourceTrigger=PropertyChanged,
+                                            Mode=TwoWay}" />
                 </StackPanel>
 
                 <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
@@ -422,7 +423,8 @@
                         <ItemsControl Grid.Row="2"
                                       Margin="5"
                                       ItemTemplate="{StaticResource ResourceKey=TemperatureItem}"
-                                      ItemsSource="{Binding TemperatureTests}" />
+                                      ItemsSource="{Binding TemperatureTests,
+                                                            Mode=TwoWay}" />
                     </Grid>
 
                 </Grid>

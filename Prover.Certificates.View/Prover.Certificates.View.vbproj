@@ -95,8 +95,9 @@
       <SubType>Designer</SubType>
     </Page>
     <Compile Include="CertificatesViewModule.vb" />
-    <Compile Include="ViewModels\CreateCertificateList.vb" />
-    <Compile Include="ViewModels\ICreateCertificateList.vb" />
+    <Compile Include="Events\CertificatesSelectedInstrumentEvents.vb" />
+    <Compile Include="ViewModels\CreateCertificateListVM.vb" />
+    <Compile Include="ViewModels\ICreateCertificateListVM.vb" />
     <Compile Include="View\CreateCertificateList.xaml.vb">
       <DependentUpon>CreateCertificateList.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -149,6 +150,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Prover.Instruments.Data\Prover.Instruments.Data.vbproj">
+      <Project>{4a9fb13d-8615-4fb5-858b-7ecb3f0ddee0}</Project>
+      <Name>Prover.Instruments.Data</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Prover\Prover.vbproj">
       <Project>{f397ca27-ec97-4b98-b8cf-e60eb1f399b9}</Project>
       <Name>Prover</Name>

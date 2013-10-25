@@ -2,15 +2,15 @@
 Imports Microsoft.Practices.Prism.Regions
 
 Public Class CreateCertificateListView
-    Implements IView(Of ICreateCertificateList), IRegionMemberLifetime
+    Implements IView(Of ICreateCertificateListVM), IRegionMemberLifetime
 
     Sub New()
-        'InitializeComponent()
+        InitializeComponent()
     End Sub
 
-    Sub New(viewModel As ICreateCertificateList)
+    Sub New(viewModel As ICreateCertificateListVM)
         DataContext1 = viewModel
-        'InitializeComponent()
+        InitializeComponent()
     End Sub
 
     Public ReadOnly Property KeepAlive As Boolean Implements IRegionMemberLifetime.KeepAlive
@@ -19,6 +19,7 @@ Public Class CreateCertificateListView
         End Get
     End Property
 
-    Public Property DataContext1 As ICreateCertificateList Implements IView(Of ICreateCertificateList).DataContext
+    Public Property DataContext1 As ICreateCertificateListVM Implements IView(Of ICreateCertificateListVM).DataContext
+
 
 End Class

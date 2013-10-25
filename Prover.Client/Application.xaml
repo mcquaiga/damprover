@@ -7,7 +7,7 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="Themes\SimpleStyles.xaml" />
                 <ResourceDictionary Source="Themes/RadioButtonStyle.xaml" />
-                <ResourceDictionary Source="/Prover.Instruments.View;component/ScrollViewerStyle.xaml"/>
+                <ResourceDictionary Source="/Prover.Instruments.View;component/ScrollViewerStyle.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
 

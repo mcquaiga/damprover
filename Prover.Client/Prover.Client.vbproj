@@ -287,6 +287,10 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Prover.Certificates.View\Prover.Certificates.View.vbproj">
+      <Project>{d4decd1b-b023-4bbb-a3db-d98aa708c625}</Project>
+      <Name>Prover.Certificates.View</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Prover.Dashboard\Prover.Dashboard.vbproj">
       <Project>{d7f8a781-55fa-467b-b374-b31c63de63c7}</Project>
       <Name>Prover.Dashboard</Name>

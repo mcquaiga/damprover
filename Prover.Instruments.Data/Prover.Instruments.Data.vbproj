@@ -130,6 +130,7 @@
     <Compile Include="InstrumentsModule.vb" />
     <Compile Include="Communications\InstrumentCommunications.vb" />
     <Compile Include="Instruments\BaseInstrument.vb" />
+    <Compile Include="Instruments\CertificatesViewModule.vb" />
     <Compile Include="Instruments\IBaseInstrument.vb" />
     <Compile Include="Instruments\InstrumentDataProvider.vb" />
     <Compile Include="Instruments\ItemClass.vb" />
@@ -189,6 +190,7 @@
     </None>
     <Content Include="EC300Items.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
     </Content>
     <Content Include="MiniMaxItems.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
