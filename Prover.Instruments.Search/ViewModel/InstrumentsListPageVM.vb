@@ -29,7 +29,7 @@ Namespace ViewModels
         End Sub
 
         Public Sub MiniMaxInstrument()
-            Dim items As IEnumerable(Of IBaseInstrument) = _InstrumentProvider.GetInstrumentByInstrumentType("MiniMaxInstruments")
+            Dim items As IEnumerable(Of IBaseInstrument) = _InstrumentProvider.GetMiniMaxInstruments("MiniMaxInstruments")
 
             _instrs.Clear()
 

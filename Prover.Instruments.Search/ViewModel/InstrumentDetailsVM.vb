@@ -141,7 +141,7 @@ Namespace ViewModels
         End Sub
 
         Public Sub Save()
-            _provider.UpsetNewInstrument(Instrument)
+            _provider.UpsertInstrument(Instrument)
         End Sub
 
         Public Sub CreateNewMiniMaxObject()

@@ -73,6 +73,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\src\packages\Unity.3.0.1304.0\lib\Net45\Microsoft.Practices.Unity.Configuration.dll</HintPath>
     </Reference>
+    <Reference Include="Raven.Client.Lightweight, Version=2.0.3.0, Culture=neutral, PublicKeyToken=37f41c7f99471593, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\src\packages\RavenDB.Client.2.0.2360\lib\net40\Raven.Client.Lightweight.dll</HintPath>
+    </Reference>
     <Reference Include="System.Core" />
     <Reference Include="System.Windows.Interactivity, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\src\packages\Prism.4.1.0.0\lib\NET40\System.Windows.Interactivity.dll</HintPath>
@@ -92,6 +96,7 @@
   <ItemGroup>
     <Compile Include="CertificatesViewModule.vb" />
     <Compile Include="Events\CertificatesSelectedInstrumentEvents.vb" />
+    <Compile Include="Helpers\MultiSelectHelper.vb" />
     <Compile Include="ViewModels\CreateCertificateListVM.vb" />
     <Compile Include="ViewModels\ICreateCertificateListVM.vb" />
     <Compile Include="View\CreateCertificatesView.xaml.vb">
@@ -145,6 +150,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Prover.Certificates.Data\Prover.Certificates.Data.vbproj">
+      <Project>{7a6ddf54-f090-4fe3-8cb2-16775946a40e}</Project>
+      <Name>Prover.Certificates.Data</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Prover.Instruments.Data\Prover.Instruments.Data.vbproj">
       <Project>{4a9fb13d-8615-4fb5-858b-7ecb3f0ddee0}</Project>
       <Name>Prover.Instruments.Data</Name>
@@ -153,8 +162,16 @@
       <Project>{f397ca27-ec97-4b98-b8cf-e60eb1f399b9}</Project>
       <Name>Prover</Name>
     </ProjectReference>
+    <ProjectReference Include="..\serialprotocol\miSerialProtocol\Prover.SerialProtocol.vbproj">
+      <Project>{8c7e475a-15bb-477b-99f3-7b2abf41e43f}</Project>
+      <Name>Prover.SerialProtocol</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Page Include="View\CertificateReport.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\CreateCertificatesView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

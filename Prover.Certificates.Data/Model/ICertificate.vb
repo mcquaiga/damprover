@@ -2,7 +2,7 @@
 
 Public Interface ICertificate
 
-    Property ID As Integer
+    Property Number As Integer
     Property DateCreated As DateTime
     Property CreatedBy As String
 

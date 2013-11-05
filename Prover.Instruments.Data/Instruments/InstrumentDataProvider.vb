@@ -13,6 +13,7 @@ Namespace Instruments.Data
         Public Sub New()
             MyBase.New()
         End Sub
+
         Private Sub New(ByVal key As String, ByVal name As String, ByVal source As String, ByVal parameters As ParamDictionary)
             MyBase.New(key, name, source, parameters)
         End Sub
@@ -35,9 +36,8 @@ Namespace Instruments.Data
         End Function
 
         Public Function GetInstrumentsBySerialNumber(SerialNumber As String) As List(Of IBaseInstrument)
-            Dim session = _docStore.OpenSession()
 
-            Dim instr = (From i In session.Query(Of IBaseInstrument)("BySerialNumber")
+            Dim instr = (From i In _session.Query(Of IBaseInstrument)("BySerialNumber")
                 Where i.SerialNumber = SerialNumber
                 Select i).ToList()
 
@@ -45,9 +45,9 @@ Namespace Instruments.Data
         End Function
 
         Public Function GetInstrumentsWithNoCertificate() As List(Of IBaseInstrument)
-            Dim session = _docStore.OpenSession()
 
-            Dim instr = (From i In session.Query(Of IBaseInstrument)("ByInspectionID")
+
+            Dim instr = (From i In _session.Query(Of IBaseInstrument)("ByInspectionID")
                     Where i.InspectionID Is Nothing
               Select i).ToList()
 
@@ -57,9 +57,9 @@ Namespace Instruments.Data
         End Function
 
         Public Function GetInstrumentDateCreated(FromDate As DateTime) As List(Of IBaseInstrument)
-            Dim session = _docStore.OpenSession()
 
-            Dim instr = (From i In session.Query(Of IBaseInstrument)("ByCreatedDate")
+
+            Dim instr = (From i In _session.Query(Of IBaseInstrument)("ByCreatedDate")
               Where i.CreatedDate.Value >= FromDate
               Select i).ToList()
 
@@ -67,10 +67,17 @@ Namespace Instruments.Data
 
         End Function
 
-        Public Function GetInstrumentByInstrumentType(InstrumentType As String) As List(Of IBaseInstrument)
-            Dim session = _docStore.OpenSession()
+        Public Function GetMiniMaxInstruments() As List(Of IBaseInstrument)
+            Dim instr = (From i In _session.Query(Of IBaseInstrument)("MiniMaxInstruments")
+              Select i).ToList()
 
-            Dim instr = (From i In session.Query(Of IBaseInstrument)("MiniMaxInstruments")
+            Return instr
+        End Function
+
+        Public Function GetEC300Instruments() As List(Of IBaseInstrument)
+
+
+            Dim instr = (From i In _session.Query(Of IBaseInstrument)("EC300Instruments")
               Select i).ToList()
 
             Return instr
@@ -78,35 +85,48 @@ Namespace Instruments.Data
         End Function
 
         Public Function GetInstrumentByID(ID As String) As IBaseInstrument
-            Dim session = _docStore.OpenSession()
-
-            Return session.Load(Of IBaseInstrument)(ID)
+            
+            Return _session.Load(Of IBaseInstrument)(ID)
         End Function
 
-        Public Sub UpsetNewInstrument(Instrument As IBaseInstrument)
-            UpsertInstrument(Instrument, Nothing)
-        End Sub
-
-        Public Async Sub UpsertInstrument(instrument As IBaseInstrument, Session As DocumentSession)
+        Public Async Sub UpsertInstrument(instrument As IBaseInstrument)
 
             Await Task.Run(Sub()
 
-                               If Session Is Nothing Then
-                                   Session = _docStore.OpenSession()
-                               Else
-                                   If Not Session.HasChanged(instrument) Then
-                                       Exit Sub
-                                   End If
+                               If _session Is Nothing Then
+                                   _session = _docStore.OpenSession()
                                End If
+
+
                                If instrument.CreatedDate Is Nothing Then instrument.CreatedDate = Date.Now()
-                               Session.Store(instrument)
-                               Session.SaveChanges()
+                               _session.Store(instrument)
+                               _session.SaveChanges()
                            End Sub
             )
         End Sub
 
+        Public Async Function DeleteInstruments(Instruments As List(Of IBaseInstrument)) As Task
+            Await Task.Run(Sub()
+                               If _session Is Nothing Then
+                                   _session = _docStore.OpenSession()
+                               End If
+
+                               For Each i In Instruments
+                                   _session.Delete(i)
+                               Next
+
+                               _session.SaveChanges()
+
+                           End Sub
+            )
+        End Function
+
         Protected Overrides Function FetchData(parameters As Dictionary(Of String, Object)) As IEnumerable(Of IBaseInstrument)
             Return Nothing
         End Function
+
+        Private Sub CreateInstrumentIndexes()
+            _session.
+        End Sub
     End Class
 End Namespace

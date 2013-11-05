@@ -52,7 +52,7 @@ Module Module1
         'Dim js = "{'InstrumentType':4,'TemperatureData':null,'VolumeData':null,'InstrumentDriveType':0,'ItemFile':{'0':' 0000000','1':' 0000000','2':' 0000000','5':' 0000000','6':' 0000000','8':'    0.00','10':'99999.98','11':'   -1.00','12':'  0.0000','13':' 14.6500','14':' 14.4000','15':'    0.00','16':'    0.00','17':'  0.0000','18':'  0.0000','19':'  0.0000','20':'  1.0000','21':'  1.0000','22':'  1.0000','23':' 50.0000','24':'  2.0000','25':'  100.00','26':'  -40.00','27':'  -35.00','28':'  145.00','29':'    0.00','30':'    0.00','31':'   73.32','32':'  114.22','33':'    5.21','34':'   60.00','35':'  0.0893','44':'  1.0000','47':'  1.0000','62':'01084240','87':'       0','109':'       1','112':'       0'},'InspectionID':0,'PressureTests':[{'Items':{'8':'    0.00','13':' 14.6500','14':' 14.4000','44':'  1.0000','47':'  1.0000','87':'       0','109':'       1','112':'       0'},'GaugePressure':60.0,'AtmosphericPressure':0.0,'PressureUnits':0,'Transducer':0,'BasePressure':14.65,'EVCPressure':'    0.00','EVCFactor':'  1.0000','EVCUnsqr':1.0,'PercentError':-75.583333333333343,'ActualPressureFactor':4.09556313993174},{'Items':{'8':'    0.00','13':' 14.6500','14':' 14.4000','44':'  1.0000','47':'  1.0000','87':'       0','109':'       1','112':'       0'},'GaugePressure':60.0,'AtmosphericPressure':0.0,'PressureUnits':0,'Transducer':0,'BasePressure':14.65,'EVCPressure':'    0.00','EVCFactor':'  1.0000','EVCUnsqr':1.0,'PercentError':-75.583333333333343,'ActualPressureFactor':4.09556313993174}],'TemperatureTests':null,'VolumeTests':null,'InstrumenGuID':'9832c3c7-1a93-43a1-9dfc-f3df046006c3','SerialNumber':'01084240','PulseASelect':0,'PulseBSelect':0}"
         'Dim myI = JsonConvert.DeserializeObject(Of BaseInstrument)(js)
         it.CreatedDate = Date.Now()
-        i.UpsertInstrument(it, Nothing)
+        i.UpsertInstrument(it)
         ' Dim x = it.PressureTests.Count
 
     End Sub
@@ -108,7 +108,7 @@ Module Module1
 
 
         Dim js = JsonConvert.SerializeObject(myinstrument)
-        myprovider.UpsertInstrument(myinstrument, Nothing)
+        myprovider.UpsertInstrument(myinstrument)
     End Sub
 
 

@@ -6,6 +6,7 @@ Namespace Data.ProviderModel
 
 
         Protected _docStore As DocumentStore = ProverDocuments.ProverDocumentStore
+        Protected _session As DocumentSession
         Private _name As String
         Private _parameters As ParamDictionary
         Private _source As String
@@ -20,7 +21,11 @@ Namespace Data.ProviderModel
         End Sub
 
         Protected Sub New()
+            _session = _docStore.OpenSession
+        End Sub
 
+        Protected Sub New(Session As DocumentSession)
+            _session = Session
         End Sub
 
         Public ReadOnly Property ElementType() As System.Type Implements IDataProvider.ElementType

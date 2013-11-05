@@ -7,10 +7,6 @@ Namespace ViewModels
     Public Interface ICreateCertificateListVM
         Inherits INotifyPropertyChanged
 
-        ReadOnly Property Instruments As ObjectModel.ObservableCollection(Of IBaseInstrument)
-
-
-        ReadOnly Property AddNewCommand As ICommand
 
         ReadOnly Property OneMonthFilterCommand As ICommand
 
@@ -18,11 +14,15 @@ Namespace ViewModels
 
         ReadOnly Property OneWeekFilterCommand As ICommand
 
-        WriteOnly Property UnselectJob As IBaseInstrument
+        Property CreatedBy As String
 
-        WriteOnly Property SelectedInstrument As IBaseInstrument
+        ReadOnly Property MiniMaxFilterCommand As ICommand
 
+        ReadOnly Property EC300FilterCommand As ICommand
 
+        Property Instruments As ObservableCollection(Of InstrumentsListViewModel)
+
+        ReadOnly Property CreateNewCertCommand As ICommand
 
     End Interface
 End Namespace
