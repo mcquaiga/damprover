@@ -68,9 +68,11 @@ Public Interface IBaseInstrument
     Property Temperature As TemperatureClass
     Property VolumeTest As IVolume
 
+    <JsonIgnore>
     ReadOnly Property FirmwareVersion As String
-
+    <JsonIgnore>
     ReadOnly Property PulseAScaling As Double
+    <JsonIgnore>
     ReadOnly Property PulseBScaling As Double
 
     Function IsLiveSuper() As FixedFactors
@@ -79,6 +81,7 @@ Public Interface IBaseInstrument
 
     Property InstrumentType As miSerialProtocol.InstrumentTypeCode
     ReadOnly Property InstrumentGuid As Guid
+
 
     ReadOnly Property SerialNumber As String
     ReadOnly Property SiteNumber1 As String
@@ -89,10 +92,11 @@ Public Interface IBaseInstrument
     Property CreatedDate As DateTime?
 
     Property Items As List(Of ItemClass)
-
+    <JsonIgnore>
     ReadOnly Property PulseASelect As String
+    <JsonIgnore>
     ReadOnly Property PulseBSelect As String
-    Property InspectionID As Integer?
+    Property InspectionID As String
 
     Function DownloadSiteInformation() As Task
     Function DownloadTemperatureItems() As Task

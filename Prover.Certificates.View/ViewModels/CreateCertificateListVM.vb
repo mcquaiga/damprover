@@ -6,6 +6,10 @@ Imports Microsoft.Practices.Prism.Events
 Imports Prover.Certificates.Data
 Imports Raven.Client.Document
 Imports Raven.Client.Linq
+Imports Microsoft.Practices.Unity
+Imports Microsoft.Practices.Prism
+Imports Microsoft.Practices.Prism.Regions
+Imports Microsoft.Practices.Prism.Modularity
 
 
 Namespace ViewModels
@@ -19,6 +23,8 @@ Namespace ViewModels
         Dim _session As DocumentSession
         Private _events As IEventAggregator
         Private _instrs As ObservableCollection(Of InstrumentsListViewModel)
+        Private _container As IUnityContainer
+        Private _regionManager As IRegionManager
 
 
         Public Property Instruments As ObservableCollection(Of InstrumentsListViewModel) Implements ICreateCertificateListVM.Instruments
@@ -31,11 +37,14 @@ Namespace ViewModels
         End Property
         
 
-        Sub New(events As IEventAggregator)
+        Sub New(Container As IUnityContainer, RegionManager As IRegionManager, events As IEventAggregator)
             _events = events
             _InstrumentProvider = New InstrumentDataProvider
             _instrs = New ObservableCollection(Of InstrumentsListViewModel)
             InstrumentsWithNoCertificates()
+
+            _container = Container
+            _regionManager = RegionManager
         End Sub
 
         Public Property CreatedBy As String Implements ICreateCertificateListVM.CreatedBy
@@ -130,18 +139,21 @@ Namespace ViewModels
                                    Where i.IsSelected = True
                                    Select i.Instrument).ToList
 
-
                 CertProvider = New CertificateDataProvider
 
-                CertProvider.UpsertCertificate(cert)
-                Await _InstrumentProvider.DeleteInstruments((From i In _instrs
-                                                       Where i.IsSelected = True
-                                                       Select i.Instrument).ToList
-                                                   )
+                Dim certID = Await CertProvider.UpsertCertificate(cert)
+
+
+                For Each x In (From i In _instrs Where i.IsSelected = True Select i.Instrument).ToList
+                    x.InspectionID = certID
+                    InstrumentProvider.UpsertInstrument(x)
+                Next x
 
                 cert.SetNextCertificateNumber()
 
                 Me.InstrumentsWithNoCertificates()
+
+                _regionManager.RequestNavigate(RegionNames.MainRegion, New Uri("CertificateReportViewer", UriKind.Relative))
             End If
         End Sub
 

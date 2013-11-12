@@ -16,19 +16,20 @@ Public Class CertificateDataProvider
         Me._session = Session
     End Sub
 
-    Public Async Sub UpsertCertificate(certificate As ICertificate)
+    Public Async Function UpsertCertificate(certificate As ICertificate) As Task(Of String)
 
-        Await Task.Run(Sub()
+        Return Await Task.Run(Function()
 
-                           If _session Is Nothing Then
-                               _session = _docStore.OpenSession()
-                           End If
+                                  If _session Is Nothing Then
+                                      _session = _docStore.OpenSession()
+                                  End If
 
-                           _session.Store(certificate)
-                           _session.SaveChanges()
-                       End Sub
+                                  _session.Store(certificate)
+                                  _session.SaveChanges()
+                                  Return _session.Advanced.GetDocumentId(certificate)
+                              End Function
         )
-    End Sub
+    End Function
 
 
     Protected Overrides Function FetchData(parameters As Dictionary(Of String, Object)) As IEnumerable(Of ICertificate)

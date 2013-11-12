@@ -128,13 +128,13 @@
                     <ColumnDefinition Width="10*" />
                 </Grid.ColumnDefinitions>
                 <Border Grid.Column="0"
-                        BorderBrush="White"
+                        BorderBrush="{DynamicResource HeaderColour}"
                         BorderThickness="0,0,1,0"
                         Style="{DynamicResource SectionHeader}">
                     <TextBlock HorizontalAlignment="Center"
                                VerticalAlignment="Center"
                                FontSize="28"
-                               Foreground="White">
+                               Style="{StaticResource ItemDescriptions}">
                         <TextBlock.LayoutTransform>
                             <TransformGroup>
                                 <ScaleTransform />
@@ -237,7 +237,7 @@
             </Grid>
 
             <Border Margin="0"
-                    BorderBrush="White"
+                    BorderBrush="{DynamicResource HeaderColour}"
                     BorderThickness="0,1,0,0"
                     Padding="0">
                 <Grid>
@@ -248,13 +248,13 @@
                     </Grid.ColumnDefinitions>
                     <!--  Basic Details Info  -->
                     <Border Grid.Column="0"
-                            BorderBrush="White"
+                            BorderBrush="{DynamicResource HeaderColour}"
                             BorderThickness="0,0,1,0"
                             Style="{StaticResource SectionHeader}">
                         <TextBlock HorizontalAlignment="Center"
                                    VerticalAlignment="Center"
                                    FontSize="28"
-                                   Foreground="White">
+                                   Style="{StaticResource ItemDescriptions}">
                             <TextBlock.LayoutTransform>
                                 <TransformGroup>
                                     <ScaleTransform />
@@ -350,7 +350,7 @@
 
             <!--  Temperature - Start  -->
             <Border Margin="0"
-                    BorderBrush="White"
+                    BorderBrush="{DynamicResource HeaderColour}"
                     BorderThickness="0,1,0,0"
                     Padding="0">
                 <Grid>
@@ -359,12 +359,12 @@
                         <ColumnDefinition Width="10*" />
                     </Grid.ColumnDefinitions>
                     <Border Grid.Column="0"
-                            BorderBrush="White"
+                            BorderBrush="{DynamicResource HeaderColour}"
                             BorderThickness="0,0,1,0">
                         <TextBlock HorizontalAlignment="Center"
                                    VerticalAlignment="Center"
                                    FontSize="72"
-                                   Foreground="White"><Run Text="T" />
+                                   Style="{StaticResource ItemDescriptions}"><Run Text="T" />
                         </TextBlock>
                     </Border>
 
@@ -494,7 +494,7 @@
                 </Border>
             -->
             <Border Margin="0"
-                    BorderBrush="White"
+                    BorderBrush="{DynamicResource HeaderColour}"
                     BorderThickness="0,1,0,0"
                     Padding="0">
                 <Grid>
@@ -503,12 +503,12 @@
                         <ColumnDefinition Width="10*" />
                     </Grid.ColumnDefinitions>
                     <Border Grid.Column="0"
-                            BorderBrush="White"
+                            BorderBrush="{DynamicResource HeaderColour}"
                             BorderThickness="0,0,1,0">
                         <TextBlock HorizontalAlignment="Center"
                                    VerticalAlignment="Center"
                                    FontSize="28"
-                                   Foreground="White">
+                                   Style="{StaticResource ItemDescriptions}">
                             <TextBlock.LayoutTransform>
                                 <TransformGroup>
                                     <ScaleTransform />
@@ -550,10 +550,10 @@
                         <Grid Grid.Row="1" Grid.Column="0">
                             <StackPanel>
                                 <Border Margin="5,5,5,5"
-                                        BorderBrush="White"
+                                        BorderBrush="{DynamicResource HeaderColour}"
                                         BorderThickness="0,0,0,1">
                                     <TextBlock FontSize="24"
-                                               Foreground="White"
+                                               Foreground="{DynamicResource HeaderColour}"
                                                Text="Start" />
                                 </Border>
                                 <StackPanel>
@@ -570,10 +570,10 @@
                         <Grid Grid.Row="1" Grid.Column="1">
                             <StackPanel>
                                 <Border Margin="5,5,5,5"
-                                        BorderBrush="White"
+                                        BorderBrush="{DynamicResource HeaderColour}"
                                         BorderThickness="0,0,0,1">
                                     <TextBlock FontSize="24"
-                                               Foreground="White"
+                                               Foreground="{DynamicResource HeaderColour}"
                                                Text="End" />
                                 </Border>
                                 <StackPanel>
@@ -590,7 +590,7 @@
                         <Border Grid.Row="2"
                                 Grid.ColumnSpan="2"
                                 Margin="5,5,5,5"
-                                BorderBrush="White"
+                                BorderBrush="{DynamicResource HeaderColour}"
                                 BorderThickness="0,1,0,0">
                             <Grid Grid.Row="2"
                                   Grid.ColumnSpan="2"
@@ -612,7 +612,7 @@
                                 </UniformGrid>
                                 <StackPanel HorizontalAlignment="Right">
                                     <Button Width="100"
-                                            Command="{Binding FetchInstrumentInfoCommand}"
+                                            Command="{Binding StartTestCommand}"
                                             Content="Start Test"
                                             Style="{StaticResource SimpleButton}" />
                                 </StackPanel>
@@ -623,7 +623,7 @@
             </Border>
 
             <Border Margin="15,0,15,5"
-                    BorderBrush="White"
+                    BorderBrush="{DynamicResource HeaderColour}"
                     BorderThickness="0,0,0,1" />
             <WrapPanel HorizontalAlignment="right">
                 <Button Width="150"

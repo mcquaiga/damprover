@@ -72,6 +72,10 @@ Public Class InstrumentsViewModule
 
 
     Private Sub ShowInstrumentsSubMenu()
+        For Each x In _regionManager.Regions(RegionNames.SubMenuRegion).ActiveViews
+            _regionManager.Regions(RegionNames.SubMenuRegion).Remove(x)
+        Next x
+
         If Not _regionManager.Regions(RegionNames.SubMenuRegion).Views.Contains(NewTest) Then
             _regionManager.Regions(RegionNames.SubMenuRegion).Add(NewTest)
         End If

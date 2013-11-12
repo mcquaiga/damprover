@@ -28,17 +28,19 @@ Namespace Instruments.Data
 
 #Region "Properties"
 
+        Public Property Id As String
         Public Property Items As List(Of ItemClass) Implements IBaseInstrument.Items
 
         Public Property CreatedDate As DateTime? Implements IBaseInstrument.CreatedDate
         Public Property InstrumentType As miSerialProtocol.InstrumentTypeCode Implements IBaseInstrument.InstrumentType
         Public Property InstrumentDriveType() As IBaseInstrument.DriveType Implements IBaseInstrument.InstrumentDriveType
-        Public Property InspectionID As Integer? Implements IBaseInstrument.InspectionID
+        Public Property InspectionID As String Implements IBaseInstrument.InspectionID
 
         Public Property PressureTests As List(Of IPressureFactorClass) Implements IBaseInstrument.PressureTests
         Public Property Temperature As TemperatureClass Implements IBaseInstrument.Temperature
         Public Property VolumeTest As IVolume Implements IBaseInstrument.VolumeTest
 
+        <JsonIgnore>
         Public ReadOnly Property InstrumenGuID() As Guid Implements IBaseInstrument.InstrumentGuid
             Get
                 If _instrumentGUID = Guid.Empty Then
@@ -48,7 +50,7 @@ Namespace Instruments.Data
             End Get
         End Property
 
-
+        <JsonIgnore>
         Public ReadOnly Property SerialNumber As String Implements IBaseInstrument.SerialNumber
             Get
                 If Items Is Nothing Then Return Nothing
@@ -56,27 +58,29 @@ Namespace Instruments.Data
             End Get
         End Property
 
-
+        <JsonIgnore>
         Public ReadOnly Property SiteNumber1 As String Implements IBaseInstrument.SiteNumber1
             Get
                 Try
-                    Return Items.Where(Function(x) x.Number = 200).SingleOrDefault.Value
+                    Return Items.Where(Function(x) x.Number = 200).SingleOrDefault.NumericValue
                 Catch ex As Exception
                     Return Nothing
                 End Try
             End Get
         End Property
 
+        <JsonIgnore>
         Public ReadOnly Property SiteNumber2 As String Implements IBaseInstrument.SiteNumber2
             Get
                 Try
-                    Return Items.Where(Function(x) x.Number = 201).SingleOrDefault.Value
+                    Return Items.Where(Function(x) x.Number = 201).SingleOrDefault.NumericValue
                 Catch ex As Exception
                     Return Nothing
                 End Try
             End Get
         End Property
 
+        <JsonIgnore>
         Public ReadOnly Property PulseASelect() As String Implements IBaseInstrument.PulseASelect
             Get
                 Try
@@ -88,6 +92,7 @@ Namespace Instruments.Data
             End Get
         End Property
 
+        <JsonIgnore>
         Public ReadOnly Property PulseBSelect() As String Implements IBaseInstrument.PulseBSelect
             Get
                 Try
@@ -98,30 +103,33 @@ Namespace Instruments.Data
             End Get
         End Property
 
+        <JsonIgnore>
         Public ReadOnly Property PulseAScaling() As Double Implements IBaseInstrument.PulseAScaling
             Get
                 Try
-                    Return Items.Where(Function(x) x.Number = 56).SingleOrDefault.Value
+                    Return Items.Where(Function(x) x.Number = 56).SingleOrDefault.NumericValue
                 Catch ex As Exception
                     Return Nothing
                 End Try
             End Get
         End Property
 
+        <JsonIgnore>
         Public ReadOnly Property PulseBScaling() As Double Implements IBaseInstrument.PulseBScaling
             Get
                 Try
-                    Return Items.Where(Function(x) x.Number = 57).SingleOrDefault.Value
+                    Return Items.Where(Function(x) x.Number = 57).SingleOrDefault.NumericValue
                 Catch ex As Exception
                     Return Nothing
                 End Try
             End Get
         End Property
 
+        <JsonIgnore>
         Public ReadOnly Property FirmwareVersion As String Implements IBaseInstrument.FirmwareVersion
             Get
                 Try
-                    Return Items.Where(Function(x) x.Number = 122).SingleOrDefault.Value
+                    Return Items.Where(Function(x) x.Number = 122).SingleOrDefault.NumericValue
                 Catch ex As Exception
                     Return Nothing
                 End Try

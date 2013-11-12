@@ -11,11 +11,11 @@ Public Interface IBoard
     Property data_flow As Integer
     Property disposedValue As Boolean     ' To detect redundant calls
 
-    ReadOnly Property StartMotor() As Short
-    ReadOnly Property StopMotor() As Short
-
+    Sub StartMotor()
+    Sub StopMotor()
     Sub Config()
     Sub PulseOut(ByVal value As Integer)
+
     Function CheckBoard() As Boolean
 
 'This returns a 1 integer if a pulse is detected and 0 if it is not

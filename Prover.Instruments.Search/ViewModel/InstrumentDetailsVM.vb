@@ -205,6 +205,17 @@ Namespace ViewModels
 
         End Function
 
+        Public Async Function StartNewTest() As Task
+
+            Try
+                Await Instrument.VolumeTest.StartTest(Me.Instrument.InstrumentType)
+            Catch ex As Exception
+                MsgBox(ex.Message.ToString, MsgBoxStyle.OkOnly)
+            End Try
+
+        End Function
+
+
 #End Region
 
 #Region "Commands"
@@ -268,6 +279,13 @@ Namespace ViewModels
                 Return _fetchTemperatureCommand
             End Get
         End Property
+
+        Private _startTestCommand = New Microsoft.Practices.Prism.Commands.DelegateCommand(AddressOf StartNewTest)
+        Public ReadOnly Property StartTestCommand As ICommand Implements IInstrumentDetailsVM.StartTestsCommand
+            Get
+                Return _startTestCommand
+            End Get
+        End Property
 #End Region
 
 
@@ -290,5 +308,6 @@ Namespace ViewModels
                 Return False
             End Get
         End Property
+
     End Class
 End Namespace

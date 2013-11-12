@@ -46,8 +46,8 @@ Public Class ProverBootstrapper
 
     Protected Overrides Sub ConfigureModuleCatalog()
 
-        Dim DashboardModuleType As Type = GetType(DashboardModule)
-        ModuleCatalog.AddModule(New ModuleInfo(DashboardModuleType.Name, DashboardModuleType.AssemblyQualifiedName))
+        'Dim DashboardModuleType As Type = GetType(DashboardModule)
+        'ModuleCatalog.AddModule(New ModuleInfo(DashboardModuleType.Name, DashboardModuleType.AssemblyQualifiedName))
 
         Dim InstrumentModuleType As Type = GetType(InstrumentsViewModule)
         ModuleCatalog.AddModule(New ModuleInfo(InstrumentModuleType.Name, InstrumentModuleType.AssemblyQualifiedName))

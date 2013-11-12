@@ -36,7 +36,7 @@ Public Class CertificatesViewModule
         _container.RegisterType(Of ICreateCertificateListVM, CreateCertificatesListVM)()
         _container.RegisterType(Of IView(Of ICreateCertificateListVM), CreateCertificatesView)()
         _container.RegisterType(Of Object, CreateCertificatesView)("CreateCertificates")
-
+        _container.RegisterType(Of Object, CertificateReportViewer)("CertificateReportViewer")
         '_container.RegisterType(Of IInstrumentsListPageVM, InstrumentsListPageVM)()
         '_container.RegisterType(Of IView(Of IInstrumentsListPageVM), InstrumentsListPage)()
         '_container.RegisterType(Of Object, InstrumentsListPage)("InstrumentsList")
@@ -72,8 +72,12 @@ Public Class CertificatesViewModule
     Private Sub ShowCertificatesSubMenu()
         '_regionManager.RequestNavigate(RegionNames.SubMenuRegion, New Uri("Certificates
         '_regionManager.Regions(RegionNames.SubMenuRegion).RequestNavigate(
+        For Each x In _regionManager.Regions(RegionNames.SubMenuRegion).ActiveViews
+            _regionManager.Regions(RegionNames.SubMenuRegion).Remove(x)
+        Next x
         _regionManager.Regions(RegionNames.SubMenuRegion).Add(NewCertificate)
         _regionManager.Regions(RegionNames.SubMenuRegion).Add(ViewCertificates)
+
     End Sub
 
     Private Sub StartNewCertCommand()

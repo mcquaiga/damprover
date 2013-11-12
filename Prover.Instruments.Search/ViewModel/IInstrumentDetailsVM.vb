@@ -31,6 +31,8 @@ Namespace ViewModels
 
         ReadOnly Property EC300Command As ICommand
 
+        ReadOnly Property StartTestsCommand As ICommand
+
 
     End Interface
 End Namespace

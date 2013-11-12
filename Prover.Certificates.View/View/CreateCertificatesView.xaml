@@ -13,45 +13,57 @@
     <UserControl.Resources>
         <CollectionViewSource x:Key="Instruments" Source="{Binding Path=Instruments, Mode=TwoWay}" />
         <DataTemplate x:Key="inst">
-            <StackPanel DataContext="{Binding Path=Instrument}" Orientation="Horizontal">
-                <Image />
+            <Border BorderBrush="White" BorderThickness="0,0,0,0.25">
+                <StackPanel DataContext="{Binding Path=Instrument}" Orientation="Horizontal">
+                    <Image />
 
-                <StackPanel Orientation="Vertical">
-                    <TextBlock Width="125"
-                               Foreground="White"
-                               Text="{Binding InstrumentType}" />
-                    <TextBlock Width="125"
-                               Margin="2"
-                               HorizontalAlignment="Center"
-                               VerticalAlignment="Center"
-                               FontSize="22"
-                               Foreground="White"
-                               Text="{Binding SerialNumber}" />
+                    <StackPanel Orientation="Vertical">
+                        <TextBlock Width="125"
+                                   Foreground="White"
+                                   Text="{Binding InstrumentType}" />
+                        <TextBlock Width="125"
+                                   Margin="2"
+                                   HorizontalAlignment="Center"
+                                   VerticalAlignment="Center"
+                                   FontSize="22"
+                                   Foreground="White"
+                                   Text="{Binding SerialNumber}" />
+                    </StackPanel>
+                    <Grid Height="50" Margin="2">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <StackPanel Grid.Row="0" Orientation="Horizontal">
+                            <TextBlock Foreground="White" Text="{Binding CreatedDate}" />
+                        </StackPanel>
+                        <StackPanel Grid.Row="1" Orientation="Horizontal" />
+                        <StackPanel Grid.Row="2" Orientation="Horizontal">
+                            <TextBlock Foreground="White" Text="S/N 1: " />
+                            <TextBlock Foreground="White" Text="{Binding SiteNumber1}" />
+                            <TextBlock Margin="5,0,0,0"
+                                       Foreground="White"
+                                       Text="S/N 2: " />
+                            <TextBlock Foreground="White" Text="{Binding SiteNumber2}" />
+                        </StackPanel>
+                        <StackPanel Grid.Row="3" Orientation="Horizontal">
+                            <TextBlock Foreground="White" Text="Drive Type: " />
+                            <TextBlock Foreground="White" Text="{Binding InstrumentDriveType}" />
+                        </StackPanel>
+                    </Grid>
+                    <Grid DataContext="{Binding Temperature.TemperatureTests}">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+                        <StackPanel Grid.Column="0" Orientation="Horizontal">
+                            <TextBlock Foreground="White" Text="{Binding LevelDescription}" />
+                            <TextBlock Foreground="White" Text="{Binding PercentError}" />
+                        </StackPanel>
+                    </Grid>
                 </StackPanel>
-                <Grid Height="50"
-                      Margin="2"
-                      DataContext="{Binding}">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                    </Grid.RowDefinitions>
-                    <StackPanel Grid.Row="0" Orientation="Horizontal">
-                        <TextBlock Foreground="White" Text="{Binding Instrument.CreatedDate}" />
-                    </StackPanel>
-                    <StackPanel Grid.Row="1" Orientation="Horizontal" />
-                    <StackPanel Grid.Row="2" Orientation="Horizontal">
-                        <TextBlock Foreground="White" Text="I.C. #: " />
-                        <TextBlock Foreground="White" Text="{Binding Instrument.IC}" />
-                    </StackPanel>
-                    <StackPanel Grid.Row="3" Orientation="Horizontal">
-                        <TextBlock Foreground="White" Text="Drive Type: " />
-                        <TextBlock Foreground="White" Text="{Binding Instrument.InstrumentDriveType}" />
-                    </StackPanel>
-                </Grid>
-                <Grid />
-            </StackPanel>
+            </Border>
         </DataTemplate>
         <Style x:Key="InstrumentStyle" TargetType="{x:Type ListBoxItem}">
             <Setter Property="IsSelected" Value="{Binding Path=IsSelected, Mode=TwoWay}" />

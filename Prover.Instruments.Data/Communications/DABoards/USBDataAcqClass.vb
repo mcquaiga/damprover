@@ -31,7 +31,7 @@ Public Class USBDataAcqClass
         _board = New MccDaq.MccBoard(BoardNumber) 'Will more often be zero
         _channelNum = ChannelNumber
         _channelType = ChannelType
-        _ulStat = MccDaq.MccService.WinBufToArray(ADMemHandle, DataArray, 0, 10)
+        '_ulStat = MccDaq.MccService.WinBufToArray(ADMemHandlePtr, DataArray, 0, 10)
         _ulStat = MccDaq.MccService.ErrHandling(MccDaq.ErrorReporting.PrintAll, MccDaq.ErrorHandling.StopAll)
     End Sub
 
@@ -44,17 +44,13 @@ Public Class USBDataAcqClass
     End Sub
 
 #Region "Properties"
-    Public ReadOnly Property StartMotor() As Short Implements IBoard.StartMotor
-        Get
-            Return MotorValues.mStart
-        End Get
-    End Property
+    Public Sub StartMotor() Implements IBoard.StartMotor
+        PulseOut(MotorValues.mStart)
+    End Sub
 
-    Public ReadOnly Property StopMotor() As Short Implements IBoard.StopMotor
-        Get
-            Return MotorValues.mStop
-        End Get
-    End Property
+    Public Sub StopMotor() Implements IBoard.StopMotor
+        PulseOut(MotorValues.mStop)
+    End Sub
 #End Region
 
 

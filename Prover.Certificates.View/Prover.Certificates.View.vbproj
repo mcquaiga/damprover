@@ -73,11 +73,14 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\src\packages\Unity.3.0.1304.0\lib\Net45\Microsoft.Practices.Unity.Configuration.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.ReportViewer.WinForms, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL" />
     <Reference Include="Raven.Client.Lightweight, Version=2.0.3.0, Culture=neutral, PublicKeyToken=37f41c7f99471593, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\src\packages\RavenDB.Client.2.0.2360\lib\net40\Raven.Client.Lightweight.dll</HintPath>
     </Reference>
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Windows.Interactivity, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\src\packages\Prism.4.1.0.0\lib\NET40\System.Windows.Interactivity.dll</HintPath>
     </Reference>
@@ -89,9 +92,11 @@
     <Reference Include="System.Xaml">
       <RequiredTargetFramework>4.0</RequiredTargetFramework>
     </Reference>
+    <Reference Include="UIAutomationProvider" />
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
+    <Reference Include="WindowsFormsIntegration" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CertificatesViewModule.vb" />
@@ -99,6 +104,9 @@
     <Compile Include="Helpers\MultiSelectHelper.vb" />
     <Compile Include="ViewModels\CreateCertificateListVM.vb" />
     <Compile Include="ViewModels\ICreateCertificateListVM.vb" />
+    <Compile Include="View\CertificateReportViewer.xaml.vb">
+      <DependentUpon>CertificateReportViewer.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\CreateCertificatesView.xaml.vb">
       <DependentUpon>CreateCertificatesView.xaml</DependentUpon>
     </Compile>
@@ -169,6 +177,10 @@
   </ItemGroup>
   <ItemGroup>
     <Page Include="View\CertificateReport.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\CertificateReportViewer.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

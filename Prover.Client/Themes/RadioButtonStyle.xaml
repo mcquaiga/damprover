@@ -22,7 +22,7 @@
                                        Opacity="100"
                                        Source="Resources/check.png"
                                        Stretch="Uniform" />
-                                <Border BorderBrush="#FF565656"
+                                <Border BorderBrush="{DynamicResource HeaderColour}"
                                         BorderThickness="2"
                                         CornerRadius="0,0,0,0"
                                         d:IsHidden="True" />
@@ -39,7 +39,7 @@
                                        VerticalAlignment="Center"
                                        FontSize="18"
 									   FontFamily="Candara"
-                                       Foreground="#FFFFFFFF">
+                                       Foreground="{DynamicResource HeaderColour}">
                                 <ContentPresenter />
                             </TextBlock>
                         </Border>

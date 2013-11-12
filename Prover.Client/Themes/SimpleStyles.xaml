@@ -1465,7 +1465,7 @@
             </Setter.Value>
         </Setter>
     </Style>
-    <SolidColorBrush x:Key="HeaderColour" Color="#FF24B3F9" />
+    <SolidColorBrush x:Key="HeaderColour" Color="#FF1C63A5" />
 
     <Style x:Key="ItemDescriptions" TargetType="{x:Type TextBlock}">
         <Setter Property="Foreground" Value="{DynamicResource HeaderColour}" />
@@ -1477,7 +1477,7 @@
     </Style>
 
     <Style x:Key="ItemValues" TargetType="{x:Type TextBlock}">
-        <Setter Property="Foreground" Value="White" />
+        <Setter Property="Foreground" Value="Black" />
         <Setter Property="OpacityMask" Value="Black" />
         <Setter Property="FontSize" Value="18.667" />
         <Setter Property="Height" Value="Auto" />
@@ -1551,11 +1551,11 @@
             </Setter.Value>
         </Setter>
     </Style>
-    <SolidColorBrush x:Key="MainBackgroundColour" Color="#FF444444" />
+    <SolidColorBrush x:Key="MainBackgroundColour" Color="White" />
     <SolidColorBrush x:Key="HeaderFontColour" Color="White" />
     <System:Double x:Key="LargeFontSize">32</System:Double>
     <ControlTemplate x:Key="MenuModuleButton" TargetType="{x:Type Button}" />
-    <SolidColorBrush x:Key="MainMenuModuleBrush" Color="#FFA2A2A2" />
+    <SolidColorBrush x:Key="MainMenuModuleBrush" Color="White" />
     <Style x:Key="SectionHeader" TargetType="{x:Type Border}" />
 	
 </ResourceDictionary>

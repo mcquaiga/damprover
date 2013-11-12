@@ -14,44 +14,35 @@ Public Class Volume
 
         BeforeItems = Items.Where(Function(x) x.IsVolume = True).ToList()
         AfterItems = Items.Where(Function(x) x.IsVolume = True).ToList
+
+        'We need to setup three subsystems, 1 output (motor), 2 inputs (pulses A/B)
+        OutputBoard = New USBDataAcqClass(0, MccDaq.DigitalPortType.FirstPortA, 0)
+        InputABoard = New USBDataAcqClass(0, MccDaq.DigitalPortType.FirstPortB, 1)
+        InputBBoard = New USBDataAcqClass(0, 0, 0)
+        'TachometerComm = New TachometerClass(1)
+
     End Sub
 
 #Region "Properties"
 
     Public Const CubicFeetToMeters = 0.0283168466
-
     <JsonIgnore>
     Public Property BeforeItems As List(Of ItemClass) Implements IVolume.BeforeItems
     <JsonIgnore>
     Public Property AfterItems As List(Of ItemClass) Implements IVolume.AfterItems
-
     Public Property EVCType() As IVolume.EVCTypeEnum Implements IVolume.EVCType
-
-
     Public Property PressureFactor() As Double Implements IVolume.PressureFactor
-
     Public Property Fpv2Factor() As Double Implements IVolume.Fpv2
-
     Public Overridable Property DriveRate() As Double Implements IVolume.DriveRate
-
     Public Overridable Property MeterDisplacement() As Double Implements IVolume.MeterDisplacement
-
     Public Overridable Property EVCMeterDisplacement() As Double Implements IVolume.EvcMeterDisplacement
-
     Public Property AppliedInput() As Double Implements IVolume.AppliedInput
-
     Public Property MechReading As Integer Implements IVolume.MechReading
-
     Public Property MeterTypeNumber1 As Integer Implements IVolume.MeterTypeNumber
-
     Public Property MeterTypeString As String Implements IVolume.MeterTypeString
-
     Public Property PulserACount As Double Implements IVolume.PulserACount
-
     Public Property PulserBCount As Double Implements IVolume.PulserBCount
-
     Public Property VolumeData As String Implements IVolume.VolumeData
-
     Public Property TemperatureTest As TemperatureTestClass Implements IVolume.TemperatureTest
 
     <JsonIgnore>
@@ -60,6 +51,8 @@ Public Class Volume
     Public Property InputABoard As IBoard
     <JsonIgnore>
     Public Property InputBBoard As IBoard
+    <JsonIgnore>
+    Public Property TachometerComm As TachometerClass
 
 
     Public ReadOnly Property StartCorrected() As Double Implements IVolume.StartCorrected
@@ -236,22 +229,19 @@ Public Class Volume
     Public Function StartTest(InstrumentType As InstrumentTypeCode) As Task Implements IVolume.StartTest
 
         Return Task.Run(Async Function()
-                            'We need to setup three subsystems, 1 output (motor), 2 inputs (pulses A/B)
-                            OutputBoard = New USBDataAcqClass(0, MccDaq.DigitalPortType.EighthPortA, 1)
-                            InputABoard = New USBDataAcqClass(0, MccDaq.DigitalPortType.ThirdPortB, 2)
-                            InputBBoard = New USBDataAcqClass(0, MccDaq.DigitalPortType.ThirdPortB, 2)
-
                             'Reset Tachometer
+                            ' TachometerComm.ResetTach()
 
-
-                            'Start Motor with Output Pulse
-                            OutputBoard.PulseOut(USBDataAcqClass.MotorValues.mStart)
+                            System.Threading.Thread.Sleep(500)
 
                             PulserACount = 0
                             PulserBCount = 0
 
+                            'Start Motor with Output Pulse
+                            OutputBoard.PulseOut(USBDataAcqClass.MotorValues.mStart)
+
                             'Begin Listening for incoming pulses
-                            Do While PulserACount < MaxUnCorrected
+                            Do While PulserACount <= MaxUnCorrected
                                 PulserACount = InputABoard.ReadPulse()
                                 PulserBCount = InputBBoard.ReadPulse()
                             Loop
@@ -260,6 +250,9 @@ Public Class Volume
                             OutputBoard.PulseOut(USBDataAcqClass.MotorValues.mStop)
 
                             'Finally read tachometer
+                            'Me.AppliedInput = TachometerComm.ReadTach()
+
+                            System.Threading.Thread.Sleep(500)
 
                             'Download post test items
                             AfterItems = Await BaseInstrument.DownloadItems(InstrumentType, AfterItems)

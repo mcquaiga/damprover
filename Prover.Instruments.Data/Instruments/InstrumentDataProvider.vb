@@ -126,7 +126,7 @@ Namespace Instruments.Data
         End Function
 
         Private Sub CreateInstrumentIndexes()
-            _session.
+            ' _session.
         End Sub
     End Class
 End Namespace
