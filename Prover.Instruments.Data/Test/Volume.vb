@@ -1,24 +1,33 @@
 Imports Newtonsoft.Json
 Imports Prover.Instruments.Data
 Imports miSerialProtocol
+Imports System.ComponentModel
+Imports System.Runtime.CompilerServices
 
 Public Class Volume
-    Implements IVolume
+    Implements IVolume, INotifyPropertyChanged
+
 
 
     Sub New()
     End Sub
 
-    Sub New(Items As List(Of ItemClass))
+    Sub New(ByVal Items As List(Of ItemClass))
         MyBase.New()
 
-        BeforeItems = Items.Where(Function(x) x.IsVolume = True).ToList()
-        AfterItems = Items.Where(Function(x) x.IsVolume = True).ToList
+        BeforeItems = (From i In Items Select i
+                      Where i.IsVolume = True
+                      Select New ItemClass With {.Code = i.Code, .DescriptionValue = i.DescriptionValue, .IsVolume = i.IsVolume, .LongDescription = i.LongDescription, .Number = i.Number, .NumericValue = i.NumericValue, .ShortDescription = i.ShortDescription, .Value = i.Value}).ToList()
+
+        AfterItems = (From i In Items Select i
+                      Where i.IsVolume = True
+                      Select New ItemClass With {.Code = i.Code, .DescriptionValue = i.DescriptionValue, .IsVolume = i.IsVolume, .LongDescription = i.LongDescription, .Number = i.Number, .NumericValue = i.NumericValue, .ShortDescription = i.ShortDescription, .Value = i.Value}).ToList()
+
 
         'We need to setup three subsystems, 1 output (motor), 2 inputs (pulses A/B)
-        OutputBoard = New USBDataAcqClass(0, MccDaq.DigitalPortType.FirstPortA, 0)
-        InputABoard = New USBDataAcqClass(0, MccDaq.DigitalPortType.FirstPortB, 1)
-        InputBBoard = New USBDataAcqClass(0, 0, 0)
+        InputABoard = New USBDataAcqClass(0, MccDaq.DigitalPortType.FirstPortA, 0)
+        InputBBoard = New USBDataAcqClass(0, MccDaq.DigitalPortType.FirstPortB, 1)
+        OutputBoard = New USBDataAcqClass(0, 0, 0)
         'TachometerComm = New TachometerClass(1)
 
     End Sub
@@ -30,27 +39,31 @@ Public Class Volume
     Public Property BeforeItems As List(Of ItemClass) Implements IVolume.BeforeItems
     <JsonIgnore>
     Public Property AfterItems As List(Of ItemClass) Implements IVolume.AfterItems
+
     Public Property EVCType() As IVolume.EVCTypeEnum Implements IVolume.EVCType
     Public Property PressureFactor() As Double Implements IVolume.PressureFactor
     Public Property Fpv2Factor() As Double Implements IVolume.Fpv2
     Public Overridable Property DriveRate() As Double Implements IVolume.DriveRate
     Public Overridable Property MeterDisplacement() As Double Implements IVolume.MeterDisplacement
     Public Overridable Property EVCMeterDisplacement() As Double Implements IVolume.EvcMeterDisplacement
+
     Public Property AppliedInput() As Double Implements IVolume.AppliedInput
     Public Property MechReading As Integer Implements IVolume.MechReading
+
     Public Property MeterTypeNumber1 As Integer Implements IVolume.MeterTypeNumber
     Public Property MeterTypeString As String Implements IVolume.MeterTypeString
+
     Public Property PulserACount As Double Implements IVolume.PulserACount
     Public Property PulserBCount As Double Implements IVolume.PulserBCount
-    Public Property VolumeData As String Implements IVolume.VolumeData
+
     Public Property TemperatureTest As TemperatureTestClass Implements IVolume.TemperatureTest
 
     <JsonIgnore>
-    Public Property OutputBoard As IBoard
+    Public Property OutputBoard As IBoard Implements IVolume.OutputBoard
     <JsonIgnore>
-    Public Property InputABoard As IBoard
+    Public Property InputABoard As IBoard Implements IVolume.InputABoard
     <JsonIgnore>
-    Public Property InputBBoard As IBoard
+    Public Property InputBBoard As IBoard Implements IVolume.InputBBoard
     <JsonIgnore>
     Public Property TachometerComm As TachometerClass
 
@@ -164,7 +177,7 @@ Public Class Volume
 
     Public Overridable ReadOnly Property MaxUnCorrected() As Double Implements IVolume.MaxUnCorrected
         Get
-            Return 3
+            Return 10
         End Get
 
     End Property
@@ -226,13 +239,14 @@ Public Class Volume
 
 #Region "Methods"
 
-    Public Function StartTest(InstrumentType As InstrumentTypeCode) As Task Implements IVolume.StartTest
+    Public Function RunTest(InstrumentType As InstrumentTypeCode, TemperatureTest As ITemperatureTestClass) As Task Implements IVolume.RunTest
+
+        Me.TemperatureTest = TemperatureTest
 
         Return Task.Run(Async Function()
                             'Reset Tachometer
                             ' TachometerComm.ResetTach()
-
-                            System.Threading.Thread.Sleep(500)
+                            ' System.Threading.Thread.Sleep(500)
 
                             PulserACount = 0
                             PulserBCount = 0
@@ -240,11 +254,15 @@ Public Class Volume
                             'Start Motor with Output Pulse
                             OutputBoard.PulseOut(USBDataAcqClass.MotorValues.mStart)
 
+                            System.Threading.Thread.Sleep(500)
+
                             'Begin Listening for incoming pulses
-                            Do While PulserACount <= MaxUnCorrected
-                                PulserACount = InputABoard.ReadPulse()
-                                PulserBCount = InputBBoard.ReadPulse()
-                            Loop
+                            Do
+                                Me.PulserACount += InputABoard.ReadPulse()
+                                NotifyPropertyChanged("PulserACount")
+                                Me.PulserBCount += InputBBoard.ReadPulse()
+                                NotifyPropertyChanged("PulserBCount")
+                            Loop While PulserACount < MaxUnCorrected
 
                             'Stop motor
                             OutputBoard.PulseOut(USBDataAcqClass.MotorValues.mStop)
@@ -256,7 +274,8 @@ Public Class Volume
 
                             'Download post test items
                             AfterItems = Await BaseInstrument.DownloadItems(InstrumentType, AfterItems)
-
+                            NotifyPropertyChanged("EndCorrected")
+                            NotifyPropertyChanged("EndUnCorrected")
                         End Function)
 
     End Function
@@ -356,4 +375,12 @@ Public Class Volume
 
 #End Region
 
+    Public Event PropertyChanged As PropertyChangedEventHandler Implements INotifyPropertyChanged.PropertyChanged
+
+    ' This method is called by the Set accessor of each property. 
+    ' The CallerMemberName attribute that is applied to the optional propertyName 
+    ' parameter causes the property name of the caller to be substituted as an argument. 
+    Private Sub NotifyPropertyChanged(<CallerMemberName()> Optional ByVal propertyName As String = Nothing)
+        RaiseEvent PropertyChanged(Me, New PropertyChangedEventArgs(propertyName))
+    End Sub
 End Class

@@ -208,7 +208,7 @@ Namespace ViewModels
         Public Async Function StartNewTest() As Task
 
             Try
-                Await Instrument.VolumeTest.StartTest(Me.Instrument.InstrumentType)
+                Await Instrument.StartRotaryTest()
             Catch ex As Exception
                 MsgBox(ex.Message.ToString, MsgBoxStyle.OkOnly)
             End Try

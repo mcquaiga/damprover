@@ -168,7 +168,7 @@ Namespace Instruments.Data
         End Function
 
         Public Overridable Async Function StartRotaryTest() As Task Implements IBaseInstrument.StartRotaryTest
-            Await Me.VolumeTest.StartTest(Me.InstrumentType)
+            Await Me.VolumeTest.RunTest(Me.InstrumentType, Me.Temperature.Tests.Where(Function(x) x.LevelIndex = 2).FirstOrDefault)
         End Function
 
 #Region "Shared stuff"

@@ -581,7 +581,7 @@
                                     <TextBlock Style="{StaticResource ItemDescriptions}">Corrected</TextBlock>
                                 </StackPanel>
                                 <StackPanel>
-                                    <TextBlock Style="{StaticResource ItemValues}" Text="{Binding Instrument.VolumeTest.EndUncorrected, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
+                                    <TextBlock Style="{StaticResource ItemValues}" Text="{Binding Instrument.VolumeTest.EndUnCorrected, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
                                     <TextBlock Style="{StaticResource ItemDescriptions}">Uncorrected</TextBlock>
 
                                 </StackPanel>
@@ -597,12 +597,12 @@
                                   Margin="0,10,0,0">
                                 <UniformGrid Columns="4">
                                     <StackPanel HorizontalAlignment="Center">
-                                        <TextBlock Style="{DynamicResource ItemValues}" Text="{Binding Instrument.VolumeTest.PulserAcount, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
-                                        <TextBlock Style="{StaticResource ItemDescriptions}">Pulse A Count</TextBlock>
+                                        <TextBlock Style="{DynamicResource ItemValues}" Text="{Binding Instrument.VolumeTest.PulserACount, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
+                                        <TextBlock Style="{StaticResource ItemDescriptions}">Pulse A</TextBlock>
                                     </StackPanel>
                                     <StackPanel HorizontalAlignment="Center">
                                         <TextBlock Style="{DynamicResource ItemValues}" Text="{Binding Instrument.VolumeTest.PulserBCount, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
-                                        <TextBlock Style="{StaticResource ItemDescriptions}">Pulse B Count</TextBlock>
+                                        <TextBlock Style="{StaticResource ItemDescriptions}">Pulse B</TextBlock>
                                     </StackPanel>
                                     <StackPanel HorizontalAlignment="Center">
                                         <TextBlock Style="{DynamicResource ItemValues}" Text="{Binding Instrument.VolumeTest.AppliedInput, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />

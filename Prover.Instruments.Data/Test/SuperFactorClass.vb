@@ -23,6 +23,10 @@ Public Class SuperFactorClass
 
     End Sub
 
+    Sub New(Items As List(Of ItemClass))
+
+    End Sub
+
     Sub New(ByVal SpecGr As Double, ByVal CO2 As Double, ByVal N2 As Double, ByVal Temp As Double, ByVal GaugePressure As Double)
         Me.SpecGr = SpecGr
         Me.CO2 = CO2

@@ -68,6 +68,8 @@ Public Interface IVolume
     End Enum
 #End Region
 
+    Function RunTest(InstrumentType As miSerialProtocol.InstrumentTypeCode, TemperatureTest As ITemperatureTestClass) As Task
+
 
 
     <JsonIgnore>
@@ -103,10 +105,15 @@ Public Interface IVolume
     Property MeterTypeNumber As Integer
     Property MeterTypeString As String
     Property MechReading As Integer
-    Property VolumeData As String
+
     Property TemperatureTest As TemperatureTestClass
 
+    <JsonIgnore>
+    Property OutputBoard As IBoard
+    <JsonIgnore>
+    Property InputABoard As IBoard
+    <JsonIgnore>
+    Property InputBBoard As IBoard
 
 
-    Function StartTest(InstrumentType As miSerialProtocol.InstrumentTypeCode) As Task
 End Interface

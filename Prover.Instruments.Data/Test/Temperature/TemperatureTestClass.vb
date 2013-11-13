@@ -18,7 +18,9 @@ Public Class TemperatureTestClass
         _levelIndex = Level
 
         Me.TestItems = New List(Of ItemClass)
-        Me.TestItems = Items.Where(Function(x) x.IsTemperatureTest = True).ToList
+        Me.TestItems = (From i In Items
+                       Where i.IsTemperatureTest = True
+                       Select New ItemClass With {.Code = i.Code, .DescriptionValue = i.DescriptionValue, .IsVolume = i.IsVolume, .LongDescription = i.LongDescription, .Number = i.Number, .NumericValue = i.NumericValue, .ShortDescription = i.ShortDescription, .Value = i.Value}).ToList()
         Me.Units = Units
         Me.BaseTemperature = BaseTemperature
     End Sub
