@@ -1,8 +1,11 @@
 ﻿Imports Prover.Instruments.Data
 Imports miSerialProtocol
 Imports System.Collections.ObjectModel
+Imports System.ComponentModel
+Imports System.Runtime.CompilerServices
 
 Public Class TemperatureClass
+    Implements INotifyPropertyChanged
 
     Public Property TemperatureItems As List(Of ItemClass)
     Public Property Tests As ObservableCollection(Of ITemperatureTestClass)
@@ -39,5 +42,17 @@ Public Class TemperatureClass
 
     Public Async Function DownloadTemperatureTestItems(InstrumentType As InstrumentTypeCode, LevelIndex As Integer) As Task
         Await Tests(LevelIndex).DownloadTestItems(InstrumentType)
+        NotifyPropertyChanged("Tests")
     End Function
+
+
+
+    Public Event PropertyChanged As PropertyChangedEventHandler Implements INotifyPropertyChanged.PropertyChanged
+
+    ' This method is called by the Set accessor of each property. 
+    ' The CallerMemberName attribute that is applied to the optional propertyName 
+    ' parameter causes the property name of the caller to be substituted as an argument. 
+    Private Sub NotifyPropertyChanged(<CallerMemberName()> Optional ByVal propertyName As String = Nothing)
+        RaiseEvent PropertyChanged(Me, New PropertyChangedEventArgs(propertyName))
+    End Sub
 End Class

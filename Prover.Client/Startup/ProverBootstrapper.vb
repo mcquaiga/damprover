@@ -26,6 +26,8 @@ Public Class ProverBootstrapper
         Container.RegisterType(Of IView(Of IMainVM), MainWindow)()
 
         Container.RegisterType(Of INotificationManager, NotificationManager)()
+        Container.RegisterType(Of IView(Of INotificationManager), NotificationsView)()
+        Container.RegisterType(Of Object, NotificationsView)()
 
         _main = Container.Resolve(Of MainWindow)()
         Return _main
@@ -48,6 +50,9 @@ Public Class ProverBootstrapper
 
         'Dim DashboardModuleType As Type = GetType(DashboardModule)
         'ModuleCatalog.AddModule(New ModuleInfo(DashboardModuleType.Name, DashboardModuleType.AssemblyQualifiedName))
+
+
+
 
         Dim InstrumentModuleType As Type = GetType(InstrumentsViewModule)
         ModuleCatalog.AddModule(New ModuleInfo(InstrumentModuleType.Name, InstrumentModuleType.AssemblyQualifiedName))

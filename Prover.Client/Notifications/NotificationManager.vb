@@ -7,9 +7,11 @@ Imports Microsoft.Practices.Prism.Events
 Public Class NotificationManager
     Implements INotificationManager
 
-    Private _regions As IRegionCollection
+    Private _regions As IRegionManager
     Private _container As IUnityContainer
     Private _events As IEventAggregator
+
+    Property Message As String
 
 
     Public Sub New(Container As IUnityContainer, RegionManager As IRegionManager, Events As IEventAggregator)
@@ -18,6 +20,9 @@ Public Class NotificationManager
         _events = Events
 
         _events.GetEvent(Of ProverNotification).Subscribe(AddressOf UpdateNotifications(Of INotification))
+
+        RegionManager.Regions(RegionNames.NotificationRegion).Add(Me)
+        RegionManager.Regions(RegionNames.NotificationRegion).Activate(Me)
     End Sub
 
 

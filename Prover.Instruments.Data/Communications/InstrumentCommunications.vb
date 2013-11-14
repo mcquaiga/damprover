@@ -39,7 +39,8 @@ Namespace Instruments.Data
                                 _miSerial.Connect()
                                 Dim downloads = _miSerial.RG((From i In _items Select i.Number).ToList)
                                 _miSerial.Disconnect()
-
+                                _miSerial.Dispose()
+                                _miSerial = Nothing
                                 For Each item In downloads
                                     Instrument.Items.Where(Function(x) x.Number = item.Key).SingleOrDefault.Value = item.Value
                                 Next

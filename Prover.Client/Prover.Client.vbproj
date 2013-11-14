@@ -110,8 +110,6 @@
     </ApplicationDefinition>
     <Compile Include="Notifications\INotificationManager.vb" />
     <Compile Include="Notifications\NotificationManager.vb" />
-    <Compile Include="Prism\Events\INotification.vb" />
-    <Compile Include="Prism\Events\ProverNotification.vb" />
     <Compile Include="Resources\LocalizedResource.Designer.vb">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -126,6 +124,9 @@
     <Compile Include="ViewModel\MainViewModel.vb" />
     <Compile Include="Windows\MainWindow.xaml.vb">
       <DependentUpon>MainWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\NotificationsView.xaml.vb">
+      <DependentUpon>NotificationsView.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -285,6 +286,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Windows\NotificationsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Prover.Certificates.Data\Prover.Certificates.Data.vbproj">
@@ -343,7 +348,9 @@
   <ItemGroup>
     <Resource Include="Resources\Settings2.png" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Prism\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\Expression\Blend\.NETFramework\v4.5\Microsoft.Expression.Blend.WPF.targets" />
 </Project>

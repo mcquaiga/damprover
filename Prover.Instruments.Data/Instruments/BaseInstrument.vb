@@ -54,7 +54,7 @@ Namespace Instruments.Data
         Public ReadOnly Property SerialNumber As String Implements IBaseInstrument.SerialNumber
             Get
                 If Items Is Nothing Then Return Nothing
-                Return Items.Where(Function(x) x.Number = 62).SingleOrDefault.DescriptionValue
+                Return Items.Where(Function(x) x.Number = 62).SingleOrDefault.NumericValue
             End Get
         End Property
 
@@ -181,7 +181,7 @@ Namespace Instruments.Data
             Dim downloads = Await InstrumentCommunications.DownloadItemsAsync(InstrumentType, Items)
 
             For Each item In downloads
-                Items.Where(Function(x) x.Number = item.Key).SingleOrDefault.Value = item.Value
+                Items.Where(Function(x) x.Number = item.Key).SingleOrDefault.NumericValue = item.Value
             Next
 
             Return Items

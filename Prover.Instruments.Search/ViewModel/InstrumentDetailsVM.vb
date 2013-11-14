@@ -167,8 +167,6 @@ Namespace ViewModels
 
         Public Async Sub FetchTemperatureItemsByLevel(LevelIndex As Integer)
             Await Instrument.DownloadTemperatureTestItems(LevelIndex)
-            NotifyPropertyChanged("Instruments")
-            NotifyPropertyChanged("TemperatureTests")
         End Sub
 
         Public Sub LoadItemDescriptions()

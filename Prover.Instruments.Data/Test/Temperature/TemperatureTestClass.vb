@@ -1,13 +1,16 @@
 Imports Prover.Instruments.Data
 Imports miSerialProtocol
+Imports System.ComponentModel
+Imports System.Runtime.CompilerServices
 
 Public Class TemperatureTestClass
-    Implements ITemperatureTestClass
+    Implements ITemperatureTestClass, INotifyPropertyChanged
 
     Const TempCorrection As Double = 459.67
     Const MetericTempCorrection As Double = 273.15
 
     Private _levelIndex As Integer
+    Private _gaugeTemperature As Double
 
     Sub New()
 
@@ -31,6 +34,15 @@ Public Class TemperatureTestClass
     Public Property Units As String Implements ITemperatureTestClass.TemperatureUnits
     Public Property BaseTemperature As Double Implements ITemperatureTestClass.BaseTemperature
     Public Property GaugeTemperature() As Double Implements ITemperatureTestClass.GaugeTemperature
+        Get
+            Return _gaugeTemperature
+        End Get
+        Set(value As Double)
+            _gaugeTemperature = value
+            NotifyPropertyChanged("TemperatureFactor")
+            NotifyPropertyChanged("PercentError")
+        End Set
+    End Property
 
 
     Public ReadOnly Property EVCTemperature() As Double Implements ITemperatureTestClass.EVCTemperature
@@ -93,10 +105,24 @@ Public Class TemperatureTestClass
 
     Public Async Function DownloadTemperatureTestItems(InstrumentType As InstrumentTypeCode) As Task Implements ITemperatureTestClass.DownloadTestItems
         Me.TestItems = Await BaseInstrument.DownloadItems(InstrumentType, Me.TestItems)
+        NotifyPropertyChanged("TestItems")
+        NotifyPropertyChanged("EVCTemperature")
+        NotifyPropertyChanged("EVCFactor")
+        NotifyPropertyChanged("TemperatureFactor")
+        NotifyPropertyChanged("PercentError")
     End Function
 
 
 #End Region
 
+
+    Public Event PropertyChanged As PropertyChangedEventHandler Implements INotifyPropertyChanged.PropertyChanged
+
+    ' This method is called by the Set accessor of each property. 
+    ' The CallerMemberName attribute that is applied to the optional propertyName 
+    ' parameter causes the property name of the caller to be substituted as an argument. 
+    Private Sub NotifyPropertyChanged(<CallerMemberName()> Optional ByVal propertyName As String = Nothing)
+        RaiseEvent PropertyChanged(Me, New PropertyChangedEventArgs(propertyName))
+    End Sub
 
 End Class
