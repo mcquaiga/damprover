@@ -68,44 +68,39 @@ Public Interface IVolume
     End Enum
 #End Region
 
+    ReadOnly Property DriveRateDescription As String
+
+    ReadOnly Property HasPassed As Boolean
+
+
     Function RunTest(InstrumentType As miSerialProtocol.InstrumentTypeCode, TemperatureTest As ITemperatureTestClass) As Task
 
-
-
-    <JsonIgnore>
     Property BeforeItems As List(Of ItemClass)
-    <JsonIgnore>
     Property AfterItems As List(Of ItemClass)
 
     ReadOnly Property TrueCorrected As Double 'Calculated Corrected Volume = (TempFactor * PressureFactor * Fpv2Factor * InputUncVolume)
     ReadOnly Property EvcCorrected As Double 'End Reading - Start Reading / Corrected Multiplier
-    Property PressureFactor As Double
-    Property Fpv2 As Double
     ReadOnly Property InputUncVolume As Double
-
     ReadOnly Property StartunCorrected As Double
     ReadOnly Property EndCorrected As Double
-
     ReadOnly Property StartCorrected As Double
     ReadOnly Property EndUnCorrected As Double
-
     ReadOnly Property CorrectedMultiplier As Decimal
     ReadOnly Property UncorrectedMutliplier As Decimal
+    ReadOnly Property UncorrectedMutliplierDescription As String
+    ReadOnly Property CorrectedMultiplierDescription As String
     ReadOnly Property MaxUnCorrected As Double
+    ReadOnly Property EvcMeterDisplacement As Double
+    ReadOnly Property DriveRate As Double
+    ReadOnly Property EVCType As EVCTypeEnum
+    ReadOnly Property MeterType As String
 
     Property AppliedInput As Double
-    Property DriveRate As Double '
-    Property EVCType As EVCTypeEnum
-
-
     Property PulserACount As Double
     Property PulserBCount As Double
-    Property MeterDisplacement As Double
-    Property EvcMeterDisplacement As Double
-    Property MeterTypeNumber As Integer
-    Property MeterTypeString As String
-    Property MechReading As Integer
 
+    Property PressureFactor As Double
+    Property Fpv2 As Double
     Property TemperatureTest As TemperatureTestClass
 
     <JsonIgnore>
@@ -114,6 +109,7 @@ Public Interface IVolume
     Property InputABoard As IBoard
     <JsonIgnore>
     Property InputBBoard As IBoard
-
+    <JsonIgnore>
+    Property TachometerComm As TachometerClass
 
 End Interface

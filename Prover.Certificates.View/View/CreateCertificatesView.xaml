@@ -12,24 +12,38 @@
 
     <UserControl.Resources>
         <CollectionViewSource x:Key="Instruments" Source="{Binding Path=Instruments, Mode=TwoWay}" />
+        <DataTemplate x:Key="temp">
+            <StackPanel Orientation="Vertical" DataContext="{Binding}" Margin="10,0,0,0" >
+                <TextBlock Foreground="Black" Text="{Binding LevelDescription}" FontStyle="Oblique"/>
+                <TextBlock Foreground="Black" Text="{Binding PercentError}" />
+            </StackPanel>
+        </DataTemplate>
+        
         <DataTemplate x:Key="inst">
-            <Border BorderBrush="White" BorderThickness="0,0,0,0.25">
-                <StackPanel DataContext="{Binding Path=Instrument}" Orientation="Horizontal">
-                    <Image />
+            <Border BorderBrush="Black" BorderThickness="0,0,0,0.25">
+                <Grid DataContext="{Binding Path=Instrument}" >
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="0.10*"/>
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Grid.Column="0" Text="{Binding HasPassed}" />
 
-                    <StackPanel Orientation="Vertical">
+                    <StackPanel Orientation="Vertical" Grid.Column="1">
                         <TextBlock Width="125"
-                                   Foreground="White"
+                                   Foreground="Black"
                                    Text="{Binding InstrumentType}" />
                         <TextBlock Width="125"
                                    Margin="2"
                                    HorizontalAlignment="Center"
                                    VerticalAlignment="Center"
                                    FontSize="22"
-                                   Foreground="White"
+                                   Foreground="Black"
                                    Text="{Binding SerialNumber}" />
                     </StackPanel>
-                    <Grid Height="50" Margin="2">
+                    <Grid Height="50" Margin="2" Grid.Column="2">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto" />
                             <RowDefinition Height="Auto" />
@@ -37,32 +51,45 @@
                             <RowDefinition Height="Auto" />
                         </Grid.RowDefinitions>
                         <StackPanel Grid.Row="0" Orientation="Horizontal">
-                            <TextBlock Foreground="White" Text="{Binding CreatedDate}" />
+                            <TextBlock Foreground="Black" Text="{Binding CreatedDate}" />
                         </StackPanel>
                         <StackPanel Grid.Row="1" Orientation="Horizontal" />
                         <StackPanel Grid.Row="2" Orientation="Horizontal">
-                            <TextBlock Foreground="White" Text="S/N 1: " />
-                            <TextBlock Foreground="White" Text="{Binding SiteNumber1}" />
+                            <TextBlock Foreground="Black" Text="S/N 1: " />
+                            <TextBlock Foreground="Black" Text="{Binding SiteNumber1}" />
                             <TextBlock Margin="5,0,0,0"
-                                       Foreground="White"
+                                       Foreground="Black"
                                        Text="S/N 2: " />
-                            <TextBlock Foreground="White" Text="{Binding SiteNumber2}" />
+                            <TextBlock Foreground="Black" Text="{Binding SiteNumber2}" />
                         </StackPanel>
                         <StackPanel Grid.Row="3" Orientation="Horizontal">
-                            <TextBlock Foreground="White" Text="Drive Type: " />
-                            <TextBlock Foreground="White" Text="{Binding InstrumentDriveType}" />
+                            <TextBlock Foreground="Black" Text="Meter Type: " />
+                            <TextBlock Foreground="Black" Text="{Binding VolumeTest.MeterType}" />
                         </StackPanel>
+                        
+                   
                     </Grid>
-                    <Grid DataContext="{Binding Temperature.TemperatureTests}">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition />
-                        </Grid.ColumnDefinitions>
-                        <StackPanel Grid.Column="0" Orientation="Horizontal">
-                            <TextBlock Foreground="White" Text="{Binding LevelDescription}" />
-                            <TextBlock Foreground="White" Text="{Binding PercentError}" />
+                    <ItemsControl Margin="5" Grid.Column="3"
+                                          ItemTemplate="{StaticResource ResourceKey=temp}"
+                                          ItemsSource="{Binding Temperature.Tests}">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <UniformGrid Columns="3" />
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                    </ItemsControl>
+                    
+                    <StackPanel Orientation="Horizontal" Grid.Column="4">
+                        <StackPanel Orientation="Vertical" Margin="10,0,0,0">
+                            <TextBlock Foreground="Black" Text="UnCor. % Error"  />
+                            <TextBlock Foreground="Black" Text="{Binding VolumeTest.UnCorrectedPercentError}" />
                         </StackPanel>
-                    </Grid>
-                </StackPanel>
+                        <StackPanel Orientation="Vertical" Margin="10,0,0,0">
+                            <TextBlock Foreground="Black" Text="Cor. % Error" />
+                            <TextBlock Foreground="Black" Text="{Binding VolumeTest.CorrectedPercentError}" />
+                        </StackPanel>
+                    </StackPanel>
+                </Grid>
             </Border>
         </DataTemplate>
         <Style x:Key="InstrumentStyle" TargetType="{x:Type ListBoxItem}">
@@ -119,9 +146,13 @@
             <Button Command="{Binding EC300FilterCommand}"
                     Content="EC 300"
                     Style="{DynamicResource SimpleButton}" />
-
+            
             <!--  <TextBlock HorizontalAlignment="Right">Serial Number:</TextBlock>  -->
         </StackPanel>
+        <Button Command="{Binding ResetFilterCommand}" Grid.Row="0"
+                    Content="Reset"
+                    HorizontalAlignment="Right"
+                    Style="{DynamicResource SimpleButton}" />
         <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="4*" />
@@ -142,9 +173,10 @@
             <!--  Certificate Information  -->
             <Grid Grid.Column="1">
                 <StackPanel>
-                    <Button Command="{Binding Path=CreateNewCertCommand}" Content="Create New Certificate" />
+                    
                     <TextBlock>Created By:</TextBlock>
                     <TextBox Text="{Binding Path=CreatedBy}" />
+                    <Button Command="{Binding Path=CreateNewCertCommand}" Content="Create New" />
                 </StackPanel>
             </Grid>
         </Grid>

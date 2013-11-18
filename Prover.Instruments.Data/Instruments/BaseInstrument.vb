@@ -12,6 +12,7 @@ Namespace Instruments.Data
     Public MustInherit Class BaseInstrument
         Implements IBaseInstrument, INotifyPropertyChanged
 
+
         'This is the base class for all the Mercury Instruments
         'Seperate classes for each instrument must be created and inherited from this class
         'Only the properties and methods common to all instruments are created in this class
@@ -29,11 +30,11 @@ Namespace Instruments.Data
 #Region "Properties"
 
         Public Property Id As String
+
         Public Property Items As List(Of ItemClass) Implements IBaseInstrument.Items
 
         Public Property CreatedDate As DateTime? Implements IBaseInstrument.CreatedDate
         Public Property InstrumentType As miSerialProtocol.InstrumentTypeCode Implements IBaseInstrument.InstrumentType
-        Public Property InstrumentDriveType() As IBaseInstrument.DriveType Implements IBaseInstrument.InstrumentDriveType
         Public Property InspectionID As String Implements IBaseInstrument.InspectionID
 
         Public Property PressureTests As List(Of IPressureFactorClass) Implements IBaseInstrument.PressureTests
@@ -136,6 +137,12 @@ Namespace Instruments.Data
             End Get
         End Property
 
+        Public ReadOnly Property HasPassed As Boolean Implements IBaseInstrument.HasPassed
+            Get
+                Return Temperature.HasPassed And VolumeTest.HasPassed
+            End Get
+        End Property
+
 #End Region
 
 #Region "Methods"
@@ -178,13 +185,19 @@ Namespace Instruments.Data
 
         Public Shared Async Function DownloadItems(InstrumentType As InstrumentTypeCode, Items As List(Of ItemClass)) As Task(Of List(Of ItemClass))
 
-            Dim downloads = Await InstrumentCommunications.DownloadItemsAsync(InstrumentType, Items)
+            Try
+                Dim downloads = Await InstrumentCommunications.DownloadItemsAsync(InstrumentType, Items)
 
-            For Each item In downloads
-                Items.Where(Function(x) x.Number = item.Key).SingleOrDefault.NumericValue = item.Value
-            Next
+                For Each item In downloads
+                    Items.Where(Function(x) x.Number = item.Key).SingleOrDefault.Value = item.Value
+                Next
 
-            Return Items
+                Return Items
+            Catch ex As Exception
+                MsgBox(ex.Message, MsgBoxStyle.OkOnly, "Error")
+                Return Nothing
+            End Try
+           
         End Function
 
 
@@ -202,6 +215,7 @@ Namespace Instruments.Data
         Private Sub NotifyPropertyChanged(<CallerMemberName()> Optional ByVal propertyName As String = Nothing)
             RaiseEvent PropertyChanged(Me, New PropertyChangedEventArgs(propertyName))
         End Sub
+
 
 
     End Class

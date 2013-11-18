@@ -3,6 +3,7 @@ Imports Newtonsoft.Json
 Imports Newtonsoft.Json.Linq
 Imports Raven.Client.Document
 Imports Raven.Client.Linq
+Imports Raven.Client.Indexes
 
 
 Namespace Instruments.Data
@@ -12,6 +13,7 @@ Namespace Instruments.Data
 
         Public Sub New()
             MyBase.New()
+            'IndexCreation.CreateIndexes(GetType(Instruments_MiniMax).Assembly, _docStore)
         End Sub
 
         Private Sub New(ByVal key As String, ByVal name As String, ByVal source As String, ByVal parameters As ParamDictionary)
@@ -32,7 +34,7 @@ Namespace Instruments.Data
         End Function
 
         Public Overrides Function GetName(ByVal element As IBaseInstrument) As String
-            Return element.InstrumentDriveType.ToString
+            Return ""
         End Function
 
         Public Function GetInstrumentsBySerialNumber(SerialNumber As String) As List(Of IBaseInstrument)
@@ -85,11 +87,11 @@ Namespace Instruments.Data
         End Function
 
         Public Function GetInstrumentByID(ID As String) As IBaseInstrument
-            
+
             Return _session.Load(Of IBaseInstrument)(ID)
         End Function
 
-        Public Async Sub UpsertInstrument(instrument As IBaseInstrument)
+        Public Async Function UpsertInstrument(instrument As IBaseInstrument) As Task
 
             Await Task.Run(Sub()
 
@@ -103,7 +105,7 @@ Namespace Instruments.Data
                                _session.SaveChanges()
                            End Sub
             )
-        End Sub
+        End Function
 
         Public Async Function DeleteInstruments(Instruments As List(Of IBaseInstrument)) As Task
             Await Task.Run(Sub()

@@ -20,6 +20,15 @@ Public Class TemperatureClass
         End If
     End Sub
 
+    Public Property HasPassed As Boolean
+        Get
+            Return Tests(0).hasPassed And Tests(1).hasPassed And Tests(2).hasPassed
+        End Get
+        Set(value As Boolean)
+
+        End Set
+    End Property
+
 
     Public ReadOnly Property TemperatureUnits() As String
         Get

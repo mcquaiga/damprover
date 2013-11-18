@@ -64,49 +64,56 @@ Namespace ViewModels
             NotifyPropertyChanged("BaseInstruments")
         End Sub
 
-        Public Sub MiniMaxFilterINstruments()
-
-            Dim items As IEnumerable(Of IBaseInstrument) = _InstrumentProvider.GetMiniMaxInstruments()
+        Public Sub MiniMaxFilterInstruments()
+            Dim tempInstrument = (From i In _instrs
+                                    Where i.Instrument.InstrumentType = miSerialProtocol.InstrumentTypeCode.MiniMax
+                                    Select i).ToList
 
             _instrs.Clear()
-
-            For Each i In items
+            For Each i In tempInstrument
                 _instrs.Add(i)
             Next
+
             NotifyPropertyChanged("BaseInstruments")
         End Sub
 
         Public Sub EC300FilterINstruments()
-
-            Dim items As IEnumerable(Of IBaseInstrument) = _InstrumentProvider.GetEC300Instruments()
+            Dim tempInstrument = (From i In _instrs
+                         Where i.Instrument.InstrumentType = miSerialProtocol.InstrumentTypeCode.EC300
+                         Select i).ToList
 
             _instrs.Clear()
-
-            For Each i In items
+            For Each i In tempInstrument
                 _instrs.Add(i)
             Next
+
             NotifyPropertyChanged("BaseInstruments")
         End Sub
 
         Public Sub OneWeekFilterClick()
-            Dim items As IEnumerable(Of IBaseInstrument) = _InstrumentProvider.GetInstrumentDateCreated(Now.Subtract(oneWeek))
+            Dim tempInstrument = (From i In _instrs
+                         Where i.Instrument.CreatedDate >= Now.AddDays(-7)
+                         Select i).ToList
 
             _instrs.Clear()
-
-            For Each i In items
+            For Each i In tempInstrument
                 _instrs.Add(i)
             Next
+
             NotifyPropertyChanged("BaseInstruments")
         End Sub
 
         Public Sub OneMonthFilterClick()
 
-            Dim items As IEnumerable(Of IBaseInstrument) = _InstrumentProvider.GetInstrumentDateCreated(Now.Subtract(oneMonth))
+            Dim tempInstrument = (From i In _instrs
+                          Where i.Instrument.CreatedDate >= Now.AddMonths(-1)
+                          Select i).ToList
 
             _instrs.Clear()
-            For Each i In items
+            For Each i In tempInstrument
                 _instrs.Add(i)
             Next
+
             NotifyPropertyChanged("BaseInstruments")
         End Sub
 
@@ -146,14 +153,14 @@ Namespace ViewModels
 
                 For Each x In (From i In _instrs Where i.IsSelected = True Select i.Instrument).ToList
                     x.InspectionID = certID
-                    InstrumentProvider.UpsertInstrument(x)
+                    Await InstrumentProvider.UpsertInstrument(x)
                 Next x
 
                 cert.SetNextCertificateNumber()
 
                 Me.InstrumentsWithNoCertificates()
 
-                _regionManager.RequestNavigate(RegionNames.MainRegion, New Uri("CertificateReportViewer", UriKind.Relative))
+                '_regionManager.RequestNavigate(RegionNames.MainRegion, New Uri("CertificateReportViewer", UriKind.Relative))
             End If
         End Sub
 
@@ -172,6 +179,13 @@ Namespace ViewModels
 
 
 #Region "commands"
+
+        Private _resetFillterCommand = New Microsoft.Practices.Prism.Commands.DelegateCommand(AddressOf InstrumentsWithNoCertificates)
+        Public ReadOnly Property ResetFilterCommand As System.Windows.Input.ICommand Implements ICreateCertificateListVM.ResetFilterCommand
+            Get
+                Return _resetFillterCommand
+            End Get
+        End Property
 
         Private _oneWeekFilterCommand = New Microsoft.Practices.Prism.Commands.DelegateCommand(AddressOf OneWeekFilterClick)
         Public ReadOnly Property OneWeekFilterCommand As System.Windows.Input.ICommand Implements ICreateCertificateListVM.OneWeekFilterCommand

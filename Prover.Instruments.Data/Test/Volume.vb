@@ -7,6 +7,7 @@ Imports System.Runtime.CompilerServices
 Public Class Volume
     Implements IVolume, INotifyPropertyChanged
 
+    Private _appliedInput As Decimal
 
 
     Sub New()
@@ -17,11 +18,17 @@ Public Class Volume
 
         BeforeItems = (From i In Items Select i
                       Where i.IsVolume = True
-                      Select New ItemClass With {.Code = i.Code, .DescriptionValue = i.DescriptionValue, .IsVolume = i.IsVolume, .LongDescription = i.LongDescription, .Number = i.Number, .NumericValue = i.NumericValue, .ShortDescription = i.ShortDescription, .Value = i.Value}).ToList()
+                      Select New ItemClass With {.Code = i.Code, .IsVolume = i.IsVolume,
+                                                .LongDescription = i.LongDescription, .Number = i.Number,
+                                                 .ShortDescription = i.ShortDescription, .Value = i.Value,
+                                                 .ValueDescriptions = i.ValueDescriptions}).ToList()
 
         AfterItems = (From i In Items Select i
                       Where i.IsVolume = True
-                      Select New ItemClass With {.Code = i.Code, .DescriptionValue = i.DescriptionValue, .IsVolume = i.IsVolume, .LongDescription = i.LongDescription, .Number = i.Number, .NumericValue = i.NumericValue, .ShortDescription = i.ShortDescription, .Value = i.Value}).ToList()
+                      Select New ItemClass With {.Code = i.Code, .IsVolume = i.IsVolume,
+                                                 .LongDescription = i.LongDescription, .Number = i.Number,
+                                                 .ShortDescription = i.ShortDescription, .Value = i.Value,
+                                                  .ValueDescriptions = i.ValueDescriptions}).ToList()
 
 
         'We need to setup three subsystems, 1 output (motor), 2 inputs (pulses A/B)
@@ -35,24 +42,24 @@ Public Class Volume
 #Region "Properties"
 
     Public Const CubicFeetToMeters = 0.0283168466
-    <JsonIgnore>
+
     Public Property BeforeItems As List(Of ItemClass) Implements IVolume.BeforeItems
-    <JsonIgnore>
+
     Public Property AfterItems As List(Of ItemClass) Implements IVolume.AfterItems
 
-    Public Property EVCType() As IVolume.EVCTypeEnum Implements IVolume.EVCType
+
     Public Property PressureFactor() As Double Implements IVolume.PressureFactor
     Public Property Fpv2Factor() As Double Implements IVolume.Fpv2
-    Public Overridable Property DriveRate() As Double Implements IVolume.DriveRate
-    Public Overridable Property MeterDisplacement() As Double Implements IVolume.MeterDisplacement
-    Public Overridable Property EVCMeterDisplacement() As Double Implements IVolume.EvcMeterDisplacement
-
     Public Property AppliedInput() As Double Implements IVolume.AppliedInput
-    Public Property MechReading As Integer Implements IVolume.MechReading
-
-    Public Property MeterTypeNumber1 As Integer Implements IVolume.MeterTypeNumber
-    Public Property MeterTypeString As String Implements IVolume.MeterTypeString
-
+        Get
+            Return _appliedInput
+        End Get
+        Set(value As Double)
+            _appliedInput = value
+            NotifyPropertyChanged("CorrectedPercentError")
+            NotifyPropertyChanged("UnCorrectedPercentError")
+        End Set
+    End Property
     Public Property PulserACount As Double Implements IVolume.PulserACount
     Public Property PulserBCount As Double Implements IVolume.PulserBCount
 
@@ -65,34 +72,93 @@ Public Class Volume
     <JsonIgnore>
     Public Property InputBBoard As IBoard Implements IVolume.InputBBoard
     <JsonIgnore>
-    Public Property TachometerComm As TachometerClass
+    Public Property TachometerComm As TachometerClass Implements IVolume.TachometerComm
 
+    Public ReadOnly Property EVCType() As IVolume.EVCTypeEnum Implements IVolume.EVCType
+        Get
+            If IsNothing(BeforeItems) Then Return Nothing
+            If BeforeItems.Where(Function(x) x.Number = 109).SingleOrDefault.DescriptionValue = "Live" And BeforeItems.Where(Function(x) x.Number = 111).SingleOrDefault.DescriptionValue = "Live" Then
+                Return IVolume.EVCTypeEnum.PressureTemperature
+            ElseIf BeforeItems.Where(Function(x) x.Number = 109).SingleOrDefault.DescriptionValue = "Live" Then
+                Return IVolume.EVCTypeEnum.Pressure
+            Else
+                Return IVolume.EVCTypeEnum.Temperature
+            End If
+        End Get
+    End Property
+
+    Public ReadOnly Property EVCMeterDisplacement() As Double Implements IVolume.EvcMeterDisplacement
+        Get
+            If IsNothing(BeforeItems) Then Return Nothing
+            Return BeforeItems.Where(Function(x) x.Number = 439).SingleOrDefault.NumericValue
+        End Get
+    End Property
+
+    Public ReadOnly Property MeterType As String Implements IVolume.MeterType
+        Get
+            If IsNothing(BeforeItems) Then Return Nothing
+            Return BeforeItems.Where(Function(x) x.Number = 432).SingleOrDefault.DescriptionValue
+        End Get
+    End Property
+
+    Public ReadOnly Property DriveRate() As Double Implements IVolume.DriveRate
+        Get
+            If IsNothing(BeforeItems) Then Return Nothing
+            Return BeforeItems.Where(Function(x) x.Number = 98).SingleOrDefault.NumericValue
+        End Get
+    End Property
+    Public ReadOnly Property DriveRateDescription() As String Implements IVolume.DriveRateDescription
+        Get
+            If IsNothing(BeforeItems) Then Return Nothing
+            Return BeforeItems.Where(Function(x) x.Number = 98).SingleOrDefault.DescriptionValue
+        End Get
+    End Property
 
     Public ReadOnly Property StartCorrected() As Double Implements IVolume.StartCorrected
         Get
+            Dim highres As String
             If IsNothing(BeforeItems) Then Return Nothing
-            Return BeforeItems.Where(Function(x) x.Number = 0).SingleOrDefault.Value
+
+            highres = BeforeItems.Where(Function(x) x.Number = 113).SingleOrDefault.NumericValue
+            highres = highres.Substring(highres.IndexOf("."), highres.Length() - highres.IndexOf("."))
+
+            Return CDec(CStr(BeforeItems.Where(Function(x) x.Number = 0).SingleOrDefault.NumericValue) + highres)
         End Get
     End Property
 
     Public ReadOnly Property EndCorrected() As Double Implements IVolume.EndCorrected
         Get
+            Dim highres As String
             If IsNothing(AfterItems) Then Return Nothing
-            Return AfterItems.Where(Function(x) x.Number = 0).SingleOrDefault.Value
+
+            highres = AfterItems.Where(Function(x) x.Number = 113).SingleOrDefault.NumericValue
+            highres = highres.Substring(highres.IndexOf("."), highres.Length() - highres.IndexOf("."))
+
+            Return CDec(CStr(AfterItems.Where(Function(x) x.Number = 0).SingleOrDefault.NumericValue) + highres)
         End Get
     End Property
 
     Public ReadOnly Property StartUncorrected() As Double Implements IVolume.StartunCorrected
         Get
+            Dim highres As String
             If IsNothing(BeforeItems) Then Return Nothing
-            Return BeforeItems.Where(Function(x) x.Number = 2).SingleOrDefault.Value
+
+            highres = BeforeItems.Where(Function(x) x.Number = 892).SingleOrDefault.NumericValue
+            highres = highres.Substring(highres.IndexOf("."), highres.Length() - highres.IndexOf("."))
+
+            Return CDec(CStr(BeforeItems.Where(Function(x) x.Number = 2).SingleOrDefault.NumericValue) + highres)
         End Get
     End Property
 
     Public ReadOnly Property EndUnCorrected() As Double Implements IVolume.EndUnCorrected
         Get
+            Dim highres As String
             If IsNothing(AfterItems) Then Return Nothing
-            Return AfterItems.Where(Function(x) x.Number = 2).SingleOrDefault.Value
+
+            highres = AfterItems.Where(Function(x) x.Number = 892).SingleOrDefault.NumericValue
+            highres = highres.Substring(highres.IndexOf("."), highres.Length() - highres.IndexOf("."))
+
+            Return CDec(CStr(AfterItems.Where(Function(x) x.Number = 2).SingleOrDefault.NumericValue) + highres)
         End Get
     End Property
 
@@ -110,19 +176,30 @@ Public Class Volume
         End Get
     End Property
 
-    Public Overridable ReadOnly Property InputUncVolume() As Double Implements IVolume.InputUncVolume
+    Public ReadOnly Property UnCorrectedMultiplierDescription() As String Implements IVolume.UncorrectedMutliplierDescription
         Get
-            Return (DriveRate * AppliedInput)
+            If IsNothing(BeforeItems) Then Return Nothing
+            Return BeforeItems.Where(Function(x) x.Number = 92).SingleOrDefault.DescriptionValue
         End Get
     End Property
-    Public Overridable ReadOnly Property EVCInputUncVolume() As Double
+
+    Public ReadOnly Property CorrectedMultiplierDescription() As String Implements IVolume.CorrectedMultiplierDescription
         Get
-            Return 0
+            If IsNothing(BeforeItems) OrElse BeforeItems.Count = 0 Then Return Nothing
+            Return BeforeItems.Where(Function(x) x.Number = 90).SingleOrDefault.DescriptionValue
+        End Get
+    End Property
+
+    Public Overridable ReadOnly Property InputUncVolume() As Double Implements IVolume.InputUncVolume
+        Get
+            Return (EVCMeterDisplacement * AppliedInput)
         End Get
     End Property
 
     Public ReadOnly Property TrueCorrected() As Double Implements IVolume.TrueCorrected
         Get
+            If TemperatureTest Is Nothing Then Return Nothing
+
             If EVCType = IVolume.EVCTypeEnum.Pressure Then
                 Return (PressureFactor * InputUncVolume)
             ElseIf EVCType = IVolume.EVCTypeEnum.Temperature Then
@@ -136,21 +213,21 @@ Public Class Volume
 
     Public ReadOnly Property EvcUnCorrected() As Double
         Get
-            Return (EndUnCorrected - StartUncorrected) * UnCorrectedMultiplier
+            Return Math.Round((EndUnCorrected - StartUncorrected) * UnCorrectedMultiplier, 4)
 
         End Get
     End Property
 
     Public ReadOnly Property EvcCorrected() As Double Implements IVolume.EvcCorrected
         Get
-            Return (EndCorrected - StartCorrected) * CorrectedMultiplier
+            Return Math.Round((EndCorrected - StartCorrected) * CorrectedMultiplier, 4)
         End Get
     End Property
 
     Public ReadOnly Property UnCorrectedPercentError() As Double
         Get
             If InputUncVolume <> 0 Then
-                Return ((EvcUnCorrected - InputUncVolume) / InputUncVolume) * 100
+                Return Math.Round(((EvcUnCorrected - InputUncVolume) / InputUncVolume) * 100, 2)
             Else
                 Return -100
 
@@ -161,7 +238,7 @@ Public Class Volume
     Public ReadOnly Property CorrectedPercentError() As Double
         Get
             If TrueCorrected <> 0 Then
-                Return ((EvcCorrected - TrueCorrected) / TrueCorrected) * 100
+                Return Math.Round(((EvcCorrected - TrueCorrected) / TrueCorrected) * 100, 2)
             Else
                 Return -100
             End If
@@ -171,7 +248,7 @@ Public Class Volume
 
     Public Overridable ReadOnly Property IdealAppliedInput(ByVal UncPulses As Integer) As Double
         Get
-            Return 0
+            Return (UncPulses * UnCorrectedMultiplier / EVCMeterDisplacement)
         End Get
     End Property
 
@@ -182,57 +259,21 @@ Public Class Volume
 
     End Property
 
-    Public Overridable ReadOnly Property MeterTypeName() As String
+    Public ReadOnly Property HasPassed As Boolean Implements IVolume.HasPassed
         Get
-            Return Nothing
-        End Get
-
-    End Property
-
-    Public Overridable ReadOnly Property MeterTypeNumber() As Integer?
-        Get
-            Return Nothing
-        End Get
-
-    End Property
-
-    Public Overridable ReadOnly Property UncCorMultiplerCode() As IVolume.InstrumentVolumeUnitsEnum
-        Get
-            If IsNothing(BeforeItems) Then Return Nothing
-            Return BeforeItems.Where(Function(x) x.Number = 92).SingleOrDefault.Value
-        End Get
-    End Property
-
-    Public Overridable ReadOnly Property CorMultiplierCode() As IVolume.InstrumentVolumeUnitsEnum
-        Get
-            If IsNothing(BeforeItems) Then Return Nothing
-            Return BeforeItems.Where(Function(x) x.Number = 90).SingleOrDefault.Value
-        End Get
-
-    End Property
-
-    Public ReadOnly Property MeterDisplacementCubicMeters() As Double
-        Get
-            Return MeterDisplacement * CubicFeetToMeters
-        End Get
-    End Property
-
-
-    Public Property MechanicalReading() As Integer
-
-    Public Overridable ReadOnly Property UncCorMechVolume() As Integer
-        Get
-            Return Math.Abs(MechanicalReading * Me.UnCorrectedMultiplier)
-        End Get
-    End Property
-
-    Public Overridable ReadOnly Property MechanicalPass() As Boolean
-        Get
-            If UncCorMechVolume = InputUncVolume Then
+            If UnCorrectedPercentError < 1 And UnCorrectedPercentError > -1 And CorrectedPercentError < 1 And CorrectedPercentError > -1 Then
                 Return True
             Else
                 Return False
             End If
+
+        End Get
+    End Property
+
+
+    Public ReadOnly Property MeterDisplacementCubicMeters() As Double
+        Get
+            Return EVCMeterDisplacement * CubicFeetToMeters
         End Get
     End Property
 #End Region
@@ -276,6 +317,10 @@ Public Class Volume
                             AfterItems = Await BaseInstrument.DownloadItems(InstrumentType, AfterItems)
                             NotifyPropertyChanged("EndCorrected")
                             NotifyPropertyChanged("EndUnCorrected")
+                            NotifyPropertyChanged("EvcUnCorrected")
+                            NotifyPropertyChanged("EvcCorrected")
+                            NotifyPropertyChanged("CorrectedPercentError")
+                            NotifyPropertyChanged("UnCorrectedPercentError")
                         End Function)
 
     End Function

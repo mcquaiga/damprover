@@ -149,7 +149,12 @@
       <LastGenOutput>Resources.Designer.vb</LastGenOutput>
       <CustomToolNamespace>My.Resources</CustomToolNamespace>
     </EmbeddedResource>
+    <EmbeddedResource Include="View\Certificate.rdlc" />
+    <EmbeddedResource Include="View\Temperatures.rdlc" />
     <None Include="app.config" />
+    <None Include="My Project\DataSources\Prover.Certificates.Data.Certificate.datasource" />
+    <None Include="My Project\DataSources\Prover.TemperatureClass.datasource" />
+    <None Include="My Project\DataSources\Prover.TemperatureTestClass.datasource" />
     <None Include="My Project\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.vb</LastGenOutput>
@@ -176,10 +181,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Page Include="View\CertificateReport.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="View\CertificateReportViewer.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

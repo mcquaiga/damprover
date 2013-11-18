@@ -82,12 +82,11 @@ Public Interface IBaseInstrument
     Property InstrumentType As miSerialProtocol.InstrumentTypeCode
     ReadOnly Property InstrumentGuid As Guid
 
+    ReadOnly Property HasPassed As Boolean
 
     ReadOnly Property SerialNumber As String
     ReadOnly Property SiteNumber1 As String
     ReadOnly Property SiteNumber2 As String
-
-    Property InstrumentDriveType As DriveType
 
     Property CreatedDate As DateTime?
 

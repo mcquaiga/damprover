@@ -24,5 +24,7 @@ Namespace ViewModels
 
         ReadOnly Property CreateNewCertCommand As ICommand
 
+        ReadOnly Property ResetFilterCommand As ICommand
+
     End Interface
 End Namespace

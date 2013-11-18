@@ -87,16 +87,20 @@ Public Class TemperatureTestClass
         End Get
     End Property
 
-    Public ReadOnly Property LevelIndex As Integer Implements ITemperatureTestClass.LevelIndex
+    Public Property LevelIndex As Integer Implements ITemperatureTestClass.LevelIndex
         Get
             Return _levelIndex
         End Get
+        Set(value As Integer)
+            _levelIndex = value
+        End Set
     End Property
 
     Public ReadOnly Property LevelDescription As String Implements ITemperatureTestClass.LevelDescription
         Get
             Return "T" + CStr(_levelIndex + 1)
         End Get
+
     End Property
 
 #End Region

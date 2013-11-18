@@ -23,8 +23,9 @@ Public Interface ITemperatureTestClass
     ReadOnly Property PercentError() As Double
     ReadOnly Property hasPassed As Boolean
 
-    ReadOnly Property LevelIndex As Integer
     ReadOnly Property LevelDescription As String
+
+    Property LevelIndex As Integer
 
     Function DownloadTestItems(InstrumentTypeCode As InstrumentTypeCode) As Task
 

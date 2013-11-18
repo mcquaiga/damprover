@@ -22,10 +22,11 @@ Public Class ItemClass
     <JsonIgnore>
     Public Property IsVolume As Boolean?
     <JsonIgnore>
-    Private Property ValueDescriptions As List(Of ItemDescriptions)
+    Public Property ValueDescriptions As List(Of ItemDescriptions)
 
     Private _descriptionValue As String
     Private _numericValue As Double?
+
 
     Public Property DescriptionValue As String
         Get

@@ -9,35 +9,20 @@
 	<item number="12" shortDescription="P Cal Atmos" description="Pressure Corrected Atmospheric"/>
 	<item number="13" code="BASE_PRESS" shortDescription="Base Press" description="Base Pressure" isPressure="true"/>
 	<item number="14" code="ATM_PRESS" shortDescription="ATM Press" description="ATM Pressure" isPressure="true"/>
-	<item number="15" shortDescription="P Cal Zero P" description="Pressure Cal Zero P"/>
-	<item number="16" shortDescription="P Cal Span P" description="Corrected Volume"/>
-	<item number="17" shortDescription="Pressure Cal" description="Corrected Volume"/>
-	<item number="18" shortDescription="Prev1 Pressu" description="Corrected Volume"/>
-	<item number="20" shortDescription="Pressure Cal" description="Corrected Volume"/>
-	<item number="23" shortDescription="Min PCal Poi" description="Corrected Volume"/>
-	<item number="24" shortDescription="Excess PCal" description="Corrected Volume"/>
-	<item number="25" shortDescription="Pressure Ran" description="Corrected Volume"/>
-	<item number="26" shortDescription="Gas Temperat" description="Gas Temperature" isTemperature="true" isTemperatureTest="true"/>
+
+	<item number="26" shortDescription="Gas Temperat" description="EVC Gas Temperature" isTemperatureTest="true"/>
 	<item number="27" shortDescription="Gas Temp Lo" description="Corrected Volume" isTemperature="true" />
 	<item number="28" shortDescription="Gas Temp Hi" description="Corrected Volume" isTemperature="true" />
-	<item number="29" shortDescription="Reference Te" description="Corrected Volume"/>
-	<item number="30" shortDescription="Reference Te" description="Corrected Volume"/>
-	<item number="31" shortDescription="Case Tempera" description="Corrected Volume"/>
-	<item number="32" shortDescription="Case Temp Ma" description="Corrected Volume"/>
-	<item number="33" shortDescription="Case Temp Mi" description="Corrected Volume"/>
-	<item number="34" shortDescription="Base Tempera" description="Corrected Volume" isTemperature="true" />
-	<item number="35" shortDescription="Temperature" description="Corrected Volume" isTemperature="true"/>
-	<item number="36" shortDescription="TempCalZero" description="Prev Temp Cal Zero" isTemperature="true" />
-	<item number="38" shortDescription="Temp Cal Span" description="Temperature Cal Span" isTemperature="true" />
-	<item number="41" shortDescription="Min TCal Point Diff %" description="Min TCal Point Diff %" isTemperature="true" />
-	<item number="42" shortDescription="Excess TCal Change %" description="Excess TCal Change %" isTemperature="true" />
-	<item number="43" shortDescription="Total Correction Factor" description="Temperature Cal Span" isTemperature="true" />
+	<item number="34" shortDescription="Base Tempera" description="Base Temperature" isTemperature="true" />
+	<item number="35" shortDescription="Temperature" description="EVC Temperature" isTemperatureTest="true"/>
 	<item number="44" code="PRESS_FACTOR" shortDescription="Press Factor" description="Pressure Factor" isPressure="true"/>
 	<item number="45" code="TEMP_FACTOR" shortDescription="Temperature Factor" description="Temperature Factor" isTemperatureTest="true"/>
-	<item number="47" code="UNSQRD_SUPER_FACTOR" shortDescription="Unsqrd. Super Factor" description="Unsquared Supercompresibility Factor" isSuper="true"/>
-	<item number="53" code="Specific Gravity For Sp" shortDescription="" isSuper="true" />
-	<item number="54" code="% N2" shortDescription="% N2 For Supercompress" isSuper="true" />
-	<item number="55" code="% CO2" shortDescription="% CO2 For Supercompress" isSuper="true" />
+	<item number="47" code="UNSQRD_SUPER_FACTOR" shortDescription="Unsqrd. Super Factor" description="Unsquared Supercompresibility Factor" isPressure="true"/>
+	<item number="53" code="SPEC_GR" shortDescription="Specific Gravity" description="Specific Gravity" isSuper="true" />
+	<item number="54" code="N2" shortDescription="% N2" description="% N2" isSuper="true" />
+	<item number="55" code="CO2" shortDescription="% CO2" description="% CO2" isSuper="true" />
+	<item number="56" code="PULSER_A_SCALING" shortDescription="Pulser A Scaling" description="Pulser A Scaling" isVolume="true" />
+	<item number="57" code="PULSER_B_SCALING" shortDescription="Pulser B Scaling" description="Pulser B Scaling" isVolume="true" />
 	<item number="62" code="SERIAL_NUM" shortDescription="Serial Number" description="Serial Number"/>
 	<item number="87" code="PRESS_UNITS" shortDescription="Press Units" description="Pressure Units" isPressure="true">
 		<value id="0" description="PSIG" numericvalue="0"/>
@@ -51,13 +36,14 @@
 		<value id="8" description="inHG" numericvalue="8"/>
 		<value id="9" description="mmHG" numericvalue="9"/>
 	</item>
+
 	<item number="89" code="TEMP_UNITS" shortDescription="Temperature Units" description="Temperature Units" isTemperature="true">
-		<value id="0" description="Farenheit" numericvalue="0"/>
-		<value id="1" description="Celsius" numericvalue="1"/>
+		<value id="0" description="F" numericvalue="0"/>
+		<value id="1" description="C" numericvalue="1"/>
 		<value id="2" description="R" numericvalue="2"/>
 		<value id="3" description="K" numericvalue="3"/>
 	</item>
-	
+
 	<item number="90" code="Corr Vol Units" shortDescription="Corr Vol Units" description="Corrected Volume Units" isVolume="true">
 		<value id="0" description="CuFT" numericvalue="1"/>
 		<value id="1" description="CuFTx10" numericvalue="10" />
@@ -94,7 +80,7 @@
 		<value id="3" description="NoOut"/>
 		<value id="4" description="Time"/>
 	</item>
-		<item number="98" code="METER_INDEX" shortDescription="Meter Index Rate" description="Meter Index Rate" isVolume="true">
+	<item number="98" code="METER_INDEX" shortDescription="Meter Index Rate" description="Meter Index Rate" isVolume="true">
 		<value id="0" description="CF1" numericvalue="1"/>
 		<value id="1" description="CF5" numericvalue="5"/>
 		<value id="2" description="CF10" numericvalue="10"/>
@@ -109,16 +95,53 @@
 		<value id="11" description="CF0" numericvalue="0"/>
 		<value id="12" description="CF50" numericvalue="50"/>
 		<value id="13" description="CF500" numericvalue="500"/>
-		<value id="14" description="Rotary Integeral Mount" numericvalue="14"/>
+		<value id="14" description="Rotary" numericvalue="14"/>
 	</item>
-	<item number="109" code="FIXED_PRESS_FACTOR" shortDescription="F Press Factor" description="Fixed Pressure Factor" isPressure="true"/>
-	<item number="111" code="FIXED_TEMP_FACTOR" shortDescription="F Temp Factor" description="Fixed Temp Factor" isTemperature="true"/>
+
+	<item number="109" code="FIXED_PRESS_FACTOR" shortDescription="F Press Factor" description="Fixed Pressure Factor" isPressure="true" isVolume="true">
+		<value id="0" description="Live" numericvalue="0"/>
+		<value id="1" description="Fixed" numericvalue="1"/>
+	</item >
+	<item number="110" code="FIXED_Super_FACTOR" shortDescription="F Super Factor" description="Fixed Super Factor" isSuper="true" isVolume="true">
+		<value id="0" description="Live" numericvalue="0"/>
+		<value id="1" description="Fixed" numericvalue="1"/>
+	</item >
+	<item number="111" code="FIXED_TEMP_FACTOR" shortDescription="F Temp Factor" description="Fixed Temp Factor" isTemperature="true" isVolume="true" >
+		<value id="0" description="Live" numericvalue="0"/>
+		<value id="1" description="Fixed" numericvalue="1"/>
+	</item>
 	<item number="112" code="TRANSDUCER_TYPE" shortDescription="Transducer Type" description="Transducer Type" isPressure="true">
 		<value id="0" description="Gauge" numericvalue="0" />
 		<value id="1" description="Absolute" numericvalue="1" />
 	</item>
 	<item number="113" code="HIGH_RES_CORRECTED" shortDescription="High Res COR" description="High Resolution Corrected Volume" isVolume="true" />
+	<item number="122" code="FIRMwARE" shortDescription="Firm. Ver." description="Firmware Version" />
+	<item number="140" code="ENERGY" shortDescription="Energy" description="Energy" isVolume="true" />
+	<item number="141" code="ENERGY_UNITS" shortDescription="Energy Units" description="Energy Units" isVolume="true">
+		<value id="0" description="Therms" />
+		<value id="1" description="DecaTherms" />
+		<value id="2" description="MegaJoules" />
+		<value id="3" description="GigaJoules" />
+		<value id="4" description="KiloCals" />
+		<value id="5" description="KiloWattHours" />
+	</item>
 	<item number="142" code="GAS_ENERGY_VALUE" shortDescription="Gas Energy Value" description="Gas Energy Value" isVolume="true" />
 	<item number="200" code="SITENUMBER1" shortDescription="Site Number 1" description="Site Number 1" />
 	<item number="201" code="SITENUMBER2" shortDescription="Site Number 2" description="Site Number 2" />
+	<item number="432" code="METER_TYPE" shortDescription="Meter Type" description="Meter Type" isVolume="true" >
+		<value id="0" description="No Meter Type" />
+		<value id="1" description="Roots2M" />
+		<value id="2" description="Roots3M" />
+		<value id="3" description="Roots5M" />
+		<value id="4" description="Roots7M" />
+		<value id="5" description="Roots11M" />
+		<value id="6" description="Roots16M" />
+		<value id="7" description="Roots23M" />
+		<value id="8" description="Roots38M" />
+		<value id="9" description="Roots56M" />
+		<value id="10" description="Roots102M" />
+		<value id="11" description="RM1000" />
+	</item>
+	<item number="439" code="METER_DISPLACEMENT" shortDescription="Meter Displacement" description="Meter Displacement" isVolume="true" />
+	<item number="892" code="HIGH_RES_UNCOR" shortDescription="High Res. Uncor. Volume" description="High Resolution Uncor. Volume" isVolume="true" />
 </InstrumentItems>
