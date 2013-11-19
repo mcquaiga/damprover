@@ -130,6 +130,9 @@
     <Compile Include="IProverSubModule.vb" />
     <Compile Include="IView.vb" />
     <Compile Include="MediatorHelper.vb" />
+    <Compile Include="Notifications\GlobalNotificationEvent.vb" />
+    <Compile Include="Notifications\INotificationManager.vb" />
+    <Compile Include="Notifications\NotificationManager.vb" />
     <Compile Include="Prism\Events\INotification.vb" />
     <Compile Include="Prism\Events\ProverNotification.vb" />
     <Compile Include="Prism\IProverModule.vb" />

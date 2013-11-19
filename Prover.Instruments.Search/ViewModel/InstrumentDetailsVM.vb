@@ -33,6 +33,7 @@ Namespace ViewModels
             _events = events
             _events.GetEvent(Of SelectedInstrumentChangedEvent).Subscribe(AddressOf ShowInstrument)
 
+
             _progress = New Progress(Of Tuple(Of String, Integer))(AddressOf ReportProgress)
         End Sub
 
@@ -141,7 +142,9 @@ Namespace ViewModels
         End Sub
 
         Public Sub Save()
+            _events.GetEvent(Of GlobalNotificationEvent).Publish("SAVING INSTRUMENT...")
             _provider.UpsertInstrument(Instrument)
+            _events.GetEvent(Of GlobalNotificationEvent).Publish("SAVED")
         End Sub
 
         Public Sub CreateNewMiniMaxObject()
@@ -189,13 +192,14 @@ Namespace ViewModels
                 Return
             End If
 
-            LoadItemDescriptions()
+            _events.GetEvent(Of GlobalNotificationEvent).Publish("DOWNLOADING INFO...")
             Try
                 Await Instrument.DownloadSiteInformation()
             Catch ex As Exception
                 MsgBox(ex.Message, MsgBoxStyle.OkOnly + MsgBoxStyle.Information, "Error")
             End Try
-
+            _events.GetEvent(Of GlobalNotificationEvent).Publish("FINISHED DOWNLOADING INFO...")
+            _events.GetEvent(Of GlobalNotificationEvent).Publish("")
             NotifyPropertyChanged("ItemValuesWithDescriptions")
             NotifyPropertyChanged("Volume")
             NotifyPropertyChanged("TemperatureTests")

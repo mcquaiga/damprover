@@ -36,6 +36,7 @@ Public Class CertificatesViewModule
         _container.RegisterType(Of ICreateCertificateListVM, CreateCertificatesListVM)()
         _container.RegisterType(Of IView(Of ICreateCertificateListVM), CreateCertificatesView)()
         _container.RegisterType(Of Object, CreateCertificatesView)("CreateCertificates")
+
         _container.RegisterType(Of Object, CertificateReportViewer)("CertificateReportViewer")
         '_container.RegisterType(Of IInstrumentsListPageVM, InstrumentsListPageVM)()
         '_container.RegisterType(Of IView(Of IInstrumentsListPageVM), InstrumentsListPage)()

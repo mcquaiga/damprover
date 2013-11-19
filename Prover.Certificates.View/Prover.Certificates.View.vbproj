@@ -149,8 +149,8 @@
       <LastGenOutput>Resources.Designer.vb</LastGenOutput>
       <CustomToolNamespace>My.Resources</CustomToolNamespace>
     </EmbeddedResource>
-    <EmbeddedResource Include="View\Certificate.rdlc" />
-    <EmbeddedResource Include="View\Temperatures.rdlc" />
+    <EmbeddedResource Include="View\Reports\Certificate.rdlc" />
+    <EmbeddedResource Include="View\Reports\Temperatures.rdlc" />
     <None Include="app.config" />
     <None Include="My Project\DataSources\Prover.Certificates.Data.Certificate.datasource" />
     <None Include="My Project\DataSources\Prover.TemperatureClass.datasource" />

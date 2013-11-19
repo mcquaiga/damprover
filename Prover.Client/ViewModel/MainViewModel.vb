@@ -18,7 +18,7 @@ Public Class MainViewModel
         _regionManager = RegionManager
 
 
-        '_regionManager.Regions(RegionNames.NotificationRegion).Add(Container.Resolve(Of INotificationManager))
+
         '_regionManager.Regions(RegionNames.NotificationRegion).Activate(Container.Resolve(Of INotificationManager))
     End Sub
 
