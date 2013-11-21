@@ -39,7 +39,7 @@
                                        VerticalAlignment="Center"
                                        FontSize="18"
 									   FontFamily="Candara"
-                                       Foreground="{DynamicResource HeaderColour}">
+                                       Foreground="{DynamicResource HeaderFontColour}">
                                 <ContentPresenter />
                             </TextBlock>
                         </Border>

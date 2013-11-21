@@ -1465,7 +1465,7 @@
             </Setter.Value>
         </Setter>
     </Style>
-    <SolidColorBrush x:Key="HeaderColour" Color="#FF1C63A5" />
+    <SolidColorBrush x:Key="HeaderColour" Color="#FF223546" />
 
     <Style x:Key="ItemDescriptions" TargetType="{x:Type TextBlock}">
         <Setter Property="Foreground" Value="{DynamicResource HeaderColour}" />
@@ -1552,10 +1552,17 @@
         </Setter>
     </Style>
     <SolidColorBrush x:Key="MainBackgroundColour" Color="White" />
-    <SolidColorBrush x:Key="HeaderFontColour" Color="White" />
+    <SolidColorBrush x:Key="HeaderFontColour" Color="#FF223546" />
     <System:Double x:Key="LargeFontSize">32</System:Double>
     <ControlTemplate x:Key="MenuModuleButton" TargetType="{x:Type Button}" />
-    <SolidColorBrush x:Key="MainMenuModuleBrush" Color="White" />
-    <Style x:Key="SectionHeader" TargetType="{x:Type Border}" />
+    <SolidColorBrush x:Key="MainMenuModuleBrush" Color="#FF223546" />
+
+    <Style x:Key="InstrumentSectionHeader" TargetType="{x:Type TextBlock}">
+    	<Setter Property="Background" Value="#FFEEEEEE"/>
+    	<Setter Property="Foreground" Value="{DynamicResource HeaderFontColour}"/>
+    	<Setter Property="FontFamily" Value="/Prover.Client;component/Fonts/#Segoe UI Semibold"/>
+    	<Setter Property="FontSize" Value="32"/>
+
+	</Style>	
 	
 </ResourceDictionary>
