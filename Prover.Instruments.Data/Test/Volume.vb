@@ -8,7 +8,7 @@ Public Class Volume
     Implements IVolume, INotifyPropertyChanged
 
     Private _appliedInput As Decimal
-
+    Private _meterIndexpulses As MeterIndexInputPulses
 
     Sub New()
     End Sub
@@ -36,6 +36,11 @@ Public Class Volume
         InputBBoard = New USBDataAcqClass(0, MccDaq.DigitalPortType.FirstPortB, 1)
         OutputBoard = New USBDataAcqClass(0, 0, 0)
         'TachometerComm = New TachometerClass(1)
+
+        Dim _xmlElement = XDocument.Load(My.Application.Info.DirectoryPath + "\MeterInputPulses.xml")
+        _meterIndexpulses = (From x In _xmlElement.<MeterIndexes>.Elements("value")
+                        Where x.@id = Me.MeterTypeID
+                        Select New MeterIndexInputPulses(x.@id, x.@UnCorPulsesX10, x.@UnCorPulsesX100)).FirstOrDefault
 
     End Sub
 
@@ -91,6 +96,13 @@ Public Class Volume
         Get
             If IsNothing(BeforeItems) Then Return Nothing
             Return BeforeItems.Where(Function(x) x.Number = 439).SingleOrDefault.NumericValue
+        End Get
+    End Property
+
+    Public ReadOnly Property MeterTypeID As Integer Implements IVolume.MeterTypeID
+        Get
+            If IsNothing(BeforeItems) Then Return Nothing
+            Return CInt(BeforeItems.Where(Function(x) x.Number = 432).SingleOrDefault.Value)
         End Get
     End Property
 
@@ -252,11 +264,16 @@ Public Class Volume
         End Get
     End Property
 
+    <JsonIgnore>
     Public Overridable ReadOnly Property MaxUnCorrected() As Double Implements IVolume.MaxUnCorrected
         Get
-            Return 10
+            If Me.UnCorrectedMultiplier = 10 Then
+                Return _meterIndexpulses.UnCorPulsesX10
+            ElseIf Me.UnCorrectedMultiplier = 100 Then
+                Return _meterIndexpulses.UnCorPulsesX100
+            End If
+            Return 15
         End Get
-
     End Property
 
     Public ReadOnly Property HasPassed As Boolean Implements IVolume.HasPassed
@@ -428,4 +445,19 @@ Public Class Volume
     Private Sub NotifyPropertyChanged(<CallerMemberName()> Optional ByVal propertyName As String = Nothing)
         RaiseEvent PropertyChanged(Me, New PropertyChangedEventArgs(propertyName))
     End Sub
+
+
+    Private Class MeterIndexInputPulses
+
+        Sub New(ID As Integer, UnCorPulsesX10 As Integer, UnCorPulsesX100 As Integer)
+            Me.Id = ID
+            Me.UnCorPulsesX10 = UnCorPulsesX10
+            Me.UnCorPulsesX100 = UnCorPulsesX100
+        End Sub
+
+        Public Property Id As Integer
+        Public Property UnCorPulsesX10 As Integer
+        Public Property UnCorPulsesX100 As Integer
+    End Class
+
 End Class

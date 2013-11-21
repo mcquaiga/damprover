@@ -13,7 +13,7 @@ Namespace Data.ProviderModel
                     .ConnectionStringName = "DBServer"
                 }
                  docStore.Initialize()
-
+                 docStore.Conventions.DefaultQueryingConsistency = ConsistencyOptions.QueryYourWrites
                  'OPTIONAL:
                  'IndexCreation.CreateIndexes(typeof(Global).Assembly, docStore);
 

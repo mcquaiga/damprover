@@ -72,6 +72,8 @@ Public Interface IVolume
 
     ReadOnly Property HasPassed As Boolean
 
+    ReadOnly Property MeterTypeID As Integer
+
 
     Function RunTest(InstrumentType As miSerialProtocol.InstrumentTypeCode, TemperatureTest As ITemperatureTestClass) As Task
 
@@ -89,6 +91,8 @@ Public Interface IVolume
     ReadOnly Property UncorrectedMutliplier As Decimal
     ReadOnly Property UncorrectedMutliplierDescription As String
     ReadOnly Property CorrectedMultiplierDescription As String
+
+    <JsonIgnore>
     ReadOnly Property MaxUnCorrected As Double
     ReadOnly Property EvcMeterDisplacement As Double
     ReadOnly Property DriveRate As Double

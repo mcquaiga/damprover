@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<!-- Rotary Test Volume Reference Sheet -->
+<!-- 
+	 -> id = related to the number used by the instrument for meter types, don't change this unless Mercury does. You
+			can add a value to this file should new meter types come out. You'll need to use Masterlink with the communication window open
+			to find what value relates to what meter type.
+	 -> description = is irrelevant as far as the software is concerned, it's here for human reference
+	 -> UnCorPulsesX10 = Input pulse count per test when volume output set at x10
+	 -> UnCorPulsesX100 = Input pulse count per test when volume output set at x100
+	 -->
+<MeterIndexes>
+		<value id="0" description="No Meter Type" UnCorrectedPulses="" />
+		<value id="1" description="Roots2M" UnCorPulsesX10="12" UnCorPulsesX100="2"/>
+		<value id="2" description="Roots3M" UnCorPulsesX10="25" UnCorPulsesX100="3"/>
+		<value id="3" description="Roots5M" UnCorPulsesX10="40" UnCorPulsesX100="4"/>
+		<value id="4" description="Roots7M" UnCorPulsesX10="65" UnCorPulsesX100="7" />
+		<value id="5" description="Roots11M" UnCorPulsesX10="100" UnCorPulsesX100="10" />
+		<value id="6" description="Roots16M" UnCorPulsesX10="150" UnCorPulsesX100="15" />
+		<value id="7" description="Roots23M" UnCorPulsesX10="270" UnCorPulsesX100="27" />
+		<value id="8" description="Roots38M" UnCorPulsesX10="520" UnCorPulsesX100="52"/>
+		<value id="9" description="Roots56M" UnCorPulsesX10="900" UnCorPulsesX100="90" />
+		<value id="10" description="Roots102M"  UnCorPulsesX10="" UnCorPulsesX100="210" />
+		<value id="11" description="RM1000" UnCorPulsesX10="" UnCorPulsesX100="" />
+</MeterIndexes>
+
