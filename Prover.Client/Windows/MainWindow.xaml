@@ -28,7 +28,7 @@
                        VerticalAlignment="Center"
                        FontFamily="Calibri Light"
                        FontSize="{DynamicResource LargeFontSize}"
-                       Foreground="{DynamicResource HeaderFontColour}"
+                       Foreground="{DynamicResource MainBackgroundColour}"
                        Text="D.A.M. PROVER" />
             <Grid Grid.Column="1">
                 <Grid.RowDefinitions>
