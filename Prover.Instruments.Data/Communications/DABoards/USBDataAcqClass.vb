@@ -103,4 +103,12 @@ Public Class USBDataAcqClass
     Public Property disposedValue As Boolean Implements IBoard.disposedValue
 
     Public Property ss_num As Integer Implements IBoard.ss_num
+
+
+    Public Shared Sub SharedStopMotor(ByVal BoardNumber As Integer, ByVal ChannelNumber As Integer)
+        Dim board = New MccDaq.MccBoard(BoardNumber)
+
+        board.AOut(ChannelNumber, MccDaq.Range.UniPt5Volts, CShort(MotorValues.mStop))
+
+    End Sub
 End Class

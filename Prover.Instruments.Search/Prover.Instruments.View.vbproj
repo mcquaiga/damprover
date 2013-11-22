@@ -121,9 +121,7 @@
     <Compile Include="ViewModel\IInstrumentDetailsVM.vb" />
     <Compile Include="ViewModel\IInstrumentsListAndDetailsVM.vb" />
     <Compile Include="ViewModel\IInstrumentsListPageVM.vb" />
-    <Compile Include="ViewModel\IMainMenuVM.vb" />
     <Compile Include="ViewModel\InstrumentsListAndDetailsVM.vb" />
-    <Compile Include="ViewModel\MainMenuVM.vb" />
     <Compile Include="Views\InstrumentDetails.xaml.vb">
       <DependentUpon>InstrumentDetails.xaml</DependentUpon>
     </Compile>
@@ -151,9 +149,6 @@
     </Compile>
     <Compile Include="Views\InstrumentsListPage.xaml.vb">
       <DependentUpon>InstrumentsListPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\MainMenu.xaml.vb">
-      <DependentUpon>MainMenu.xaml</DependentUpon>
     </Compile>
     <EmbeddedResource Include="My Project\Resources.resx">
       <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
@@ -185,10 +180,6 @@
     <Page Include="Views\InstrumentDetails.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Views\MainMenu.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
   <ItemGroup>

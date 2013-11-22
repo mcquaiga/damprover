@@ -208,6 +208,29 @@ Public Class Volume
         End Get
     End Property
 
+    <JsonIgnore>
+    Public ReadOnly Property PulseASelect() As String Implements IVolume.PulseASelect
+        Get
+            Try
+                Return BeforeItems.Where(Function(x) x.Number = 93).SingleOrDefault.DescriptionValue
+
+            Catch ex As Exception
+                Return Nothing
+            End Try
+        End Get
+    End Property
+
+    <JsonIgnore>
+    Public ReadOnly Property PulseBSelect() As String Implements IVolume.PulseBSelect
+        Get
+            Try
+                Return BeforeItems.Where(Function(x) x.Number = 94).SingleOrDefault.DescriptionValue
+            Catch ex As Exception
+                Return Nothing
+            End Try
+        End Get
+    End Property
+
     Public ReadOnly Property TrueCorrected() As Double Implements IVolume.TrueCorrected
         Get
             If TemperatureTest Is Nothing Then Return Nothing
@@ -293,6 +316,18 @@ Public Class Volume
             Return EVCMeterDisplacement * CubicFeetToMeters
         End Get
     End Property
+
+    Public ReadOnly Property UncPulseCounter As Integer
+        Get
+            If PulseASelect = "UncVol" Then
+                Return PulserACount
+            ElseIf PulseBSelect = "UncVol" Then
+                Return PulserBCount
+            Else
+                Return PulseASelect
+            End If
+        End Get
+    End Property
 #End Region
 
 #Region "Methods"
@@ -314,13 +349,14 @@ Public Class Volume
 
                             System.Threading.Thread.Sleep(500)
 
+
                             'Begin Listening for incoming pulses
                             Do
                                 Me.PulserACount += InputABoard.ReadPulse()
                                 NotifyPropertyChanged("PulserACount")
                                 Me.PulserBCount += InputBBoard.ReadPulse()
                                 NotifyPropertyChanged("PulserBCount")
-                            Loop While PulserACount < MaxUnCorrected
+                            Loop While UncPulseCounter < MaxUnCorrected
 
                             'Stop motor
                             OutputBoard.PulseOut(USBDataAcqClass.MotorValues.mStop)

@@ -74,6 +74,10 @@ Public Interface IVolume
 
     ReadOnly Property MeterTypeID As Integer
 
+    ReadOnly Property PulseBSelect As String
+
+    ReadOnly Property PulseASelect As String
+
 
     Function RunTest(InstrumentType As miSerialProtocol.InstrumentTypeCode, TemperatureTest As ITemperatureTestClass) As Task
 

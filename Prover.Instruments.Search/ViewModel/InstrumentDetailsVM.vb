@@ -207,7 +207,7 @@ Namespace ViewModels
 
         End Function
 
-        Public Async Function StartNewTest() As Task
+        Public Async Sub StartNewTest()
 
             Try
                 Await Instrument.StartRotaryTest()
@@ -215,7 +215,11 @@ Namespace ViewModels
                 MsgBox(ex.Message.ToString, MsgBoxStyle.OkOnly)
             End Try
 
-        End Function
+        End Sub
+
+        Public Sub StopTest()
+            USBDataAcqClass.SharedStopMotor(0, 0)
+        End Sub
 
 
 #End Region
@@ -288,6 +292,13 @@ Namespace ViewModels
                 Return _startTestCommand
             End Get
         End Property
+
+        Private _stopTestcommand = New Microsoft.Practices.Prism.Commands.DelegateCommand(AddressOf StopTest)
+        Public ReadOnly Property StopTestCommand As ICommand Implements IInstrumentDetailsVM.StopCommand
+            Get
+                Return _stopTestcommand
+            End Get
+        End Property
 #End Region
 
 
@@ -310,6 +321,8 @@ Namespace ViewModels
                 Return False
             End Get
         End Property
+
+
 
     End Class
 End Namespace

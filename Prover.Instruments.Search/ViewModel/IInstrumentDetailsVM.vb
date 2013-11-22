@@ -33,6 +33,8 @@ Namespace ViewModels
 
         ReadOnly Property StartTestsCommand As ICommand
 
+        ReadOnly Property StopCommand As ICommand
+
 
     End Interface
 End Namespace
