@@ -15,35 +15,40 @@ Namespace Instruments.Data
 
         Public Shared Function DownloadItemFileAsync(Instrument As IBaseInstrument, Optional Progress As IProgress(Of Tuple(Of String, Integer)) = Nothing) As Task
             Return Task.Run(Sub()
-                                If CommPortName Is Nothing Or IsNothing(BaudRate) Then
-                                    Throw New Exception("Comm Port and Baud Rate must be set.")
-                                End If
+                                Try
+                                    If CommPortName Is Nothing Or IsNothing(BaudRate) Then
+                                        Throw New Exception("Comm Port and Baud Rate must be set.")
+                                    End If
 
-                                If CommPortName = "IrDA" Then
-                                    CommPort = New IrDAPort()
-                                Else
-                                    CommPort = New SerialPort(CommPortName, BaudRate)
-                                End If
+                                    If CommPortName = "IrDA" Then
+                                        CommPort = New IrDAPort()
+                                    Else
+                                        CommPort = New SerialPort(CommPortName, BaudRate)
+                                    End If
 
-                                Select Case Instrument.InstrumentType
-                                    Case InstrumentTypeCode.MiniMax
-                                        _miSerial = New miSerialProtocol.MiniMaxClass(CommPort)
-                                        _items = MiniMaxInstrument.LoadInstrumentItems()
-                                    Case InstrumentTypeCode.EC300
-                                        _miSerial = New miSerialProtocol.EC300Class(CommPort)
-                                        _items = EC300Instrument.LoadInstrumentItems()
-                                    Case Else
-                                        _miSerial = New miSerialProtocol.TCIClass(CommPort)
-                                End Select
+                                    Select Case Instrument.InstrumentType
+                                        Case InstrumentTypeCode.MiniMax
+                                            _miSerial = New miSerialProtocol.MiniMaxClass(CommPort)
+                                            _items = MiniMaxInstrument.LoadInstrumentItems()
+                                        Case InstrumentTypeCode.EC300
+                                            _miSerial = New miSerialProtocol.EC300Class(CommPort)
+                                            _items = EC300Instrument.LoadInstrumentItems()
+                                        Case Else
+                                            _miSerial = New miSerialProtocol.TCIClass(CommPort)
+                                    End Select
 
-                                _miSerial.Connect()
-                                Dim downloads = _miSerial.RG((From i In _items Select i.Number).ToList)
-                                _miSerial.Disconnect()
-                                _miSerial.Dispose()
-                                _miSerial = Nothing
-                                For Each item In downloads
-                                    Instrument.Items.Where(Function(x) x.Number = item.Key).SingleOrDefault.Value = item.Value
-                                Next
+                                    _miSerial.Connect()
+                                    Dim downloads = _miSerial.RG((From i In _items Select i.Number).ToList)
+                                    _miSerial.Disconnect()
+                                    _miSerial.Dispose()
+                                    _miSerial = Nothing
+                                    For Each item In downloads
+                                        Instrument.Items.Where(Function(x) x.Number = item.Key).SingleOrDefault.Value = item.Value
+                                    Next
+                                Catch ex As Exception
+                                    MsgBox(ex.Message, MsgBoxStyle.OkOnly, "Error")
+                                End Try
+
                             End Sub)
         End Function
 

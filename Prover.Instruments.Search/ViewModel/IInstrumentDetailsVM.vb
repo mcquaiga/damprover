@@ -35,6 +35,10 @@ Namespace ViewModels
 
         ReadOnly Property StopCommand As ICommand
 
+        ReadOnly Property TachCommPorts As List(Of String)
+
+        ReadOnly Property setTachCommPortCommand As ICommand
+
 
     End Interface
 End Namespace

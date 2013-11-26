@@ -93,6 +93,13 @@ Namespace ViewModels
             End Get
         End Property
 
+        Public ReadOnly Property TachCommPorts As List(Of String) Implements IInstrumentDetailsVM.TachCommPorts
+            Get
+                Dim ports As List(Of String) = CommunicationPorts.GetAllCommPorts().ToList()
+                Return ports
+            End Get
+        End Property
+
         Public ReadOnly Property BaudRates As List(Of String) Implements IInstrumentDetailsVM.BaudRates
             Get
                 Return System.Enum.GetNames(GetType(miSerialProtocol.BaudRateEnum)).ToList()
@@ -140,6 +147,11 @@ Namespace ViewModels
         Public Sub SetCommPort(CommPort As String)
             InstrumentCommunications.CommPortName = CommPort
         End Sub
+
+        Public Sub SetTachCommPort(CommPort As String)
+            TachometerClass.CommPortName = CommPort
+        End Sub
+
 
         Public Sub Save()
             _events.GetEvent(Of GlobalNotificationEvent).Publish("SAVING INSTRUMENT...")
@@ -249,6 +261,14 @@ Namespace ViewModels
             End Get
         End Property
 
+        Private _setTachCommPortCommand = New Microsoft.Practices.Prism.Commands.DelegateCommand(Of String)(AddressOf SetTachCommPort)
+
+        Public ReadOnly Property SetTachCommPortCommand As ICommand Implements IInstrumentDetailsVM.setTachCommPortCommand
+            Get
+                Return _setTachCommPortCommand
+            End Get
+        End Property
+
         Private _SaveCommand = New Microsoft.Practices.Prism.Commands.DelegateCommand(AddressOf Save)
         Public ReadOnly Property SaveCommand As ICommand Implements IInstrumentDetailsVM.SaveCommand
             Get
@@ -322,6 +342,7 @@ Namespace ViewModels
             End Get
         End Property
 
+       
 
 
     End Class

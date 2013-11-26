@@ -14,15 +14,13 @@
         _pulseAInput = New USBDataAcqClass(0, MccDaq.DigitalPortType.FirstPortA, 0)
         _pulseBInput = New USBDataAcqClass(0, MccDaq.DigitalPortType.FirstPortB, 1)
         _pulseOutput = New USBDataAcqClass(0, 0, 0)
-
-        _tachPort = New TachometerClass(2)
     End Sub
 
 
 
     Public Function StartTest(Volume As IVolume) As Task Implements ITestClass.StartTest
         Return Task.Run(Sub()
-                            _tachPort.ResetTach()
+                            TachometerClass.ResetTach()
                             _pulseOutput.StartMotor()
 
                             Do While _pulseACounter < 10
@@ -30,7 +28,7 @@
                                 Me._pulseBCounter = _pulseBInput.ReadPulse()
                             Loop
 
-                            _tachPort.ResetTach()
+                            TachometerClass.ReadTach()
 
 
                         End Sub)

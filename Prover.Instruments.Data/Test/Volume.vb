@@ -132,8 +132,9 @@ Public Class Volume
             If IsNothing(BeforeItems) Then Return Nothing
 
             highres = BeforeItems.Where(Function(x) x.Number = 113).SingleOrDefault.NumericValue
-            highres = highres.Substring(highres.IndexOf("."), highres.Length() - highres.IndexOf("."))
-
+            If highres > 0 Then
+                highres = highres.Substring(highres.IndexOf("."), highres.Length() - highres.IndexOf("."))
+            End If
             Return CDec(CStr(BeforeItems.Where(Function(x) x.Number = 0).SingleOrDefault.NumericValue) + highres)
         End Get
     End Property
@@ -144,8 +145,9 @@ Public Class Volume
             If IsNothing(AfterItems) Then Return Nothing
 
             highres = AfterItems.Where(Function(x) x.Number = 113).SingleOrDefault.NumericValue
-            highres = highres.Substring(highres.IndexOf("."), highres.Length() - highres.IndexOf("."))
-
+            If highres > 0 Then
+                highres = highres.Substring(highres.IndexOf("."), highres.Length() - highres.IndexOf("."))
+            End If
             Return CDec(CStr(AfterItems.Where(Function(x) x.Number = 0).SingleOrDefault.NumericValue) + highres)
         End Get
     End Property
@@ -156,7 +158,9 @@ Public Class Volume
             If IsNothing(BeforeItems) Then Return Nothing
 
             highres = BeforeItems.Where(Function(x) x.Number = 892).SingleOrDefault.NumericValue
-            highres = highres.Substring(highres.IndexOf("."), highres.Length() - highres.IndexOf("."))
+            If highres > 0 Then
+                highres = highres.Substring(highres.IndexOf("."), highres.Length() - highres.IndexOf("."))
+            End If
 
             Return CDec(CStr(BeforeItems.Where(Function(x) x.Number = 2).SingleOrDefault.NumericValue) + highres)
         End Get
@@ -168,7 +172,9 @@ Public Class Volume
             If IsNothing(AfterItems) Then Return Nothing
 
             highres = AfterItems.Where(Function(x) x.Number = 892).SingleOrDefault.NumericValue
-            highres = highres.Substring(highres.IndexOf("."), highres.Length() - highres.IndexOf("."))
+            If highres > 0 Then
+                highres = highres.Substring(highres.IndexOf("."), highres.Length() - highres.IndexOf("."))
+            End If
 
             Return CDec(CStr(AfterItems.Where(Function(x) x.Number = 2).SingleOrDefault.NumericValue) + highres)
         End Get
@@ -338,8 +344,8 @@ Public Class Volume
 
         Return Task.Run(Async Function()
                             'Reset Tachometer
-                            ' TachometerComm.ResetTach()
-                            ' System.Threading.Thread.Sleep(500)
+                            TachometerClass.ResetTach()
+                            System.Threading.Thread.Sleep(1000)
 
                             PulserACount = 0
                             PulserBCount = 0
@@ -362,7 +368,7 @@ Public Class Volume
                             OutputBoard.PulseOut(USBDataAcqClass.MotorValues.mStop)
 
                             'Finally read tachometer
-                            'Me.AppliedInput = TachometerComm.ReadTach()
+                            Me.AppliedInput = TachometerClass.ReadTach()
 
                             System.Threading.Thread.Sleep(500)
 

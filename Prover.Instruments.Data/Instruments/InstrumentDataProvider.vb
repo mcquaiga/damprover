@@ -94,15 +94,19 @@ Namespace Instruments.Data
         Public Async Function UpsertInstrument(instrument As IBaseInstrument) As Task
 
             Await Task.Run(Sub()
+                               Try
+                                   If _session Is Nothing Then
+                                       _session = _docStore.OpenSession()
+                                   End If
 
-                               If _session Is Nothing Then
-                                   _session = _docStore.OpenSession()
-                               End If
 
+                                   If instrument.CreatedDate Is Nothing Then instrument.CreatedDate = Date.Now()
+                                   _session.Store(instrument)
+                                   _session.SaveChanges()
+                               Catch ex As Exception
+                                   MsgBox(ex.Message, MsgBoxStyle.OkOnly, "Error")
+                               End Try
 
-                               If instrument.CreatedDate Is Nothing Then instrument.CreatedDate = Date.Now()
-                               _session.Store(instrument)
-                               _session.SaveChanges()
                            End Sub
             )
         End Function

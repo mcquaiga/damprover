@@ -1,17 +1,10 @@
+Imports miSerialProtocol
+
 Public Class TachometerClass
     Implements IDisposable
 
-    Dim comm As New System.IO.Ports.SerialPort
-
-    Sub New(ByVal SerialPort As Integer)
-        'Config Serial Port
-        comm.PortName = "COM" & SerialPort
-        comm.BaudRate = 9600
-
-        If Not comm.IsOpen Then
-            comm.Open()
-        End If
-    End Sub
+    Public Shared CommPortName As String
+    Public Shared CommPort As ICommPort
 
     Public Overloads Sub Dispose() Implements IDisposable.Dispose
         Dispose(True)
@@ -22,46 +15,62 @@ Public Class TachometerClass
     End Sub
 
     Protected Overridable Overloads Sub Dispose(ByVal disposing As Boolean)
-        'clean up our resources
-        If (disposing) Then
-            If comm.IsOpen Then
-                comm.Close()
-                comm.Dispose()
-                comm = Nothing
-            End If
-        End If
+        CommPort.DiscardInBuffer()
+        CommPort.Dispose()
     End Sub
 
 
 #Region "Methods"
 
-    Public Sub ResetTach()
-        comm.Write("@T1" & Chr(13))
-        System.Threading.Thread.Sleep(50)
-        comm.Write("6" & Chr(13))
-        System.Threading.Thread.Sleep(100)
+    Private Shared Sub InitCommPort()
+        If CommPort Is Nothing Then
+            If CommPortName Is Nothing Or CommPortName = "" Then
+                'Throw New Exception("Tachometer Comm Port must be set.")
+            Else
+                CommPort = New SerialPort(CommPortName, BaudRateEnum.b9600)
+            End If
 
-        comm.DiscardInBuffer()
+
+        End If
     End Sub
 
-    Public Function ReadTach() As Object
+    Public Shared Sub ResetTach()
+        InitCommPort()
+
+        If CommPort Is Nothing Then Return
+
+        If Not CommPort.IsOpen() Then
+            CommPort.OpenPort()
+        End If
+
+        CommPort.SendDataToPort("@T1" & Chr(13))
+        System.Threading.Thread.Sleep(50)
+        CommPort.SendDataToPort("6" & Chr(13))
+        System.Threading.Thread.Sleep(100)
+
+        CommPort.DiscardInBuffer()
+    End Sub
+
+    Public Shared Function ReadTach() As Integer
         Dim tachString As String = ""
         Dim tach As Integer
 
-        If comm.IsOpen = False Then
-            comm.Open()
+        InitCommPort()
+        If CommPort Is Nothing Then Return 0
+        If Not CommPort.IsOpen Then
+            CommPort.OpenPort()
         End If
-        comm.DiscardInBuffer()
-        comm.Write("@D0")
-        comm.Write(Chr(13))
+        CommPort.DiscardInBuffer()
+        CommPort.SendDataToPort("@D0")
+        CommPort.SendDataToPort(Chr(13))
         System.Threading.Thread.Sleep(200)
 
-        tachString = comm.ReadExisting()
+        tachString = CommPort.ReceiveDataFromPort()
         If tachString.Length > 8 Then
             tach = tachString.Substring(1, 8)
         End If
 
-        Return tach
+        Return CInt(tach)
     End Function
 
 #End Region
