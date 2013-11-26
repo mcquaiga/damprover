@@ -132,10 +132,13 @@ Public Class Volume
             If IsNothing(BeforeItems) Then Return Nothing
 
             highres = BeforeItems.Where(Function(x) x.Number = 113).SingleOrDefault.NumericValue
-            If highres > 0 Then
+            If highres > 0 AndAlso highres.IndexOf(".") > -1 Then
                 highres = highres.Substring(highres.IndexOf("."), highres.Length() - highres.IndexOf("."))
+                Return CDec(CStr(BeforeItems.Where(Function(x) x.Number = 0).SingleOrDefault.NumericValue) + highres)
+            Else
+                Return CDec(CStr(BeforeItems.Where(Function(x) x.Number = 0).SingleOrDefault.NumericValue))
             End If
-            Return CDec(CStr(BeforeItems.Where(Function(x) x.Number = 0).SingleOrDefault.NumericValue) + highres)
+
         End Get
     End Property
 
@@ -145,10 +148,13 @@ Public Class Volume
             If IsNothing(AfterItems) Then Return Nothing
 
             highres = AfterItems.Where(Function(x) x.Number = 113).SingleOrDefault.NumericValue
-            If highres > 0 Then
+            If highres > 0 AndAlso highres.IndexOf(".") > -1 Then
                 highres = highres.Substring(highres.IndexOf("."), highres.Length() - highres.IndexOf("."))
+                Return CDec(CStr(AfterItems.Where(Function(x) x.Number = 0).SingleOrDefault.NumericValue) + highres)
+            Else
+                Return CDec(CStr(AfterItems.Where(Function(x) x.Number = 0).SingleOrDefault.NumericValue))
             End If
-            Return CDec(CStr(AfterItems.Where(Function(x) x.Number = 0).SingleOrDefault.NumericValue) + highres)
+
         End Get
     End Property
 
@@ -158,11 +164,13 @@ Public Class Volume
             If IsNothing(BeforeItems) Then Return Nothing
 
             highres = BeforeItems.Where(Function(x) x.Number = 892).SingleOrDefault.NumericValue
-            If highres > 0 Then
+            If highres > 0 AndAlso highres.IndexOf(".") > -1 Then
                 highres = highres.Substring(highres.IndexOf("."), highres.Length() - highres.IndexOf("."))
+                Return CDec(CStr(BeforeItems.Where(Function(x) x.Number = 2).SingleOrDefault.NumericValue) + highres)
+            Else
+                Return CDec(CStr(BeforeItems.Where(Function(x) x.Number = 2).SingleOrDefault.NumericValue))
             End If
 
-            Return CDec(CStr(BeforeItems.Where(Function(x) x.Number = 2).SingleOrDefault.NumericValue) + highres)
         End Get
     End Property
 
@@ -172,11 +180,13 @@ Public Class Volume
             If IsNothing(AfterItems) Then Return Nothing
 
             highres = AfterItems.Where(Function(x) x.Number = 892).SingleOrDefault.NumericValue
-            If highres > 0 Then
+            If highres > 0 AndAlso highres.IndexOf(".") > -1 Then
                 highres = highres.Substring(highres.IndexOf("."), highres.Length() - highres.IndexOf("."))
+                Return CDec(CStr(BeforeItems.Where(Function(x) x.Number = 2).SingleOrDefault.NumericValue) + highres)
+            Else
+                Return CDec(CStr(AfterItems.Where(Function(x) x.Number = 2).SingleOrDefault.NumericValue))
             End If
 
-            Return CDec(CStr(AfterItems.Where(Function(x) x.Number = 2).SingleOrDefault.NumericValue) + highres)
         End Get
     End Property
 
