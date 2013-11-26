@@ -23,7 +23,7 @@ Public Class MainWindow
 
     Private Sub MainWindow_Loaded(sender As Object, e As RoutedEventArgs) Handles Me.Loaded
         ' _container.Resolve(Of NotificationsView)()
-        _regionManager.Regions(RegionNames.NotificationRegion).Add(_container.Resolve(Of INotificationManager))
-        _regionManager.Regions(RegionNames.NotificationRegion).Activate(_container.Resolve(Of INotificationManager))
+        '_regionManager.Regions(RegionNames.NotificationRegion).Add(_container.Resolve(Of INotificationManager))
+        '_regionManager.Regions(RegionNames.NotificationRegion).Activate(_container.Resolve(Of INotificationManager))
     End Sub
 End Class

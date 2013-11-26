@@ -7,7 +7,7 @@
         xmlns:regions="clr-namespace:Prover;assembly=Prover"
         Title="DAM Prover"
         Background="{DynamicResource MainBackgroundColour}"
-        mc:Ignorable="d">
+        mc:Ignorable="d" WindowState="Maximized">
 
     <Window.Resources />
     <Grid>

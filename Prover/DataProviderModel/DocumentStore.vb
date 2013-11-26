@@ -12,13 +12,20 @@ Namespace Data.ProviderModel
                  Dim docStore = New DocumentStore() With { _
                     .ConnectionStringName = "DBServer"
                 }
-                 docStore.Initialize()
-                 docStore.Conventions.DefaultQueryingConsistency = ConsistencyOptions.QueryYourWrites
-                 'OPTIONAL:
-                 'IndexCreation.CreateIndexes(typeof(Global).Assembly, docStore);
+                 Try
+                     docStore.Initialize()
 
-                 Return docStore
+                     docStore.Conventions.DefaultQueryingConsistency = ConsistencyOptions.QueryYourWrites
+                     'OPTIONAL:
+                     'IndexCreation.CreateIndexes(typeof(Global).Assembly, docStore);
 
+                     Return docStore
+
+                 Catch ex As Exception
+                     MsgBox(ex.Message, MsgBoxStyle.OkOnly, "Database Error")
+                 End Try
+
+                 Return Nothing
              End Function)
 
         Public Shared ReadOnly Property ProverDocumentStore() As DocumentStore
