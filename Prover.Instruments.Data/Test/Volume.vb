@@ -128,64 +128,37 @@ Public Class Volume
 
     Public ReadOnly Property StartCorrected() As Double Implements IVolume.StartCorrected
         Get
-            Dim highres As String
             If IsNothing(BeforeItems) Then Return Nothing
 
-            highres = BeforeItems.Where(Function(x) x.Number = 113).SingleOrDefault.NumericValue
-            If highres > 0 AndAlso highres.IndexOf(".") > -1 Then
-                highres = highres.Substring(highres.IndexOf("."), highres.Length() - highres.IndexOf("."))
-                Return CDec(CStr(BeforeItems.Where(Function(x) x.Number = 0).SingleOrDefault.NumericValue) + highres)
-            Else
-                Return CDec(CStr(BeforeItems.Where(Function(x) x.Number = 0).SingleOrDefault.NumericValue))
-            End If
+            Return BeforeItems.Where(Function(x) x.Number = 0).SingleOrDefault.NumericValue + ParseHighResReading(BeforeItems.Where(Function(x) x.Number = 113).SingleOrDefault.NumericValue)
 
         End Get
     End Property
 
     Public ReadOnly Property EndCorrected() As Double Implements IVolume.EndCorrected
         Get
-            Dim highres As String
             If IsNothing(AfterItems) Then Return Nothing
 
-            highres = AfterItems.Where(Function(x) x.Number = 113).SingleOrDefault.NumericValue
-            If highres > 0 AndAlso highres.IndexOf(".") > -1 Then
-                highres = highres.Substring(highres.IndexOf("."), highres.Length() - highres.IndexOf("."))
-                Return CDec(CStr(AfterItems.Where(Function(x) x.Number = 0).SingleOrDefault.NumericValue) + highres)
-            Else
-                Return CDec(CStr(AfterItems.Where(Function(x) x.Number = 0).SingleOrDefault.NumericValue))
-            End If
+            Return AfterItems.Where(Function(x) x.Number = 0).SingleOrDefault.NumericValue + ParseHighResReading(AfterItems.Where(Function(x) x.Number = 113).SingleOrDefault.NumericValue)
 
         End Get
     End Property
 
     Public ReadOnly Property StartUncorrected() As Double Implements IVolume.StartunCorrected
         Get
-            Dim highres As String
             If IsNothing(BeforeItems) Then Return Nothing
 
-            highres = BeforeItems.Where(Function(x) x.Number = 892).SingleOrDefault.NumericValue
-            If highres > 0 AndAlso highres.IndexOf(".") > -1 Then
-                highres = highres.Substring(highres.IndexOf("."), highres.Length() - highres.IndexOf("."))
-                Return CDec(CStr(BeforeItems.Where(Function(x) x.Number = 2).SingleOrDefault.NumericValue) + highres)
-            Else
-                Return CDec(CStr(BeforeItems.Where(Function(x) x.Number = 2).SingleOrDefault.NumericValue))
-            End If
+            Return BeforeItems.Where(Function(x) x.Number = 2).SingleOrDefault.NumericValue + ParseHighResReading(BeforeItems.Where(Function(x) x.Number = 892).SingleOrDefault.NumericValue)
 
         End Get
     End Property
 
     Public ReadOnly Property EndUnCorrected() As Double Implements IVolume.EndUnCorrected
         Get
-            Dim highres As String
             If IsNothing(AfterItems) Then Return Nothing
 
-            highres = AfterItems.Where(Function(x) x.Number = 892).SingleOrDefault.NumericValue
-            If highres > 0 AndAlso highres.IndexOf(".") > -1 Then
-                highres = highres.Substring(highres.IndexOf("."), highres.Length() - highres.IndexOf("."))
-                Return CDec(CStr(BeforeItems.Where(Function(x) x.Number = 2).SingleOrDefault.NumericValue) + highres)
-            Else
-                Return CDec(CStr(AfterItems.Where(Function(x) x.Number = 2).SingleOrDefault.NumericValue))
-            End If
+            Return AfterItems.Where(Function(x) x.Number = 2).SingleOrDefault.NumericValue + ParseHighResReading(AfterItems.Where(Function(x) x.Number = 892).SingleOrDefault.NumericValue)
+           
 
         End Get
     End Property
@@ -347,6 +320,24 @@ Public Class Volume
 #End Region
 
 #Region "Methods"
+
+    'Returns 0.XXXX
+    Private Function ParseHighResReading(HighResReading As Decimal) As Decimal
+
+        Dim HighResString As String
+
+        If HighResReading = 0 Then Return 0
+
+        HighResString = HighResReading
+
+        If HighResReading > 0 AndAlso HighResString.IndexOf(".") > -1 Then
+            Return HighResString.Substring(HighResString.IndexOf("."), HighResString.Length() - HighResString.IndexOf("."))
+        Else
+            Return 0
+        End If
+
+    End Function
+
 
     Public Function RunTest(InstrumentType As InstrumentTypeCode, TemperatureTest As ITemperatureTestClass) As Task Implements IVolume.RunTest
 
