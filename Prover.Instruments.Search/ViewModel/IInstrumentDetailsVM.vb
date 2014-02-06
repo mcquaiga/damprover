@@ -39,6 +39,12 @@ Namespace ViewModels
 
         ReadOnly Property setTachCommPortCommand As ICommand
 
+        Sub SetBaudRate(p1 As String)
+
+        Sub SetCommPort(p1 As String)
+
+        Sub SetTachCommPort(p1 As String)
+
 
     End Interface
 End Namespace

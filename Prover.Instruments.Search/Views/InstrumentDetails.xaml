@@ -521,7 +521,7 @@
                             <RowDefinition />
                         </Grid.RowDefinitions>
                         <Grid Grid.Row="0" Grid.ColumnSpan="3">
-                            <UniformGrid Columns="4">
+                            <UniformGrid Columns="5">
                                 <StackPanel>
                                     <TextBlock Style="{StaticResource ItemValues}" Text="{Binding Instrument.VolumeTest.CorrectedMultiplierDescription, UpdateSourceTrigger=PropertyChanged}" />
                                     <TextBlock Style="{StaticResource ItemDescriptions}" Foreground="{DynamicResource HeaderFontColour}">Cor. Multi. (90)</TextBlock>
@@ -537,6 +537,10 @@
                                 <StackPanel>
                                     <TextBlock Style="{StaticResource ItemValues}" Text="{Binding Instrument.VolumeTest.MeterType, UpdateSourceTrigger=PropertyChanged}" />
                                     <TextBlock Style="{StaticResource ItemDescriptions}" Foreground="{DynamicResource HeaderFontColour}">Meter Type (432)</TextBlock>
+                                </StackPanel>
+                                <StackPanel>
+                                    <TextBlock Style="{StaticResource ItemValues}" Text="{Binding Instrument.VolumeTest.MeterDisplacement, UpdateSourceTrigger=PropertyChanged}" />
+                                    <TextBlock Style="{StaticResource ItemDescriptions}" Foreground="{DynamicResource HeaderFontColour}">Meter Displacement</TextBlock>
                                 </StackPanel>
                             </UniformGrid>
 

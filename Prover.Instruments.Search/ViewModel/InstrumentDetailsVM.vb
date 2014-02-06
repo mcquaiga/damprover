@@ -35,6 +35,17 @@ Namespace ViewModels
 
 
             _progress = New Progress(Of Tuple(Of String, Integer))(AddressOf ReportProgress)
+
+            Me.SetBaudRate(My.Settings.BaudRate)
+            Me.SetCommPort(My.Settings.CommPort)
+            Me.SetTachCommPort(My.Settings.TachCommPort)
+
+            If My.Settings.InstrumentType = "MiniMax" Then
+                Me.Instrument = New MiniMaxInstrument()
+            Else
+                Me.Instrument = New EC300Instrument()
+            End If
+
         End Sub
 
         Public ReadOnly Property ItemValuesWithDescriptions As Dictionary(Of ItemClass, String)
@@ -124,7 +135,7 @@ Namespace ViewModels
 
         Public Property TemperatureTests As ObservableCollection(Of ITemperatureTestClass)
             Get
-                If _Instrument Is Nothing Then Return Nothing
+                If _Instrument Is Nothing OrElse _Instrument.Temperature Is Nothing Then Return Nothing
                 Return _Instrument.Temperature.Tests
             End Get
             Set(value As ObservableCollection(Of ITemperatureTestClass))
@@ -141,15 +152,19 @@ Namespace ViewModels
         End Sub
 
         Public Sub SetBaudRate(BaudRate As String)
+            If BaudRate Is Nothing Or BaudRate = "" Then Exit Sub
             InstrumentCommunications.BaudRate = [Enum].Parse(GetType(miSerialProtocol.BaudRateEnum), BaudRate)
+            My.Settings.BaudRate = [Enum].Parse(GetType(miSerialProtocol.BaudRateEnum), BaudRate).ToString
         End Sub
 
         Public Sub SetCommPort(CommPort As String)
             InstrumentCommunications.CommPortName = CommPort
+            My.Settings.CommPort = CommPort
         End Sub
 
         Public Sub SetTachCommPort(CommPort As String)
             TachometerClass.CommPortName = CommPort
+            My.Settings.TachCommPort = CommPort
         End Sub
 
 

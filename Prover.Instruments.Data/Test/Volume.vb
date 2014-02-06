@@ -40,7 +40,7 @@ Public Class Volume
         Dim _xmlElement = XDocument.Load(My.Application.Info.DirectoryPath + "\MeterInputPulses.xml")
         _meterIndexpulses = (From x In _xmlElement.<MeterIndexes>.Elements("value")
                         Where x.@id = Me.MeterTypeID
-                        Select New MeterIndexInputPulses(x.@id, x.@UnCorPulsesX10, x.@UnCorPulsesX100)).FirstOrDefault
+                        Select New MeterIndexInputPulses(x.@id, x.@UnCorPulsesX10, x.@UnCorPulsesX100, x.@MeterDisplacement)).FirstOrDefault
 
     End Sub
 
@@ -193,7 +193,7 @@ Public Class Volume
 
     Public Overridable ReadOnly Property InputUncVolume() As Double Implements IVolume.InputUncVolume
         Get
-            Return (EVCMeterDisplacement * AppliedInput)
+            Return (MeterDisplacement * AppliedInput)
         End Get
     End Property
 
@@ -272,7 +272,7 @@ Public Class Volume
 
     Public Overridable ReadOnly Property IdealAppliedInput(ByVal UncPulses As Integer) As Double
         Get
-            Return (UncPulses * UnCorrectedMultiplier / EVCMeterDisplacement)
+            Return (UncPulses * UnCorrectedMultiplier / MeterDisplacement)
         End Get
     End Property
 
@@ -302,7 +302,7 @@ Public Class Volume
 
     Public ReadOnly Property MeterDisplacementCubicMeters() As Double
         Get
-            Return EVCMeterDisplacement * CubicFeetToMeters
+            Return MeterDisplacement * CubicFeetToMeters
         End Get
     End Property
 
@@ -316,6 +316,13 @@ Public Class Volume
                 Return PulseASelect
             End If
         End Get
+    End Property
+
+    Public ReadOnly Property MeterDisplacement As Decimal
+        Get
+            Return _meterIndexpulses.MeterDisplacement
+        End Get
+
     End Property
 #End Region
 
@@ -492,15 +499,17 @@ Public Class Volume
 
     Private Class MeterIndexInputPulses
 
-        Sub New(ID As Integer, UnCorPulsesX10 As Integer, UnCorPulsesX100 As Integer)
+        Sub New(ID As Integer, UnCorPulsesX10 As Integer, UnCorPulsesX100 As Integer, MeterDisplacement As Decimal)
             Me.Id = ID
             Me.UnCorPulsesX10 = UnCorPulsesX10
             Me.UnCorPulsesX100 = UnCorPulsesX100
+            Me.MeterDisplacement = MeterDisplacement
         End Sub
 
         Public Property Id As Integer
         Public Property UnCorPulsesX10 As Integer
         Public Property UnCorPulsesX100 As Integer
+        Public Property MeterDisplacement As Decimal
     End Class
 
 End Class
