@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
   <metadata>
     <id>Prism.UnityExtensions</id>
     <version>4.1.0.0</version>
@@ -18,8 +18,5 @@
       <dependency id="Unity" version="2.1" />
       <dependency id="Prism" version="4.1" />
     </dependencies>
-    <references>
-      <reference file="Microsoft.Practices.Prism.UnityExtensions.dll" />
-    </references>
   </metadata>
 </package>

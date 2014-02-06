@@ -43,7 +43,7 @@ Public Class TachometerClass
             CommPort.OpenPort()
         End If
 
-        CommPort.SendDataToPort("@T1" & Chr(13))
+        CommPort.SendDataToPort("@R1" & Chr(13))
         System.Threading.Thread.Sleep(50)
         CommPort.SendDataToPort("6" & Chr(13))
         System.Threading.Thread.Sleep(100)
@@ -63,11 +63,14 @@ Public Class TachometerClass
         CommPort.DiscardInBuffer()
         CommPort.SendDataToPort("@D0")
         CommPort.SendDataToPort(Chr(13))
-        System.Threading.Thread.Sleep(200)
+        CommPort.DiscardInBuffer()
+        System.Threading.Thread.Sleep(300)
 
         tachString = CommPort.ReceiveDataFromPort()
+        MsgBox(tachString)
         If tachString.Length > 8 Then
             tach = tachString.Substring(1, 8)
+            MsgBox(tach)
         End If
 
         Return CInt(tach)
