@@ -36,15 +36,15 @@ Namespace ViewModels
 
             _progress = New Progress(Of Tuple(Of String, Integer))(AddressOf ReportProgress)
 
-            Me.SetBaudRate(My.Settings.BaudRate)
-            Me.SetCommPort(My.Settings.CommPort)
-            Me.SetTachCommPort(My.Settings.TachCommPort)
+            'Me.SetBaudRate(My.Settings.BaudRate)
+            'Me.SetCommPort(My.Settings.CommPort)
+            'Me.SetTachCommPort(My.Settings.TachCommPort)
 
-            If My.Settings.InstrumentType = "MiniMax" Then
-                Me.Instrument = New MiniMaxInstrument()
-            Else
-                Me.Instrument = New EC300Instrument()
-            End If
+            'If My.Settings.InstrumentType = "MiniMax" Then
+            '    Me.Instrument = New MiniMaxInstrument()
+            'Else
+            '    Me.Instrument = New EC300Instrument()
+            'End If
 
         End Sub
 
@@ -151,18 +151,18 @@ Namespace ViewModels
             End If
         End Sub
 
-        Public Sub SetBaudRate(BaudRate As String)
+        Public Sub SetBaudRate(BaudRate As String) Implements IInstrumentDetailsVM.SetBaudRate
             If BaudRate Is Nothing Or BaudRate = "" Then Exit Sub
             InstrumentCommunications.BaudRate = [Enum].Parse(GetType(miSerialProtocol.BaudRateEnum), BaudRate)
             My.Settings.BaudRate = [Enum].Parse(GetType(miSerialProtocol.BaudRateEnum), BaudRate).ToString
         End Sub
 
-        Public Sub SetCommPort(CommPort As String)
+        Public Sub SetCommPort(CommPort As String) Implements IInstrumentDetailsVM.SetCommPort
             InstrumentCommunications.CommPortName = CommPort
             My.Settings.CommPort = CommPort
         End Sub
 
-        Public Sub SetTachCommPort(CommPort As String)
+        Public Sub SetTachCommPort(CommPort As String) Implements IInstrumentDetailsVM.SetTachCommPort
             TachometerClass.CommPortName = CommPort
             My.Settings.TachCommPort = CommPort
         End Sub

@@ -31,7 +31,7 @@ Public Class IrDAPort
     Sub New()
         logger = LogManager.GetCurrentClassLogger
 
-        cli = New IrDAClient
+        cli = New IrDAClient()
         Try
             m_enc = Encoding.GetEncoding("x-IA5")
         Catch ex As ArgumentException
