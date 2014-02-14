@@ -43,9 +43,7 @@ Public Class TachometerClass
             CommPort.OpenPort()
         End If
 
-        CommPort.SendDataToPort("@R1" & Chr(13))
-        System.Threading.Thread.Sleep(50)
-        CommPort.SendDataToPort("6" & Chr(13))
+        CommPort.SendDataToPort("@R3" & Chr(13))
         System.Threading.Thread.Sleep(100)
 
         CommPort.DiscardInBuffer()
