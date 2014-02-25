@@ -101,33 +101,39 @@ Namespace Instruments.Data
 
         Public Shared Function DownloadItemsAsync(InstrumentType As InstrumentTypeCode, Items As List(Of ItemClass), Optional Progress As IProgress(Of Tuple(Of String, Integer)) = Nothing) As Task(Of Dictionary(Of Integer, String))
             Return Task.Run(Function()
-                                If CommPortName Is Nothing Or IsNothing(BaudRate) Then
-                                    Throw New Exception("Comm Port and Baud Rate must be set.")
-                                End If
+                                Try
 
-                                If CommPort Is Nothing Then
-                                    If CommPortName = "IrDA" Then
-                                        CommPort = New IrDAPort()
-                                    Else
-                                        CommPort = New SerialPort(CommPortName, BaudRate)
+
+                                    If CommPortName Is Nothing Or IsNothing(BaudRate) Then
+                                        Throw New Exception("Comm Port and Baud Rate must be set.")
                                     End If
-                                End If
 
-                                Select Case InstrumentType
-                                    Case InstrumentTypeCode.MiniMax
-                                        _miSerial = New miSerialProtocol.MiniMaxClass(CommPort)
-                                    Case InstrumentTypeCode.EC300
-                                        _miSerial = New miSerialProtocol.EC300Class(CommPort)
-                                    Case Else
-                                        _miSerial = New miSerialProtocol.TCIClass(CommPort)
-                                End Select
+                                    If CommPort Is Nothing Then
+                                        If CommPortName = "IrDA" Then
+                                            CommPort = New IrDAPort()
+                                        Else
+                                            CommPort = New SerialPort(CommPortName, BaudRate)
+                                        End If
+                                    End If
 
-                                _miSerial.Connect()
-                                Dim downloads = _miSerial.RG((From i In (Items) Select i.Number).ToList)
-                                _miSerial.Disconnect()
+                                    Select Case InstrumentType
+                                        Case InstrumentTypeCode.MiniMax
+                                            _miSerial = New miSerialProtocol.MiniMaxClass(CommPort)
+                                        Case InstrumentTypeCode.EC300
+                                            _miSerial = New miSerialProtocol.EC300Class(CommPort)
+                                        Case Else
+                                            _miSerial = New miSerialProtocol.TCIClass(CommPort)
+                                    End Select
 
-                                Return downloads
+                                    _miSerial.Connect()
+                                    Dim downloads = _miSerial.RG((From i In (Items) Select i.Number).ToList)
+                                    _miSerial.Disconnect()
 
+                                    Return downloads
+                                Catch ex As Exception
+                                    MsgBox(ex.Message, MsgBoxStyle.OkOnly + MsgBoxStyle.Information, "Error")
+                                    Return New Dictionary(Of Integer, String)
+                                End Try
                             End Function)
         End Function
 

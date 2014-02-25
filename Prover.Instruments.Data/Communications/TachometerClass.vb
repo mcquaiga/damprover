@@ -65,13 +65,24 @@ Public Class TachometerClass
         System.Threading.Thread.Sleep(300)
 
         tachString = CommPort.ReceiveDataFromPort()
-        MsgBox(tachString)
-        If tachString.Length > 8 Then
-            tach = tachString.Substring(1, 8)
-            MsgBox(tach)
-        End If
 
-        Return CInt(tach)
+
+        Return ParseTachValue(tachString)
+    End Function
+
+    Public Shared Function ParseTachValue(value As String) As Integer
+        ' D0
+        '
+        ' OK
+        '
+        ' 12000
+        '
+        Try
+            Return Trim(Right(value, Len(value) - value.IndexOf(Chr(13), value.IndexOf(Chr(13)) + 1) - 1))
+        Catch ex As Exception
+            Throw ex
+        End Try
+
     End Function
 
 #End Region
