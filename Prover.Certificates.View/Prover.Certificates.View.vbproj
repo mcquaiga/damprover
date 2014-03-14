@@ -78,8 +78,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\src\packages\RavenDB.Client.2.0.2360\lib\net40\Raven.Client.Lightweight.dll</HintPath>
     </Reference>
+    <Reference Include="ReachFramework" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Printing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Windows.Interactivity, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\src\packages\Prism.4.1.0.0\lib\NET40\System.Windows.Interactivity.dll</HintPath>
@@ -107,8 +109,14 @@
     <Compile Include="View\CertificateReportViewer.xaml.vb">
       <DependentUpon>CertificateReportViewer.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\CertificatesList.xaml.vb">
+      <DependentUpon>CertificatesList.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\CreateCertificatesView.xaml.vb">
       <DependentUpon>CreateCertificatesView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Reports\ReportViewer.xaml.vb">
+      <DependentUpon>ReportViewer.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -149,8 +157,12 @@
       <LastGenOutput>Resources.Designer.vb</LastGenOutput>
       <CustomToolNamespace>My.Resources</CustomToolNamespace>
     </EmbeddedResource>
-    <EmbeddedResource Include="View\Reports\Certificate.rdlc" />
-    <EmbeddedResource Include="View\Reports\Temperatures.rdlc" />
+    <Content Include="View\Reports\Certificate.rdlc">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="View\Reports\Temperatures.rdlc">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <None Include="app.config" />
     <None Include="My Project\DataSources\Prover.Certificates.Data.Certificate.datasource" />
     <None Include="My Project\DataSources\Prover.TemperatureClass.datasource" />
@@ -185,7 +197,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="View\CertificatesList.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\CreateCertificatesView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Reports\ReportViewer.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

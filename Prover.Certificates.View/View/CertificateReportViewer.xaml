@@ -3,12 +3,11 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:rv="clr-namespace:Microsoft.Reporting.WinForms;assembly=Microsoft.ReportViewer.WinForms"
         Title="CertificateReportViewer"
+        xmlns:report="clr-namespace:Prover.Certificates.View"
         Width="300"
         Height="300">
 
     <Grid>
-        <WindowsFormsHost>
-            <rv:ReportViewer x:Name="_reportViewer" />
-        </WindowsFormsHost>
+        <report:ReportViewer Loaded="ReportViewer_Loaded"></report:ReportViewer>
     </Grid>
 </Window>

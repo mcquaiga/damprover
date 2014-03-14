@@ -31,7 +31,6 @@ Public Class CertificateDataProvider
         )
     End Function
 
-
     Protected Overrides Function FetchData(parameters As Dictionary(Of String, Object)) As IEnumerable(Of ICertificate)
         Return Nothing
     End Function

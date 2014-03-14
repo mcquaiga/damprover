@@ -26,7 +26,8 @@ Public Class NotificationManager
         If _regions Is Nothing Then
             _regions = _regionManager.Regions
         End If
-
+        _regionManager.Regions(RegionNames.NotificationRegion).Add(Me)
+        _regionManager.Regions(RegionNames.NotificationRegion).Activate(Me)
         EventAggregator.GetEvent(Of GlobalNotificationEvent).Subscribe(New Action(Of String)(AddressOf UpdateNotificationArea), ThreadOption.UIThread)
         Me.Message = "HELLO ADAM"
     End Sub

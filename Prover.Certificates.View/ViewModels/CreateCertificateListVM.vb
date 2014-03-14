@@ -10,6 +10,9 @@ Imports Microsoft.Practices.Unity
 Imports Microsoft.Practices.Prism
 Imports Microsoft.Practices.Prism.Regions
 Imports Microsoft.Practices.Prism.Modularity
+Imports System.Windows.Xps
+Imports System.Windows.Xps.Packaging
+Imports System.IO
 
 
 Namespace ViewModels
@@ -35,7 +38,7 @@ Namespace ViewModels
                 _instrs = value
             End Set
         End Property
-        
+
 
         Sub New(Container As IUnityContainer, RegionManager As IRegionManager, events As IEventAggregator)
             _events = events
@@ -156,8 +159,10 @@ Namespace ViewModels
                     Await InstrumentProvider.UpsertInstrument(x)
                 Next x
 
-                cert.SetNextCertificateNumber()
 
+                Me.ShowReport(cert)
+
+                cert.SetNextCertificateNumber()
                 Me.InstrumentsWithNoCertificates()
 
                 '_regionManager.RequestNavigate(RegionNames.MainRegion, New Uri("CertificateReportViewer", UriKind.Relative))
@@ -223,7 +228,7 @@ Namespace ViewModels
             End Get
         End Property
 
-        Private _createNewCommand = New Microsoft.Practices.Prism.Commands.DelegateCommand(AddressOf createNewCertClick, AddressOf CanCreateNewCertClick)
+        Private _createNewCommand = New Microsoft.Practices.Prism.Commands.DelegateCommand(AddressOf CreateNewCertClick, AddressOf CanCreateNewCertClick)
         Public ReadOnly Property CreateNewCertCommand As System.Windows.Input.ICommand Implements ICreateCertificateListVM.CreateNewCertCommand
 
             Get
@@ -239,6 +244,38 @@ Namespace ViewModels
         End Sub
 
 
+        Public Sub ShowReport(Cert As ICertificate)
+            Dim _reportView = New CertificateReportViewer(Cert)
+
+            _reportView.ShowDialog()
+        End Sub
+
+        Public Sub CreateFixedDocument()
+            Dim doc As New FixedDocument()
+
+            doc.DocumentPaginator.PageSize = New Size(96 * 8.5, 96 * 11)
+            Dim page = New PageContent
+
+            Dim fixedPage = New FixedPage
+
+            fixedPage.Background = Brushes.White
+            fixedPage.Width = 96 * 8.5
+            fixedPage.Height = 96 * 11
+
+            Dim certs = _container.Resolve(GetType(CertificatesList), "CertificatesList")
+            fixedPage.Children.Add(certs)
+            DirectCast(page, System.Windows.Markup.IAddChild).AddChild(fixedPage)
+
+            Dim xpsd = New XpsDocument("test.xps", FileAccess.ReadWrite)
+            Dim xw = XpsDocument.CreateXpsDocumentWriter(xpsd)
+            doc.Pages.Add(page)
+            xw.Write(doc)
+            xpsd.Close()
+
+        End Sub
+
+
+
 
     End Class
 
@@ -246,6 +283,9 @@ Namespace ViewModels
         Public Property Instrument As IBaseInstrument
         Public Property IsSelected As Boolean
     End Class
+
+
+
 End Namespace
 
 

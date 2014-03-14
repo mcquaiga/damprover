@@ -17,5 +17,8 @@ Public Class CreateCertificatesView
         InitializeComponent()
     End Sub
 
+
     Public Property DataContext1 As ICreateCertificateListVM Implements IView(Of ICreateCertificateListVM).DataContext
+
+
 End Class

@@ -1,0 +1,141 @@
+﻿<UserControl x:Class="CertificatesList"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:Prover.Certificates.View"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+               Foreground="{DynamicResource HeaderColour}"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300">
+    
+    <UserControl.Resources>
+        <CollectionViewSource x:Key="Instruments" Source="{Binding Path=Instruments, Mode=TwoWay}" />
+        <DataTemplate x:Key="temp">
+            <StackPanel Orientation="Vertical" DataContext="{Binding}" Margin="10,0,0,0" >
+                <TextBlock Foreground="Black" Text="{Binding LevelDescription}" FontStyle="Oblique"/>
+                <TextBlock Foreground="Black" Text="{Binding PercentError}" />
+            </StackPanel>
+        </DataTemplate>
+
+        <DataTemplate x:Key="inst">
+            <Border BorderBrush="Black" BorderThickness="0,0,0,0.25">
+                <Grid DataContext="{Binding Path=Instrument}" >
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="0.10*"/>
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Grid.Column="0" Text="{Binding HasPassed}" />
+
+                    <StackPanel Orientation="Vertical" Grid.Column="1">
+                        <TextBlock Width="125"
+                                   Foreground="Black"
+                                   Text="{Binding InstrumentType}" />
+                        <TextBlock Width="125"
+                                   Margin="2"
+                                   HorizontalAlignment="Center"
+                                   VerticalAlignment="Center"
+                                   FontSize="22"
+                                   Foreground="Black"
+                                   Text="{Binding SerialNumber}" />
+                    </StackPanel>
+                    <Grid Height="50" Margin="2" Grid.Column="2">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <StackPanel Grid.Row="0" Orientation="Horizontal">
+                            <TextBlock Foreground="Black" Text="{Binding CreatedDate}" />
+                        </StackPanel>
+                        <StackPanel Grid.Row="1" Orientation="Horizontal" />
+                        <StackPanel Grid.Row="2" Orientation="Horizontal">
+                            <TextBlock Foreground="Black" Text="S/N 1: " />
+                            <TextBlock Foreground="Black" Text="{Binding SiteNumber1}" />
+                            <TextBlock Margin="5,0,0,0"
+                                       Foreground="Black"
+                                       Text="S/N 2: " />
+                            <TextBlock Foreground="Black" Text="{Binding SiteNumber2}" />
+                        </StackPanel>
+                        <StackPanel Grid.Row="3" Orientation="Horizontal">
+                            <TextBlock Foreground="Black" Text="Meter Type: " />
+                            <TextBlock Foreground="Black" Text="{Binding VolumeTest.MeterType}" />
+                        </StackPanel>
+
+
+                    </Grid>
+                    <ItemsControl Margin="5" Grid.Column="3"
+                                          ItemTemplate="{StaticResource ResourceKey=temp}"
+                                          ItemsSource="{Binding Temperature.Tests}">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <UniformGrid Columns="3" />
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                    </ItemsControl>
+
+                    <StackPanel Orientation="Horizontal" Grid.Column="4">
+                        <StackPanel Orientation="Vertical" Margin="10,0,0,0">
+                            <TextBlock Foreground="Black" Text="UnCor. % Error"  />
+                            <TextBlock Foreground="Black" Text="{Binding VolumeTest.UnCorrectedPercentError}" />
+                        </StackPanel>
+                        <StackPanel Orientation="Vertical" Margin="10,0,0,0">
+                            <TextBlock Foreground="Black" Text="Cor. % Error" />
+                            <TextBlock Foreground="Black" Text="{Binding VolumeTest.CorrectedPercentError}" />
+                        </StackPanel>
+                    </StackPanel>
+                </Grid>
+            </Border>
+        </DataTemplate>
+        <Style x:Key="InstrumentStyle" TargetType="{x:Type ListBoxItem}">
+            <Setter Property="IsSelected" Value="{Binding Path=IsSelected, Mode=TwoWay}" />
+            <Style.Triggers>
+                <MultiTrigger>
+                    <MultiTrigger.Conditions>
+                        <Condition Property="ItemsControl.AlternationIndex" Value="1" />
+                        <Condition Property="IsSelected" Value="False" />
+                        <Condition Property="IsMouseOver" Value="False" />
+                    </MultiTrigger.Conditions>
+                    <Setter Property="Background" Value="#EEEEEEEE" />
+                </MultiTrigger>
+            </Style.Triggers>
+        </Style>
+        <Style x:Key="Flat">
+            <Setter Property="Control.Background" Value="{x:Null}" />
+            <Setter Property="Control.BorderBrush" Value="{x:Null}" />
+            <Style.Triggers>
+                <Trigger Property="Control.IsMouseOver" Value="True">
+                    <Setter Property="Control.Background" Value="{x:Null}" />
+                    <Setter Property="Control.BorderBrush" Value="{x:Null}" />
+                    <Setter Property="Control.FontWeight" Value="Bold" />
+                </Trigger>
+                <Trigger Property="Control.IsFocused" Value="True">
+                    <Setter Property="Control.FontWeight" Value="Bold" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+        <Style TargetType="{x:Type ListBoxItem}">
+            <Setter Property="IsSelected" Value="{Binding IsSelected, Mode=TwoWay}" />
+        </Style>
+    </UserControl.Resources>
+
+
+    <Grid>
+
+        <ListBox x:Name="InstrumentList"
+                     Grid.Column="0"
+                     Margin="10"
+                     HorizontalContentAlignment="Stretch"
+                     VerticalContentAlignment="Stretch"
+                     Background="{DynamicResource MainBackgroundColour}"
+                     BorderThickness="0"
+                     ItemContainerStyle="{StaticResource InstrumentStyle}"
+                     ItemTemplate="{StaticResource ResourceKey=inst}"
+                     ItemsSource="{Binding Source={StaticResource Instruments}}"
+                     SelectionMode="Multiple" />
+
+    </Grid>
+</UserControl>

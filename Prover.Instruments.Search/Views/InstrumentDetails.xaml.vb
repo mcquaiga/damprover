@@ -22,4 +22,24 @@ Public Class InstrumentDetails
         End Get
     End Property
 
+    Private Sub UserControl_Initialized(sender As Object, e As EventArgs)
+        If My.Settings.InstrumentType = "MiniMax" Then
+            MiniMax.IsChecked = True
+        ElseIf My.Settings.InstrumentType = "EC300" Then
+            EC300.IsChecked = True
+        End If
+
+    End Sub
+
+    Private Sub MiniMax_Checked(sender As Object, e As RoutedEventArgs) Handles MiniMax.Checked
+        If MiniMax.IsChecked = True Then
+            My.Settings.InstrumentType = "MiniMax"
+        End If
+    End Sub
+
+    Private Sub EC300_Checked(sender As Object, e As RoutedEventArgs) Handles EC300.Checked
+        If EC300.IsChecked = True Then
+            My.Settings.InstrumentType = "EC300"
+        End If
+    End Sub
 End Class

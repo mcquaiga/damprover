@@ -6,6 +6,7 @@ Imports Newtonsoft.Json.Linq
 Imports System.ComponentModel
 Imports System.Runtime.CompilerServices
 Imports System.Collections.ObjectModel
+Imports System.ComponentModel.DataAnnotations
 
 Namespace Instruments.Data
 
@@ -14,7 +15,7 @@ Namespace Instruments.Data
 
 
         'This is the base class for all the Mercury Instruments
-        'Seperate classes for each instrument must be created and inherited from this class
+        'Separate classes for each instrument must be created and inherited from this class
         'Only the properties and methods common to all instruments are created in this class
         'i.e. Mini-Max Rotary has Proving modes that must be set before testing
 
@@ -23,20 +24,12 @@ Namespace Instruments.Data
         Protected _pathToItemXML As String
         Private _instrumentGUID As Guid
 
-        Sub New()
-
-        End Sub
-
 #Region "Properties"
-
         Public Property Id As String
-
         Public Property Items As List(Of ItemClass) Implements IBaseInstrument.Items
-
         Public Property CreatedDate As DateTime? Implements IBaseInstrument.CreatedDate
         Public Property InstrumentType As miSerialProtocol.InstrumentTypeCode Implements IBaseInstrument.InstrumentType
         Public Property InspectionID As String Implements IBaseInstrument.InspectionID
-
         Public Property PressureTests As List(Of IPressureFactorClass) Implements IBaseInstrument.PressureTests
         Public Property Temperature As TemperatureClass Implements IBaseInstrument.Temperature
         Public Property VolumeTest As IVolume Implements IBaseInstrument.VolumeTest

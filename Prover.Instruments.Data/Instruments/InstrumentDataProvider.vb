@@ -58,6 +58,18 @@ Namespace Instruments.Data
 
         End Function
 
+        Public Function GetInstrumentsByCertificateNumber(Number As Integer) As List(Of IBaseInstrument)
+
+
+            Dim instr = (From i In _session.Query(Of IBaseInstrument)("ByInspectionID")
+                    Where i.InspectionID = Number
+              Select i).ToList()
+
+
+            Return instr
+
+        End Function
+
         Public Function GetInstrumentDateCreated(FromDate As DateTime) As List(Of IBaseInstrument)
 
 

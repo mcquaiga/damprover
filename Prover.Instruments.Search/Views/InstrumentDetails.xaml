@@ -5,6 +5,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:vm="clr-namespace:Prover.Instruments.View.ViewModels"
              d:DesignWidth="1000"
+             Initialized="UserControl_Initialized"
              mc:Ignorable="d">
 
     <UserControl.Resources>
@@ -15,6 +16,7 @@
                                                RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"
                              CommandParameter="{Binding .}"
                              Content="{Binding .}"
+                             IsChecked="{Binding BaudRateSettings}"
                              Style="{DynamicResource radio2}" 
                              GroupName="BaudRates"/>
             </WrapPanel>
@@ -25,6 +27,7 @@
                                                RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"
                              CommandParameter="{Binding .}"
                              Content="{Binding .}"
+                             IsChecked="{Binding CommPortSettings}"
                              Style="{DynamicResource radio2}"
                              GroupName="{Binding .}"/>
             </WrapPanel>
@@ -171,13 +174,15 @@
                             <WrapPanel Margin="5">
                                 <RadioButton Command="{Binding MiniMaxCommand}"
                                              Content="MiniMax"
+                                             Name="MiniMax"
                                              FontSize="24"
                                              Foreground="White"
                                              Style="{DynamicResource radio2}" />
                                 <RadioButton Margin="15,0,0,0"
+                                             Name="EC300"
                                              Command="{Binding EC300Command}"
                                              Content="EC300"
-                                             FontSize="18.667"
+                                             FontSize="24"
                                              Foreground="White"
                                              Style="{DynamicResource radio2}" />
                             </WrapPanel>

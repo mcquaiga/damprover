@@ -29,8 +29,6 @@ Public Class TachometerClass
             Else
                 CommPort = New SerialPort(CommPortName, BaudRateEnum.b9600)
             End If
-
-
         End If
     End Sub
 
@@ -43,8 +41,17 @@ Public Class TachometerClass
             CommPort.OpenPort()
         End If
 
-        CommPort.SendDataToPort("@R3" & Chr(13))
-        System.Threading.Thread.Sleep(100)
+        CommPort.SendDataToPort("@R1" + Environment.NewLine)
+        CommPort.SendDataToPort(Environment.NewLine)
+        System.Threading.Thread.Sleep(500)
+        CommPort.SendDataToPort("@R2" + Environment.NewLine)
+        CommPort.SendDataToPort(Environment.NewLine)
+        System.Threading.Thread.Sleep(500)
+        CommPort.SendDataToPort("@R3" + Environment.NewLine)
+        CommPort.SendDataToPort(Environment.NewLine)
+        System.Threading.Thread.Sleep(500)
+        CommPort.SendDataToPort("@R3" + Environment.NewLine)
+        System.Threading.Thread.Sleep(500)
 
         CommPort.DiscardInBuffer()
     End Sub

@@ -143,6 +143,26 @@ Namespace ViewModels
             End Set
         End Property
 
+        Public ReadOnly Property BaudRateSettings(ByVal Rate As String) As Boolean
+            Get
+                If My.Settings.BaudRate = Rate Then
+                    Return True
+                End If
+
+                Return False
+            End Get
+        End Property
+
+        Public ReadOnly Property commPortSettings(ByVal CommPort As String) As Boolean
+            Get
+                If My.Settings.CommPort = CommPort Then
+                    Return True
+                End If
+
+                Return False
+            End Get
+        End Property
+
 #Region "Methods"
 
         Public Sub ShowInstrument(instrument As IBaseInstrument)
@@ -214,23 +234,30 @@ Namespace ViewModels
         End Sub
 
         Public Async Function FetchInstrumentInformation() As Task
-            If Instrument Is Nothing Then
-                MessageBox.Show("Select an Instrument Type.")
-                Return
+            If My.Settings.InstrumentType = "MiniMax" Then
+                CreateNewMiniMaxObject()
+            ElseIf My.Settings.InstrumentType = "EC300" Then
+                CreateNewEC300Object()
             End If
 
-            _events.GetEvent(Of GlobalNotificationEvent).Publish("DOWNLOADING INFO...")
-            Try
-                Await Instrument.DownloadSiteInformation()
-            Catch ex As Exception
-                MsgBox(ex.Message, MsgBoxStyle.OkOnly + MsgBoxStyle.Information, "Error")
-            End Try
-            _events.GetEvent(Of GlobalNotificationEvent).Publish("FINISHED DOWNLOADING INFO...")
-            _events.GetEvent(Of GlobalNotificationEvent).Publish("")
-            NotifyPropertyChanged("ItemValuesWithDescriptions")
-            NotifyPropertyChanged("Volume")
-            NotifyPropertyChanged("TemperatureTests")
-            NotifyPropertyChanged("Instrument")
+
+                If Instrument Is Nothing Then
+                    MessageBox.Show("Select an Instrument Type.")
+                    Return
+                End If
+
+                _events.GetEvent(Of GlobalNotificationEvent).Publish("DOWNLOADING INFO...")
+                Try
+                    Await Instrument.DownloadSiteInformation()
+                Catch ex As Exception
+                    MsgBox(ex.Message, MsgBoxStyle.OkOnly + MsgBoxStyle.Information, "Error")
+                End Try
+                _events.GetEvent(Of GlobalNotificationEvent).Publish("FINISHED DOWNLOADING INFO...")
+                _events.GetEvent(Of GlobalNotificationEvent).Publish("")
+                NotifyPropertyChanged("ItemValuesWithDescriptions")
+                NotifyPropertyChanged("Volume")
+                NotifyPropertyChanged("TemperatureTests")
+                NotifyPropertyChanged("Instrument")
 
         End Function
 
@@ -258,7 +285,6 @@ Namespace ViewModels
                 Return _fetchInstrumentCommand
             End Get
         End Property
-
 
         Private _setBaudRateCommand = New Microsoft.Practices.Prism.Commands.DelegateCommand(Of String)(AddressOf SetBaudRate)
 

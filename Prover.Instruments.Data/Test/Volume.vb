@@ -61,6 +61,7 @@ Public Class Volume
         End Get
         Set(value As Double)
             _appliedInput = value
+            NotifyPropertyChanged("AppliedInput")
             NotifyPropertyChanged("CorrectedPercentError")
             NotifyPropertyChanged("UnCorrectedPercentError")
         End Set
@@ -320,6 +321,9 @@ Public Class Volume
 
     Public ReadOnly Property MeterDisplacement As Decimal
         Get
+            If _meterIndexpulses Is Nothing Then
+                Return CDbl(BeforeItems.Where(Function(x) x.Number = 439).SingleOrDefault.NumericValue)
+            End If
             Return _meterIndexpulses.MeterDisplacement
         End Get
 
@@ -374,14 +378,16 @@ Public Class Volume
 
                             'Stop motor
                             OutputBoard.PulseOut(USBDataAcqClass.MotorValues.mStop)
+                            System.Threading.Thread.Sleep(2000)
 
                             'Finally read tachometer
                             Me.AppliedInput = TachometerClass.ReadTach()
 
-                            System.Threading.Thread.Sleep(500)
+
 
                             'Download post test items
                             AfterItems = Await BaseInstrument.DownloadItems(InstrumentType, AfterItems)
+                            NotifyPropertyChanged("AppliedInput")
                             NotifyPropertyChanged("EndCorrected")
                             NotifyPropertyChanged("EndUnCorrected")
                             NotifyPropertyChanged("EvcUnCorrected")
