@@ -5,6 +5,8 @@ Public Class TachometerClass
 
     Public Shared CommPortName As String
     Public Shared CommPort As ICommPort
+    Public Shared TachResetBoard As IBoard
+
 
     Public Overloads Sub Dispose() Implements IDisposable.Dispose
         Dispose(True)
@@ -32,6 +34,10 @@ Public Class TachometerClass
         End If
     End Sub
 
+    Private Shared Sub InitTachOutputBoard()
+        TachResetBoard = New USBDataAcqClass(0, 0, 1)
+    End Sub
+
     Public Shared Sub ResetTach()
         InitCommPort()
 
@@ -41,17 +47,13 @@ Public Class TachometerClass
             CommPort.OpenPort()
         End If
 
-        CommPort.SendDataToPort("@R1" + Environment.NewLine)
-        CommPort.SendDataToPort(Environment.NewLine)
-        System.Threading.Thread.Sleep(500)
-        CommPort.SendDataToPort("@R2" + Environment.NewLine)
-        CommPort.SendDataToPort(Environment.NewLine)
-        System.Threading.Thread.Sleep(500)
         CommPort.SendDataToPort("@R3" + Environment.NewLine)
         CommPort.SendDataToPort(Environment.NewLine)
-        System.Threading.Thread.Sleep(500)
-        CommPort.SendDataToPort("@R3" + Environment.NewLine)
-        System.Threading.Thread.Sleep(500)
+        System.Threading.Thread.Sleep(100)
+        TachResetBoard.PulseOut(USBDataAcqClass.MotorValues.mStart)
+        System.Threading.Thread.Sleep(100)
+        TachResetBoard.PulseOut(USBDataAcqClass.MotorValues.mStop)
+        System.Threading.Thread.Sleep(100)
 
         CommPort.DiscardInBuffer()
     End Sub
