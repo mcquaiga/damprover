@@ -35,7 +35,8 @@ Public Class Volume
         InputABoard = New USBDataAcqClass(0, MccDaq.DigitalPortType.FirstPortA, 0)
         InputBBoard = New USBDataAcqClass(0, MccDaq.DigitalPortType.FirstPortB, 1)
         OutputBoard = New USBDataAcqClass(0, 0, 0)
-        'TachometerComm = New TachometerClass(1)
+
+        'TachometerComm = New TachometerClass()
 
         Dim _xmlElement = XDocument.Load(My.Application.Info.DirectoryPath + "\MeterInputPulses.xml")
         _meterIndexpulses = (From x In _xmlElement.<MeterIndexes>.Elements("value")
@@ -79,6 +80,8 @@ Public Class Volume
     Public Property InputBBoard As IBoard Implements IVolume.InputBBoard
     <JsonIgnore>
     Public Property TachometerComm As TachometerClass Implements IVolume.TachometerComm
+    <JsonIgnore>
+    Private Property TachResetBoard As IBoard Implements IVolume.TachResetBoard
 
     Public ReadOnly Property EVCType() As IVolume.EVCTypeEnum Implements IVolume.EVCType
         Get
@@ -331,6 +334,7 @@ Public Class Volume
 #End Region
 
 #Region "Methods"
+
 
     'Returns 0.XXXX
     Private Function ParseHighResReading(HighResReading As Decimal) As Decimal

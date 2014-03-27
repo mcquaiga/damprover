@@ -78,6 +78,8 @@ Public Interface IVolume
 
     ReadOnly Property PulseASelect As String
 
+    Property TachResetBoard As IBoard
+
 
     Function RunTest(InstrumentType As miSerialProtocol.InstrumentTypeCode, TemperatureTest As ITemperatureTestClass) As Task
 

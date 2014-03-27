@@ -41,21 +41,24 @@ Public Class TachometerClass
     Public Shared Sub ResetTach()
         InitCommPort()
 
-        If CommPort Is Nothing Then Return
+        If Not CommPort Is Nothing Then
 
-        If Not CommPort.IsOpen() Then
-            CommPort.OpenPort()
+            If Not CommPort.IsOpen() Then
+                CommPort.OpenPort()
+            End If
+
+            CommPort.SendDataToPort("@R3" + Environment.NewLine)
+            CommPort.SendDataToPort(Environment.NewLine)
+            CommPort.DiscardInBuffer()
         End If
-
-        CommPort.SendDataToPort("@R3" + Environment.NewLine)
-        CommPort.SendDataToPort(Environment.NewLine)
+        InitTachOutputBoard()
         System.Threading.Thread.Sleep(100)
         TachResetBoard.PulseOut(USBDataAcqClass.MotorValues.mStart)
         System.Threading.Thread.Sleep(100)
         TachResetBoard.PulseOut(USBDataAcqClass.MotorValues.mStop)
         System.Threading.Thread.Sleep(100)
 
-        CommPort.DiscardInBuffer()
+
     End Sub
 
     Public Shared Function ReadTach() As Integer
