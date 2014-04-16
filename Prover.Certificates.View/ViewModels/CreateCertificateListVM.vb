@@ -52,6 +52,19 @@ Namespace ViewModels
 
         Public Property CreatedBy As String Implements ICreateCertificateListVM.CreatedBy
 
+        Public Sub InstrumentsByCertificateNumber(CertID As String)
+            Dim items As IEnumerable(Of IBaseInstrument) = _InstrumentProvider.GetInstrumentsByCertificateNumber(CertID)
+
+            If _instrs Is Nothing Then _instrs = New ObservableCollection(Of InstrumentsListViewModel)
+            _instrs.Clear()
+
+            For Each i In items
+                Dim ilvm = New InstrumentsListViewModel()
+                ilvm.Instrument = i
+                _instrs.Add(ilvm)
+            Next
+            NotifyPropertyChanged("BaseInstruments")
+        End Sub
 
         Public Sub InstrumentsWithNoCertificates()
             Dim items As IEnumerable(Of IBaseInstrument) = _InstrumentProvider.GetInstrumentsWithNoCertificate()
@@ -138,6 +151,7 @@ Namespace ViewModels
         Public Async Sub CreateNewCertClick()
             If CreatedBy Is Nothing Then
                 MsgBox("Created By cannot be empty.", MsgBoxStyle.OkOnly, "Created By")
+                Return
             End If
 
             If _instrs.Where(Function(x) x.IsSelected = True).Count >= 1 And _instrs.Where(Function(x) x.IsSelected = True).Count <= 10 Then
@@ -160,7 +174,7 @@ Namespace ViewModels
                 Next x
 
 
-                Me.ShowReport(cert)
+                Me.CreateFixedDocument(certID)
 
                 cert.SetNextCertificateNumber()
                 Me.InstrumentsWithNoCertificates()
@@ -244,29 +258,44 @@ Namespace ViewModels
         End Sub
 
 
-        Public Sub ShowReport(Cert As ICertificate)
-            Dim _reportView = New CertificateReportViewer(Cert)
 
-            _reportView.ShowDialog()
-        End Sub
 
-        Public Sub CreateFixedDocument()
+        Public Sub CreateFixedDocument(CertificateID As String)
+            Dim certPath As String = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Certificates")
             Dim doc As New FixedDocument()
+            doc.DocumentPaginator.PageSize = New Size(96 * 11, 96 * 8.5)
 
-            doc.DocumentPaginator.PageSize = New Size(96 * 8.5, 96 * 11)
             Dim page = New PageContent
-
             Dim fixedPage = New FixedPage
 
             fixedPage.Background = Brushes.White
-            fixedPage.Width = 96 * 8.5
-            fixedPage.Height = 96 * 11
+            fixedPage.Width = 96 * 11
+            fixedPage.Height = 96 * 8.5
 
-            Dim certs = _container.Resolve(GetType(CertificatesList), "CertificatesList")
-            fixedPage.Children.Add(certs)
+
+            'Build the header
+            Dim reportHeader = New CertificateHeader
+            reportHeader.FontSize = "24"
+
+            fixedPage.SetLeft(reportHeader, 96 * 0.75)
+            fixedPage.SetTop(reportHeader, 96 * 0.75)
+            fixedPage.Children.Add(CType(reportHeader, UIElement))
+
+            'The instrument list
+            Dim certsVm = New CreateCertificatesListVM(_container, _regionManager, _events)
+            certsVm.InstrumentsByCertificateNumber(CertificateID)
+            Dim certList = New CertificatesList()
+            certList.DataContext = certsVm
+            fixedPage.SetLeft(certList, 96 * 0.4)
+            fixedPage.SetTop(certList, 150)
+            fixedPage.Children.Add(CType(certList, UIElement))
+
             DirectCast(page, System.Windows.Markup.IAddChild).AddChild(fixedPage)
+            If System.IO.Directory.Exists(certPath) = False Then
+                Directory.CreateDirectory(certPath)
+            End If
 
-            Dim xpsd = New XpsDocument("test.xps", FileAccess.ReadWrite)
+            Dim xpsd = New XpsDocument(certPath + "\" + Replace(CertificateID, "/", "") + ".xps", FileAccess.ReadWrite)
             Dim xw = XpsDocument.CreateXpsDocumentWriter(xpsd)
             doc.Pages.Add(page)
             xw.Write(doc)

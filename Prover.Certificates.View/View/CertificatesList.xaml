@@ -9,6 +9,7 @@
              d:DesignHeight="300" d:DesignWidth="300">
     
     <UserControl.Resources>
+        <local:BooleanToPassConverter x:Key="BooleanToPassConverter" />
         <CollectionViewSource x:Key="Instruments" Source="{Binding Path=Instruments, Mode=TwoWay}" />
         <DataTemplate x:Key="temp">
             <StackPanel Orientation="Vertical" DataContext="{Binding}" Margin="10,0,0,0" >
@@ -27,7 +28,7 @@
                         <ColumnDefinition />
                         <ColumnDefinition />
                     </Grid.ColumnDefinitions>
-                    <TextBlock Grid.Column="0" Text="{Binding HasPassed}" />
+                    <TextBlock Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Center" Text="{Binding HasPassed, Converter={StaticResource BooleanToPassConverter}}" FontSize="24"/>
 
                     <StackPanel Orientation="Vertical" Grid.Column="1">
                         <TextBlock Width="125"

@@ -103,20 +103,18 @@
   <ItemGroup>
     <Compile Include="CertificatesViewModule.vb" />
     <Compile Include="Events\CertificatesSelectedInstrumentEvents.vb" />
+    <Compile Include="View\BooleanToPassConverter.vb" />
     <Compile Include="Helpers\MultiSelectHelper.vb" />
     <Compile Include="ViewModels\CreateCertificateListVM.vb" />
     <Compile Include="ViewModels\ICreateCertificateListVM.vb" />
-    <Compile Include="View\CertificateReportViewer.xaml.vb">
-      <DependentUpon>CertificateReportViewer.xaml</DependentUpon>
-    </Compile>
     <Compile Include="View\CertificatesList.xaml.vb">
       <DependentUpon>CertificatesList.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\CreateCertificatesView.xaml.vb">
       <DependentUpon>CreateCertificatesView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\Reports\ReportViewer.xaml.vb">
-      <DependentUpon>ReportViewer.xaml</DependentUpon>
+    <Compile Include="View\Reports\CertificateHeader.xaml.vb">
+      <DependentUpon>CertificateHeader.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -157,12 +155,6 @@
       <LastGenOutput>Resources.Designer.vb</LastGenOutput>
       <CustomToolNamespace>My.Resources</CustomToolNamespace>
     </EmbeddedResource>
-    <Content Include="View\Reports\Certificate.rdlc">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="View\Reports\Temperatures.rdlc">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
     <None Include="app.config" />
     <None Include="My Project\DataSources\Prover.Certificates.Data.Certificate.datasource" />
     <None Include="My Project\DataSources\Prover.TemperatureClass.datasource" />
@@ -193,10 +185,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Page Include="View\CertificateReportViewer.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="View\CertificatesList.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -205,7 +193,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\Reports\ReportViewer.xaml">
+    <Page Include="View\Reports\CertificateHeader.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

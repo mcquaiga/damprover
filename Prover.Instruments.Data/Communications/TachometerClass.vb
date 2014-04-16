@@ -54,7 +54,7 @@ Public Class TachometerClass
         InitTachOutputBoard()
         System.Threading.Thread.Sleep(100)
         TachResetBoard.PulseOut(USBDataAcqClass.MotorValues.mStart)
-        System.Threading.Thread.Sleep(100)
+        System.Threading.Thread.Sleep(500)
         TachResetBoard.PulseOut(USBDataAcqClass.MotorValues.mStop)
         System.Threading.Thread.Sleep(100)
 

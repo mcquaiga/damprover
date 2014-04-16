@@ -347,9 +347,7 @@
   <ItemGroup>
     <Resource Include="Resources\Settings2.png" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Prism\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\Expression\Blend\.NETFramework\v4.5\Microsoft.Expression.Blend.WPF.targets" />
 </Project>
