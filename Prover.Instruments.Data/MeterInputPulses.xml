@@ -66,21 +66,21 @@
 		<value id="17" description="RM11000" UnCorPulsesX10="100" UnCorPulsesX100="10" MeterDisplacement="0.0993789"/>
 		<value id="18" description="RM16000" UnCorPulsesX10="150" UnCorPulsesX100="15" MeterDisplacement="0.1408163"/>
 		<value id="34" description="RM16000n" UnCorPulsesX10="110" UnCorPulsesX100="11" MeterDisplacement="0.1085343"/>
-		<value id="35" description="RM23000" UnCorPulsesX10="150" UnCorPulsesX100="15" MeterDisplacement=""/>
-		<value id="36" description="RM38000" UnCorPulsesX10="290" UnCorPulsesX100="29" MeterDisplacement=""/>
-		<value id="22" description="Roots 2M B3" UnCorPulsesX10="12" UnCorPulsesX100="2" MeterDisplacement=""/>
-		<value id="23" description="Roots 3M B3" UnCorPulsesX10="25" UnCorPulsesX100="3" MeterDisplacement=""/>
-		<value id="24" description="Roots 5M B3" UnCorPulsesX10="40" UnCorPulsesX100="4" MeterDisplacement=""/>
-		<value id="25" description="Roots 7M B3" UnCorPulsesX10="65" UnCorPulsesX100="7" MeterDisplacement=""/>
-		<value id="26" description="Roots 11M B3" UnCorPulsesX10="100" UnCorPulsesX100="10" MeterDisplacement=""/>
-		<value id="27" description="Roots 16M B3" UnCorPulsesX10="150" UnCorPulsesX100="15" MeterDisplacement=""/>
-		<value id="28" description="Roots 23M B3" UnCorPulsesX10="370" UnCorPulsesX100="37" MeterDisplacement=""/>
-		<value id="29" description="Roots 38M B3" UnCorPulsesX10="560" UnCorPulsesX100="56" MeterDisplacement=""/>
-		<value id="30" description="Roots 56M B3" UnCorPulsesX10="700" UnCorPulsesX100="70" MeterDisplacement=""/>
-		<value id="19" description="Roots 8C B3" UnCorPulsesX10="8" UnCorPulsesX100="2" MeterDisplacement=""/>
-		<value id="20" description="Roots 11C B3" UnCorPulsesX10="9" UnCorPulsesX100="2" MeterDisplacement=""/>
-		<value id="21" description="Roots 15C B3" UnCorPulsesX10="10" UnCorPulsesX100="2" MeterDisplacement=""/>
-		<value id="33" description="RM1000n" UnCorPulsesX10="10" UnCorPulsesX100="1" MeterDisplacement=""/>
+		<value id="35" description="RM23000" UnCorPulsesX10="150" UnCorPulsesX100="15" MeterDisplacement="0.1408163"/>
+		<value id="36" description="RM38000" UnCorPulsesX10="290" UnCorPulsesX100="29" MeterDisplacement="0.2840580"/>
+		<value id="22" description="Roots 2M B3" UnCorPulsesX10="12" UnCorPulsesX100="2" MeterDisplacement="0.0200000"/>
+		<value id="23" description="Roots 3M B3" UnCorPulsesX10="25" UnCorPulsesX100="3" MeterDisplacement="0.0250000"/>
+		<value id="24" description="Roots 5M B3" UnCorPulsesX10="40" UnCorPulsesX100="4" MeterDisplacement="0.0370370"/>
+		<value id="25" description="Roots 7M B3" UnCorPulsesX10="65" UnCorPulsesX100="7" MeterDisplacement="0.0625000"/>
+		<value id="26" description="Roots 11M B3" UnCorPulsesX10="100" UnCorPulsesX100="10" MeterDisplacement="0.1000000"/>
+		<value id="27" description="Roots 16M B3" UnCorPulsesX10="150" UnCorPulsesX100="15" MeterDisplacement="0.1481480"/>
+		<value id="28" description="Roots 23M B3" UnCorPulsesX10="370" UnCorPulsesX100="37" MeterDisplacement="0.3703700"/>
+		<value id="29" description="Roots 38M B3" UnCorPulsesX10="560" UnCorPulsesX100="56" MeterDisplacement="0.5555560"/>
+		<value id="30" description="Roots 56M B3" UnCorPulsesX10="700" UnCorPulsesX100="70" MeterDisplacement="0.6944400"/>
+		<value id="19" description="Roots 8C B3" UnCorPulsesX10="8" UnCorPulsesX100="2" MeterDisplacement="0.0074070"/>
+		<value id="20" description="Roots 11C B3" UnCorPulsesX10="9" UnCorPulsesX100="2" MeterDisplacement="0.0083300"/>
+		<value id="21" description="Roots 15C B3" UnCorPulsesX10="10" UnCorPulsesX100="2" MeterDisplacement="0.0100000"/>
+		<value id="33" description="RM1000n" UnCorPulsesX10="10" UnCorPulsesX100="1" MeterDisplacement="0.0079772"/>
 
 </MeterIndexes>
 
