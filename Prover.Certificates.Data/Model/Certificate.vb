@@ -29,6 +29,7 @@ Public Class Certificate
             Throw New Exception("Could not load instrument items.")
         End If
 
+
         Dim _xmlElement = XDocument.Load(CertInfoFilePath)
         Return _xmlElement.<CertificateInfo>.Elements("NextCertificateNumber").Value
     End Function
@@ -44,5 +45,13 @@ Public Class Certificate
         _xmlElement.Save(CertInfoFilePath)
 
     End Sub
+
+    Private Function CertFileExists() As Boolean
+        If Not System.IO.File.Exists(CertInfoFilePath) Then
+            System.IO.File.Create(CertInfoFilePath)
+        End If
+
+        Return True
+    End Function
 
 End Class

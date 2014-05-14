@@ -80,6 +80,7 @@ Namespace ViewModels
                 ilvm.Instrument = i
                 _instrs.Add(ilvm)
             Next
+
             NotifyPropertyChanged("BaseInstruments")
         End Sub
 

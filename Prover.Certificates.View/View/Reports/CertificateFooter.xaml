@@ -18,10 +18,8 @@
             </StackPanel>
             <StackPanel Orientation="Horizontal">
                 <TextBlock>Verification Type: </TextBlock>
-                    <TextBlock Text="{Binding Certificate.VerificateType}"></TextBlock>
-            </StackPanel>
-           
-            
+                <TextBlock Text="{Binding Certificate.VerificationType}"></TextBlock>
+            </StackPanel>  
         </StackPanel>
         <StackPanel Grid.Column="1">
             <StackPanel Orientation="Horizontal">
