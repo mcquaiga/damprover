@@ -10,7 +10,13 @@ Public Class Certificate
         Number = GetNextCertificateNumber()
     End Sub
 
+    Public Property Id As String Implements ICertificate.Id
+
     Public Property CreatedBy As String Implements ICertificate.CreatedBy
+
+    Public Property VerificationType As String Implements ICertificate.VerificationType
+
+    Public Property SealExpirationDate As String Implements ICertificate.SealExpirationDate
 
     Public Property DateCreated As Date Implements ICertificate.DateCreated
 
@@ -29,7 +35,7 @@ Public Class Certificate
 
     Public Sub SetNextCertificateNumber()
         If CertInfoFilePath Is Nothing OrElse CertInfoFilePath = "" Then
-            Throw New Exception("Could not load instrument items.")
+            Throw New Exception("Could not load certificate information.")
         End If
 
 
@@ -38,4 +44,5 @@ Public Class Certificate
         _xmlElement.Save(CertInfoFilePath)
 
     End Sub
+
 End Class

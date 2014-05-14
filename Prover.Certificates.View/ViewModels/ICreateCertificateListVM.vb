@@ -26,5 +26,9 @@ Namespace ViewModels
 
         ReadOnly Property ResetFilterCommand As ICommand
 
+        Property VerificationType As String
+
+        ReadOnly Property SealExpirationDate As String
+
     End Interface
 End Namespace

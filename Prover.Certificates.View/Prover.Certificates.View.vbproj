@@ -113,9 +113,14 @@
     <Compile Include="View\CreateCertificatesView.xaml.vb">
       <DependentUpon>CreateCertificatesView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\Reports\CertificateFooter.xaml.vb">
+      <DependentUpon>CertificateFooter.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Reports\CertificateFootViewModel.vb" />
     <Compile Include="View\Reports\CertificateHeader.xaml.vb">
       <DependentUpon>CertificateHeader.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\Reports\ICertificateFootViewModel.vb" />
   </ItemGroup>
   <ItemGroup>
     <Import Include="System.Threading.Tasks" />
@@ -193,10 +198,17 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="View\Reports\CertificateFooter.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\Reports\CertificateHeader.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="View\Reports\uniongas-logo.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>

@@ -6,31 +6,36 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                Foreground="{DynamicResource HeaderColour}"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300">
+             d:DesignHeight="300" d:DesignWidth="600">
     
     <UserControl.Resources>
         <local:BooleanToPassConverter x:Key="BooleanToPassConverter" />
         <CollectionViewSource x:Key="Instruments" Source="{Binding Path=Instruments, Mode=TwoWay}" />
         <DataTemplate x:Key="temp">
-            <StackPanel Orientation="Vertical" DataContext="{Binding}" Margin="10,0,0,0" >
-                <TextBlock Foreground="Black" Text="{Binding LevelDescription}" FontStyle="Oblique" FontWeight="Bold" HorizontalAlignment="Center"/>
-                <TextBlock Foreground="Black" Text="{Binding PercentError}" />
-            </StackPanel>
+            <Grid>
+                <StackPanel  Orientation="Vertical" DataContext="{Binding}" Margin="10,0,0,0" >
+                    <TextBlock Foreground="Black" Text="{Binding LevelDescription}" FontStyle="Oblique" FontWeight="Bold" HorizontalAlignment="Center"/>
+                    <TextBlock Foreground="Black" Text="{Binding PercentError}" HorizontalAlignment="Center" />
+                    <TextBlock Foreground="Black" Text="{Binding EVCTemperature}" HorizontalAlignment="Center"/>
+                    <TextBlock Foreground="Black" Text="{Binding GaugeTemperature}" HorizontalAlignment="Center" />
+                </StackPanel>
+            </Grid>
         </DataTemplate>
 
         <DataTemplate x:Key="inst">
             <Border BorderBrush="Black" BorderThickness="0,0,0,0.25">
                 <Grid DataContext="{Binding Path=Instrument}" >
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="0.10*"/>
-                        <ColumnDefinition />
-                        <ColumnDefinition />
-                        <ColumnDefinition />
-                        <ColumnDefinition />
-                        <ColumnDefinition />
-                        <ColumnDefinition />
+                        <ColumnDefinition Width="0.5*"/>
+                        <ColumnDefinition Width="1*" />
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="0.5*"/>
+                        <ColumnDefinition Width="0.5*"/>
                     </Grid.ColumnDefinitions>
-                    <TextBlock Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Center" Text="{Binding HasPassed, Converter={StaticResource BooleanToPassConverter}}" FontSize="24"/>
+                    <TextBlock Margin="15"  Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Center" Text="{Binding HasPassed, Converter={StaticResource BooleanToPassConverter}}" FontSize="24"/>
 
                     <StackPanel Orientation="Vertical" Grid.Column="1">
                         <TextBlock Width="125"
@@ -53,16 +58,16 @@
                         </Grid.RowDefinitions>
                         <StackPanel Grid.Row="0" Orientation="Horizontal" />
                         <StackPanel Grid.Row="1" Orientation="Horizontal">
-                            <TextBlock Foreground="Black" Text="S/N 1: " FontWeight="Bold" />
-                            <TextBlock Foreground="Black" Text="{Binding SiteNumber1}" />
+                            <TextBlock Foreground="Black" Text="MFG.: " FontWeight="Bold" />
+                            <TextBlock Foreground="Black" Text="{Binding SerialNumber}"  HorizontalAlignment="Right" />
                         </StackPanel>
                         <StackPanel Grid.Row="2" Orientation="Horizontal">
-                            <TextBlock Foreground="Black" Text="S/N 2: " FontWeight="Bold" />
-                            <TextBlock Foreground="Black" Text="{Binding SiteNumber2}" />
+                            <TextBlock Foreground="Black" Text="CO.: " FontWeight="Bold" />
+                            <TextBlock Foreground="Black" Text="{Binding SiteNumber2}" HorizontalAlignment="Right"/>
                         </StackPanel>
                         <StackPanel Grid.Row="3" Orientation="Horizontal">
                             <TextBlock Foreground="Black" Text="Firm. Ver.: " FontWeight="Bold"/>
-                            <TextBlock Foreground="Black" Text="{Binding FirmwareVersion}" />
+                            <TextBlock Foreground="Black" Text="{Binding FirmwareVersion}"  HorizontalAlignment="Right"/>
                         </StackPanel>
                     </Grid>
                     <Grid Grid.Column="3" Margin="5">
@@ -77,14 +82,61 @@
                             <TextBlock Foreground="Black" Text="{Binding VolumeTest.MeterType}" FontSize="16" />
                         </StackPanel>
                         <StackPanel Grid.Row="1" Orientation="Horizontal">
-                            <TextBlock Foreground="Black" Text="M/D: " FontWeight="Bold" />
+                            <TextBlock Foreground="Black" Text="Meter Displacement: " FontWeight="Bold" />
                             <TextBlock Foreground="Black" Text="{Binding VolumeTest.MeterDisplacement}" />
                         </StackPanel>
+                        <StackPanel Grid.Row="2" Orientation="Horizontal">
+                            <TextBlock Foreground="Black" Text="Date Tested: " FontWeight="Bold" />
+                            <TextBlock Foreground="Black" Text="{Binding CreatedDate}" />
+                        </StackPanel>
                     </Grid>
+
                     <Grid Grid.Column="4" Margin="5">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <StackPanel Grid.Row="0" Orientation="Horizontal">
+                            <TextBlock Foreground="Black" Text="T. Units: " FontWeight="Bold"/>
+                            <TextBlock Foreground="Black" Text="{Binding Temperature.TemperatureUnits}" />
+                        </StackPanel>
+                        <StackPanel Grid.Row="1" Orientation="Horizontal">
+                            <TextBlock Foreground="Black" Text="Base T.: " FontWeight="Bold" />
+                            <TextBlock Foreground="Black" Text="{Binding Temperature.BaseTemperature}" />
+                        </StackPanel>
+                        <StackPanel Grid.Row="2" Orientation="Horizontal">
+                            <TextBlock Foreground="Black" Text="T. Range: " FontWeight="Bold" />
+                            <TextBlock Foreground="Black" Text="{Binding Temperature.Range}" />
+                        </StackPanel>
+                    </Grid>
+
+                    <Grid Grid.Column="5">
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="1*" />
+                            <ColumnDefinition Width="4*"/>
+                        </Grid.ColumnDefinitions>
+                    
+                        <StackPanel Grid.Column="0"  Orientation="Vertical">
+                            <TextBlock></TextBlock>
+                            <TextBlock Margin="0,2,0,0" FontWeight="Bold">%</TextBlock>
+                            <TextBlock Margin="0,2,0,0" FontWeight="Bold">A</TextBlock>
+                            <TextBlock Margin="0,2,0,0" FontWeight="Bold">G</TextBlock>
+                        </StackPanel>
+                        <ItemsControl Grid.Column="1"  Margin="2,5,5,5"
+                                              ItemTemplate="{StaticResource ResourceKey=temp}"
+                                              ItemsSource="{Binding Temperature.Tests}">
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <UniformGrid Columns="3" />
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                        </ItemsControl>
+                    </Grid>
+                    
+                    <Grid Grid.Column="6" Margin="5">
+                        <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto" />
                             <ColumnDefinition Width="Auto" />
                         </Grid.ColumnDefinitions>
@@ -92,41 +144,37 @@
                             <RowDefinition Height="Auto" />
                             <RowDefinition Height="Auto" />
                         </Grid.RowDefinitions>
-                        <!-- Row 1 - SiteInformation -->
+                        <!--Row 1 - SiteInformation-->
                         <StackPanel Grid.Row="0" Grid.Column="0"  Orientation="Vertical">
-                            <TextBlock Foreground="Black" Text="Cor. Multi." FontWeight="Bold"/>
-                            <TextBlock Foreground="Black" Text="{Binding VolumeTest.CorrectedMultiplierDescription}" />
-                        </StackPanel>
-                        <StackPanel Grid.Row="0" Grid.Column="1"  Orientation="Vertical">
                             <TextBlock Foreground="Black" Text="UnCor. Multi." FontWeight="Bold"/>
                             <TextBlock Foreground="Black" Text="{Binding VolumeTest.UnCorrectedMultiplierDescription}" />
                         </StackPanel>
-                        <!-- Row 2 -->
+
+                        <!--Row 2-->
                         <StackPanel Grid.Row="1" Grid.Column="0" Orientation="Vertical">
-                            <TextBlock Foreground="Black" Text="Energy" FontWeight="Bold" />
-                            <TextBlock Foreground="Black" Text="--" />
+                                <TextBlock Foreground="Black" Text="Cor. Multi." FontWeight="Bold"/>
+                            <TextBlock Foreground="Black" Text="{Binding VolumeTest.CorrectedMultiplierDescription}" />
                         </StackPanel>
                     </Grid>
-                    <ItemsControl Margin="5" Grid.Column="5"
-                                          ItemTemplate="{StaticResource ResourceKey=temp}"
-                                          ItemsSource="{Binding Temperature.Tests}">
-                        <ItemsControl.ItemsPanel>
-                            <ItemsPanelTemplate>
-                                <UniformGrid Columns="3" />
-                            </ItemsPanelTemplate>
-                        </ItemsControl.ItemsPanel>
-                    </ItemsControl>
-
-                    <StackPanel Orientation="Vertical" Grid.Column="6">
-                        <StackPanel Orientation="Vertical" Margin="10,0,0,0">
-                            <TextBlock Foreground="Black" Text="UnCor. % Error"  />
+                    <Grid Grid.Column="7" Margin="5">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <StackPanel Grid.Row="0"  Grid.Column="0"  Orientation="Vertical" Margin="10,0,0,0">
+                            <TextBlock Foreground="Black" Text="UnCor. % Error" FontWeight="Bold"  />
                             <TextBlock Foreground="Black" Text="{Binding VolumeTest.UnCorrectedPercentError}" />
                         </StackPanel>
-                        <StackPanel Orientation="Vertical" Margin="10,0,0,0">
-                            <TextBlock Foreground="Black" Text="Cor. % Error" />
+                        
+                        <StackPanel Grid.Row="1" Grid.Column="0"  Orientation="Vertical" Margin="10,0,0,0">
+                            <TextBlock Foreground="Black" Text="Cor. % Error"  FontWeight="Bold"/>
                             <TextBlock Foreground="Black" Text="{Binding VolumeTest.CorrectedPercentError}" />
                         </StackPanel>
-                    </StackPanel>
+                    </Grid>
                 </Grid>
             </Border>
         </DataTemplate>

@@ -29,6 +29,11 @@ Public Class TemperatureClass
         End Set
     End Property
 
+    Public ReadOnly Property Range As String
+        Get
+            Return "-40 - 150 " + TemperatureUnits
+        End Get
+    End Property
 
     Public ReadOnly Property TemperatureUnits() As String
         Get

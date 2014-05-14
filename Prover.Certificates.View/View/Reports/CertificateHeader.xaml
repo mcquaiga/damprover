@@ -17,7 +17,33 @@
             <ColumnDefinition Width="2*" />
             <ColumnDefinition Width="1*" />
         </Grid.ColumnDefinitions>
-        <TextBlock Grid.Row="0" Grid.Column="1" FontSize="24">Measurement Device</TextBlock>
-        <TextBlock Grid.Row="1" Grid.Column="1" FontSize="24">Inspection Certificate</TextBlock>
+        <Image Grid.Column="0"  HorizontalAlignment="Left" Height="57" VerticalAlignment="Top" Width="234" Source="uniongas-logo.png" Stretch="Fill" Margin="10,10,0,-27" Grid.RowSpan="4"/>
+        <TextBlock Grid.Row="0" Grid.Column="1" FontSize="24" HorizontalAlignment="Center">Measurement Device <LineBreak/>
+        Inspection Certificate
+        </TextBlock>
+        <StackPanel Grid.Column="2" Grid.Row="0" Grid.RowSpan="2">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+                <TextBlock Grid.Column="0" Grid.Row="0" FontSize="14" FontWeight="Bold">Union Gas Limited</TextBlock>
+                <TextBlock Grid.Column="0" Grid.Row="1" FontSize="10">36 Charles St.</TextBlock>
+                <TextBlock Grid.Column="0" Grid.Row="2" FontSize="10">North Bay, Ontario</TextBlock>
+                <TextBlock Grid.Column="0" Grid.Row="3" FontSize="10">P1B 8K7</TextBlock>
+
+                <TextBlock Grid.Column="1" Grid.Row="1"  FontSize="10">P: (705) 474-8483</TextBlock>
+                <TextBlock Grid.Column="1" Grid.Row="2" FontSize="10">F: (705) 475-7926</TextBlock>
+            </Grid>
+            <TextBlock />
+            <TextBlock FontSize="10">Accreditation Certificate: A-049</TextBlock>
+            
+        </StackPanel>
     </Grid>
 </UserControl>

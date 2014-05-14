@@ -51,6 +51,23 @@ Namespace ViewModels
         End Sub
 
         Public Property CreatedBy As String Implements ICreateCertificateListVM.CreatedBy
+        Public Property VerificationType As String Implements ICreateCertificateListVM.VerificationType
+
+        Public ReadOnly Property VerificationTypes As List(Of String)
+            Get
+                Dim mylist As New List(Of String)
+                mylist.Add("Verification")
+                mylist.Add("Re-Verification")
+                Return mylist
+            End Get
+        End Property
+
+
+        Public ReadOnly Property SealExpirationDate As String Implements ICreateCertificateListVM.SealExpirationDate
+            Get
+                Return FormatDateTime(DateAdd(DateInterval.Year, 5, Date.Now), DateFormat.ShortDate)
+            End Get
+        End Property
 
         Public Sub InstrumentsByCertificateNumber(CertID As String)
             Dim items As IEnumerable(Of IBaseInstrument) = _InstrumentProvider.GetInstrumentsByCertificateNumber(CertID)
@@ -154,11 +171,13 @@ Namespace ViewModels
                 Return
             End If
 
-            If _instrs.Where(Function(x) x.IsSelected = True).Count >= 1 And _instrs.Where(Function(x) x.IsSelected = True).Count <= 10 Then
+            If _instrs.Where(Function(x) x.IsSelected = True).Count >= 1 And _instrs.Where(Function(x) x.IsSelected = True).Count <= 8 Then
                 Dim CertProvider As CertificateDataProvider
                 Dim InstrumentProvider As InstrumentDataProvider = New InstrumentDataProvider
                 Dim cert = New Certificate()
                 cert.CreatedBy = Me.CreatedBy
+                cert.VerificationType = Me.VerificationType
+                cert.SealExpirationDate = Me.SealExpirationDate
                 cert.Instruments = (From i In _instrs
                                    Where i.IsSelected = True
                                    Select i.Instrument).ToList
@@ -166,7 +185,7 @@ Namespace ViewModels
                 CertProvider = New CertificateDataProvider
 
                 Dim certID = Await CertProvider.UpsertCertificate(cert)
-
+                cert.Id = certID
 
                 For Each x In (From i In _instrs Where i.IsSelected = True Select i.Instrument).ToList
                     x.InspectionID = certID
@@ -174,7 +193,7 @@ Namespace ViewModels
                 Next x
 
 
-                Me.CreateFixedDocument(certID)
+                Me.CreateFixedDocument(cert)
 
                 cert.SetNextCertificateNumber()
                 Me.InstrumentsWithNoCertificates()
@@ -260,7 +279,7 @@ Namespace ViewModels
 
 
 
-        Public Sub CreateFixedDocument(CertificateID As String)
+        Public Sub CreateFixedDocument(Certificate As ICertificate)
             Dim certPath As String = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Certificates")
             Dim doc As New FixedDocument()
             doc.DocumentPaginator.PageSize = New Size(96 * 11, 96 * 8.5)
@@ -275,27 +294,41 @@ Namespace ViewModels
 
             'Build the header
             Dim reportHeader = New CertificateHeader
-            reportHeader.FontSize = "24"
 
-            fixedPage.SetLeft(reportHeader, 96 * 0.75)
-            fixedPage.SetTop(reportHeader, 96 * 0.75)
+            fixedPage.SetLeft(reportHeader, 35)
+            fixedPage.SetTop(reportHeader, 96 * 0.15)
+            reportHeader.Height = 96 * 1
+            reportHeader.Width = 96 * 11
             fixedPage.Children.Add(CType(reportHeader, UIElement))
 
             'The instrument list
             Dim certsVm = New CreateCertificatesListVM(_container, _regionManager, _events)
-            certsVm.InstrumentsByCertificateNumber(CertificateID)
+            certsVm.InstrumentsByCertificateNumber(Certificate.Id)
             Dim certList = New CertificatesList()
             certList.DataContext = certsVm
-            fixedPage.SetLeft(certList, 96 * 0.4)
-            fixedPage.SetTop(certList, 150)
+            certList.Width = 96 * 10.5
+            fixedPage.SetLeft(certList, 20)
+            fixedPage.SetTop(certList, 115)
+            fixedPage.Measure(New Windows.Size(96 * 11, 96 * 8.5))
             fixedPage.Children.Add(CType(certList, UIElement))
+
+            'Build the footer
+            Dim certFooterVM = New CertificateFootViewModel(_container, _regionManager, _events)
+            certFooterVM.Certificate = Certificate
+            Dim certFooter = New CertificateFooter
+            certFooter.DataContext = certFooterVM
+            certFooter.Height = 150
+            certFooter.Width = 96 * 10
+            fixedPage.SetLeft(certFooter, 35)
+            fixedPage.SetTop(certFooter, 96 * 8)
+            fixedPage.Children.Add(CType(certFooter, UIElement))
 
             DirectCast(page, System.Windows.Markup.IAddChild).AddChild(fixedPage)
             If System.IO.Directory.Exists(certPath) = False Then
                 Directory.CreateDirectory(certPath)
             End If
 
-            Dim xpsd = New XpsDocument(certPath + "\" + Replace(CertificateID, "/", "") + ".xps", FileAccess.ReadWrite)
+            Dim xpsd = New XpsDocument(certPath + "\Certificate_" + Replace(Certificate.Number, "/", "") + ".xps", FileAccess.ReadWrite)
             Dim xw = XpsDocument.CreateXpsDocumentWriter(xpsd)
             doc.Pages.Add(page)
             xw.Write(doc)
