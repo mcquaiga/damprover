@@ -329,7 +329,7 @@ Namespace ViewModels
                 Directory.CreateDirectory(certPath)
             End If
 
-            Dim xpsd = New XpsDocument(certPath + "\Certificate_" + Replace(Certificate.Number, "/", "") + ".xps", FileAccess.ReadWrite)
+            Dim xpsd = New XpsDocument(certPath + "\certificate_" + Replace(Certificate.Number, "/", "_") + "_" + Format(Date.Now, "MMddyyHmmss") + ".xps", FileAccess.ReadWrite)
             Dim xw = XpsDocument.CreateXpsDocumentWriter(xpsd)
             doc.Pages.Add(page)
             xw.Write(doc)
