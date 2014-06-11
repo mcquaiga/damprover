@@ -39,6 +39,8 @@ Namespace ViewModels
 
         ReadOnly Property setTachCommPortCommand As ICommand
 
+        ReadOnly Property CancelCommand As ICommand
+
         Sub SetBaudRate(p1 As String)
 
         Sub SetCommPort(p1 As String)

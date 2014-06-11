@@ -4,7 +4,7 @@
 	 -> id = related to the number used by the instrument for meter types, don't change this unless Mercury does. You
 			can add a value to this file should new meter types come out. You'll need to use Masterlink with the communication window open
 			to find what value relates to what meter type.
-	 -> description = is irrelevant as far as the software is concerned, it's here for human reference
+	 -> Description = This is what will be displayed in the application
 	 -> UnCorPulsesX10 = Input pulse count per test when volume output set at x10
 	 -> UnCorPulsesX100 = Input pulse count per test when volume output set at x100
 	 -> MeterDisplacement = Value to use in volume calculation

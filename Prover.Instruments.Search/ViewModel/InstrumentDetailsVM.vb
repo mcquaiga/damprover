@@ -7,6 +7,7 @@ Imports System.Linq
 Imports System.ComponentModel
 Imports System.Runtime.CompilerServices
 Imports System.Collections.ObjectModel
+Imports Microsoft.Practices.Unity
 
 
 Namespace ViewModels
@@ -19,19 +20,24 @@ Namespace ViewModels
         Public Property Items As List(Of ItemClass)
         Private _Instrument As IBaseInstrument
         Private _events As IEventAggregator
+        Private _container As IUnityContainer
+        Private _regions As IRegionManager
+
         Private _communications As InstrumentCommunications
         Private _provider As New InstrumentDataProvider
         Private _pressurelevelIndex As List(Of String)
         Private _templevelIndex As List(Of Integer)
         Private _volume As IVolume
 
-
+        Private hasSaved As Boolean
         Private _irdaPort As IrDAPort
         Private _serialPort As SerialPort
 
-        Sub New(events As IEventAggregator)
+        Sub New(container As IUnityContainer, regionManager As IRegionManager, events As IEventAggregator)
             _events = events
             _events.GetEvent(Of SelectedInstrumentChangedEvent).Subscribe(AddressOf ShowInstrument)
+            _container = container
+            _regions = regionManager
 
 
             _progress = New Progress(Of Tuple(Of String, Integer))(AddressOf ReportProgress)
@@ -54,7 +60,7 @@ Namespace ViewModels
                 If Items Is Nothing Then
                     LoadItemDescriptions()
                 End If
-               
+
                 Return iD
             End Get
         End Property
@@ -192,14 +198,27 @@ Namespace ViewModels
             _events.GetEvent(Of GlobalNotificationEvent).Publish("SAVING INSTRUMENT...")
             _provider.UpsertInstrument(Instrument)
             _events.GetEvent(Of GlobalNotificationEvent).Publish("SAVED")
+            Me.hasSaved = True
         End Sub
 
         Public Sub CreateNewMiniMaxObject()
             Me.Instrument = New MiniMaxInstrument()
+            Me.hasSaved = False
         End Sub
 
         Sub CreateNewEC300Object()
             Me.Instrument = New EC300Instrument()
+            Me.hasSaved = False
+        End Sub
+
+        Public Sub Cancel()
+            If hasSaved = False Then
+                If (MessageBox.Show("You have unsaved changes" + vbNewLine + "Are you sure you want to clear this test?", "Clear?", MessageBoxButton.YesNo, MessageBoxImage.Question) = MessageBoxResult.Yes) Then
+                    Me.Instrument = Nothing
+                End If
+                Return
+            End If
+            Me.Instrument = Nothing
         End Sub
 
 
@@ -241,23 +260,23 @@ Namespace ViewModels
             End If
 
 
-                If Instrument Is Nothing Then
-                    MessageBox.Show("Select an Instrument Type.")
-                    Return
-                End If
+            If Instrument Is Nothing Then
+                MessageBox.Show("Select an Instrument Type.")
+                Return
+            End If
 
-                _events.GetEvent(Of GlobalNotificationEvent).Publish("DOWNLOADING INFO...")
-                Try
-                    Await Instrument.DownloadSiteInformation()
-                Catch ex As Exception
-                    MsgBox(ex.Message, MsgBoxStyle.OkOnly + MsgBoxStyle.Information, "Error")
-                End Try
-                _events.GetEvent(Of GlobalNotificationEvent).Publish("FINISHED DOWNLOADING INFO...")
-                _events.GetEvent(Of GlobalNotificationEvent).Publish("")
-                NotifyPropertyChanged("ItemValuesWithDescriptions")
-                NotifyPropertyChanged("Volume")
-                NotifyPropertyChanged("TemperatureTests")
-                NotifyPropertyChanged("Instrument")
+            _events.GetEvent(Of GlobalNotificationEvent).Publish("DOWNLOADING INFO...")
+            Try
+                Await Instrument.DownloadSiteInformation()
+            Catch ex As Exception
+                MsgBox(ex.Message, MsgBoxStyle.OkOnly + MsgBoxStyle.Information, "Error")
+            End Try
+            _events.GetEvent(Of GlobalNotificationEvent).Publish("FINISHED DOWNLOADING INFO...")
+            _events.GetEvent(Of GlobalNotificationEvent).Publish("")
+            NotifyPropertyChanged("ItemValuesWithDescriptions")
+            NotifyPropertyChanged("Volume")
+            NotifyPropertyChanged("TemperatureTests")
+            NotifyPropertyChanged("Instrument")
 
         End Function
 
@@ -314,6 +333,13 @@ Namespace ViewModels
         Public ReadOnly Property SaveCommand As ICommand Implements IInstrumentDetailsVM.SaveCommand
             Get
                 Return _SaveCommand
+            End Get
+        End Property
+
+        Private _CancelCommand = New Microsoft.Practices.Prism.Commands.DelegateCommand(AddressOf Cancel)
+        Public ReadOnly Property CancelCommand As ICommand Implements IInstrumentDetailsVM.CancelCommand
+            Get
+                Return _CancelCommand
             End Get
         End Property
 
@@ -383,7 +409,7 @@ Namespace ViewModels
             End Get
         End Property
 
-       
+
 
 
     End Class
