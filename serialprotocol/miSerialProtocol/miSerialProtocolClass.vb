@@ -659,10 +659,8 @@ Public MustInherit Class miSerialProtocolClass
                     Loop
                     'if value is not an acknoledgement then check for an error
                     InstrumentError = IncomingString
-                ElseIf IncomingString.Length = 1 Then
-                    If IncomingString = Chr(CommCharEnum.ACK) Then
-                        InstrumentError = InstrumentErrorsEnum.NoError
-                    End If
+                ElseIf IncomingString.Contains(CommCharEnum.ACK) Or IncomingString.Length = 1 Then
+                    InstrumentError = InstrumentErrorsEnum.NoError
                 Else
                     InstrumentError = InstrumentErrorsEnum.CheckByteError
                 End If

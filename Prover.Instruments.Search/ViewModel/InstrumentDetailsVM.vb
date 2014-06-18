@@ -33,6 +33,8 @@ Namespace ViewModels
         Private _irdaPort As IrDAPort
         Private _serialPort As SerialPort
 
+        Private _downloadInProgress As Boolean
+
         Sub New(container As IUnityContainer, regionManager As IRegionManager, events As IEventAggregator)
             _events = events
             _events.GetEvent(Of SelectedInstrumentChangedEvent).Subscribe(AddressOf ShowInstrument)
@@ -235,7 +237,11 @@ Namespace ViewModels
         End Function
 
         Public Async Sub FetchTemperatureItemsByLevel(LevelIndex As Integer)
-            Await Instrument.DownloadTemperatureTestItems(LevelIndex)
+            If _downloadInProgress = False Then
+                _downloadInProgress = True
+                Await Instrument.DownloadTemperatureTestItems(LevelIndex)
+                _downloadInProgress = False
+            End If
         End Sub
 
         Public Sub LoadItemDescriptions()
@@ -253,41 +259,46 @@ Namespace ViewModels
         End Sub
 
         Public Async Function FetchInstrumentInformation() As Task
-            If My.Settings.InstrumentType = "MiniMax" Then
-                CreateNewMiniMaxObject()
-            ElseIf My.Settings.InstrumentType = "EC300" Then
-                CreateNewEC300Object()
+            If _downloadInProgress = False Then
+                _downloadInProgress = True
+                If My.Settings.InstrumentType = "MiniMax" Then
+                    CreateNewMiniMaxObject()
+                ElseIf My.Settings.InstrumentType = "EC300" Then
+                    CreateNewEC300Object()
+                End If
+
+
+                If Instrument Is Nothing Then
+                    MessageBox.Show("Select an Instrument Type.")
+                    Return
+                End If
+
+                _events.GetEvent(Of GlobalNotificationEvent).Publish("DOWNLOADING INFO...")
+                Try
+                    Await Instrument.DownloadSiteInformation()
+                Catch ex As Exception
+                    MsgBox(ex.Message, MsgBoxStyle.OkOnly + MsgBoxStyle.Information, "Error")
+                End Try
+                _events.GetEvent(Of GlobalNotificationEvent).Publish("FINISHED DOWNLOADING INFO...")
+                _events.GetEvent(Of GlobalNotificationEvent).Publish("")
+                NotifyPropertyChanged("ItemValuesWithDescriptions")
+                NotifyPropertyChanged("Volume")
+                NotifyPropertyChanged("TemperatureTests")
+                NotifyPropertyChanged("Instrument")
+                _downloadInProgress = False
             End If
-
-
-            If Instrument Is Nothing Then
-                MessageBox.Show("Select an Instrument Type.")
-                Return
-            End If
-
-            _events.GetEvent(Of GlobalNotificationEvent).Publish("DOWNLOADING INFO...")
-            Try
-                Await Instrument.DownloadSiteInformation()
-            Catch ex As Exception
-                MsgBox(ex.Message, MsgBoxStyle.OkOnly + MsgBoxStyle.Information, "Error")
-            End Try
-            _events.GetEvent(Of GlobalNotificationEvent).Publish("FINISHED DOWNLOADING INFO...")
-            _events.GetEvent(Of GlobalNotificationEvent).Publish("")
-            NotifyPropertyChanged("ItemValuesWithDescriptions")
-            NotifyPropertyChanged("Volume")
-            NotifyPropertyChanged("TemperatureTests")
-            NotifyPropertyChanged("Instrument")
-
         End Function
 
         Public Async Sub StartNewTest()
-
-            Try
-                Await Instrument.StartRotaryTest()
-            Catch ex As Exception
-                MsgBox(ex.Message.ToString, MsgBoxStyle.OkOnly)
-            End Try
-
+            If _downloadInProgress = False Then
+                Try
+                    _downloadInProgress = True
+                    Await Instrument.StartRotaryTest()
+                    _downloadInProgress = False
+                Catch ex As Exception
+                    MsgBox(ex.Message.ToString, MsgBoxStyle.OkOnly)
+                End Try
+            End If
         End Sub
 
         Public Sub StopTest()
