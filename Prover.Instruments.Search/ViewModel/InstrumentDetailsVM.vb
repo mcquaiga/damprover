@@ -33,7 +33,7 @@ Namespace ViewModels
         Private _irdaPort As IrDAPort
         Private _serialPort As SerialPort
 
-        Private _downloadInProgress As Boolean
+        Private _downloadInProgress As Boolean = False
 
         Sub New(container As IUnityContainer, regionManager As IRegionManager, events As IEventAggregator)
             _events = events
@@ -240,6 +240,7 @@ Namespace ViewModels
             If _downloadInProgress = False Then
                 _downloadInProgress = True
                 Await Instrument.DownloadTemperatureTestItems(LevelIndex)
+                NotifyPropertyChanged("TemperatureTests")
                 _downloadInProgress = False
             End If
         End Sub
