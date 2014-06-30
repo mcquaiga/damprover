@@ -165,6 +165,8 @@ Namespace Instruments.Data
 
         Public Overridable Async Function DownloadTemperatureTestItems(LevelIndex As Integer) As Task Implements IBaseInstrument.DownloadTemperatureTestItems
             Await Temperature.DownloadTemperatureTestItems(InstrumentType, LevelIndex)
+            NotifyPropertyChanged("TemperatureTests")
+
         End Function
 
         Public Overridable Async Function StartRotaryTest() As Task Implements IBaseInstrument.StartRotaryTest
@@ -182,6 +184,7 @@ Namespace Instruments.Data
                 Dim downloads = Await InstrumentCommunications.DownloadItemsAsync(InstrumentType, Items)
 
                 For Each item In downloads
+                    Items.Where(Function(x) x.Number = item.Key).SingleOrDefault.NumericValue = item.Value
                     Items.Where(Function(x) x.Number = item.Key).SingleOrDefault.Value = item.Value
                 Next
 

@@ -225,7 +225,7 @@ Namespace ViewModels
 
 
 
-        Public Async Function FetchPressureItemsByLevel(LevelIndex As Integer) As Task
+        Public Async Sub FetchPressureItemsByLevel(LevelIndex As Integer)
 
             'Dim p As New PressureFactorClass(LevelIndex)
             'Await InstrumentCommunications.DownloadPressureItemsAsync(Instrument, _progress)
@@ -234,13 +234,12 @@ Namespace ViewModels
             'Instrument.PressureTests.Add(p)
 
             'NotifyPropertyChanged("Instrument")
-        End Function
+        End Sub
 
         Public Async Sub FetchTemperatureItemsByLevel(LevelIndex As Integer)
             If _downloadInProgress = False Then
                 _downloadInProgress = True
                 Await Instrument.DownloadTemperatureTestItems(LevelIndex)
-                NotifyPropertyChanged("TemperatureTests")
                 _downloadInProgress = False
             End If
         End Sub

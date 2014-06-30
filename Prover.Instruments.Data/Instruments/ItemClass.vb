@@ -30,8 +30,7 @@ Public Class ItemClass
 
     Public Property DescriptionValue As String
         Get
-            If Not _descriptionValue Is Nothing Then Return _descriptionValue
-            If ValueDescriptions Is Nothing OrElse ValueDescriptions.Count = 0 Then Return Value
+            If ValueDescriptions Is Nothing OrElse ValueDescriptions.Count = 0 Then Return NumericValue
             Return ValueDescriptions.Where(Function(x) x.id = Me.Value).SingleOrDefault.description
         End Get
         Set(value As String)
